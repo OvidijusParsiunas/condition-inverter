@@ -14,7 +14,7 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
                 indexOfNewStatement = i + 2;
                 signFound = false;
             }
-        } else if (tokens[i] === '=' || tokens[i] === '<' || tokens[i] === '>') {
+        } else if (tokens[i] === '=' || tokens[i] === '<' || tokens[i] === '>' || tokens[i] === '!') {
             conditionIndexes.push({ start: i });
             signFound = true;
             if (tokens[i + 1] === '=') {
@@ -23,12 +23,11 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
                 } else {
                     i += 1;
                 }
-                continue;
             }
         }
     }
     if (!signFound) {
-        conditionIndexes.push({ start: indexOfNewStatement, end: firstIfStatementCloseBracketIndex - 1});
+        conditionIndexes.push({ start: indexOfNewStatement, end: firstIfStatementCloseBracketIndex - 1 });
     }
     return conditionIndexes;
 }
@@ -46,6 +45,14 @@ function invertIfStatements(tokens, conditionIndexes) {
                 break;
             case '>':
                 tokens[arrayIndex] = '<';
+                break;
+            case '!':
+                if (tokens[arrayIndex + 1] === '=') {
+                    tokens[arrayIndex] = '=';
+                } else {
+                    tokens.splice(arrayIndex, 1);
+                    newElementsDelta -= 1;
+                }
                 break;
             default: {
                 tokens.splice(arrayIndex, 0, '!');
@@ -96,10 +103,10 @@ function runInvert(functionString) {
 
 function test(input, expectedResult) {
     const result = runInvert(input);
-    console.log(`input: ${input}, exected result: ${expectedResult}:`);
-    console.log(`${result === expectedResult ? 'PASS' : 'FAIL'}`);
-    if (result !== expectedResult) {
-        console.log(`Result was: ${result}`);
+    if (result === expectedResult) {
+        console.log('PASS');
+    } else {
+        console.log(`FAIL: input - ${input}, expected result - ${expectedResult}, actual result - ${result}`);
     }
 }
 
@@ -107,7 +114,17 @@ function runTests() {
     test(
         'if ((hello) === (2) && start || number < 2 && hello && end) { console.log(2) }',
         'if((hello)!==(2)&&!start||number>2&&!hello&&!end){console.log(2)}',
-    )
+    );
+
+    test(
+        'if ((hello) !== (2) && start || number != 2 && hello && end) { console.log(2) }',
+        'if((hello)===(2)&&!start||number==2&&!hello&&!end){console.log(2)}',
+    );
+
+    test(
+        'if ((hello) !== (2) && !start || number != 2 && hello && end) { console.log(2) }',
+        'if((hello)===(2)&&start||number==2&&!hello&&!end){console.log(2)}',
+    );
 }
 
 runTests();
