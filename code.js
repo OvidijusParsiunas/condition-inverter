@@ -4,15 +4,17 @@
 function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStatementCloseBracketIndex) {
     const conditionIndexes = [];
     let signFound = false;
-    let indexOfNewStatement = 0;
+    let indexOfNewStatement = ifStatementlocationsInTokens + 2;
     for (let i = ifStatementlocationsInTokens + 2; i < firstIfStatementCloseBracketIndex; i += 1) {
         if (tokens[i] === '&' || tokens[i] === '|') {
             if (tokens[i + 1] === '&' || tokens[i + 1] === '|') {
                 if (!signFound) {
                     conditionIndexes.push({ start: indexOfNewStatement, end: i - 1});
                 }
+                conditionIndexes.push({ start: i});
                 indexOfNewStatement = i + 2;
                 signFound = false;
+                i += 1;
             }
         } else if (tokens[i] === '=' || tokens[i] === '<' || tokens[i] === '>' || tokens[i] === '!') {
             conditionIndexes.push({ start: i });
@@ -45,6 +47,14 @@ function invertIfStatements(tokens, conditionIndexes) {
                 break;
             case '>':
                 tokens[arrayIndex] = '<';
+                break;
+            case '&':
+                tokens[arrayIndex] = '|';
+                tokens[arrayIndex + 1] = '|';
+                break;
+            case '|':
+                tokens[arrayIndex] = '&';
+                tokens[arrayIndex + 1] = '&';
                 break;
             case '!':
                 if (tokens[arrayIndex + 1] === '=') {
@@ -106,24 +116,36 @@ function test(input, expectedResult) {
     if (result === expectedResult) {
         console.log('PASS');
     } else {
-        console.log(`FAIL: input - ${input}, expected result - ${expectedResult}, actual result - ${result}`);
+        console.log(`FAIL: input - ${input}`);
+        console.log(`e: ${expectedResult}`)
+        console.log(`a: ${result}`);
     }
 }
 
 function runTests() {
     test(
         'if ((hello) === (2) && start || number < 2 && hello && end) { console.log(2) }',
-        'if((hello)!==(2)&&!start||number>2&&!hello&&!end){console.log(2)}',
+        'if((hello)!==(2)||!start&&number>2||!hello||!end){console.log(2)}',
     );
 
     test(
         'if ((hello) !== (2) && start || number != 2 && hello && end) { console.log(2) }',
-        'if((hello)===(2)&&!start||number==2&&!hello&&!end){console.log(2)}',
+        'if((hello)===(2)||!start&&number==2||!hello||!end){console.log(2)}',
     );
 
     test(
         'if ((hello) !== (2) && !start || number != 2 && hello && end) { console.log(2) }',
-        'if((hello)===(2)&&start||number==2&&!hello&&!end){console.log(2)}',
+        'if((hello)===(2)||start&&number==2||!hello||!end){console.log(2)}',
+    );
+
+    test(
+        'if (dog && cat) { console.log(2) }',
+        'if(!dog||!cat){console.log(2)}',
+    );
+
+    test(
+        'if (dog && cat || mouse) { console.log(2) }',
+        'if(!dog||!cat&&!mouse){console.log(2)}',
     );
 }
 
