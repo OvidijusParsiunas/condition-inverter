@@ -25,9 +25,9 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
                     indexOfNewStatement = i + 2;
                     needBrackets = true;
                 }
+                if (numberOfBracketsOpen > 0 && logicalOperatorFound) conditionIndexes.pop();
                 logicalOperatorFound = false;
                 isArithmeticOperation = false;
-                if (numberOfBracketsOpen > 0) conditionIndexes.pop();
                 i += 1;
             }
         } else if (tokens[i] === '<' || tokens[i] === '>') {
@@ -238,8 +238,63 @@ function runTests() {
     );
 
     test(
+        'if (hello || ((mouse <= cat))) { console.log(2) }',
+        'if(!hello&&((mouse>cat))){console.log(2)}',
+    );
+
+    test(
         'if (hello || (mouse <= cat && mouse - cat)) { console.log(2) }',
         'if(!hello&&!(mouse<=cat&&mouse-cat)){console.log(2)}',
+    );
+
+    test(
+        'if (hello || (mouse <= cat && (mouse - cat))) { console.log(2) }',
+        'if(!hello&&!(mouse<=cat&&(mouse-cat))){console.log(2)}',
+    );
+
+    test(
+        'if (hello || (mouse <= cat && ((mouse - cat)))) { console.log(2) }',
+        'if(!hello&&!(mouse<=cat&&((mouse-cat)))){console.log(2)}',
+    );
+
+    test(
+        'if ((mouse <= cat && mouse - cat) || hello) { console.log(2) }',
+        'if(!(mouse<=cat&&mouse-cat)&&!hello){console.log(2)}',
+    );
+
+    test(
+        'if ((mouse <= cat && (mouse - cat)) || hello) { console.log(2) }',
+        'if(!(mouse<=cat&&(mouse-cat))&&!hello){console.log(2)}',
+    );
+
+    test(
+        'if ((mouse <= cat && ((mouse - cat))) || hello) { console.log(2) }',
+        'if(!(mouse<=cat&&((mouse-cat)))&&!hello){console.log(2)}',
+    );
+
+    test(
+        'if (((mouse <= cat) && ((mouse - cat))) || hello) { console.log(2) }',
+        'if(!((mouse<=cat)&&((mouse-cat)))&&!hello){console.log(2)}',
+    );
+
+    test(
+        'if (((mouse - cat) && ((mouse - cat))) || hello) { console.log(2) }',
+        'if(!((mouse-cat)&&((mouse-cat)))&&!hello){console.log(2)}',
+    );
+
+    test(
+        'if (((mouse - cat) && ((mouse - cat)) && ((mouse - cat) && ((mouse - cat)))) || hello) { console.log(2) }',
+        'if(!((mouse-cat)&&((mouse-cat))&&((mouse-cat)&&((mouse-cat))))&&!hello){console.log(2)}',
+    );
+
+    test(
+        'if (((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) { console.log(2) }',
+        'if(!((mouse-cat)&&((mouse-cat)))&&!((mouse-cat)&&((mouse-cat)))){console.log(2)}',
+    );
+
+    test(
+        'if ((((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) && (((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
+        'if(!(((mouse-cat)&&((mouse-cat)))||((mouse-cat)&&((mouse-cat))))||!(((mouse-cat)&&((mouse-cat)))||((mouse-cat)&&((mouse-cat))))){console.log(2)}',
     );
 }
 
