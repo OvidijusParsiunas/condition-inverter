@@ -1,30 +1,33 @@
-// retrieve outer conditions in an if statement so that only they would need to be changed
-// invert outer conditions accordingly
-
-function dealWithStandaloneStatements(logicalOperatorFound, isMultipleStatements, needBrackets, conditionIndexes, indexOfNewStatement, i) {
+function dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, i) {
     if (!logicalOperatorFound) {
         conditionIndexes.push({ start: indexOfNewStatement, end: i - 1});
     }
-    if (isMultipleStatements && needBrackets) {
+    if (isArithmeticOperation && needBrackets) {
         conditionIndexes.push({ brackets: true, start: indexOfNewStatement, end: i });
     }
 }
+
+// bug with shift assignment - make sure that < is not follwoed by anither < and > not followed by another >
 
 function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStatementCloseBracketIndex) {
     const conditionIndexes = [];
     let logicalOperatorFound = false;
     let indexOfNewStatement = ifStatementlocationsInTokens + 2;
-    let isMultipleStatements = false;
+    let isArithmeticOperation = false;
     let needBrackets = true;
+    let numberOfBracketsOpen = 0;
     for (let i = ifStatementlocationsInTokens + 2; i < firstIfStatementCloseBracketIndex; i += 1) {
         if (tokens[i] === '&' || tokens[i] === '|') {
             if (tokens[i + 1] === '&' || tokens[i + 1] === '|') {
-                dealWithStandaloneStatements(logicalOperatorFound, isMultipleStatements, needBrackets, conditionIndexes, indexOfNewStatement, i);
-                conditionIndexes.push({ start: i});
-                indexOfNewStatement = i + 2;
+                if (numberOfBracketsOpen === 0) {
+                    dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, i);
+                    conditionIndexes.push({ start: i});
+                    indexOfNewStatement = i + 2;
+                    needBrackets = true;
+                }
                 logicalOperatorFound = false;
-                isMultipleStatements = false;
-                needBrackets = true;
+                isArithmeticOperation = false;
+                if (numberOfBracketsOpen > 0) conditionIndexes.pop();
                 i += 1;
             }
         } else if (tokens[i] === '<' || tokens[i] === '>') {
@@ -46,12 +49,15 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
                 }
             }
         } else if (tokens[i] === '-' || tokens[i] === '+' || tokens[i] === '/' || tokens[i] === '*') {
-            isMultipleStatements = true;
+            isArithmeticOperation = true;
         } else if (tokens[i] === '(') {
             needBrackets = false;
+            numberOfBracketsOpen += 1;
+        } else if (tokens[i] === ')') {
+            numberOfBracketsOpen -= 1;
         }
     }
-    dealWithStandaloneStatements(logicalOperatorFound, isMultipleStatements, needBrackets, conditionIndexes, indexOfNewStatement, firstIfStatementCloseBracketIndex);
+    if (numberOfBracketsOpen === 0) dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, firstIfStatementCloseBracketIndex);
     return conditionIndexes;
 }
 
@@ -202,6 +208,11 @@ function runTests() {
     );
 
     test(
+        'if (mouse || (dog - cat)) { console.log(2) }',
+        'if(!mouse&&!(dog-cat)){console.log(2)}',
+    );
+
+    test(
         'if (mouse < cat) { console.log(2) }',
         'if(mouse>=cat){console.log(2)}',
     );
@@ -219,6 +230,16 @@ function runTests() {
     test(
         'if (hello || mouse <= cat) { console.log(2) }',
         'if(!hello&&mouse>cat){console.log(2)}',
+    );
+
+    test(
+        'if (hello || (mouse <= cat)) { console.log(2) }',
+        'if(!hello&&(mouse>cat)){console.log(2)}',
+    );
+
+    test(
+        'if (hello || (mouse <= cat && mouse - cat)) { console.log(2) }',
+        'if(!hello&&!(mouse<=cat&&mouse-cat)){console.log(2)}',
     );
 }
 
