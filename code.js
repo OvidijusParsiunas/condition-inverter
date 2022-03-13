@@ -1,10 +1,14 @@
-function dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, endIndex) {
+function dealWithStandaloneStatements(logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, endIndex) {
     if (!logicalOperatorFound) {
         conditionIndexes.push({ start: indexOfNewStatement });
     }
-    if (isArithmeticOperation && needBrackets) {
+    if (isOperationWrappableInBrackets && !areBracketsAlreadyPresent) {
         conditionIndexes.push({ brackets: true, start: indexOfNewStatement, end: endIndex });
     }
+}
+
+function isCharacterArithmeticOperation(character) {
+    return character === '-' || character === '+' || character === '/' || character === '*';
 }
 
 function findNonSpaceCharacterIndexStartingFromIndex(tokens, index, forwards = true) {
@@ -26,8 +30,9 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
     // adding + 1 in order to be inside the brackets
     const startingIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, ifStatementlocationsInTokens + 1) + 1;
     let indexOfNewStatement = findNonSpaceCharacterIndexStartingFromIndex(tokens, startingIndex);
-    let isArithmeticOperation = false;
-    let needBrackets = true;
+    // usually involves arithmentic operations or double bangs
+    let isOperationWrappableInBrackets = false;
+    let areBracketsAlreadyPresent = false;
     let numberOfBracketsOpen = 0;
     for (let i = startingIndex; i < firstIfStatementCloseBracketIndex; i += 1) {
         if (tokens[i] === '&' || tokens[i] === '|') {
@@ -35,14 +40,14 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
                 const nextNonSpaceCharacter = findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 2);
                 if (numberOfBracketsOpen === 0) {
                     const endIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, i - 1, false);
-                    dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, endIndex);
+                    dealWithStandaloneStatements(logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, endIndex);
                     conditionIndexes.push({ start: i });
                     indexOfNewStatement = nextNonSpaceCharacter;
-                    needBrackets = true;
+                    areBracketsAlreadyPresent = false;
                 }
                 if (numberOfBracketsOpen > 0 && logicalOperatorFound) conditionIndexes.pop();
                 logicalOperatorFound = false;
-                isArithmeticOperation = false;
+                isOperationWrappableInBrackets = false;
                 // subtracting one due to the for loop automatically adding one
                 i = (nextNonSpaceCharacter - 1);
             }
@@ -54,7 +59,7 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
             } else {
                 conditionIndexes.push({ start: i });
             }
-        } else if (tokens[i] === '=' || tokens[i] === '!') {
+        } else if (tokens[i] === '=') {
             conditionIndexes.push({ start: i });
             logicalOperatorFound = true;
             if (tokens[i + 1] === '=') {
@@ -64,23 +69,45 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
                     i += 1;
                 }
             }
-        } else if (tokens[i] === '-' || tokens[i] === '+' || tokens[i] === '/' || tokens[i] === '*') {
-            isArithmeticOperation = true;
+        } else if (tokens[i] === '!') {
+            if (tokens[i + 1] === '!') {
+                isOperationWrappableInBrackets = true;
+                i += 1;
+            } else {
+                const nextCharacterTokenIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+                const potentialArithmeticSymbolIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, nextCharacterTokenIndex + 1);
+                const isFollowedByArithmeticOperation = isCharacterArithmeticOperation(tokens[potentialArithmeticSymbolIndex]);
+                const previousCharacterTokenIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, i - 1, false);
+                const isPreviousTokenArithmeticOperation = isCharacterArithmeticOperation(tokens[previousCharacterTokenIndex]);
+                if (numberOfBracketsOpen === 0 && ((!isFollowedByArithmeticOperation && !isPreviousTokenArithmeticOperation) || tokens[nextCharacterTokenIndex] === '=' || tokens[nextCharacterTokenIndex] === '(')) {
+                    conditionIndexes.push({ start: i });
+                    logicalOperatorFound = true;
+                    if (tokens[i + 1] === '=') {
+                        if (tokens[i + 2] === '=') {
+                            i += 2;
+                        } else {
+                            i += 1;
+                        }
+                    }
+                }
+            }
+        } else if (isCharacterArithmeticOperation(tokens[i])) {
+            isOperationWrappableInBrackets = true;
         } else if (tokens[i] === '(') {
-            needBrackets = false;
+            areBracketsAlreadyPresent = true;
             numberOfBracketsOpen += 1;
         } else if (tokens[i] === ')') {
             numberOfBracketsOpen -= 1;
         }
     }
     const endIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, firstIfStatementCloseBracketIndex - 1, false);
-    if (numberOfBracketsOpen === 0) dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, endIndex);
+    if (numberOfBracketsOpen === 0) dealWithStandaloneStatements(logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, endIndex);
     return conditionIndexes;
 }
 
 function invertIfStatements(tokens, conditionIndexes) {
     let newElementsDelta = 0;
-    conditionIndexes.forEach(({ start, end, brackets, hasFollowupEquals }) => {
+    conditionIndexes.forEach(({ start, end, brackets, hasFollowupEquals }, conditionIndexesCurrentIndex) => {
         const arrayIndex = start + newElementsDelta;
         if (brackets) {
             tokens.splice(arrayIndex, 0, '(');
@@ -123,11 +150,13 @@ function invertIfStatements(tokens, conditionIndexes) {
                 case '!':
                     if (tokens[arrayIndex + 1] === '=') {
                         tokens[arrayIndex] = '=';
-                    } else {
+                        break;
+                    } else if (!conditionIndexes[conditionIndexesCurrentIndex + 1]?.brackets) {
                         tokens.splice(arrayIndex, 1);
                         newElementsDelta -= 1;
+                        break;
                     }
-                    break;
+                    // if brackets are required - proceed to go onto the next section and append a ! at the start before the brackets
                 default: {
                     tokens.splice(arrayIndex, 0, '!');
                     newElementsDelta += 1;
@@ -229,6 +258,46 @@ function runTests() {
     );
 
     test(
+        'if (!dog - cat) { console.log(2) }',
+        'if (!(!dog - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (!dog - cat && !dog - cat) { console.log(2) }',
+        'if (!(!dog - cat) || !(!dog - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (!  dog - cat && !  dog - cat) { console.log(2) }',
+        'if (!(!  dog - cat) || !(!  dog - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (dog - !cat && dog - !cat) { console.log(2) }',
+        'if (!(dog - !cat) || !(dog - !cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (dog -   !cat && dog -  !cat) { console.log(2) }',
+        'if (!(dog -   !cat) || !(dog -  !cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (dog -   !cat && dog -  !  cat  ) { console.log(2) }',
+        'if (!(dog -   !cat) || !(dog -  !  cat)  ) { console.log(2) }',
+    );
+
+    test(
+        'if ((!(!dog - cat)) && (!(!dog - cat))) { console.log(2) }',
+        'if (!(!(!dog - cat)) || !(!(!dog - cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (  (!  (!  dog - cat)) && (  !(  !dog - cat))) { console.log(2) }',
+        'if (  !(!  (!  dog - cat)) || !(  !(  !dog - cat))) { console.log(2) }',
+    );
+
+    test(
         'if (dog - cat ||   mouse) { console.log(2) }',
         'if (!(dog - cat) &&   !mouse) { console.log(2) }',
     );
@@ -251,6 +320,21 @@ function runTests() {
     test(
         '  if   (   mouse  ||   dog   -  cat  ) { console.log(2) }  ',
         '  if   (   !mouse  &&   !(dog   -  cat)  ) { console.log(2) }  ',
+    );
+
+    test(
+        'if (!(mouse - cat)) { console.log(2) }',
+        'if ((mouse - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (  !  (  mouse - cat)  ) { console.log(2) }',
+        'if (    (  mouse - cat)  ) { console.log(2) }',
+    );
+
+    test(
+        'if (  !  (  mouse - cat)  &&   !  (  mouse - cat)  ) { console.log(2) }',
+        'if (    (  mouse - cat)  ||     (  mouse - cat)  ) { console.log(2) }',
     );
 
     test(
@@ -386,7 +470,45 @@ function runTests() {
 
 runTests();
 
+// WORK - implement a little bit of intelligence for negating double bangs
+// WORK - - and + are allowed
+// WORK - compensate for extra spaces in-between
+
 function runExclusiveTests() {
+    test(
+        'if (!!dog) { console.log(2) }',
+        'if (!(!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!dog) { console.log(2) }',
+        'if (!(!!!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!(!!dog)) { console.log(2) }',
+        'if (!(!!!(!!dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!-!!dog) { console.log(2) }',
+        'if (!(!!-!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!dog + 2) { console.log(2) }',
+        'if (!(!!dog + 2)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!dog && !!dog + 2) { console.log(2) }',
+        'if (!(!!dog) || !(!!dog + 2)) { console.log(2) }',
+    );
+    
+    test(
+        'if ((!!dog && !!dog + 2) && (!!dog && !!dog + 2)) { console.log(2) }',
+        'if (!(!!dog && !!dog + 2) || !(!!dog && !!dog + 2)) { console.log(2) }',
+    );
 }
 
-// runExclusiveTests();
+runExclusiveTests();
