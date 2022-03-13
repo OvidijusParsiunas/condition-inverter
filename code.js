@@ -1,9 +1,9 @@
-function dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, i) {
+function dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, endIndex) {
     if (!logicalOperatorFound) {
-        conditionIndexes.push({ start: indexOfNewStatement, end: i - 1});
+        conditionIndexes.push({ start: indexOfNewStatement });
     }
     if (isArithmeticOperation && needBrackets) {
-        conditionIndexes.push({ brackets: true, start: indexOfNewStatement, end: i });
+        conditionIndexes.push({ brackets: true, start: indexOfNewStatement, end: endIndex });
     }
 }
 
@@ -12,23 +12,28 @@ function dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperatio
 function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStatementCloseBracketIndex) {
     const conditionIndexes = [];
     let logicalOperatorFound = false;
-    let indexOfNewStatement = ifStatementlocationsInTokens + 2;
+    const initialSpaceDelta = tokens[ifStatementlocationsInTokens + 1] === ' ' ? 3 : 2; 
+    const startingIndex = ifStatementlocationsInTokens + initialSpaceDelta;
+    let indexOfNewStatement = startingIndex;
     let isArithmeticOperation = false;
     let needBrackets = true;
     let numberOfBracketsOpen = 0;
-    for (let i = ifStatementlocationsInTokens + 2; i < firstIfStatementCloseBracketIndex; i += 1) {
+    for (let i = startingIndex; i < firstIfStatementCloseBracketIndex; i += 1) {
         if (tokens[i] === '&' || tokens[i] === '|') {
             if (tokens[i + 1] === '&' || tokens[i + 1] === '|') {
                 if (numberOfBracketsOpen === 0) {
-                    dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, i);
-                    conditionIndexes.push({ start: i});
-                    indexOfNewStatement = i + 2;
+                    const endIndex = tokens[i - 1] === ' ' ? i - 1 : i;
+                    dealWithStandaloneStatements(logicalOperatorFound, isArithmeticOperation, needBrackets, conditionIndexes, indexOfNewStatement, endIndex);
+                    conditionIndexes.push({ start: i });
+                    const spaceDelta = tokens[i + 2] === ' ' ? 3 : 2;
+                    indexOfNewStatement = i + spaceDelta;
                     needBrackets = true;
                 }
                 if (numberOfBracketsOpen > 0 && logicalOperatorFound) conditionIndexes.pop();
                 logicalOperatorFound = false;
                 isArithmeticOperation = false;
-                i += 1;
+                const spaceDelta = tokens[i + 2] === ' ' ? 2 : 1;
+                i += spaceDelta;
             }
         } else if (tokens[i] === '<' || tokens[i] === '>') {
             logicalOperatorFound = true;
@@ -121,33 +126,34 @@ function invertIfStatements(tokens, conditionIndexes) {
     });
 }
 
-function getIndexOfLastBracketOfIfStatement(tokens, firstIndex, openBrackets = 0) {
-    if (tokens[firstIndex + 1] === '(') {
-        return getIndexOfLastBracketOfIfStatement(tokens, firstIndex + 1, openBrackets + 1);
+function getIndexOfLastBracketOfIfStatement(tokens, index, openBrackets = 0) {
+    if (tokens[index + 1] === '(') {
+        return getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);
     }
-    if (tokens[firstIndex + 1] === ')') {
-        if (openBrackets === 0) {
-            return firstIndex + 1;
+    if (tokens[index + 1] === ')') {
+        if (openBrackets === 1) {
+            return index + 1;
         }
-        return getIndexOfLastBracketOfIfStatement(tokens, firstIndex + 1, openBrackets - 1);
+        return getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets - 1);
     }
-    return getIndexOfLastBracketOfIfStatement(tokens, firstIndex + 1, openBrackets);
+    return getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets);
 }
 
 function retrieveIfIndexes(tokens) {
     const ifStatementIndexes = [];
     const startIndexes = tokens.map((e, i) => e === 'if' ? i : '').filter(String);
     startIndexes.forEach((startIndex) => {
-        const endIndex = getIndexOfLastBracketOfIfStatement(tokens, startIndex + 1);
+        const endIndex = getIndexOfLastBracketOfIfStatement(tokens, startIndex );
         ifStatementIndexes.push({ start: startIndex, end: endIndex });
     })
     return ifStatementIndexes;
 }
 
 function tokenize(functionString) {
-    const tokens = functionString.replace(/[^\w\s]|_/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ').split(' ');
+    const tokens1 = functionString.match(/(\w+)|(\s)|[^\w\s]/g);
+    const tokens = functionString.replace(/(\w+)|(\s)|[^\w\s]/g, function ($1) { return ' ' + $1 + ' ';}).replace(/[ ]+/g, ' ').split(' ');
     tokens.pop();
-    return tokens;
+    return tokens1;
 }
 
 function runInvert(functionString) {
@@ -172,130 +178,167 @@ function test(input, expectedResult) {
 }
 
 function runTests() {
+
+    test(
+        'if (mouse && cat) { console.log(2) }',
+        'if (!mouse || !cat) { console.log(2) }',
+    );
+
+    test(
+        'if (mouse &&cat) { console.log(2) }',
+        'if (!mouse ||!cat) { console.log(2) }',
+    );
+
+    test(
+        'if(mouse && cat) { console.log(2) }',
+        'if(!mouse || !cat) { console.log(2) }',
+    );
+
+    test(
+        'if(mouse &&cat) { console.log(2) }',
+        'if(!mouse ||!cat) { console.log(2) }',
+    );
+
     test(
         'if ((hello) === (2) && start || number < 2 && hello && end) { console.log(2) }',
-        'if((hello)!==(2)||!start&&number>=2||!hello||!end){console.log(2)}',
+        'if ((hello) !== (2) || !start && number >= 2 || !hello || !end) { console.log(2) }',
     );
 
     test(
         'if ((hello) !== (2) && start || number != 2 && hello && end) { console.log(2) }',
-        'if((hello)===(2)||!start&&number==2||!hello||!end){console.log(2)}',
+        'if ((hello) === (2) || !start && number == 2 || !hello || !end) { console.log(2) }',
     );
 
     test(
         'if ((hello) !== (2) && !start || number != 2 && hello && end) { console.log(2) }',
-        'if((hello)===(2)||start&&number==2||!hello||!end){console.log(2)}',
+        'if ((hello) === (2) || start && number == 2 || !hello || !end) { console.log(2) }',
     );
 
     test(
         'if (dog && cat) { console.log(2) }',
-        'if(!dog||!cat){console.log(2)}',
+        'if (!dog || !cat) { console.log(2) }',
     );
 
     test(
         'if (dog && cat || mouse) { console.log(2) }',
-        'if(!dog||!cat&&!mouse){console.log(2)}',
+        'if (!dog || !cat && !mouse) { console.log(2) }',
     );
 
     test(
         'if (dog - cat || mouse) { console.log(2) }',
-        'if(!(dog-cat)&&!mouse){console.log(2)}',
+        'if (!(dog - cat) && !mouse) { console.log(2) }',
+    );
+
+    test(
+        'if (dog - cat || mouse) { console.log(2) }',
+        'if (!(dog - cat) && !mouse) { console.log(2) }',
     );
 
     test(
         'if (mouse || dog - cat) { console.log(2) }',
-        'if(!mouse&&!(dog-cat)){console.log(2)}',
+        'if (!mouse && !(dog - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (dog - cat || mouse && cat - dog) { console.log(2) }',
+        'if (!(dog - cat) && !mouse || !(cat - dog)) { console.log(2) }',
     );
 
     test(
         'if (mouse || (dog - cat)) { console.log(2) }',
-        'if(!mouse&&!(dog-cat)){console.log(2)}',
+        'if (!mouse && !(dog - cat)) { console.log(2) }',
     );
 
     test(
         'if (mouse < cat) { console.log(2) }',
-        'if(mouse>=cat){console.log(2)}',
+        'if (mouse >= cat) { console.log(2) }',
     );
 
     test(
         'if (mouse <= cat) { console.log(2) }',
-        'if(mouse>cat){console.log(2)}',
+        'if (mouse > cat) { console.log(2) }',
     );
 
     test(
         'if (mouse <= cat || hello) { console.log(2) }',
-        'if(mouse>cat&&!hello){console.log(2)}',
+        'if (mouse > cat && !hello) { console.log(2) }',
     );
 
     test(
         'if (hello || mouse <= cat) { console.log(2) }',
-        'if(!hello&&mouse>cat){console.log(2)}',
+        'if (!hello && mouse > cat) { console.log(2) }',
     );
 
     test(
         'if (hello || (mouse <= cat)) { console.log(2) }',
-        'if(!hello&&(mouse>cat)){console.log(2)}',
+        'if (!hello && (mouse > cat)) { console.log(2) }',
     );
 
     test(
         'if (hello || ((mouse <= cat))) { console.log(2) }',
-        'if(!hello&&((mouse>cat))){console.log(2)}',
+        'if (!hello && ((mouse > cat))) { console.log(2) }',
     );
 
     test(
         'if (hello || (mouse <= cat && mouse - cat)) { console.log(2) }',
-        'if(!hello&&!(mouse<=cat&&mouse-cat)){console.log(2)}',
+        'if (!hello && !(mouse <= cat && mouse - cat)) { console.log(2) }',
     );
 
     test(
         'if (hello || (mouse <= cat && (mouse - cat))) { console.log(2) }',
-        'if(!hello&&!(mouse<=cat&&(mouse-cat))){console.log(2)}',
+        'if (!hello && !(mouse <= cat && (mouse - cat))) { console.log(2) }',
     );
 
     test(
         'if (hello || (mouse <= cat && ((mouse - cat)))) { console.log(2) }',
-        'if(!hello&&!(mouse<=cat&&((mouse-cat)))){console.log(2)}',
+        'if (!hello && !(mouse <= cat && ((mouse - cat)))) { console.log(2) }',
     );
 
     test(
         'if ((mouse <= cat && mouse - cat) || hello) { console.log(2) }',
-        'if(!(mouse<=cat&&mouse-cat)&&!hello){console.log(2)}',
+        'if (!(mouse <= cat && mouse - cat) && !hello) { console.log(2) }',
     );
 
     test(
         'if ((mouse <= cat && (mouse - cat)) || hello) { console.log(2) }',
-        'if(!(mouse<=cat&&(mouse-cat))&&!hello){console.log(2)}',
+        'if (!(mouse <= cat && (mouse - cat)) && !hello) { console.log(2) }',
     );
 
     test(
         'if ((mouse <= cat && ((mouse - cat))) || hello) { console.log(2) }',
-        'if(!(mouse<=cat&&((mouse-cat)))&&!hello){console.log(2)}',
+        'if (!(mouse <= cat && ((mouse - cat))) && !hello) { console.log(2) }',
     );
 
     test(
         'if (((mouse <= cat) && ((mouse - cat))) || hello) { console.log(2) }',
-        'if(!((mouse<=cat)&&((mouse-cat)))&&!hello){console.log(2)}',
+        'if (!((mouse <= cat) && ((mouse - cat))) && !hello) { console.log(2) }',
     );
 
     test(
         'if (((mouse - cat) && ((mouse - cat))) || hello) { console.log(2) }',
-        'if(!((mouse-cat)&&((mouse-cat)))&&!hello){console.log(2)}',
+        'if (!((mouse - cat) && ((mouse - cat))) && !hello) { console.log(2) }',
     );
 
     test(
         'if (((mouse - cat) && ((mouse - cat)) && ((mouse - cat) && ((mouse - cat)))) || hello) { console.log(2) }',
-        'if(!((mouse-cat)&&((mouse-cat))&&((mouse-cat)&&((mouse-cat))))&&!hello){console.log(2)}',
+        'if (!((mouse - cat) && ((mouse - cat)) && ((mouse - cat) && ((mouse - cat)))) && !hello) { console.log(2) }',
     );
 
     test(
         'if (((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) { console.log(2) }',
-        'if(!((mouse-cat)&&((mouse-cat)))&&!((mouse-cat)&&((mouse-cat)))){console.log(2)}',
+        'if (!((mouse - cat) && ((mouse - cat))) && !((mouse - cat) && ((mouse - cat)))) { console.log(2) }',
     );
 
     test(
         'if ((((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) && (((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
-        'if(!(((mouse-cat)&&((mouse-cat)))||((mouse-cat)&&((mouse-cat))))||!(((mouse-cat)&&((mouse-cat)))||((mouse-cat)&&((mouse-cat))))){console.log(2)}',
+        'if (!(((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) || !(((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
     );
 }
 
 runTests();
+
+function runExclusiveTests() {
+    
+}
+
+runExclusiveTests();
