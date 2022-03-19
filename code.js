@@ -13,9 +13,7 @@ function dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationW
     if (shouldBracketsBeRemoved) {
         const endIndex = getIndexOfLastBracketOfIfStatement(tokens, indexOfNewStatement - 1);
         conditionIndexes.push({ start: indexOfNewStatement, removeNegationBrackets: { start: indexOfNewStatement, end: endIndex } });
-        return;
-    }
-    if (!logicalOperatorFound) {
+    } else if (!logicalOperatorFound) {
         conditionIndexes.push({ start: indexOfNewStatement });
     }
     if (isOperationWrappableInBrackets && !areBracketsAlreadyPresent) {
@@ -39,6 +37,17 @@ function foundEquals(index, tokens, conditionIndexes) {
     }
 }
 
+function findLastExclamationMarkIndex(tokens, index) {
+    const nextCharacterTokenIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
+    if (tokens[nextCharacterTokenIndex] === '!') {
+        return findLastExclamationMarkIndex(tokens, nextCharacterTokenIndex);
+    }
+    if (tokens[nextCharacterTokenIndex] === '+' || tokens[nextCharacterTokenIndex] === '-') {
+        return findLastExclamationMarkIndex(tokens, nextCharacterTokenIndex);
+    }
+    return index;
+}
+
 // bug with shift assignment - make sure that < is not follwoed by anither < and > not followed by another >
 
 function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStatementCloseBracketIndex) {
@@ -49,7 +58,6 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
     let indexOfNewStatement = findNonSpaceCharacterIndexStartingFromIndex(tokens, startingIndex);
     // usually involves arithmentic operations or double bangs
     let isOperationWrappableInBrackets = false;
-    // WORK - is this truly needed
     let shouldBracketsBeRemoved = false;
     // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
     let areBracketsAlreadyPresent = false;
@@ -84,23 +92,22 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
             logicalOperatorFound = true;
             i = foundEquals(i, tokens, conditionIndexes);
         } else if (tokens[i] === '!') {
-            if (tokens[i + 1] === '!') {
+            const nextExclamationMarkIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+            if (tokens[nextExclamationMarkIndex] === '!') {
                 isOperationWrappableInBrackets = true;
-                i += 1;
-                if (tokens[i + 1] === '!') {
-                    i += 1;
-                    if (tokens[i + 1] === '!') {
-                        i += 1;
-                    }
+                i = findLastExclamationMarkIndex(tokens, i + 1);
+                const nextNonSpaceCharacterIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+                if (tokens[nextNonSpaceCharacterIndex] === '(') {
+                    i = getIndexOfLastBracketOfIfStatement(tokens, i);
                 }
-                // WORK - keep looping until no more ! (consider spaces)
             } else if (numberOfBracketsOpen === 0) {
                 const nextCharacterTokenIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
                 if (tokens[nextCharacterTokenIndex] === '(') {
                     // doesn't get called with syntax !!!!!( as the logic above captures that use case
                     // doesn't get called with syntax !!!(!( as numberOfBracketsOpen will be more than 1
-                    // when we have !( we are always sure that that the bracket will need to be removed - which is done in dealWithStandaloneStatements
+                    // this is called for !( where we are sure that the bracket will need to be removed - which is done in dealWithStandaloneStatements
                     shouldBracketsBeRemoved = true;
+                    i = getIndexOfLastBracketOfIfStatement(tokens, i);
                 } else if (tokens[i + 1] === '=') {
                     logicalOperatorFound = true;
                     i = foundEquals(i, tokens, conditionIndexes);
@@ -190,6 +197,10 @@ function invertIfStatements(tokens, conditionIndexes) {
 }
 
 function getIndexOfLastBracketOfIfStatement(tokens, index, openBrackets = 0) {
+    if (index > tokens.length - 1) {
+        console.log('index out of bounds');
+        return -1;
+    }
     if (tokens[index + 1] === '(') {
         return getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);
     }
@@ -238,119 +249,12 @@ function test(input, expectedResult) {
 }
 
 // WORK - implement a little bit of intelligence for negating double bangs
-// WORK - - and + are allowed
-// WORK - compensate for extra spaces in-between
-
 // WORK - implement a little bit of intelligence and convert 0 number to 1, false boolean to true and vice versa
 runExclusiveTests();
 
 runTests();
 
 function runExclusiveTests() {
-    test(
-        'if (!!dog) { console.log(2) }',
-        'if (!(!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!dog)) { console.log(2) }',
-        'if (!!dog) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!!dog) { console.log(2) }',
-        'if (!(!!!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!!!dog)) { console.log(2) }',
-        'if (!!!!dog) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!(!!dog)) { console.log(2) }',
-        'if (!(!!!(!!dog))) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!(!!dog) && !!!(!!dog)) { console.log(2) }',
-        'if (!(!!!(!!dog)) || !(!!!(!!dog))) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!!(!!dog)) || !(!!!(!!dog))) { console.log(2) }',
-        'if (!!!(!!dog) && !!!(!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!(!!dog + 1) && !!!(!!dog)) { console.log(2) }',
-        'if (!(!!!(!!dog + 1)) || !(!!!(!!dog))) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!!(!!dog + 1)) || !(!!!(!!dog))) { console.log(2) }',
-        'if (!!!(!!dog + 1) && !!!(!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!(!!dog && cat) && !!!(!!dog)) { console.log(2) }',
-        'if (!(!!!(!!dog && cat)) || !(!!!(!!dog))) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!!(!!dog && cat)) || !(!!!(!!dog))) { console.log(2) }',
-        'if (!!!(!!dog && cat) && !!!(!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!-!!dog) { console.log(2) }',
-        'if (!(!!-!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!+!!dog) { console.log(2) }',
-        'if (!(!!+!!dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!dog + 2) { console.log(2) }',
-        'if (!(!!dog + 2)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!dog && !!dog + 2) { console.log(2) }',
-        'if (!(!!dog) || !(!!dog + 2)) { console.log(2) }',
-    );
-    
-    test(
-        'if ((!!dog && !!dog + 2) && (!!dog && !!dog + 2)) { console.log(2) }',
-        'if (!(!!dog && !!dog + 2) || !(!!dog && !!dog + 2)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!!(dog)) { console.log(2) }',
-        'if (!(!!!!(dog))) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!!!(dog))) { console.log(2) }',
-        'if (!!!!(dog)) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!!(dog != cat)) { console.log(2) }',
-        'if (!(!!!!(dog != cat))) { console.log(2) }',
-    );
-
-    test(
-        'if (!!!!(!(dog || cat)) || !!!!(!(dog || cat))) { console.log(2) }',
-        'if (!(!!!!(!(dog || cat))) && !(!!!!(!(dog || cat)))) { console.log(2) }',
-    );
-
-    test(
-        'if (!(!!!!(!(dog || cat))) && !(!!!!(!(dog || cat)))) { console.log(2) }',
-        'if (!!!!(!(dog || cat)) || !!!!(!(dog || cat))) { console.log(2) }',
-    );
 }
 
 
@@ -604,5 +508,275 @@ function runTests() {
     test(
         'if ((((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) && (((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
         'if (!(((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) || !(((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!dog) { console.log(2) }',
+        'if (!(!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!dog)) { console.log(2) }',
+        'if (!!dog) { console.log(2) }',
+    );
+
+    test(
+        'if (! !dog) { console.log(2) }',
+        'if (!(! !dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(! !dog)) { console.log(2) }',
+        'if (! !dog) { console.log(2) }',
+    );
+
+    test(
+        'if (! !(dog)) { console.log(2) }',
+        'if (!(! !(dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(! !(dog))) { console.log(2) }',
+        'if (! !(dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (! !!! (dog)) { console.log(2) }',
+        'if (!(! !!! (dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (! !!!  (  dog != 1)) { console.log(2) }',
+        'if (!(! !!!  (  dog != 1))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!dog) { console.log(2) }',
+        'if (!(!!!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!!dog)) { console.log(2) }',
+        'if (!!!!dog) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!(!!dog)) { console.log(2) }',
+        'if (!(!!!(!!dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!(!!dog) && !!!(!!dog)) { console.log(2) }',
+        'if (!(!!!(!!dog)) || !(!!!(!!dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!(!!dog)) || !(!!!(!!dog))) { console.log(2) }',
+        'if (!!!(!!dog) && !!!(!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!(!!dog + 1) && !!!(!!dog)) { console.log(2) }',
+        'if (!(!!!(!!dog + 1)) || !(!!!(!!dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!(!!dog + 1)) || !(!!!(!!dog))) { console.log(2) }',
+        'if (!!!(!!dog + 1) && !!!(!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!(!!dog && cat) && !!!(!!dog)) { console.log(2) }',
+        'if (!(!!!(!!dog && cat)) || !(!!!(!!dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!(!!dog && cat)) || !(!!!(!!dog))) { console.log(2) }',
+        'if (!!!(!!dog && cat) && !!!(!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!-!!dog) { console.log(2) }',
+        'if (!(!!-!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!+!!dog) { console.log(2) }',
+        'if (!(!!+!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!dog + 2) { console.log(2) }',
+        'if (!(!!dog + 2)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!dog && !!dog + 2) { console.log(2) }',
+        'if (!(!!dog) || !(!!dog + 2)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!dog && !!dog +  2) { console.log(2) }',
+        'if (!(!!dog) || !(!!dog +  2)) { console.log(2) }',
+    );
+    
+    test(
+        'if ((!!dog && !!dog + 2) && (!!dog && !!dog + 2)) { console.log(2) }',
+        'if (!(!!dog && !!dog + 2) || !(!!dog && !!dog + 2)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!(dog)) { console.log(2) }',
+        'if (!(!!!!(dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!  !(dog)) { console.log(2) }',
+        'if (!(!!!  !(dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!!(dog))) { console.log(2) }',
+        'if (!!!!(dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!!  (  dog))) { console.log(2) }',
+        'if (!!!!  (  dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!(dog != cat)) { console.log(2) }',
+        'if (!(!!!!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!(dog != cat && cat - dog)) { console.log(2) }',
+        'if (!(!!!!(dog != cat && cat - dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (! !!  !(dog != cat && cat   - dog) ) { console.log(2) }',
+        'if (!(! !!  !(dog != cat && cat   - dog)) ) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!!(dog != cat && cat - dog)) && !(!!!!(dog != cat && cat - dog))) { console.log(2) }',
+        'if (!!!!(dog != cat && cat - dog) || !!!!(dog != cat && cat - dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!+!(dog != cat)) { console.log(2) }',
+        'if (!(!!!+!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!+!(dog != cat))) { console.log(2) }',
+        'if (!!!+!(dog != cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!  +  !!(dog !=   cat)) { console.log(2) }',
+        'if (!(!!!  +  !!(dog !=   cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!(!!  +  !!(dog !=   cat))) { console.log(2) }',
+        'if (!(!!(!!  +  !!(dog !=   cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!+!!(dog != cat)) { console.log(2) }',
+        'if (!(!!!+!!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!+!!(dog != cat))) { console.log(2) }',
+        'if (!!!+!!(dog != cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!!+(dog != cat)) { console.log(2) }',
+        'if (!(!!!!!+(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!!!+(dog != cat))) { console.log(2) }',
+        'if (!!!!!+(dog != cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (+!!!!!(dog != cat)) { console.log(2) }',
+        'if (!(+!!!!!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(+!!!!!(dog != cat))) { console.log(2) }',
+        'if (+!!!!!(dog != cat)) { console.log(2) }',
+    );
+
+    test(
+        'if ((+!!!!!(dog != cat))) { console.log(2) }',
+        'if (!(+!!!!!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if ((-!!!!!(dog != cat))) { console.log(2) }',
+        'if (!(-!!!!!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (( - !!!!!(dog != cat))) { console.log(2) }',
+        'if (!( - !!!!!(dog != cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (!( - !!!!!(dog != cat))) { console.log(2) }',
+        'if ( - !!!!!(dog != cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!(!(dog || cat)) || !!!!(!(dog || cat))) { console.log(2) }',
+        'if (!(!!!!(!(dog || cat))) && !(!!!!(!(dog || cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!!!  (! (dog || cat) ) || !!  !!(! (dog || cat))) { console.log(2) }',
+        'if (!(!!!!  (! (dog || cat) )) && !(!!  !!(! (dog || cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(!!!!(!(dog || cat))) && !(!!!!(!(dog || cat)))) { console.log(2) }',
+        'if (!!!!(!(dog || cat)) || !!!!(!(dog || cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (  !(!!! !(!(dog || cat))) && !(!! ! !(!(dog ||  cat) ))) { console.log(2) }',
+        'if (  !!! !(!(dog || cat)) || !! ! !(!(dog ||  cat) )) { console.log(2) }',
+    );
+
+    test(
+        'if (!! + - + -!!(!(dog || cat))) { console.log(2) }',
+        'if (!(!! + - + -!!(!(dog || cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (!! + - + -!!(!(dog ||  + - + - cat))) { console.log(2) }',
+        'if (!(!! + - + -!!(!(dog ||  + - + - cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (+ - + -!!(!(dog ||  + - + - cat))) { console.log(2) }',
+        'if (!(+ - + -!!(!(dog ||  + - + - cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (+ - + - !!(!(dog ||  + - + - cat))) { console.log(2) }',
+        'if (!(+ - + - !!(!(dog ||  + - + - cat)))) { console.log(2) }',
+    );
+
+    test(
+        'if (!(+ - + - !!(!(dog ||  + - + - cat)))) { console.log(2) }',
+        'if (+ - + - !!(!(dog ||  + - + - cat))) { console.log(2) }',
     );
 }
