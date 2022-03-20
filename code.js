@@ -9,10 +9,12 @@ function findNonSpaceCharacterIndexStartingFromIndex(tokens, index, forwards = t
     return findNonSpaceCharacterIndexStartingFromIndex(tokens, newIndex, forwards);
 }
 
-function dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, currentTokenIndex) {
+function dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, currentTokenIndex) {
     if (shouldBracketsBeRemoved) {
         const endIndex = getIndexOfLastBracketOfIfStatement(tokens, indexOfNewStatement - 1);
         conditionIndexes.push({ start: indexOfNewStatement, removeNegationBrackets: { start: indexOfNewStatement, end: endIndex } });
+    } else if (revertBooleanLiteral && !isOperationWrappableInBrackets) {
+        conditionIndexes.push({ start: indexOfNewStatement, revertBooleanLiteral });
     } else if (!logicalOperatorFound) {
         conditionIndexes.push({ start: indexOfNewStatement });
     }
@@ -62,18 +64,20 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
     // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
     let areBracketsAlreadyPresent = false;
     let numberOfBracketsOpen = 0;
+    let revertBooleanLiteral = false;
     for (let i = startingIndex; i < firstIfStatementCloseBracketIndex; i += 1) {
         if (tokens[i] === '&' || tokens[i] === '|') {
             if (tokens[i + 1] === '&' || tokens[i + 1] === '|') {
                 const nextNonSpaceCharacter = findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 2);
                 if (numberOfBracketsOpen === 0) {
                     // a look back to see if previous syntax defines a standalone statement
-                    dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, i);
+                    dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, i);
                     conditionIndexes.push({ start: i });
                     indexOfNewStatement = nextNonSpaceCharacter;
                     areBracketsAlreadyPresent = false;
                     isOperationWrappableInBrackets = false;
                     shouldBracketsBeRemoved = false;
+                    revertBooleanLiteral = false;
                 }
                 if (numberOfBracketsOpen > 0 && logicalOperatorFound) conditionIndexes.pop();
                 logicalOperatorFound = false;
@@ -120,15 +124,17 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
             numberOfBracketsOpen += 1;
         } else if (tokens[i] === ')') {
             numberOfBracketsOpen -= 1;
+        } else if (tokens[i] === 'false' || tokens[i] === 'true' || tokens[i] === '0' || tokens[i] === '1') {
+            revertBooleanLiteral = true;
         }
     }
-    dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, firstIfStatementCloseBracketIndex);
+    dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, firstIfStatementCloseBracketIndex);
     return conditionIndexes;
 }
 
 function invertIfStatements(tokens, conditionIndexes) {
     let newElementsDelta = 0;
-    conditionIndexes.forEach(({ start, end, brackets, hasFollowupEquals, removeNegationBrackets }, conditionIndexesCurrentIndex) => {
+    conditionIndexes.forEach(({ start, end, brackets, hasFollowupEquals, removeNegationBrackets, revertBooleanLiteral }, conditionIndexesCurrentIndex) => {
         const arrayIndex = start + newElementsDelta;
         if (brackets) {
             tokens.splice(arrayIndex, 0, '(');
@@ -168,6 +174,26 @@ function invertIfStatements(tokens, conditionIndexes) {
                     tokens[arrayIndex] = '&';
                     tokens[arrayIndex + 1] = '&';
                     break;
+                case 'true':
+                    if (revertBooleanLiteral) {
+                        tokens[arrayIndex] = false;
+                        break;
+                    }
+                case 'false':
+                    if (revertBooleanLiteral) {
+                        tokens[arrayIndex] = true;
+                        break;
+                    }
+                case '0':
+                    if (revertBooleanLiteral) {
+                        tokens[arrayIndex] = 1;
+                        break;
+                    }
+                case '1':
+                    if (revertBooleanLiteral) {
+                        tokens[arrayIndex] = 0;
+                        break;
+                    }
                 case '!':
                     if (tokens[arrayIndex + 1] === '=') {
                         tokens[arrayIndex] = '=';
@@ -248,13 +274,88 @@ function test(input, expectedResult) {
     }
 }
 
-// WORK - implement a little bit of intelligence for negating double bangs
 // WORK - implement a little bit of intelligence and convert 0 number to 1, false boolean to true and vice versa
+// WORK - escape strings
 runExclusiveTests();
 
 runTests();
 
-function runExclusiveTests() {}
+function runExclusiveTests() {
+    test(
+        'if (false) { console.log(1) }',
+        'if (true) { console.log(1) }'
+    );
+
+    test(
+        'if (0) { console.log(1) }',
+        'if (1) { console.log(1) }'
+    );
+
+    test(
+        'if (1) { console.log(1) }',
+        'if (0) { console.log(1) }'
+    );
+    
+    test(
+        'if (true) { console.log(1) }',
+        'if (false) { console.log(1) }'
+    );
+
+    test(
+        'if (  !!  false  ) { console.log(1) }',
+        'if (  !(!!  false)  ) { console.log(1) }'
+    );
+
+    test(
+        'if (!(!!  false)) { console.log(1) }',
+        'if (!!  false) { console.log(1) }'
+    );
+    
+    test(
+        'if (false && true) { console.log(1) }',
+        'if (true || false) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false && true)) { console.log(1) }',
+        'if (false && true) { console.log(1) }'
+    );
+
+    test(
+        'if (false   &&   true) { console.log(1) }',
+        'if (true   ||   false) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false && true)) { console.log(1) }',
+        'if (false && true) { console.log(1) }'
+    );
+
+    test(
+        'if (!(  false   &&   true  )) { console.log(1) }',
+        'if (  false   &&   true  ) { console.log(1) }'
+    );
+
+    test(
+        'if (false + dog && true + cat) { console.log(1) }',
+        'if (!(false + dog) || !(true + cat)) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false + dog) || !(true + cat)) { console.log(1) }',
+        'if (false + dog && true + cat) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false   && true  ) &&   true) { console.log(1) }',
+        'if (false   && true   ||   false) { console.log(1) }'
+    );
+
+    test(
+        'if (  true   ||   false   &&   true  ) { console.log(1) }',
+        'if (  false   &&   true   ||   false  ) { console.log(1) }'
+    );
+}
 
 
 function runTests() {
