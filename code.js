@@ -254,8 +254,7 @@ runExclusiveTests();
 
 runTests();
 
-function runExclusiveTests() {
-}
+function runExclusiveTests() {}
 
 
 function runTests() {
@@ -778,5 +777,100 @@ function runTests() {
     test(
         'if (!(+ - + - !!(!(dog ||  + - + - cat)))) { console.log(2) }',
         'if (+ - + - !!(!(dog ||  + - + - cat))) { console.log(2) }',
+    );
+
+        test(
+        'if (-dog) { console.log(2) }',
+        'if (!(-dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (- + dog) { console.log(2) }',
+        'if (!(- + dog)) { console.log(2) }',
+    );
+
+    test(
+        'if ((- + dog)) { console.log(2) }',
+        'if (!(- + dog)) { console.log(2) }',
+    );
+
+    test(
+        'if ((- + dog) && (- + dog)) { console.log(2) }',
+        'if (!(- + dog) || !(- + dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (( - + - + dog) && (- + - + dog)) { console.log(2) }',
+        'if (!( - + - + dog) || !(- + - + dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!!(- + - + dog) && !!( - + - + dog)) { console.log(2) }',
+        'if (!(!!(- + - + dog)) || !(!!( - + - + dog))) { console.log(2) }',
+    );
+
+    test(
+        'if (!!(- + - + dog + cat) && !!(- + - + dog - cat)) { console.log(2) }',
+        'if (!(!!(- + - + dog + cat)) || !(!!(- + - + dog - cat))) { console.log(2) }',
+    );
+
+    test(
+        'if (- + - + dog + cat && - + - + dog - cat) { console.log(2) }',
+        'if (!(- + - + dog + cat) || !(- + - + dog - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (- + - + dog + !!cat) { console.log(2) }',
+        'if (!(- + - + dog + !!cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (- + -   + dog + !!cat && - + - + !!dog - cat) { console.log(2) }',
+        'if (!(- + -   + dog + !!cat) || !(- + - + !!dog - cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(- + -   + dog + !!cat) || !(- + - + !!dog - cat)) { console.log(2) }',
+        'if (- + -   + dog + !!cat && - + - + !!dog - cat) { console.log(2) }',
+    );
+
+    test(
+        'if (!(- + dog)) { console.log(2) }',
+        'if (- + dog) { console.log(2) }',
+    );
+    
+    test(
+        'if (+dog) { console.log(2) }',
+        'if (!(+dog)) { console.log(2) }',
+    );
+    
+    test(
+        'if (+!!dog) { console.log(2) }',
+        'if (!(+!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (-+!!dog) { console.log(2) }',
+        'if (!(-+!!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(-+!!dog)) { console.log(2) }',
+        'if (-+!!dog) { console.log(2) }',
+    );
+
+    test(
+        'if (-  +  !!dog) { console.log(2) }',
+        'if (!(-  +  !!dog)) { console.log(2) }',
+    );
+
+    test(
+        'if (!(-  +  !!dog)) { console.log(2) }',
+        'if (-  +  !!dog) { console.log(2) }',
+    );
+
+    test(
+        'if (!(-  +  !!dog - !!cat + - + - (dog && !!cat))) { console.log(2) }',
+        'if (-  +  !!dog - !!cat + - + - (dog && !!cat)) { console.log(2) }',
     );
 }
