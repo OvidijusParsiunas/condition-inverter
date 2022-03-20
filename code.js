@@ -24,6 +24,18 @@ function dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationW
     }
 }
 
+function getWhenNumberStops(tokens, index) {
+    if (index > tokens.length - 1) {
+        console.log('attempt to retrieve when number declaration stops is out of bounds');
+        return -1;
+    }
+    const nextCharacter = tokens[index];
+    if (nextCharacter === ' ' || nextCharacter === ')' || nextCharacter === '&' || nextCharacter === '|') {
+        return index;
+    }
+    return getWhenNumberStops(tokens, index + 1);
+}
+
 function isCharacterArithmeticOperation(character) {
     return character === '-' || character === '+' || character === '/' || character === '*';
 }
@@ -120,12 +132,19 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
         } else if (isCharacterArithmeticOperation(tokens[i])) {
             isOperationWrappableInBrackets = true;
         } else if (tokens[i] === '(') {
-            if (!isOperationWrappableInBrackets) areBracketsAlreadyPresent = true;
+            if (!isOperationWrappableInBrackets && numberOfBracketsOpen === 0) areBracketsAlreadyPresent = true;
             numberOfBracketsOpen += 1;
         } else if (tokens[i] === ')') {
             numberOfBracketsOpen -= 1;
-        } else if (tokens[i] === 'false' || tokens[i] === 'true' || tokens[i] === '0' || tokens[i] === '1') {
+        } else if (tokens[i] === 'false' || tokens[i] === 'true') {
             revertBooleanLiteral = true;
+        } else if (tokens[i] === '0' || tokens[i] === '1') {
+            const nextCharacter = tokens[i + 1];
+            if (nextCharacter === ' ' || nextCharacter === ')' || nextCharacter === '&' || nextCharacter === '|') {
+                revertBooleanLiteral = true;
+            } else {
+                i = getWhenNumberStops(tokens, i);
+            }
         }
     }
     dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, firstIfStatementCloseBracketIndex);
@@ -174,6 +193,23 @@ function invertIfStatements(tokens, conditionIndexes) {
                     tokens[arrayIndex] = '&';
                     tokens[arrayIndex + 1] = '&';
                     break;
+                case '!':
+                    if (tokens[arrayIndex + 1] === '=') {
+                        tokens[arrayIndex] = '=';
+                        break;
+                    } else if (!conditionIndexes[conditionIndexesCurrentIndex + 1]?.brackets) {
+                        // if brackets are present, remove the exclamation mark
+                        tokens.splice(arrayIndex, 1);
+                        newElementsDelta -= 1;
+                        if (removeNegationBrackets) {
+                            const startIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, arrayIndex);
+                            tokens.splice(startIndex, 1);
+                            newElementsDelta -= 1;
+                            tokens.splice(removeNegationBrackets.end + newElementsDelta, 1);
+                            newElementsDelta -= 1;
+                        }
+                        break;
+                    }
                 case 'true':
                     if (revertBooleanLiteral) {
                         tokens[arrayIndex] = false;
@@ -194,23 +230,6 @@ function invertIfStatements(tokens, conditionIndexes) {
                         tokens[arrayIndex] = 0;
                         break;
                     }
-                case '!':
-                    if (tokens[arrayIndex + 1] === '=') {
-                        tokens[arrayIndex] = '=';
-                        break;
-                    } else if (!conditionIndexes[conditionIndexesCurrentIndex + 1]?.brackets) {
-                        // if brackets are present, remove the exclamation mark
-                        tokens.splice(arrayIndex, 1);
-                        newElementsDelta -= 1;
-                        if (removeNegationBrackets) {
-                            const startIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, arrayIndex);
-                            tokens.splice(startIndex, 1);
-                            newElementsDelta -= 1;
-                            tokens.splice(removeNegationBrackets.end + newElementsDelta, 1);
-                            newElementsDelta -= 1;
-                        }
-                        break;
-                    }
                     // if brackets are required - proceed to go onto the next section and append a ! at the start before the brackets
                 default: {
                     tokens.splice(arrayIndex, 0, '!');
@@ -218,7 +237,6 @@ function invertIfStatements(tokens, conditionIndexes) {
                 }
             }
         }
-        
     });
 }
 
@@ -274,87 +292,16 @@ function test(input, expectedResult) {
     }
 }
 
-// WORK - implement a little bit of intelligence and convert 0 number to 1, false boolean to true and vice versa
 // WORK - escape strings
 runExclusiveTests();
 
 runTests();
 
 function runExclusiveTests() {
-    test(
-        'if (false) { console.log(1) }',
-        'if (true) { console.log(1) }'
-    );
-
-    test(
-        'if (0) { console.log(1) }',
-        'if (1) { console.log(1) }'
-    );
-
-    test(
-        'if (1) { console.log(1) }',
-        'if (0) { console.log(1) }'
-    );
-    
-    test(
-        'if (true) { console.log(1) }',
-        'if (false) { console.log(1) }'
-    );
-
-    test(
-        'if (  !!  false  ) { console.log(1) }',
-        'if (  !(!!  false)  ) { console.log(1) }'
-    );
-
-    test(
-        'if (!(!!  false)) { console.log(1) }',
-        'if (!!  false) { console.log(1) }'
-    );
-    
-    test(
-        'if (false && true) { console.log(1) }',
-        'if (true || false) { console.log(1) }'
-    );
-
-    test(
-        'if (!(false && true)) { console.log(1) }',
-        'if (false && true) { console.log(1) }'
-    );
-
-    test(
-        'if (false   &&   true) { console.log(1) }',
-        'if (true   ||   false) { console.log(1) }'
-    );
-
-    test(
-        'if (!(false && true)) { console.log(1) }',
-        'if (false && true) { console.log(1) }'
-    );
-
-    test(
-        'if (!(  false   &&   true  )) { console.log(1) }',
-        'if (  false   &&   true  ) { console.log(1) }'
-    );
-
-    test(
-        'if (false + dog && true + cat) { console.log(1) }',
-        'if (!(false + dog) || !(true + cat)) { console.log(1) }'
-    );
-
-    test(
-        'if (!(false + dog) || !(true + cat)) { console.log(1) }',
-        'if (false + dog && true + cat) { console.log(1) }'
-    );
-
-    test(
-        'if (!(false   && true  ) &&   true) { console.log(1) }',
-        'if (false   && true   ||   false) { console.log(1) }'
-    );
-
-    test(
-        'if (  true   ||   false   &&   true  ) { console.log(1) }',
-        'if (  false   &&   true   ||   false  ) { console.log(1) }'
-    );
+    // test(
+    //     'if ((1) + 12) { console.log(1) }',
+    //     'if (!((1) + 12)) { console.log(1) }',
+    // );
 }
 
 
@@ -973,5 +920,110 @@ function runTests() {
     test(
         'if (!(-  +  !!dog - !!cat + - + - (dog && !!cat))) { console.log(2) }',
         'if (-  +  !!dog - !!cat + - + - (dog && !!cat)) { console.log(2) }',
+    );
+
+    test(
+        'if (false) { console.log(1) }',
+        'if (true) { console.log(1) }'
+    );
+
+    test(
+        'if (0) { console.log(1) }',
+        'if (1) { console.log(1) }'
+    );
+
+    test(
+        'if (0123123) { console.log(1) }',
+        'if (!0123123) { console.log(1) }'
+    );
+
+    test(
+        'if (0123123 && 0123123) { console.log(1) }',
+        'if (!0123123 || !0123123) { console.log(1) }'
+    );
+
+    test(
+        'if (0123123 + 123213123) { console.log(1) }',
+        'if (!(0123123 + 123213123)) { console.log(1) }'
+    );
+
+    test(
+        'if (1) { console.log(1) }',
+        'if (0) { console.log(1) }'
+    );
+
+    test(
+        'if (0.0) { console.log(1) }',
+        'if (!0.0) { console.log(1) }'
+    );
+
+    test(
+        'if (1_1) { console.log(1) }',
+        'if (!1_1) { console.log(1) }'
+    );
+
+    test(
+        'if (0.0 + 2) { console.log(1) }',
+        'if (!(0.0 + 2)) { console.log(1) }'
+    );
+
+    test(
+        'if (true) { console.log(1) }',
+        'if (false) { console.log(1) }'
+    );
+
+    test(
+        'if (  !!  false  ) { console.log(1) }',
+        'if (  !(!!  false)  ) { console.log(1) }'
+    );
+
+    test(
+        'if (!(!!  false)) { console.log(1) }',
+        'if (!!  false) { console.log(1) }'
+    );
+    
+    test(
+        'if (false && true) { console.log(1) }',
+        'if (true || false) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false && true)) { console.log(1) }',
+        'if (false && true) { console.log(1) }'
+    );
+
+    test(
+        'if (false   &&   true) { console.log(1) }',
+        'if (true   ||   false) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false && true)) { console.log(1) }',
+        'if (false && true) { console.log(1) }'
+    );
+
+    test(
+        'if (!(  false   &&   true  )) { console.log(1) }',
+        'if (  false   &&   true  ) { console.log(1) }'
+    );
+
+    test(
+        'if (false + dog && true + cat) { console.log(1) }',
+        'if (!(false + dog) || !(true + cat)) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false + dog) || !(true + cat)) { console.log(1) }',
+        'if (false + dog && true + cat) { console.log(1) }'
+    );
+
+    test(
+        'if (!(false   && true  ) &&   true) { console.log(1) }',
+        'if (false   && true   ||   false) { console.log(1) }'
+    );
+
+    test(
+        'if (  true   ||   false   &&   true  ) { console.log(1) }',
+        'if (  false   &&   true   ||   false  ) { console.log(1) }'
     );
 }
