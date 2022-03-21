@@ -131,6 +131,7 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
             }
         } else if (isCharacterArithmeticOperation(tokens[i])) {
             isOperationWrappableInBrackets = true;
+            if (areBracketsAlreadyPresent && numberOfBracketsOpen === 0) areBracketsAlreadyPresent = false;
         } else if (tokens[i] === '(') {
             if (!isOperationWrappableInBrackets && numberOfBracketsOpen === 0) areBracketsAlreadyPresent = true;
             numberOfBracketsOpen += 1;
@@ -298,10 +299,6 @@ runExclusiveTests();
 runTests();
 
 function runExclusiveTests() {
-    // test(
-    //     'if ((1) + 12) { console.log(1) }',
-    //     'if (!((1) + 12)) { console.log(1) }',
-    // );
 }
 
 
@@ -1025,5 +1022,55 @@ function runTests() {
     test(
         'if (  true   ||   false   &&   true  ) { console.log(1) }',
         'if (  false   &&   true   ||   false  ) { console.log(1) }'
+    );
+
+    test(
+        'if ((1) + 12) { console.log(1) }',
+        'if (!((1) + 12)) { console.log(1) }',
+    );
+
+    test(
+        'if ((1) + (12)) { console.log(1) }',
+        'if (!((1) + (12))) { console.log(1) }',
+    );
+
+    test(
+        'if (( ( 1 ) ) + ( ( 12 ) )) { console.log(1) }',
+        'if (!(( ( 1 ) ) + ( ( 12 ) ))) { console.log(1) }',
+    );
+
+    test(
+        'if ((1 - 1) + (12 + 0)) { console.log(1) }',
+        'if (!((1 - 1) + (12 + 0))) { console.log(1) }',
+    );
+
+    test(
+        'if (!((1 - 1) + (12 + 0))) { console.log(1) }',
+        'if ((1 - 1) + (12 + 0)) { console.log(1) }',
+    );
+
+    test(
+        'if ((1 && 4) + (12 || 4)) { console.log(1) }',
+        'if (!((1 && 4) + (12 || 4))) { console.log(1) }',
+    );
+
+    test(
+        'if ((1) + ((2 + 5)) + 12) { console.log(1) }',
+        'if (!((1) + ((2 + 5)) + 12)) { console.log(1) }',
+    );
+
+    test(
+        'if (!((1) + ((2 + 5)) + 12)) { console.log(1) }',
+        'if ((1) + ((2 + 5)) + 12) { console.log(1) }',
+    );
+
+    test(
+        'if ((2 < 5) && (4 > 2)) { console.log(1) }',
+        'if ((2 >= 5) || (4 <= 2)) { console.log(1) }',
+    );
+
+    test(
+        'if ((2 >= 5) || (4 <= 2)) { console.log(1) }',
+        'if ((2 < 5) && (4 > 2)) { console.log(1) }',
     );
 }
