@@ -51,6 +51,13 @@ function foundEquals(index, tokens, conditionIndexes) {
     }
 }
 
+function findEndingStringQuoteIndex(tokens, index, typeOfQuoteString) {
+    if (tokens[index] === typeOfQuoteString) {
+        return index;
+    }
+    return findEndingStringQuoteIndex(tokens, index + 1, typeOfQuoteString);
+}
+
 function findLastExclamationMarkIndex(tokens, index) {
     const nextCharacterTokenIndex = findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
     if (tokens[nextCharacterTokenIndex] === '!') {
@@ -146,6 +153,8 @@ function identifyConditions(tokens, ifStatementlocationsInTokens, firstIfStateme
             } else {
                 i = getWhenNumberStops(tokens, i);
             }
+        } else if (tokens[i] === `'` || tokens[i] === '`' || tokens[i] === '"') {
+            i = findEndingStringQuoteIndex(tokens, i + 1, tokens[i]);
         }
     }
     dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, firstIfStatementCloseBracketIndex);
@@ -260,8 +269,9 @@ function getIndexOfLastBracketOfIfStatement(tokens, index, openBrackets = 0) {
 
 function retrieveIfIndexes(tokens) {
     const ifStatementIndexes = [];
-    const startIndexes = tokens.map((e, i) => e === 'if' ? i : '').filter(String);
-    startIndexes.forEach((startIndex) => {
+    // will probably need to parse if statements differently
+    // const startIndexes = tokens.map((e, i) => e === 'if' ? i : '').filter(String);
+    [0].forEach((startIndex) => {
         const endIndex = getIndexOfLastBracketOfIfStatement(tokens, startIndex);
         ifStatementIndexes.push({ start: startIndex, end: endIndex });
     })
@@ -293,12 +303,15 @@ function test(input, expectedResult) {
     }
 }
 
-// WORK - escape strings
 runExclusiveTests();
 
 runTests();
 
 function runExclusiveTests() {
+    // test(
+    //     '  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  ',
+    //     '  if   (  !(dog   -  cat)  &&   !mouse  ) { console.log(2) }  ',
+    // );
 }
 
 
@@ -400,13 +413,13 @@ function runTests() {
     );
 
     test(
-        '  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  ',
-        '  if   (  !(dog   -  cat)  &&   !mouse  ) { console.log(2) }  ',
+        'if   (  dog   -  cat  ||   mouse  ) { console.log(2) }',
+        'if   (  !(dog   -  cat)  &&   !mouse  ) { console.log(2) }',
     );
 
     test(
-        '  if   (   mouse  ||   dog   -  cat  ) { console.log(2) }  ',
-        '  if   (   !mouse  &&   !(dog   -  cat)  ) { console.log(2) }  ',
+        'if   (   mouse  ||   dog   -  cat  ) { console.log(2) }',
+        'if   (   !mouse  &&   !(dog   -  cat)  ) { console.log(2) }',
     );
 
     test(
@@ -1072,5 +1085,60 @@ function runTests() {
     test(
         'if ((2 >= 5) || (4 <= 2)) { console.log(1) }',
         'if ((2 < 5) && (4 > 2)) { console.log(1) }',
+    );
+
+    test(
+        `if ('mouse' && cat) { console.log(2) }`,
+        `if (!'mouse' || !cat) { console.log(2) }`,
+    );
+
+    test(
+        `if ('false' && cat) { console.log(2) }`,
+        `if (!'false' || !cat) { console.log(2) }`,
+    );
+
+    test(
+        `if ('false && cat' && cat) { console.log(2) }`,
+        `if (!'false && cat' || !cat) { console.log(2) }`,
+    );
+
+    test(
+        'if (`false && cat` && cat) { console.log(2) }',
+        'if (!`false && cat` || !cat) { console.log(2) }',
+    );
+
+    test(
+        'if ("false && cat" && cat) { console.log(2) }',
+        'if (!"false && cat" || !cat) { console.log(2) }',
+    );
+
+    test(
+        'if ("false && `cat`" && `"cat"`) { console.log(2) }',
+        'if (!"false && `cat`" || !`"cat"`) { console.log(2) }',
+    );
+
+    test(
+        'if (!"false && `cat`" || !`"cat"`) { console.log(2) }',
+        'if ("false && `cat`" && `"cat"`) { console.log(2) }',
+    );
+
+    test(
+        'if ("1" + 2 && cat) { console.log(2) }',
+        'if (!("1" + 2) || !cat) { console.log(2) }',
+    );
+
+    test(
+        'if (!("1" + 2) || !("1" + 2)) { console.log(2) }',
+        'if ("1" + 2 && "1" + 2) { console.log(2) }',
+    );
+
+    test(
+        `if ('if (!("1" + 2) || !("1" + 2)) { console.log(2) }' && cat) { console.log(2) }`,
+        `if (!'if (!("1" + 2) || !("1" + 2)) { console.log(2) }' || !cat) { console.log(2) }`,
+    );
+
+    test(
+        `if (!'if (!("1" + 2) || !("1" + 2)) { console.log(2) }' || !cat) { console.log(2) }`,
+        `if ('if (!("1" + 2) || !("1" + 2)) { console.log(2) }' && cat) { console.log(2) }`,
     );
 }
