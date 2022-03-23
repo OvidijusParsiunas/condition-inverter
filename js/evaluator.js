@@ -1,27 +1,48 @@
-const traversalUtils = require('./traversalUtils');
+const TraversalUtils = require('./TraversalUtils');
 
 module.exports = class Evaluator {
-    dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, currentTokenIndex) {
-        if (shouldBracketsBeRemoved) {
-            const endIndex = traversalUtils.getIndexOfLastBracketOfIfStatement(tokens, indexOfNewStatement - 1);
-            conditionIndexes.push({ start: indexOfNewStatement, removeNegationBrackets: { start: indexOfNewStatement, end: endIndex } });
-        } else if (revertBooleanLiteral && !isOperationWrappableInBrackets) {
-            conditionIndexes.push({ start: indexOfNewStatement, revertBooleanLiteral });
-        } else if (!logicalOperatorFound) {
-            conditionIndexes.push({ start: indexOfNewStatement });
-        }
-        if (isOperationWrappableInBrackets && !areBracketsAlreadyPresent) {
-            const endIndex = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, currentTokenIndex - 1, false);
-            conditionIndexes.push({ brackets: true, start: indexOfNewStatement, end: endIndex });
-        }
-    }
-    
-    isCharacterArithmeticOperation(character) {
+    isCurrentlyEvaluatingIfStatement = false;
+    startOfCurrentlyEvaluatedStatementIndex = 0;
+    currentIfStatementCloseBracketIndex = 0;
+    indexesRequiringInversion = [];
+    shouldBracketsBeRemoved = false;
+    // usually involves arithmentic operations or double bangs
+    isOperationWrappableInBrackets = false;
+    revertBooleanLiteral = false;
+    // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
+    logicalOperatorFound = false;
+    areBracketsAlreadyPresent = false;
+    numberOfBracketsOpen = 0;
+
+    static isCharacterArithmeticOperation(character) {
         return character === '-' || character === '+' || character === '/' || character === '*';
     }
-    
-    foundEquals(index, tokens, conditionIndexes) {
-        conditionIndexes.push({ start: index });
+
+    refreshState() {
+        this.isOperationWrappableInBrackets = false;
+        this.shouldBracketsBeRemoved = false;
+        this.areBracketsAlreadyPresent = false;
+        this.revertBooleanLiteral = false;
+    }
+
+    // a look back to see if previous syntax defines a standalone statement
+    dealWithStandaloneStatements(tokens, currentTokenIndex) {
+        if (this.shouldBracketsBeRemoved) {
+            const endIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, this.startOfCurrentlyEvaluatedStatementIndex - 1);
+            this.indexesRequiringInversion.push({ start: this.startOfCurrentlyEvaluatedStatementIndex, removeNegationBrackets: { start: this.startOfCurrentlyEvaluatedStatementIndex, end: endIndex } });
+        } else if (this.revertBooleanLiteral && !this.isOperationWrappableInBrackets) {
+            this.indexesRequiringInversion.push({ start: this.startOfCurrentlyEvaluatedStatementIndex, revertBooleanLiteral: this.revertBooleanLiteral });
+        } else if (!this.logicalOperatorFound) {
+            this.indexesRequiringInversion.push({ start: this.startOfCurrentlyEvaluatedStatementIndex });
+        }
+        if (this.isOperationWrappableInBrackets && !this.areBracketsAlreadyPresent) {
+            const endIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, currentTokenIndex - 1, false);
+            this.indexesRequiringInversion.push({ brackets: true, start: this.startOfCurrentlyEvaluatedStatementIndex, end: endIndex });
+        }
+    }
+
+    foundEquals(tokens, index) {
+        this.indexesRequiringInversion.push({ start: index });
         if (tokens[index + 1] === '=') {
             if (tokens[index + 2] === '=') {
                 return index + 2;
@@ -30,112 +51,103 @@ module.exports = class Evaluator {
             }
         }
     }
+
     
+
+    evaluateStatementsBeforeLogicalOperator(tokens, index, nextNonSpaceCharacter) {
+        if (this.numberOfBracketsOpen === 0) {
+            this.dealWithStandaloneStatements(tokens, index);
+            this.indexesRequiringInversion.push({ start: index });
+            this.startOfCurrentlyEvaluatedStatementIndex = nextNonSpaceCharacter;
+            this.refreshState();
+        }
+        if (this.numberOfBracketsOpen > 0 && this.logicalOperatorFound) this.indexesRequiringInversion.pop();
+        this.logicalOperatorFound = false;
+    }
+
+    finishEvaluatingIfStatement(tokens) {
+        this.dealWithStandaloneStatements(tokens, this.currentIfStatementCloseBracketIndex);
+        this.isCurrentlyEvaluatingIfStatement = false;
+        this.logicalOperatorFound = false;
+        this.refreshState();
+    }
+
     // bug with shift assignment - make sure that < is not follwoed by anither < and > not followed by another >
-    
-    identifyConditions(tokens) {
-        let currentIfStatementCloseBracketIndex = tokens.length - 1;
-        let indexOfNewStatement = 0;
-        const conditionIndexes = [];
-        let logicalOperatorFound = false;
-        // usually involves arithmentic operations or double bangs
-        let isOperationWrappableInBrackets = false;
-        let shouldBracketsBeRemoved = false;
-        // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
-        let areBracketsAlreadyPresent = false;
-        let numberOfBracketsOpen = 0;
-        let revertBooleanLiteral = false;
-        let isCurrentlyEvaluatingIfStatement = false;
+
+    evaluate(tokens) {
+        this.currentIfStatementCloseBracketIndex = tokens.length - 1;
         for (let i = 0; i < tokens.length; i += 1) {
-            if (isCurrentlyEvaluatingIfStatement) {
-                if (currentIfStatementCloseBracketIndex <= i) {
-                    this.dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, currentIfStatementCloseBracketIndex);
-                    isCurrentlyEvaluatingIfStatement = false;
-                    logicalOperatorFound = false;
-                    refreshState();
+            if (this.isCurrentlyEvaluatingIfStatement) {
+                if (this.currentIfStatementCloseBracketIndex <= i) {
+                    this.finishEvaluatingIfStatement(tokens);
                 } else if (tokens[i] === '&' || tokens[i] === '|') {
                     if (tokens[i + 1] === '&' || tokens[i + 1] === '|') {
-                        const nextNonSpaceCharacter = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 2);
-                        if (numberOfBracketsOpen === 0) {
-                            // a look back to see if previous syntax defines a standalone statement
-                            this.dealWithStandaloneStatements(tokens, logicalOperatorFound, isOperationWrappableInBrackets, areBracketsAlreadyPresent, conditionIndexes, indexOfNewStatement, shouldBracketsBeRemoved, revertBooleanLiteral, i);
-                            conditionIndexes.push({ start: i });
-                            indexOfNewStatement = nextNonSpaceCharacter;
-                            refreshState();
-                        }
-                        if (numberOfBracketsOpen > 0 && logicalOperatorFound) conditionIndexes.pop();
-                        logicalOperatorFound = false;
+                        const nextNonSpaceCharacter = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 2);
+                        this.evaluateStatementsBeforeLogicalOperator(tokens, i, nextNonSpaceCharacter);
                         // subtracting one due to the for loop automatically adding one
                         i = nextNonSpaceCharacter - 1;
                     }
                 } else if (tokens[i] === '<' || tokens[i] === '>') {
-                    logicalOperatorFound = true;
+                    this.logicalOperatorFound = true;
                     if (tokens[i + 1] === '=') {
-                        conditionIndexes.push({ start: i, hasFollowupEquals: true });
+                        this.indexesRequiringInversion.push({ start: i, hasFollowupEquals: true });
                         i += 1;
                     } else {
-                        conditionIndexes.push({ start: i });
+                        this.indexesRequiringInversion.push({ start: i });
                     }
                 } else if (tokens[i] === '=') {
-                    logicalOperatorFound = true;
-                    i = this.foundEquals(i, tokens, conditionIndexes);
+                    this.logicalOperatorFound = true;
+                    i = this.foundEquals(tokens, i);
                 } else if (tokens[i] === '!') {
-                    const nextExclamationMarkIndex = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+                    const nextExclamationMarkIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
                     if (tokens[nextExclamationMarkIndex] === '!') {
-                        isOperationWrappableInBrackets = true;
-                        i = traversalUtils.findLastExclamationMarkIndex(tokens, i + 1);
-                        const nextNonSpaceCharacterIndex = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+                        this.isOperationWrappableInBrackets = true;
+                        i = TraversalUtils.findLastExclamationMarkIndex(tokens, i + 1);
+                        const nextNonSpaceCharacterIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
                         if (tokens[nextNonSpaceCharacterIndex] === '(') {
-                            i = traversalUtils.getIndexOfLastBracketOfIfStatement(tokens, i);
+                            i = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, i);
                         }
-                    } else if (numberOfBracketsOpen === 0) {
-                        const nextCharacterTokenIndex = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+                    } else if (this.numberOfBracketsOpen === 0) {
+                        const nextCharacterTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
                         if (tokens[nextCharacterTokenIndex] === '(') {
                             // doesn't get called with syntax !!!!!( as the logic above captures that use case
-                            // doesn't get called with syntax !!!(!( as numberOfBracketsOpen will be more than 1
+                            // doesn't get called with syntax !!!(!( as this.numberOfBracketsOpen will be more than 1
                             // this is called for !( where we are sure that the bracket will need to be removed - which is done in dealWithStandaloneStatements
-                            shouldBracketsBeRemoved = true;
-                            i = traversalUtils.getIndexOfLastBracketOfIfStatement(tokens, i);
+                            this.shouldBracketsBeRemoved = true;
+                            i = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, i);
                         } else if (tokens[i + 1] === '=') {
-                            logicalOperatorFound = true;
-                            i = this.foundEquals(i, tokens, conditionIndexes);
+                            this.logicalOperatorFound = true;
+                            i = this.foundEquals(tokens, i);
                         }
                     }
-                } else if (this.isCharacterArithmeticOperation(tokens[i])) {
-                    isOperationWrappableInBrackets = true;
-                    if (areBracketsAlreadyPresent && numberOfBracketsOpen === 0) areBracketsAlreadyPresent = false;
+                } else if (Evaluator.isCharacterArithmeticOperation(tokens[i])) {
+                    this.isOperationWrappableInBrackets = true;
+                    if (this.areBracketsAlreadyPresent && this.numberOfBracketsOpen === 0) this.areBracketsAlreadyPresent = false;
                 } else if (tokens[i] === '(') {
-                    if (!isOperationWrappableInBrackets && numberOfBracketsOpen === 0) areBracketsAlreadyPresent = true;
-                    numberOfBracketsOpen += 1;
+                    if (!this.isOperationWrappableInBrackets && this.numberOfBracketsOpen === 0) this.areBracketsAlreadyPresent = true;
+                    this.numberOfBracketsOpen += 1;
                 } else if (tokens[i] === ')') {
-                    numberOfBracketsOpen -= 1;
+                    this.numberOfBracketsOpen -= 1;
                 } else if (tokens[i] === 'false' || tokens[i] === 'true') {
-                    revertBooleanLiteral = true;
+                    this.revertBooleanLiteral = true;
                 } else if (tokens[i] === '0' || tokens[i] === '1') {
                     const nextCharacter = tokens[i + 1];
                     if (nextCharacter === ' ' || nextCharacter === ')' || nextCharacter === '&' || nextCharacter === '|') {
-                        revertBooleanLiteral = true;
+                        this.revertBooleanLiteral = true;
                     } else {
-                        i = traversalUtils.getWhenNumberStops(tokens, i);
+                        i = TraversalUtils.getWhenNumberStops(tokens, i);
                     }
                 } else if (tokens[i] === `'` || tokens[i] === '`' || tokens[i] === '"') {
-                    i = traversalUtils.findEndingStringQuoteIndex(tokens, i + 1, tokens[i]);
+                    i = TraversalUtils.findEndingStringQuoteIndex(tokens, i + 1, tokens[i]);
                 }
             } else if (tokens[i] === 'if') {
-                currentIfStatementCloseBracketIndex = traversalUtils.getIndexOfLastBracketOfIfStatement(tokens, i);
-                const bracketIndex = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
-                indexOfNewStatement = traversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, bracketIndex + 1);
-                i = indexOfNewStatement - 1;
-                isCurrentlyEvaluatingIfStatement = true;
+                this.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, i);
+                const bracketIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, i + 1);
+                this.startOfCurrentlyEvaluatedStatementIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, bracketIndex + 1);
+                i = this.startOfCurrentlyEvaluatedStatementIndex - 1;
+                this.isCurrentlyEvaluatingIfStatement = true;
             }
         }
-        return conditionIndexes;
-    
-        function refreshState() {
-            isOperationWrappableInBrackets = false;
-            shouldBracketsBeRemoved = false;
-            areBracketsAlreadyPresent = false;
-            revertBooleanLiteral = false;
-        }
+        return this.indexesRequiringInversion;
     }
 }
