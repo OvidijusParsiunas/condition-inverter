@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const lineProperties = activeEditor?.document.lineAt(activeEditor.selection.active.line);
 		var selection = activeEditor?.selection;
 		var text = activeEditor?.document.getText(selection);
-		console.log(text);
+		console.log('asdasdssadsdsdsdsdasdasdsadsdsdsadsd');
 		activeEditor?.edit((selectedText) => {
 			if (lineProperties?.range) {
 				const result = inverter.runInvert(lineProperties.text);
