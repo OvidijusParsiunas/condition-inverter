@@ -537,7 +537,7 @@ function runTests() {
         'if (+ - + - !!(!(dog ||  + - + - cat))) { console.log(2) }',
     );
 
-        test(
+    test(
         'if (-dog) { console.log(2) }',
         'if (!(-dog)) { console.log(2) }',
     );

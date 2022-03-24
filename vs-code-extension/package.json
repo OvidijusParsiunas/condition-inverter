@@ -23,8 +23,8 @@
 		"keybindings":[
 			{
         "command": "condition-inverter.helloWorld",
-				"key": "ctrl+f1",
-        "mac": "cmd+0",
+				"key": "ctrl+i",
+        "mac": "cmd+i",
         "when": "editorTextFocus"
       }
 		]

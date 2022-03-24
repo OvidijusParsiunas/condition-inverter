@@ -4,6 +4,7 @@ exports.deactivate = exports.activate = void 0;
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require("vscode");
+const inverter = require('../../js/invertConditions');
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -22,7 +23,8 @@ function activate(context) {
         var text = activeEditor?.document.getText(selection);
         activeEditor?.edit((selectedText) => {
             if (lineProperties?.range) {
-                selectedText.replace(lineProperties?.range, 'asdasdsad');
+                const result = inverter.runInvert(lineProperties.text);
+                selectedText.replace(lineProperties.range, result);
             }
         });
         // vscode.window.showInformationMessage(text || 'please highlight a line of text');
