@@ -1,1 +1,1 @@
-reset the correct spaces
+if multiple if statements on same line and user has highlighted a particular if statement - only invert that particular if statement
