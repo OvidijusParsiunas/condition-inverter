@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-const inverter = require('../../js/invertConditions');
+import InvertConditions from '../../shared/out/invert';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -21,10 +21,9 @@ export function activate(context: vscode.ExtensionContext) {
 		const lineProperties = activeEditor?.document.lineAt(activeEditor.selection.active.line);
 		var selection = activeEditor?.selection;
 		var text = activeEditor?.document.getText(selection);
-		console.log('asdasdssadsdsdsdsdasdasdsadsdsdsadsd');
 		activeEditor?.edit((selectedText) => {
 			if (lineProperties?.range) {
-				const result = inverter.runInvert(lineProperties.text);
+				const result = InvertConditions.runInvert(lineProperties.text);
 				selectedText.replace(lineProperties.range, result);
 			}
 		});
