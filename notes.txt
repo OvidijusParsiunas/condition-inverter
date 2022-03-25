@@ -1,4 +1,6 @@
 if multiple if statements on same line and user has highlighted a particular if statement - only invert that particular if statement
 
+when current cursor at the end and inversion occurs - a cursor selection is created
+
 "key": "ctrl+shift+i",
 "mac": "cmd+shift+i",

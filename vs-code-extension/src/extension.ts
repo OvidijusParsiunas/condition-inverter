@@ -3,6 +3,29 @@
 import * as vscode from 'vscode';
 import InvertConditions from '../../shared/out/invert';
 
+function invertLine(activeEditor: vscode.TextEditor | undefined) {
+	activeEditor?.edit((selectedText) => {
+		const lineProperties = activeEditor?.document.lineAt(activeEditor.selection.active.line);
+		if (lineProperties?.range) {
+			const result = InvertConditions.runInvert(lineProperties.text);
+			selectedText.replace(lineProperties.range, result);
+			// WORK - get lines before and after if if statement does not end
+		}
+	});
+}
+
+function invertSelection(activeEditor: vscode.TextEditor | undefined, selection: vscode.Selection | undefined) {
+	activeEditor?.edit((selectedText) => {
+		if (selection) {
+			const range = new vscode.Range(activeEditor?.document.lineAt(selection.start.line).range.start, activeEditor?.document.lineAt(selection.end.line).range.end);
+			var text = activeEditor?.document.getText(range);
+			const result = InvertConditions.runInvert(text);
+			selectedText.replace(range, result);
+			// WORK - only invert the if statement(s) that is/are highlighted
+		}
+	});
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
@@ -18,15 +41,17 @@ export function activate(context: vscode.ExtensionContext) {
 		// The code you place here will be executed every time your command is executed
 		// Display a message box to the user
 		const activeEditor = vscode.window.activeTextEditor;
-		const lineProperties = activeEditor?.document.lineAt(activeEditor.selection.active.line);
 		var selection = activeEditor?.selection;
-		var text = activeEditor?.document.getText(selection);
-		activeEditor?.edit((selectedText) => {
-			if (lineProperties?.range) {
-				const result = InvertConditions.runInvert(lineProperties.text);
-				selectedText.replace(lineProperties.range, result);
+		
+		if (selection) {
+			const { start, end } = selection;
+			if (start.line === end.line) {
+				invertLine(activeEditor);
+			} else {
+				invertSelection(activeEditor, selection);
 			}
-		});
+		}
+		
 
 		// vscode.window.showInformationMessage(text || 'please highlight a line of text');
 	});
