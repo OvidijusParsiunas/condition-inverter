@@ -2,6 +2,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import InvertConditions from '../../shared/out/invert';
+import { InvertSelection } from './invertSelection';
 
 function invertLine(activeEditor: vscode.TextEditor | undefined) {
   activeEditor?.edit((selectedText) => {
@@ -10,21 +11,6 @@ function invertLine(activeEditor: vscode.TextEditor | undefined) {
       const result = InvertConditions.runInvert(lineProperties.text);
       selectedText.replace(lineProperties.range, result);
       // WORK - get lines before and after if if statement does not end
-    }
-  });
-}
-
-function invertSelection(activeEditor: vscode.TextEditor | undefined, selection: vscode.Selection | undefined) {
-  activeEditor?.edit((selectedText) => {
-    if (selection) {
-      const range = new vscode.Range(
-        activeEditor?.document.lineAt(selection.start.line).range.start,
-        activeEditor?.document.lineAt(selection.end.line).range.end,
-      );
-      var text = activeEditor?.document.getText(range);
-      const result = InvertConditions.runInvert(text);
-      selectedText.replace(range, result);
-      // WORK - only invert the if statement(s) that is/are highlighted
     }
   });
 }
@@ -50,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
       if (start.line === end.line) {
         invertLine(activeEditor);
       } else {
-        invertSelection(activeEditor, selection);
+        InvertSelection.invert(activeEditor, selection);
       }
     }
 

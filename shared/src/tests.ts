@@ -1,5 +1,7 @@
 import InvertConditions from './invert';
 
+// WORK - refactor
+
 export class Tests {
   private static test(input, expectedResult) {
     const result = InvertConditions.runInvert(input);
