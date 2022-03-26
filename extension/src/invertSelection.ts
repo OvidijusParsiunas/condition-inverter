@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import InvertConditions from '../../shared/src/invert';
+import InvertConditions from '../../shared/out/invert';
 
 export class InvertSelection {
   private static getIfPreviousCharacterIsIfStatement(
@@ -99,7 +99,9 @@ export class InvertSelection {
     var text = activeEditor?.document.getText(selection);
     const closingBracketIndex = text.indexOf(')');
     const ifIndex = text.indexOf('if');
-    if (closingBracketIndex < ifIndex) {
+    if (ifIndex === -1) {
+    }
+    if (closingBracketIndex && closingBracketIndex < ifIndex) {
       const startLocation = InvertSelection.getPrefixIfStatementStartLocation(
         activeEditor,
         selection,
@@ -119,6 +121,7 @@ export class InvertSelection {
       if (selection) {
         const range = InvertSelection.getOverallIfStatementRange(activeEditor, selection);
         var text = activeEditor?.document.getText(range);
+        console.log(text);
         const result = InvertConditions.runInvert(text);
         selectedText.replace(range, result);
         // WORK - only invert the if statement(s) that is/are highlighted
