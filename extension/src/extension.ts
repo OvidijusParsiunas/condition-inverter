@@ -6,7 +6,7 @@ import { InvertSelection } from './invertSelection';
 
 function invertLine(activeEditor: vscode.TextEditor | undefined) {
   activeEditor?.edit((selectedText) => {
-    const lineProperties = activeEditor?.document.lineAt(activeEditor.selection.active.line);
+    const lineProperties = activeEditor.document.lineAt(activeEditor.selection.active.line);
     if (lineProperties?.range) {
       const result = InvertConditions.runInvert(lineProperties.text);
       selectedText.replace(lineProperties.range, result);
