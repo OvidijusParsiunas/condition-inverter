@@ -1,5 +1,5 @@
+import InvertConditions from '../../../shared/out/invert';
 import * as vscode from 'vscode';
-import InvertConditions from '../../shared/out/invert';
 
 export class InvertSelection {
   private static getIfPreviousCharacterIsIfStatement(
@@ -12,7 +12,7 @@ export class InvertSelection {
       new vscode.Position(currentLineNumber, currentIndex),
       new vscode.Position(currentLineNumber, currentIndex - 1),
     );
-    var character = activeEditor.document.getText(range);
+    const character = activeEditor.document.getText(range);
     if (character === ' ') {
       return InvertSelection.getIfPreviousCharacterIsIfStatement(
         activeEditor,
@@ -25,13 +25,13 @@ export class InvertSelection {
         new vscode.Position(currentLineNumber, currentIndex - 1),
         new vscode.Position(currentLineNumber, currentIndex - 2),
       );
-      var character2 = activeEditor.document.getText(range2);
+      const character2 = activeEditor.document.getText(range2);
       if (character2 === 'i') {
         const range3 = new vscode.Range(
           new vscode.Position(currentLineNumber, currentIndex - 2),
           new vscode.Position(currentLineNumber, currentIndex - 3),
         );
-        var character3 = activeEditor.document.getText(range3);
+        const character3 = activeEditor.document.getText(range3);
         if (character3 === ' ') {
           return true;
         }
@@ -50,7 +50,7 @@ export class InvertSelection {
       new vscode.Position(selection.start.line, currentIndex),
       new vscode.Position(selection.start.line, currentIndex - 1),
     );
-    var character = activeEditor.document.getText(range);
+    const character = activeEditor.document.getText(range);
     if (character === ')') {
       numberOfCloses += 1;
     } else if (character === '(') {
@@ -96,7 +96,7 @@ export class InvertSelection {
   }
 
   private static getOverallIfStatementRange(activeEditor: vscode.TextEditor, selection: vscode.Selection): vscode.Range {
-    var text = activeEditor?.document.getText(selection);
+    const text = activeEditor?.document.getText(selection);
     const closingBracketIndex = text.indexOf(')');
     const ifIndex = text.indexOf('if');
     if (ifIndex === -1) {
@@ -120,7 +120,7 @@ export class InvertSelection {
     activeEditor?.edit((selectedText) => {
       if (selection) {
         const range = InvertSelection.getOverallIfStatementRange(activeEditor, selection);
-        var text = activeEditor?.document.getText(range);
+        const text = activeEditor?.document.getText(range);
         console.log(text);
         const result = InvertConditions.runInvert(text);
         selectedText.replace(range, result);
