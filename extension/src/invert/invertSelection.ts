@@ -116,7 +116,7 @@ export class InvertSelection {
     return selection;
   }
 
-  public static invert(activeEditor: vscode.TextEditor | undefined, selection: vscode.Selection | undefined) {
+  public static invert(activeEditor: vscode.TextEditor | undefined, selection: vscode.Selection | undefined): void {
     activeEditor?.edit((selectedText) => {
       if (selection) {
         const range = InvertSelection.getOverallIfStatementRange(activeEditor, selection);

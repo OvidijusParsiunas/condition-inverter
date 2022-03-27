@@ -28,6 +28,7 @@ module.exports = {
     'no-var': 'error',
     'prefer-const': 'error',
     '@typescript-eslint/prefer-readonly': 'error',
+    '@typescript-eslint/explicit-function-return-type': 'error',
   },
   ignorePatterns: ['out', 'dist', '**/*.d.ts'],
 };

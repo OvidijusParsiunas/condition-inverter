@@ -39,7 +39,7 @@ suite('Extension Test Suite', () => {
       lines: { input: string; output: string }[];
       selection: { start: vscode.Position; end: vscode.Position };
     }[],
-  ) {
+  ): void {
     testProps.forEach(({ lines, selection }) => {
       test(`Multi line inversion test for input`, (done) => {
         textEditor
@@ -53,7 +53,7 @@ suite('Extension Test Suite', () => {
             // select text
             textEditor.selection = new vscode.Selection(selection.start, selection.end);
             // execute the inversion command
-            vscode.commands.executeCommand('condition-inverter.helloWorld').then(() => {
+            vscode.commands.executeCommand('condition-inverter.invert').then(() => {
               // wait for command to perform its operation
               setTimeout(() => {
                 // select text on the first line

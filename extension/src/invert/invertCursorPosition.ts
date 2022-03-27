@@ -20,7 +20,7 @@ export class InvertCursorPosition {
   }
 
   // WORK - only invert the if statement that is selected/highlighted (including if cursor is inside)
-  public static invert(activeEditor: vscode.TextEditor | undefined) {
+  public static invert(activeEditor: vscode.TextEditor | undefined): void {
     activeEditor?.edit((selectedText) => {
       const startToCursorText = activeEditor.document.getText(
         new vscode.Range(

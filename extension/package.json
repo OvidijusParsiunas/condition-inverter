@@ -10,19 +10,19 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:condition-inverter.helloWorld"
+    "onCommand:condition-inverter.invert"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "condition-inverter.helloWorld",
+        "command": "condition-inverter.invert",
         "title": "Hello World"
       }
     ],
     "keybindings": [
       {
-        "command": "condition-inverter.helloWorld",
+        "command": "condition-inverter.invert",
         "key": "ctrl+i",
         "mac": "cmd+i",
         "when": "editorTextFocus"
