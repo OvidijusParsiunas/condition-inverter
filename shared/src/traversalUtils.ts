@@ -1,5 +1,5 @@
 export default class TraversalUtils {
-  static findNonSpaceCharacterIndexStartingFromIndex(tokens: any[], index: number, forwards = true): any {
+  public static findNonSpaceCharacterIndexStartingFromIndex(tokens: any[], index: number, forwards = true): any {
     if (index === 0) {
       return 0;
     }
@@ -10,7 +10,7 @@ export default class TraversalUtils {
     return TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, newIndex, forwards);
   }
 
-  static getWhenNumberStops(tokens: string | any[], index: number): any {
+  public static getWhenNumberStops(tokens: string | any[], index: number): any {
     if (index > tokens.length - 1) {
       console.log('attempt to retrieve when number declaration stops is out of bounds');
       return -1;
@@ -22,14 +22,14 @@ export default class TraversalUtils {
     return TraversalUtils.getWhenNumberStops(tokens, index + 1);
   }
 
-  static findEndingStringQuoteIndex(tokens: { [x: string]: any }, index: number, typeOfQuoteString: any): any {
+  public static findEndingStringQuoteIndex(tokens: { [x: string]: any }, index: number, typeOfQuoteString: any): any {
     if (tokens[index] === typeOfQuoteString) {
       return index;
     }
     return TraversalUtils.findEndingStringQuoteIndex(tokens, index + 1, typeOfQuoteString);
   }
 
-  static findLastExclamationMarkIndex(tokens: any[], index: number): any {
+  public static findLastExclamationMarkIndex(tokens: any[], index: number): any {
     const nextCharacterTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
     if (tokens[nextCharacterTokenIndex] === '!') {
       return TraversalUtils.findLastExclamationMarkIndex(tokens, nextCharacterTokenIndex);
@@ -40,7 +40,7 @@ export default class TraversalUtils {
     return index;
   }
 
-  static getIndexOfLastBracketOfIfStatement(tokens: string | any[], index: number, openBrackets = 0): any {
+  public static getIndexOfLastBracketOfIfStatement(tokens: any[], index: number, openBrackets = 0): any {
     if (index > tokens.length - 1) {
       console.log('index out of bounds');
       return -1;
