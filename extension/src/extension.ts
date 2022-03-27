@@ -11,6 +11,7 @@ function invertLine(activeEditor: vscode.TextEditor | undefined) {
       const result = InvertConditions.runInvert(lineProperties.text);
       selectedText.replace(lineProperties.range, result);
       // WORK - get lines before and after if if statement does not end
+      // WORK - only invert the if statement that is selected/highlighted (including if cursor is inside)
     }
   });
 }

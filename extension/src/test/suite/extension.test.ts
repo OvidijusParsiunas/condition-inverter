@@ -19,11 +19,14 @@ suite('Extension Test Suite', () => {
     });
   });
 
-  mocha.afterEach(async () => {
+  mocha.beforeEach(async () => {
     return new Promise((resolve) => {
       textEditor
         ?.edit((editBuild) => {
-          editBuild.delete(textEditor.document.lineAt(0).range);
+          for (let i = 0; i < textEditor.document.lineCount; i += 1) {
+            const range = new vscode.Range(new vscode.Position(i, 0), new vscode.Position(i + 1, 0));
+            editBuild.delete(range);
+          }
         })
         .then(() => {
           resolve(true);
@@ -31,26 +34,35 @@ suite('Extension Test Suite', () => {
     });
   });
 
-  function runSingleLineInversionTests(testProps: { input: string; output: string }[]) {
-    testProps.forEach(({ input, output: expectedOutput }) => {
-      test(`Single line inversion test for input: ${input}`, (done) => {
+  function runInversionTests(
+    testProps: {
+      lines: { input: string; output: string }[];
+      selection: { start: vscode.Position; end: vscode.Position };
+    }[],
+  ) {
+    testProps.forEach(({ lines, selection }) => {
+      test(`Multi line inversion test for input`, (done) => {
         textEditor
           .edit((editBuild) => {
             // insert text
-            editBuild.insert(new vscode.Position(0, 0), input);
+            lines.forEach((line) => {
+              editBuild.insert(new vscode.Position(0, 0), line.input);
+            });
           })
           .then(() => {
             // select text
-            textEditor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 10));
+            textEditor.selection = new vscode.Selection(selection.start, selection.end);
             // execute the inversion command
             vscode.commands.executeCommand('condition-inverter.helloWorld').then(() => {
               // wait for command to perform its operation
               setTimeout(() => {
                 // select text on the first line
-                textEditor.selection = new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 10));
-                const resultTextOutput = textEditor.document.lineAt(0).text;
+                textEditor.selection = new vscode.Selection(selection.start, selection.end);
                 // compare result
-                assert.strictEqual(resultTextOutput, expectedOutput);
+                lines.forEach((line, index) => {
+                  const resultTextOutput = textEditor.document.lineAt(index).text;
+                  assert.strictEqual(resultTextOutput, line.output);
+                });
                 done();
               }, COMMAND_EXECUTION_TIME_ML);
             });
@@ -59,14 +71,70 @@ suite('Extension Test Suite', () => {
     });
   }
 
-  runSingleLineInversionTests([
+  runInversionTests([
     {
-      input: 'if (dog && cat || mouse) { console.log(2) }',
-      output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
+      },
     },
     {
-      input: 'if (mouse && cat) { console.log(2) }',
-      output: 'if (!mouse || !cat) { console.log(2) }',
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }\n`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: `if (mouse && cat) { console.log(2) }\n`,
+          output: 'if (!mouse || !cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(2, 38),
+      },
     },
   ]);
 });
