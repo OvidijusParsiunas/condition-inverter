@@ -1,4 +1,4 @@
-import { InvertCursorPosition } from './invertCursorPosition';
+import { InvertViaCursorPosition } from './invertViaCursorPosition';
 import { InvertSelection } from './invertSelection';
 import * as vscode from 'vscode';
 
@@ -10,7 +10,7 @@ export class Invert {
     if (selection) {
       const { start, end } = selection;
       if (start.line === end.line) {
-        InvertCursorPosition.invert(activeEditor);
+        InvertViaCursorPosition.invert(activeEditor);
       } else {
         InvertSelection.invert(activeEditor, selection);
       }
