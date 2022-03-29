@@ -23,7 +23,7 @@ module.exports = {
     'no-throw-literal': 'warn',
     semi: 'off',
     '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
-    'max-len': ['error', { code: 123 }],
+    'max-len': ['error', { code: 150 }],
     'prefer-template': 'error',
     'no-var': 'error',
     'prefer-const': 'error',

@@ -1,18 +1,18 @@
 import { InvertViaCursorPosition } from './invertViaCursorPosition';
 import { InvertSelection } from './invertSelection';
-import * as vscode from 'vscode';
+import { window } from 'vscode';
 
 export class Invert {
   public static exec(): void {
-    const activeEditor = vscode.window.activeTextEditor;
-    const selection = activeEditor?.selection;
+    const editor = window.activeTextEditor;
+    const selection = editor?.selection;
 
     if (selection) {
       const { start, end } = selection;
       if (start.line === end.line) {
-        InvertViaCursorPosition.invert(activeEditor);
+        InvertViaCursorPosition.invert(editor);
       } else {
-        InvertSelection.invert(activeEditor, selection);
+        InvertSelection.invert(editor, selection);
       }
     }
   }

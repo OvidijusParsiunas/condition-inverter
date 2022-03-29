@@ -1,37 +1,23 @@
+import { TextEditor, Selection, Range, Position } from 'vscode';
 import InvertConditions from '../../../shared/out/invert';
-import * as vscode from 'vscode';
 
 export class InvertSelection {
   private static getIfPreviousCharacterIsIfStatement(
-    activeEditor: vscode.TextEditor,
-    selection: vscode.Selection,
+    editor: TextEditor,
+    selection: Selection,
     currentLineNumber: number,
     currentIndex: number,
   ): boolean {
-    const range = new vscode.Range(
-      new vscode.Position(currentLineNumber, currentIndex),
-      new vscode.Position(currentLineNumber, currentIndex - 1),
-    );
-    const character = activeEditor.document.getText(range);
+    const range = new Range(new Position(currentLineNumber, currentIndex), new Position(currentLineNumber, currentIndex - 1));
+    const character = editor.document.getText(range);
     if (character === ' ') {
-      return InvertSelection.getIfPreviousCharacterIsIfStatement(
-        activeEditor,
-        selection,
-        currentLineNumber,
-        currentIndex - 1,
-      );
+      return InvertSelection.getIfPreviousCharacterIsIfStatement(editor, selection, currentLineNumber, currentIndex - 1);
     } else if (character === 'f') {
-      const range2 = new vscode.Range(
-        new vscode.Position(currentLineNumber, currentIndex - 1),
-        new vscode.Position(currentLineNumber, currentIndex - 2),
-      );
-      const character2 = activeEditor.document.getText(range2);
+      const range2 = new Range(new Position(currentLineNumber, currentIndex - 1), new Position(currentLineNumber, currentIndex - 2));
+      const character2 = editor.document.getText(range2);
       if (character2 === 'i') {
-        const range3 = new vscode.Range(
-          new vscode.Position(currentLineNumber, currentIndex - 2),
-          new vscode.Position(currentLineNumber, currentIndex - 3),
-        );
-        const character3 = activeEditor.document.getText(range3);
+        const range3 = new Range(new Position(currentLineNumber, currentIndex - 2), new Position(currentLineNumber, currentIndex - 3));
+        const character3 = editor.document.getText(range3);
         if (character3 === ' ') {
           return true;
         }
@@ -40,36 +26,26 @@ export class InvertSelection {
     return false;
   }
 
-  private static getPrefixNumber(
-    activeEditor: vscode.TextEditor,
-    selection: vscode.Selection,
-    currentIndex: number,
-    numberOfCloses: number,
-  ): number {
-    const range = new vscode.Range(
-      new vscode.Position(selection.start.line, currentIndex),
-      new vscode.Position(selection.start.line, currentIndex - 1),
-    );
-    const character = activeEditor.document.getText(range);
+  private static getPrefixNumber(editor: TextEditor, selection: Selection, currentIndex: number, numberOfCloses: number): number {
+    const range = new Range(new Position(selection.start.line, currentIndex), new Position(selection.start.line, currentIndex - 1));
+    const character = editor.document.getText(range);
     if (character === ')') {
       numberOfCloses += 1;
     } else if (character === '(') {
       numberOfCloses -= 1;
     }
     if (numberOfCloses === 0) {
-      if (
-        InvertSelection.getIfPreviousCharacterIsIfStatement(activeEditor, selection, selection.start.line, currentIndex)
-      ) {
+      if (InvertSelection.getIfPreviousCharacterIsIfStatement(editor, selection, selection.start.line, currentIndex)) {
         return currentIndex;
       }
       return -1;
     }
-    return InvertSelection.getPrefixNumber(activeEditor, selection, currentIndex, numberOfCloses);
+    return InvertSelection.getPrefixNumber(editor, selection, currentIndex, numberOfCloses);
   }
 
   private static getPrefixIfStatementStartLocation(
-    activeEditor: vscode.TextEditor,
-    selection: vscode.Selection,
+    editor: TextEditor,
+    selection: Selection,
     text: string,
     currentIndex: number,
     numberOfCloses = 0,
@@ -78,7 +54,7 @@ export class InvertSelection {
       if (numberOfCloses === 0) {
         return 0;
       }
-      return InvertSelection.getPrefixNumber(activeEditor, selection, currentIndex, numberOfCloses);
+      return InvertSelection.getPrefixNumber(editor, selection, currentIndex, numberOfCloses);
     }
     const currentChar = text.charAt(currentIndex - 1);
     if (currentChar === ')') {
@@ -86,41 +62,27 @@ export class InvertSelection {
     } else if (currentChar === '(') {
       numberOfCloses -= 1;
     }
-    return InvertSelection.getPrefixIfStatementStartLocation(
-      activeEditor,
-      selection,
-      text,
-      currentIndex - 1,
-      numberOfCloses,
-    );
+    return InvertSelection.getPrefixIfStatementStartLocation(editor, selection, text, currentIndex - 1, numberOfCloses);
   }
 
-  private static getOverallIfStatementRange(activeEditor: vscode.TextEditor, selection: vscode.Selection): vscode.Range {
-    const text = activeEditor?.document.getText(selection);
+  private static getOverallIfStatementRange(editor: TextEditor, selection: Selection): Range {
+    const text = editor?.document.getText(selection);
     const closingBracketIndex = text.indexOf(')');
     const ifIndex = text.indexOf('if');
     if (ifIndex === -1) {
     }
     if (closingBracketIndex && closingBracketIndex < ifIndex) {
-      const startLocation = InvertSelection.getPrefixIfStatementStartLocation(
-        activeEditor,
-        selection,
-        text,
-        closingBracketIndex,
-      );
-      return new vscode.Range(
-        new vscode.Position(selection.start.line, startLocation),
-        new vscode.Position(selection.end.line, selection.end.character),
-      );
+      const startLocation = InvertSelection.getPrefixIfStatementStartLocation(editor, selection, text, closingBracketIndex);
+      return new Range(new Position(selection.start.line, startLocation), new Position(selection.end.line, selection.end.character));
     }
     return selection;
   }
 
-  public static invert(activeEditor: vscode.TextEditor | undefined, selection: vscode.Selection | undefined): void {
-    activeEditor?.edit((selectedText) => {
+  public static invert(editor: TextEditor | undefined, selection: Selection | undefined): void {
+    editor?.edit((selectedText) => {
       if (selection) {
-        const range = InvertSelection.getOverallIfStatementRange(activeEditor, selection);
-        const text = activeEditor?.document.getText(range);
+        const range = InvertSelection.getOverallIfStatementRange(editor, selection);
+        const text = editor?.document.getText(range);
         const result = InvertConditions.runInvert(text);
         selectedText.replace(range, result);
         // WORK - only invert the if statement(s) that is/are highlighted
