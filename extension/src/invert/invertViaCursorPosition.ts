@@ -1,52 +1,33 @@
 import InvertConditions from '../../../shared/out/invert';
 import * as vscode from 'vscode';
 
-interface Range {
-  start: number;
-  end: number;
-}
-
 interface Position {
   line: number;
   character: number;
 }
 
 export class InvertViaCursorPosition {
-  private static replaceExistingText(
-    selectedText: vscode.TextEditorEdit,
-    ifStatementIndexRange: Range,
-    lineNumber: number,
-    invertedText: string,
-  ): void {
-    const rangeToBeReplaced = InvertViaCursorPosition.createRange(
-      { line: lineNumber, character: ifStatementIndexRange.start },
-      { line: lineNumber, character: ifStatementIndexRange.end },
-    );
-    selectedText.replace(rangeToBeReplaced, invertedText);
-  }
-
-  private static getInvertedText(lineText: string, ifStatementIndexRange: Range): string {
-    const ifStatementText = lineText.substring(ifStatementIndexRange.start, ifStatementIndexRange.end);
+  private static getInvertedText(activeEditor: vscode.TextEditor, ifStatementRange: vscode.Range): string {
+    const ifStatementText = activeEditor.document.getText(ifStatementRange);
     return InvertConditions.runInvert(ifStatementText);
   }
 
-  private static getIndexOfCloseIfStatementBracket(text: string, index: number, openBrackets = 0): number {
+  private static getIfStatementCloseBracketPosition(text: string, index: number, openBrackets = 0): number {
     if (index > text.length - 1) {
       console.log('index out of bounds');
       return -1;
     }
-    const nextIndex = index + 1;
-    const nextCharacter = text.charAt(nextIndex);
+    const nextCharacter = text.charAt(index);
     if (nextCharacter === '(') {
-      return InvertViaCursorPosition.getIndexOfCloseIfStatementBracket(text, nextIndex, openBrackets + 1);
+      return InvertViaCursorPosition.getIfStatementCloseBracketPosition(text, index + 1, openBrackets + 1);
     }
     if (nextCharacter === ')') {
       if (openBrackets === 1) {
-        return nextIndex;
+        return index;
       }
-      return InvertViaCursorPosition.getIndexOfCloseIfStatementBracket(text, nextIndex, openBrackets - 1);
+      return InvertViaCursorPosition.getIfStatementCloseBracketPosition(text, index + 1, openBrackets - 1);
     }
-    return InvertViaCursorPosition.getIndexOfCloseIfStatementBracket(text, nextIndex, openBrackets);
+    return InvertViaCursorPosition.getIfStatementCloseBracketPosition(text, index + 1, openBrackets);
   }
 
   private static createRange(start: Position, end: Position): vscode.Range {
@@ -54,6 +35,25 @@ export class InvertViaCursorPosition {
       new vscode.Position(start.line, start.character),
       new vscode.Position(end.line, end.character),
     );
+  }
+
+  private static getIfStatementStartPositionInUpperLine(activeEditor: vscode.TextEditor, lineNumber: number): Position {
+    const upperLineNumber = lineNumber - 1;
+    if (upperLineNumber < 0) {
+      return { line: upperLineNumber, character: -1 };
+    }
+    const endOfLineProperties = activeEditor.document.lineAt(upperLineNumber).range;
+    const stringAroundStatement = activeEditor.document.getText(
+      InvertViaCursorPosition.createRange(
+        { line: upperLineNumber, character: 0 },
+        { line: upperLineNumber, character: endOfLineProperties.end.character },
+      ),
+    );
+    const ifIndex = stringAroundStatement.lastIndexOf('if');
+    if (ifIndex < 0) {
+      return InvertViaCursorPosition.getIfStatementStartPositionInUpperLine(activeEditor, upperLineNumber - 1);
+    }
+    return { line: upperLineNumber, character: ifIndex };
   }
 
   private static getIfStatementStartIfCursorAfterIfWord(activeEditor: vscode.TextEditor, lineNumber: number): number {
@@ -81,28 +81,54 @@ export class InvertViaCursorPosition {
     return -1;
   }
 
-  private static getIfStatementStartIndex(activeEditor: vscode.TextEditor, lineNumber: number): number {
-    const startIndex = InvertViaCursorPosition.getIfStatementStartIfCursorOnIfWord(activeEditor, lineNumber);
-    if (startIndex < 0) {
-      return InvertViaCursorPosition.getIfStatementStartIfCursorAfterIfWord(activeEditor, lineNumber);
+  private static getNumberOfOpenBrackets(startToCursorText: string): number {
+    const matchedBrackets = startToCursorText.match(/\(|\)/g);
+    if (matchedBrackets) {
+      const numberOfOpenBrackets = matchedBrackets.filter((bracket) => bracket === '(').length;
+      const numberOfClosed = matchedBrackets.filter((bracket) => bracket === ')').length;
+      return numberOfOpenBrackets - numberOfClosed;
     }
-    return startIndex;
+    return 0;
   }
 
-  private static getIfStatementIndexRange(activeEditor: vscode.TextEditor, lineNumber: number, lineText: string): Range {
-    const start = InvertViaCursorPosition.getIfStatementStartIndex(activeEditor, lineNumber);
-    const end = InvertViaCursorPosition.getIndexOfCloseIfStatementBracket(lineText, start) + 1;
-    return { start, end };
+  private static getStartToCursorText(activeEditor: vscode.TextEditor, currentLine: number, selectedLine: number): string {
+    const startLineToSelectedLineRange = InvertViaCursorPosition.createRange(
+      { line: selectedLine, character: 0 },
+      { line: currentLine, character: 0 },
+    );
+    return activeEditor.document.getText(startLineToSelectedLineRange);
+  }
+
+  private static getIfStatementStartPosition(activeEditor: vscode.TextEditor, lineNumber: number): Position {
+    const cursorOnIfWordStartIndex = InvertViaCursorPosition.getIfStatementStartIfCursorOnIfWord(activeEditor, lineNumber);
+    if (cursorOnIfWordStartIndex < 0) {
+      const cursorAfterIfIndex = InvertViaCursorPosition.getIfStatementStartIfCursorAfterIfWord(activeEditor, lineNumber);
+      if (cursorAfterIfIndex < 0) {
+        return InvertViaCursorPosition.getIfStatementStartPositionInUpperLine(activeEditor, lineNumber);
+      }
+      return { line: lineNumber, character: cursorAfterIfIndex };
+    }
+    return { line: lineNumber, character: cursorOnIfWordStartIndex };
+  }
+
+  private static getIfStatementRange(activeEditor: vscode.TextEditor, currentLineNumber: number): vscode.Range {
+    const lineText = activeEditor.document.lineAt(currentLineNumber).text;
+    const start = InvertViaCursorPosition.getIfStatementStartPosition(activeEditor, currentLineNumber);
+    const charStartPosition = start.line === currentLineNumber ? start.character : 0;
+    const startToCursorText = InvertViaCursorPosition.getStartToCursorText(activeEditor, currentLineNumber, start.line);
+    const numOfOpenBrackets = InvertViaCursorPosition.getNumberOfOpenBrackets(startToCursorText);
+    const end = InvertViaCursorPosition.getIfStatementCloseBracketPosition(lineText, charStartPosition, numOfOpenBrackets);
+    return InvertViaCursorPosition.createRange(start, { line: currentLineNumber, character: end + 1 });
   }
 
   public static invert(activeEditor: vscode.TextEditor): void {
     activeEditor.edit((selectedText) => {
       const lineNumber = activeEditor.selection.active.line;
-      const lineText = activeEditor.document.lineAt(lineNumber).text;
-      const ifStatementIndexRange = InvertViaCursorPosition.getIfStatementIndexRange(activeEditor, lineNumber, lineText);
-      const invertedText = InvertViaCursorPosition.getInvertedText(lineText, ifStatementIndexRange);
-      InvertViaCursorPosition.replaceExistingText(selectedText, ifStatementIndexRange, lineNumber, invertedText);
+      const ifStatementRange = InvertViaCursorPosition.getIfStatementRange(activeEditor, lineNumber);
+      const invertedText = InvertViaCursorPosition.getInvertedText(activeEditor, ifStatementRange);
+      selectedText.replace(ifStatementRange, invertedText);
       // WORK - get lines before and after if if statement does not end
+      // WORK - if selected outside of if statement, don't invert
     });
   }
 }

@@ -121,7 +121,6 @@ export class InvertSelection {
       if (selection) {
         const range = InvertSelection.getOverallIfStatementRange(activeEditor, selection);
         const text = activeEditor?.document.getText(range);
-        console.log(text);
         const result = InvertConditions.runInvert(text);
         selectedText.replace(range, result);
         // WORK - only invert the if statement(s) that is/are highlighted

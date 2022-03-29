@@ -1,6 +1,18 @@
 import TraversalUtils from './traversalUtils';
 
 export default class Inverter {
+  private static insertValue(tokens: any[], arrayIndex: number, newValue: string): number {
+    if (tokens[arrayIndex].substring(0, 2) === `\n`) {
+      tokens[arrayIndex] = `${tokens[arrayIndex].substring(0, 2)}${newValue}${tokens[arrayIndex].substring(
+        2,
+        tokens[arrayIndex].length,
+      )}`;
+      return 0;
+    }
+    tokens.splice(arrayIndex, 0, newValue);
+    return 1;
+  }
+
   static invertIfStatements(
     tokens: any[],
     conditionIndexes: {
@@ -20,10 +32,8 @@ export default class Inverter {
       ) => {
         const arrayIndex = start + newElementsDelta;
         if (brackets) {
-          tokens.splice(arrayIndex, 0, '(');
-          newElementsDelta += 1;
-          tokens.splice(end + newElementsDelta + 1, 0, ')');
-          newElementsDelta += 1;
+          newElementsDelta += Inverter.insertValue(tokens, arrayIndex, '(');
+          newElementsDelta += Inverter.insertValue(tokens, end + newElementsDelta + 1, ')');
         } else {
           switch (tokens[arrayIndex]) {
             case '=':
@@ -35,8 +45,7 @@ export default class Inverter {
                 tokens.splice(arrayIndex + 1, 1);
                 newElementsDelta -= 1;
               } else {
-                tokens.splice(arrayIndex + 1, 0, '=');
-                newElementsDelta += 1;
+                newElementsDelta += Inverter.insertValue(tokens, arrayIndex + 1, '=');
               }
               break;
             case '>':
@@ -45,8 +54,7 @@ export default class Inverter {
                 tokens.splice(arrayIndex + 1, 1);
                 newElementsDelta -= 1;
               } else {
-                tokens.splice(arrayIndex + 1, 0, '=');
-                newElementsDelta += 1;
+                newElementsDelta += Inverter.insertValue(tokens, arrayIndex + 1, '=');
               }
               break;
             case '&':
@@ -96,8 +104,7 @@ export default class Inverter {
               }
             // if brackets are required - proceed to go onto the next section and append a ! at the start before the brackets
             default: {
-              tokens.splice(arrayIndex, 0, '!');
-              newElementsDelta += 1;
+              newElementsDelta += Inverter.insertValue(tokens, arrayIndex, '!');
             }
           }
         }

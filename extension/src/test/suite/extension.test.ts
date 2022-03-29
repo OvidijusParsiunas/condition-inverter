@@ -35,13 +35,14 @@ suite('Extension Test Suite', () => {
   });
 
   function runInversionTests(
+    testName: string,
     testProps: {
       lines: { input: string; output: string }[];
       selection: { start: vscode.Position; end: vscode.Position };
     }[],
   ): void {
     testProps.forEach(({ lines, selection }) => {
-      test(`Multi line inversion test for input`, (done) => {
+      test(testName, (done) => {
         textEditor
           .edit((editBuild) => {
             // insert text
@@ -71,7 +72,93 @@ suite('Extension Test Suite', () => {
     });
   }
 
-  runInversionTests([
+  runInversionTests(`Multi line single if statement inversion test`, [
+    {
+      lines: [
+        {
+          input: `if (dog && \n`,
+          output: 'if (!dog || ',
+        },
+        {
+          input: `cat || mouse) { console.log(2) }`,
+          output: '!cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (\n`,
+          output: 'if (',
+        },
+        {
+          input: `dog && cat || mouse) { console.log(2) }`,
+          output: '!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if \n`,
+          output: 'if ',
+        },
+        {
+          input: `(dog && cat || mouse) { console.log(2) }`,
+          output: '(!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if\n`,
+          output: 'if',
+        },
+        {
+          input: ` (dog && cat || mouse) { console.log(2) }`,
+          output: ' (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+  ]);
+
+  runInversionTests(`Multi line inversion test`, [
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }\n`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: `if (mouse && cat) { console.log(2) }\n`,
+          output: 'if (!mouse || !cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(2, 38),
+      },
+    },
+  ]);
+
+  runInversionTests(`Single line inversion test`, [
     {
       lines: [
         {
@@ -130,6 +217,18 @@ suite('Extension Test Suite', () => {
       selection: {
         start: new vscode.Position(0, 10),
         end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 24),
       },
     },
     {
@@ -372,34 +471,5 @@ suite('Extension Test Suite', () => {
         end: new vscode.Position(0, 80),
       },
     },
-
-    // {
-    //   lines: [
-    //     {
-    //       input: `if (dog && cat || mouse) { console.log(2) }`,
-    //       output: 'if (!dog || !cat && !mouse) { console.log(2) }',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 10),
-    //     end: new vscode.Position(0, 24),
-    //   },
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: `if (dog && cat || mouse) { console.log(2) }\n`,
-    //       output: 'if (!dog || !cat && !mouse) { console.log(2) }',
-    //     },
-    //     {
-    //       input: `if (mouse && cat) { console.log(2) }\n`,
-    //       output: 'if (!mouse || !cat) { console.log(2) }',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 0),
-    //     end: new vscode.Position(2, 38),
-    //   },
-    // },
   ]);
 });

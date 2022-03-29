@@ -3,7 +3,7 @@ export default class TraversalUtils {
     if (index === 0) {
       return 0;
     }
-    if (tokens[index] !== ' ') {
+    if (tokens[index] !== ' ' && tokens[index] !== `\n`) {
       return index;
     }
     const newIndex = forwards ? index + 1 : index - 1;
