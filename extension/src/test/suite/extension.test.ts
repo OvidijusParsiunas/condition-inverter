@@ -300,8 +300,8 @@ suite('Extension Test Suite', () => {
           output: '|| !cat ',
         },
         {
-          input: `|| mouse\n`,
-          output: '&& !mouse',
+          input: `|| mouse \n`,
+          output: '&& !mouse ',
         },
         {
           input: `) { console.log(2) }`,
@@ -332,8 +332,8 @@ suite('Extension Test Suite', () => {
           output: '|| !cat ',
         },
         {
-          input: `|| mouse\n`,
-          output: '&& !mouse',
+          input: `|| mouse \n`,
+          output: '&& !mouse ',
         },
         {
           input: `) { console.log(2) }`,
@@ -364,8 +364,8 @@ suite('Extension Test Suite', () => {
           output: '|| !cat ',
         },
         {
-          input: `|| mouse\n`,
-          output: '&& !mouse',
+          input: `|| mouse \n`,
+          output: '&& !mouse ',
         },
         {
           input: `) { console.log(2) }`,
@@ -375,6 +375,210 @@ suite('Extension Test Suite', () => {
       selection: {
         start: new vscode.Position(5, 0),
         end: new vscode.Position(5, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if\n`,
+          output: 'if',
+        },
+        {
+          input: `(dog\n`,
+          output: '(!dog',
+        },
+        {
+          input: `&& cat\n`,
+          output: '|| !cat',
+        },
+        {
+          input: `&& cat\n`,
+          output: '|| !cat',
+        },
+        {
+          input: `||\n`,
+          output: '&&',
+        },
+        {
+          input: `mouse\n`,
+          output: '!mouse',
+        },
+        {
+          input: `) { console.log(2) }`,
+          output: ') { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(5, 0),
+        end: new vscode.Position(5, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if\n`,
+          output: 'if',
+        },
+        {
+          input: `(!dog\n`,
+          output: '(dog',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '|| cat',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '|| cat',
+        },
+        {
+          input: `||\n`,
+          output: '&&',
+        },
+        {
+          input: `!mouse\n`,
+          output: 'mouse',
+        },
+        {
+          input: `) { console.log(2) }`,
+          output: ') { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(5, 0),
+        end: new vscode.Position(5, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if\n`,
+          output: 'if',
+        },
+        {
+          input: `(!dog\n`,
+          output: '(dog',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '|| cat',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '|| cat',
+        },
+        {
+          input: `||\n`,
+          output: '&&',
+        },
+        {
+          input: `!mouse\n`,
+          output: 'mouse',
+        },
+        {
+          input: `) { console.log(2) }`,
+          output: ') { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(4, 1),
+        end: new vscode.Position(4, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if\n`,
+          output: 'if',
+        },
+        {
+          input: `(\n`,
+          output: '(',
+        },
+        {
+          input: `(!dog\n`,
+          output: '!(!dog',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '&& !cat',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '&& !cat',
+        },
+        {
+          input: `||\n`,
+          output: '||',
+        },
+        {
+          input: `mouse\n`,
+          output: 'mouse',
+        },
+        {
+          input: `)\n`,
+          output: ')',
+        },
+        {
+          input: `) { console.log(2) }`,
+          output: ') { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(4, 1),
+        end: new vscode.Position(4, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if\n`,
+          output: 'if',
+        },
+        {
+          input: `(\n`,
+          output: '(',
+        },
+        {
+          input: `(\n`,
+          output: '!(',
+        },
+        {
+          input: `!dog\n`,
+          output: '!dog',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '&& !cat',
+        },
+        {
+          input: `&& !cat\n`,
+          output: '&& !cat',
+        },
+        {
+          input: `||\n`,
+          output: '||',
+        },
+        {
+          input: `mouse\n`,
+          output: 'mouse',
+        },
+        {
+          input: `)\n`,
+          output: ')',
+        },
+        {
+          input: `)\n`,
+          output: ')',
+        },
+        {
+          input: `{ console.log(2) }`,
+          output: '{ console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(4, 1),
+        end: new vscode.Position(4, 1),
       },
     },
   ]);
