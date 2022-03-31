@@ -36,6 +36,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
+    "test:coverage": "export COVERAGE=true && npm run test",
     "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
   },
   "devDependencies": {
@@ -51,6 +52,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "glob": "^7.2.0",
     "mocha": "^9.2.1",
+    "nyc": "^15.1.0",
     "prettier": "^2.6.1",
     "typescript": "^4.5.5"
   }
