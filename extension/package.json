@@ -36,7 +36,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "test:coverage": "export COVERAGE=true && npm run test && codecov",
+    "testreport": "export COVERAGE=true && npm run test && codecov",
     "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
   },
   "devDependencies": {
