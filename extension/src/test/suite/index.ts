@@ -8,11 +8,11 @@ interface NYCWithBasicMethods {
 }
 
 // create an nyc instance, config here is the same as your package.json
-function setupCoverage(): NYCWithBasicMethods {
+async function setupCoverage(): Promise<NYCWithBasicMethods> {
   const NYC = require('nyc');
   const nyc = new NYC({
-    cwd: path.join(__dirname, '..', '..', '..'),
-    exclude: ['**/test/**', '.vscode-test/**'],
+    cwd: path.join(__dirname, '..', '..', '..', '..'),
+    exclude: ['extension/.vscode-test', 'extension/node_modules'],
     reporter: ['text', 'html'],
     all: true,
     instrument: true,
@@ -24,13 +24,13 @@ function setupCoverage(): NYCWithBasicMethods {
     statements: 95,
     functions: 100,
   });
-  nyc.reset();
+  await nyc.reset();
   nyc.wrap();
   return nyc;
 }
 
 export async function run(): Promise<void> {
-  const nyc = process.env.COVERAGE ? setupCoverage() : null;
+  const nyc = process.env.COVERAGE ? await setupCoverage() : null;
 
   // Create the mocha test
   const mocha = new Mocha({
@@ -58,8 +58,8 @@ export async function run(): Promise<void> {
     console.error(err);
   } finally {
     if (nyc) {
-      nyc.writeCoverageFile();
-      nyc.report();
+      await nyc.writeCoverageFile();
+      await nyc.report();
     }
   }
 }
