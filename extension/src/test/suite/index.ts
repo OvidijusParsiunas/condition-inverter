@@ -12,9 +12,9 @@ async function setupCoverage(): Promise<NYCWithBasicMethods> {
   const NYC = require('nyc');
   const nyc = new NYC({
     cwd: path.join(__dirname, '..', '..', '..', '..'),
-    exclude: ['extension/.vscode-test', 'extension/node_modules'],
+    exclude: ['extension/.vscode-test', 'extension/node_modules', '**/test/**'],
+    include: ['extension', 'shared'],
     reporter: ['text', 'html'],
-    all: true,
     instrument: true,
     hookRequire: true,
     hookRunInContext: true,
