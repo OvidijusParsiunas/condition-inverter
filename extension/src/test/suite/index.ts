@@ -4,7 +4,7 @@ import * as glob from 'glob';
 
 interface NYCWithBasicMethods {
   writeCoverageFile: () => void;
-  report: () => void;
+  report: () => Promise<void>;
 }
 
 // create an nyc instance, config here is the same as your package.json
@@ -58,7 +58,7 @@ export async function run(): Promise<void> {
     console.error(err);
   } finally {
     if (nyc) {
-      await nyc.writeCoverageFile();
+      nyc.writeCoverageFile();
       await nyc.report();
     }
   }
