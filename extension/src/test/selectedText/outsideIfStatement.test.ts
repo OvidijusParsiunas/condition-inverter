@@ -1,82 +1,19 @@
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
-import * as assert from 'assert';
+import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Highlighted Text Suite', () => {
+suite('Selected Text Suite - Outside If Statement -', () => {
   vscode.window.showInformationMessage('Start all tests.');
 
-  let textEditor: vscode.TextEditor;
-  const COMMAND_EXECUTION_TIME_ML = 10;
+  const textEditorObj: { textEditor: vscode.TextEditor | null } = { textEditor: null };
 
-  mocha.before(() => {
-    return new Promise((resolve) => {
-      vscode.workspace.openTextDocument().then((textDocument) => {
-        vscode.window.showTextDocument(textDocument).then((textEditorArg) => {
-          textEditor = textEditorArg;
-          resolve(true);
-        });
-      });
-    });
-  });
+  mocha.before(() => TestUtil.crateTextDocument(textEditorObj));
 
-  mocha.after(() => {
-    return vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-  });
+  mocha.beforeEach(() => TestUtil.removeTextFromEditor(textEditorObj));
 
-  mocha.beforeEach(async () => {
-    return new Promise((resolve) => {
-      textEditor
-        ?.edit((editBuild) => {
-          for (let i = 0; i < textEditor.document.lineCount; i += 1) {
-            const range = new vscode.Range(new vscode.Position(i, 0), new vscode.Position(i + 1, 0));
-            editBuild.delete(range);
-          }
-        })
-        .then(() => {
-          resolve(true);
-        });
-    });
-  });
+  mocha.after(() => TestUtil.removeTextDocument());
 
-  function runInversionTests(
-    testName: string,
-    testProps: {
-      lines: { input: string; output: string }[];
-      selection: { start: vscode.Position; end: vscode.Position };
-    }[],
-  ): void {
-    testProps.forEach(({ lines, selection }) => {
-      test(testName, (done) => {
-        textEditor
-          .edit((editBuild) => {
-            // insert text
-            lines.forEach((line) => {
-              editBuild.insert(new vscode.Position(0, 0), line.input);
-            });
-          })
-          .then(() => {
-            // select text
-            textEditor.selection = new vscode.Selection(selection.start, selection.end);
-            // execute the inversion command
-            vscode.commands.executeCommand('condition-inverter.invert').then(() => {
-              // wait for command to perform its operation
-              setTimeout(() => {
-                // select text on the first line
-                textEditor.selection = new vscode.Selection(selection.start, selection.end);
-                // compare result
-                lines.forEach((line, index) => {
-                  const resultTextOutput = textEditor.document.lineAt(index).text;
-                  assert.strictEqual(resultTextOutput, line.output);
-                });
-                done();
-              }, COMMAND_EXECUTION_TIME_ML);
-            });
-          });
-      });
-    });
-  }
-
-  runInversionTests(`Outside of if statement testing`, [
+  TestUtil.runInversionTests(textEditorObj, `Outside of if statement testing`, [
     {
       lines: [
         {
