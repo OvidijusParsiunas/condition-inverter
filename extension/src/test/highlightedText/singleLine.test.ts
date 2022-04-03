@@ -1,11 +1,10 @@
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
+import { TextEditorObj } from '../../types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Highlighted Text Suite - Single Line -', () => {
-  vscode.window.showInformationMessage('Start all tests.');
-
-  const textEditorObj: { textEditor: vscode.TextEditor | null } = { textEditor: null };
+suite.only('Highlighted Text Suite - Single Line -', () => {
+  const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.crateTextDocument(textEditorObj));
 
@@ -17,13 +16,97 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }\n`,
-          output: 'if (dog && cat || mouse) { console.log(2) }',
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
       selection: {
-        start: new vscode.Position(1, 1),
-        end: new vscode.Position(1, 10),
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 30),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 51),
+        end: new vscode.Position(0, 60),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 51),
+        end: new vscode.Position(0, 80),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 55),
+        end: new vscode.Position(0, 60),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 80),
+        end: new vscode.Position(0, 86),
       },
     },
   ]);
