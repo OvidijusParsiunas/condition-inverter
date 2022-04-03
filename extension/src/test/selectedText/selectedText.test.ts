@@ -2,7 +2,7 @@ const mocha = require('../../../node_modules/mocha/lib/mocha.js');
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 
-suite('Extension Test Suite', () => {
+suite('Selected Text Suite', () => {
   vscode.window.showInformationMessage('Start all tests.');
 
   let textEditor: vscode.TextEditor;
@@ -32,6 +32,10 @@ suite('Extension Test Suite', () => {
           resolve(true);
         });
     });
+  });
+
+  mocha.after(() => {
+    return vscode.commands.executeCommand('workbench.action.closeActiveEditor');
   });
 
   function runInversionTests(
