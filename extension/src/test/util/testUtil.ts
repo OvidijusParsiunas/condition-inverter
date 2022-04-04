@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 export class TestUtil {
   private static readonly commandExecutionTimeMl = 10;
 
-  public static crateTextDocument(textEditorObj: TextEditorObj): Promise<boolean> {
+  public static createTextDocument(textEditorObj: TextEditorObj): Promise<boolean> {
     return new Promise((resolve) => {
       vscode.workspace.openTextDocument().then((textDocument) => {
         vscode.window.showTextDocument(textDocument).then((textEditorArg) => {

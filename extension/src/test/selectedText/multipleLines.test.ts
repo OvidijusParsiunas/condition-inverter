@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 suite('Selected Text Suite - Multiple Lines -', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
-  mocha.before(() => TestUtil.crateTextDocument(textEditorObj));
+  mocha.before(() => TestUtil.createTextDocument(textEditorObj));
 
   mocha.beforeEach(() => TestUtil.removeTextFromEditor(textEditorObj));
 

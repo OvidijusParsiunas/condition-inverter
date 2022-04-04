@@ -148,17 +148,17 @@ export class InvertSelectedText {
     return { line: lineNumber, character: cursorOnIfWordStartIndex };
   }
 
-  private static getIfStatementRange(editor: TextEditor, selectedLineNumber: number): Range | null {
-    const text = editor.document.lineAt(selectedLineNumber).text;
-    const start = InvertSelectedText.getIfStatementStartPosition(editor, selectedLineNumber, text);
+  private static getIfStatementRange(editor: TextEditor): Range | null {
+    const lineNumber = editor.selection.active.line;
+    const { text } = editor.document.lineAt(lineNumber);
+    const start = InvertSelectedText.getIfStatementStartPosition(editor, lineNumber, text);
     if (!start) return start;
-    return InvertSelectedText.getIfStatementRangeFromStart(editor, selectedLineNumber, start, text);
+    return InvertSelectedText.getIfStatementRangeFromStart(editor, lineNumber, start, text);
   }
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
-      const lineNumber = editor.selection.active.line;
-      const ifStatementRange = InvertSelectedText.getIfStatementRange(editor, lineNumber);
+      const ifStatementRange = InvertSelectedText.getIfStatementRange(editor);
       if (ifStatementRange) {
         const invertedText = InvertSelectedText.getInvertedText(editor, ifStatementRange);
         selectedText.replace(ifStatementRange, invertedText);
