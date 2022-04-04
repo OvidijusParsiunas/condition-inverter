@@ -19,7 +19,6 @@ jobs:
           cd extension
           npm install
           npm run compile
-          npm run testreport
       - name: Deploy 🚀
         uses: codecov/codecov-action@v2
         with:

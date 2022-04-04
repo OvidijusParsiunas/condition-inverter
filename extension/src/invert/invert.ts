@@ -1,5 +1,5 @@
-import { InvertViaCursorPosition } from './invertViaCursorPosition';
-import { InvertSelection } from './invertSelection';
+import { InvertHighlightedText } from './invertHighlightedText';
+import { InvertSelectedText } from './invertSelectedText';
 import { window } from 'vscode';
 
 export class Invert {
@@ -9,10 +9,10 @@ export class Invert {
 
     if (selection) {
       const { start, end } = selection;
-      if (start.line === end.line) {
-        InvertViaCursorPosition.invert(editor);
+      if (start.line === end.line && start.character === end.character) {
+        InvertSelectedText.invert(editor);
       } else {
-        InvertSelection.invert(editor, selection);
+        InvertHighlightedText.invert(editor);
       }
     }
   }

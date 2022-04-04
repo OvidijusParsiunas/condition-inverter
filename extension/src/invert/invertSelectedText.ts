@@ -6,7 +6,7 @@ interface Position {
   character: number;
 }
 
-export class InvertViaCursorPosition {
+export class InvertSelectedText {
   private static getInvertedText(editor: TextEditor, ifStatementRange: Range): string {
     const ifStatementText = editor.document.getText(ifStatementRange);
     return InvertConditions.runInvert(ifStatementText);
@@ -20,15 +20,15 @@ export class InvertViaCursorPosition {
     }
     const nextCharacter = text.charAt(charNumber);
     if (nextCharacter === '(') {
-      return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets + 1);
+      return InvertSelectedText.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets + 1);
     }
     if (nextCharacter === ')') {
       if (openBrackets === 1) {
         return { character: charNumber, line: lineNumber };
       }
-      return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets - 1);
+      return InvertSelectedText.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets - 1);
     }
-    return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets);
+    return InvertSelectedText.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets);
   }
 
   private static setSameLineCharIfNotAvailable(
@@ -61,7 +61,7 @@ export class InvertViaCursorPosition {
   }
 
   private static getTextBeforeSelectedLine(editor: TextEditor, startLineNumber: number, selectedLine: number): string {
-    const startLineToSelectedLineRange = InvertViaCursorPosition.createRange(
+    const startLineToSelectedLineRange = InvertSelectedText.createRange(
       { line: startLineNumber, character: 0 },
       { line: selectedLine, character: 0 },
     );
@@ -69,14 +69,14 @@ export class InvertViaCursorPosition {
   }
 
   private static getIfStatementRangeFromStart(editor: TextEditor, selectedLineNumber: number, start: Position, text: string): Range | null {
-    const textBeforeSelectedLine = InvertViaCursorPosition.getTextBeforeSelectedLine(editor, start.line, selectedLineNumber);
-    const numOfOpenBrackets = InvertViaCursorPosition.getNumberOfOpenBrackets(textBeforeSelectedLine);
-    const wasSet = InvertViaCursorPosition.setSameLineCharIfNotAvailable(textBeforeSelectedLine, start, text, numOfOpenBrackets, selectedLineNumber);
+    const textBeforeSelectedLine = InvertSelectedText.getTextBeforeSelectedLine(editor, start.line, selectedLineNumber);
+    const numOfOpenBrackets = InvertSelectedText.getNumberOfOpenBrackets(textBeforeSelectedLine);
+    const wasSet = InvertSelectedText.setSameLineCharIfNotAvailable(textBeforeSelectedLine, start, text, numOfOpenBrackets, selectedLineNumber);
     if (!wasSet) return null;
     const charStartPosition = start.line === selectedLineNumber ? start.character : 0;
-    const end = InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, selectedLineNumber, charStartPosition, numOfOpenBrackets);
+    const end = InvertSelectedText.getIfCloseBracketPosition(editor, text, selectedLineNumber, charStartPosition, numOfOpenBrackets);
     end.character += 1;
-    return InvertViaCursorPosition.createRange(start, end);
+    return InvertSelectedText.createRange(start, end);
   }
 
   private static getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText: string, lineNumber: number): Position | null {
@@ -98,28 +98,28 @@ export class InvertViaCursorPosition {
     }
     const endOfLineProperties = editor.document.lineAt(upperLineNumber).range;
     const stringAroundStatement = editor.document.getText(
-      InvertViaCursorPosition.createRange(
+      InvertSelectedText.createRange(
         { line: upperLineNumber, character: 0 },
         { line: upperLineNumber, character: endOfLineProperties.end.character },
       ),
     );
     const ifIndex = stringAroundStatement.lastIndexOf('if');
     if (ifIndex < 0) {
-      return InvertViaCursorPosition.getIfStatementStartPositionInUpperLine(editor, upperLineNumber);
+      return InvertSelectedText.getIfStatementStartPositionInUpperLine(editor, upperLineNumber);
     }
     return { line: upperLineNumber, character: ifIndex };
   }
 
   private static getIfStatementStartIfCursorAfterIfWord(editor: TextEditor, lineNumber: number): number {
     const startToCursorText = editor.document.getText(
-      InvertViaCursorPosition.createRange({ line: lineNumber, character: 0 }, { line: lineNumber, character: editor.selection.active.character }),
+      InvertSelectedText.createRange({ line: lineNumber, character: 0 }, { line: lineNumber, character: editor.selection.active.character }),
     );
     return startToCursorText.lastIndexOf('if');
   }
 
   private static getIfStatementStartIfCursorOnIfWord(editor: TextEditor, lineNumber: number): number {
     const stringAroundStatement = editor.document.getText(
-      InvertViaCursorPosition.createRange(
+      InvertSelectedText.createRange(
         { line: lineNumber, character: Math.max(editor.selection.active.character - 1, 0) },
         { line: lineNumber, character: editor.selection.active.character + 2 },
       ),
@@ -133,13 +133,13 @@ export class InvertViaCursorPosition {
   }
 
   private static getIfStatementStartPosition(editor: TextEditor, lineNumber: number, lineText: string): Position | null {
-    const cursorOnIfWordStartIndex = InvertViaCursorPosition.getIfStatementStartIfCursorOnIfWord(editor, lineNumber);
+    const cursorOnIfWordStartIndex = InvertSelectedText.getIfStatementStartIfCursorOnIfWord(editor, lineNumber);
     if (cursorOnIfWordStartIndex < 0) {
-      const cursorAfterIfIndex = InvertViaCursorPosition.getIfStatementStartIfCursorAfterIfWord(editor, lineNumber);
+      const cursorAfterIfIndex = InvertSelectedText.getIfStatementStartIfCursorAfterIfWord(editor, lineNumber);
       if (cursorAfterIfIndex < 0) {
-        const startPosition = InvertViaCursorPosition.getIfStatementStartPositionInUpperLine(editor, lineNumber);
+        const startPosition = InvertSelectedText.getIfStatementStartPositionInUpperLine(editor, lineNumber);
         if (!startPosition) {
-          return InvertViaCursorPosition.getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText, lineNumber);
+          return InvertSelectedText.getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText, lineNumber);
         }
         return startPosition;
       }
@@ -150,21 +150,20 @@ export class InvertViaCursorPosition {
 
   private static getIfStatementRange(editor: TextEditor, selectedLineNumber: number): Range | null {
     const text = editor.document.lineAt(selectedLineNumber).text;
-    const start = InvertViaCursorPosition.getIfStatementStartPosition(editor, selectedLineNumber, text);
+    const start = InvertSelectedText.getIfStatementStartPosition(editor, selectedLineNumber, text);
     if (!start) return start;
-    return InvertViaCursorPosition.getIfStatementRangeFromStart(editor, selectedLineNumber, start, text);
+    return InvertSelectedText.getIfStatementRangeFromStart(editor, selectedLineNumber, start, text);
   }
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
       const lineNumber = editor.selection.active.line;
-      const ifStatementRange = InvertViaCursorPosition.getIfStatementRange(editor, lineNumber);
+      const ifStatementRange = InvertSelectedText.getIfStatementRange(editor, lineNumber);
       if (ifStatementRange) {
-        const invertedText = InvertViaCursorPosition.getInvertedText(editor, ifStatementRange);
+        const invertedText = InvertSelectedText.getInvertedText(editor, ifStatementRange);
         selectedText.replace(ifStatementRange, invertedText);
+        // WORK - if the user has selected text outside of if statement bracket, don't invert
       }
-      // WORK - get lines before and after if if statement does not end
-      // WORK - if selected outside of if statement, don't invert
     });
   }
 }
