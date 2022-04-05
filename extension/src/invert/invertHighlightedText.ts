@@ -251,7 +251,7 @@ export class InvertHighlightedText {
     if (
       !startIfStatementRange ||
       startIfStatementRange.end.line < startLine ||
-      (startIfStatementRange.end.line === startLine && startIfStatementRange.end.character < startCharacter)
+      (startIfStatementRange.end.line === startLine && startIfStatementRange.end.character <= startCharacter)
     ) {
       return null;
     }
