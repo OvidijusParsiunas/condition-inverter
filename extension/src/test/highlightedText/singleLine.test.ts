@@ -150,7 +150,31 @@ suite.only('Highlighted Text Suite - Single Line -', () => {
       ],
       selection: {
         start: new vscode.Position(0, 10),
-        end: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 45),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 46),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 47),
       },
     },
     {
@@ -163,30 +187,6 @@ suite.only('Highlighted Text Suite - Single Line -', () => {
       selection: {
         start: new vscode.Position(0, 10),
         end: new vscode.Position(0, 48),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
-          output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 51),
-        end: new vscode.Position(0, 80),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
-          output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 55),
-        end: new vscode.Position(0, 60),
       },
     },
     {
