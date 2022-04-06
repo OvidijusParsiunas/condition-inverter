@@ -31,23 +31,9 @@ export class InvertSelectedText {
     return InvertSelectedText.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets);
   }
 
-  private static setSameLineCharIfNotAvailable(
-    textBefore: string,
-    start: Position,
-    lineText: string,
-    numOfOpenBrackets: number,
-    lineNumber: number,
-  ): boolean {
-    const doesTextBeforeOpenbracket = textBefore.indexOf('(') > -1;
-    if (doesTextBeforeOpenbracket && numOfOpenBrackets === 0 && start.line !== lineNumber) {
-      const ifStatementIndex = lineText.indexOf('if');
-      if (ifStatementIndex > -1) {
-        start.character = ifStatementIndex;
-      } else {
-        return false;
-      }
-    }
-    return true;
+  private static shouldContinueToAnalyseCurrentLine(textAboveSelectedLine: string, numOfOpenBrackets: number): boolean {
+    // if there are open brackets from the text above or there are no brackets above to begin with
+    return numOfOpenBrackets > 0 || textAboveSelectedLine.indexOf('(') === -1;
   }
 
   private static getNumberOfOpenBrackets(startToCursorText: string): number {
@@ -60,7 +46,7 @@ export class InvertSelectedText {
     return 0;
   }
 
-  private static getTextBeforeSelectedLine(editor: TextEditor, startLineNumber: number, selectedLine: number): string {
+  private static getTextAboveSelectedLine(editor: TextEditor, startLineNumber: number, selectedLine: number): string {
     const startLineToSelectedLineRange = InvertSelectedText.createRange(
       { line: startLineNumber, character: 0 },
       { line: selectedLine, character: 0 },
@@ -69,10 +55,10 @@ export class InvertSelectedText {
   }
 
   private static getIfStatementRangeFromStart(editor: TextEditor, selectedLineNumber: number, start: Position, text: string): Range | null {
-    const textBeforeSelectedLine = InvertSelectedText.getTextBeforeSelectedLine(editor, start.line, selectedLineNumber);
-    const numOfOpenBrackets = InvertSelectedText.getNumberOfOpenBrackets(textBeforeSelectedLine);
-    const wasSet = InvertSelectedText.setSameLineCharIfNotAvailable(textBeforeSelectedLine, start, text, numOfOpenBrackets, selectedLineNumber);
-    if (!wasSet) return null;
+    const textAboveSelectedLine = InvertSelectedText.getTextAboveSelectedLine(editor, start.line, selectedLineNumber);
+    const numOfOpenBrackets = InvertSelectedText.getNumberOfOpenBrackets(textAboveSelectedLine);
+    const shouldContinue = InvertSelectedText.shouldContinueToAnalyseCurrentLine(textAboveSelectedLine, numOfOpenBrackets);
+    if (!shouldContinue) return null;
     const charStartPosition = start.line === selectedLineNumber ? start.character : 0;
     const end = InvertSelectedText.getIfCloseBracketPosition(editor, text, selectedLineNumber, charStartPosition, numOfOpenBrackets);
     end.character += 1;

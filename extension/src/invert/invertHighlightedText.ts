@@ -143,23 +143,9 @@ export class InvertHighlightedText {
     return InvertHighlightedText.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets);
   }
 
-  private static setStartCharIfNoIfInUpperLine(
-    textBeforeSelectedLine: string,
-    start: Position,
-    lineText: string,
-    numOfOpenBrackets: number,
-    lineNumber: number,
-  ): boolean {
-    const isOpenBracketInUpperLine = textBeforeSelectedLine.indexOf('(') > -1;
-    if (isOpenBracketInUpperLine && numOfOpenBrackets === 0 && start.line !== lineNumber) {
-      const ifStatementIndex = lineText.indexOf('if');
-      if (ifStatementIndex > -1) {
-        start.character = ifStatementIndex;
-      } else {
-        return false;
-      }
-    }
-    return true;
+  private static shouldContinueToAnalyseCurrentLine(textAboveSelectedLine: string, numOfOpenBrackets: number): boolean {
+    // if there are open brackets from the text above or there are no brackets above to begin with
+    return numOfOpenBrackets > 0 || textAboveSelectedLine.indexOf('(') === -1;
   }
 
   private static getNumberOfOpenBrackets(startToCursorText: string): number {
@@ -172,7 +158,7 @@ export class InvertHighlightedText {
     return 0;
   }
 
-  private static getTextBeforeSelectedLine(editor: TextEditor, startLineNumber: number, selectedLine: number): string {
+  private static getTextAboveSelectedLine(editor: TextEditor, startLineNumber: number, selectedLine: number): string {
     const startLineToSelectedLineRange = InvertHighlightedText.createRange(
       { line: startLineNumber, character: 0 },
       { line: selectedLine, character: 0 },
@@ -181,10 +167,10 @@ export class InvertHighlightedText {
   }
 
   private static getIfStatementRangeFromStart(editor: TextEditor, startLine: number, start: Position, text: string): Range | null {
-    const textBeforeSelectedLine = InvertHighlightedText.getTextBeforeSelectedLine(editor, start.line, startLine);
-    const numOfOpenBrackets = InvertHighlightedText.getNumberOfOpenBrackets(textBeforeSelectedLine);
-    const wasIfFound = InvertHighlightedText.setStartCharIfNoIfInUpperLine(textBeforeSelectedLine, start, text, numOfOpenBrackets, startLine);
-    if (!wasIfFound) return null;
+    const textAboveSelectedLine = InvertHighlightedText.getTextAboveSelectedLine(editor, start.line, startLine);
+    const numOfOpenBrackets = InvertHighlightedText.getNumberOfOpenBrackets(textAboveSelectedLine);
+    const shouldContinue = InvertHighlightedText.shouldContinueToAnalyseCurrentLine(textAboveSelectedLine, numOfOpenBrackets);
+    if (!shouldContinue) return null;
     const charStartPosition = start.line === startLine ? start.character : 0;
     const end = InvertHighlightedText.getIfCloseBracketPosition(editor, text, startLine, charStartPosition, numOfOpenBrackets);
     end.character += 1;
