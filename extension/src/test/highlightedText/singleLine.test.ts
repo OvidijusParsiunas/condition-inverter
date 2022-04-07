@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite.only('Highlighted Text Suite - Single Line -', () => {
+suite('Highlighted Text Suite - Single Line -', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -491,26 +491,6 @@ suite.only('Highlighted Text Suite - Single Line -', () => {
       selection: {
         start: new vscode.Position(0, 2),
         end: new vscode.Position(0, 4),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog\n`,
-          output: 'if (dog',
-        },
-        {
-          input: `&& cat\n`,
-          output: '&& cat',
-        },
-        {
-          input: `|| mouse) { console.log(2) }`,
-          output: '|| mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(2, 18),
-        end: new vscode.Position(2, 22),
       },
     },
   ]);
