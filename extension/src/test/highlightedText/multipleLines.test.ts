@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Highlighted Text Suite', () => {
+suite.only('Highlighted Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -971,6 +971,114 @@ suite('Highlighted Text Suite', () => {
       selection: {
         start: new vscode.Position(2, 5),
         end: new vscode.Position(2, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 5),
+        end: new vscode.Position(1, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 5),
+        end: new vscode.Position(2, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(2, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'const inverterVariable = 2;\n',
+          output: 'const inverterVariable = 2;',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'const inverterVariable = 2;\n',
+          output: 'const inverterVariable = 2;',
+        },
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(4, 43),
       },
     },
   ]);
