@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Selected Text Suite - Outside If Statement -', () => {
+suite('Selected Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -12,7 +12,7 @@ suite('Selected Text Suite - Outside If Statement -', () => {
 
   mocha.after(() => TestUtil.removeTextDocument());
 
-  TestUtil.runInversionTests(textEditorObj, `Outside of if statement testing`, [
+  TestUtil.runInversionTests(textEditorObj, 'Outside If Statement', [
     {
       lines: [
         {

@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Selected Text Suite - Multiple Lines -', () => {
+suite('Selected Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -12,7 +12,7 @@ suite('Selected Text Suite - Multiple Lines -', () => {
 
   mocha.after(() => TestUtil.removeTextDocument());
 
-  TestUtil.runInversionTests(textEditorObj, `Multi line single if statement inversion test`, [
+  TestUtil.runInversionTests(textEditorObj, 'Multiple Lines', [
     {
       lines: [
         {

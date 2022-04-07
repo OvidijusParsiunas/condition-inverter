@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Highlighted Text Suite - Single Line -', () => {
+suite('Highlighted Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -12,11 +12,11 @@ suite('Highlighted Text Suite - Single Line -', () => {
 
   mocha.after(() => TestUtil.removeTextDocument());
 
-  TestUtil.runInversionTests(textEditorObj, `Single line testing`, [
+  TestUtil.runInversionTests(textEditorObj, 'Single Line', [
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -28,7 +28,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -40,7 +40,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -52,7 +52,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -64,7 +64,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -76,7 +76,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -88,7 +88,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -100,7 +100,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -112,7 +112,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -124,7 +124,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -136,7 +136,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -148,7 +148,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -160,7 +160,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -172,7 +172,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -184,7 +184,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -196,7 +196,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -208,7 +208,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -220,7 +220,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -232,7 +232,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -244,7 +244,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -256,7 +256,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -268,7 +268,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -280,7 +280,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -292,7 +292,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -304,7 +304,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -316,7 +316,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -328,7 +328,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -340,7 +340,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -352,7 +352,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -364,7 +364,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (dog && cat) { console.log(2) }',
         },
       ],
@@ -376,7 +376,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -388,7 +388,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -400,7 +400,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -412,7 +412,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -424,7 +424,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -436,7 +436,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -448,7 +448,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
       ],
@@ -460,7 +460,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -472,7 +472,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: '    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: '    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
         },
       ],
@@ -484,7 +484,7 @@ suite('Highlighted Text Suite - Single Line -', () => {
     {
       lines: [
         {
-          input: `    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }`,
+          input: '    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: '    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
         },
       ],
