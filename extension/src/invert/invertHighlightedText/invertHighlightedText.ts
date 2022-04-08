@@ -1,16 +1,10 @@
-import { Position as VSCodePosition, Range, TextEditor } from 'vscode';
+import { Position } from '../../types/invertHighlightedText/invertHighlightedText';
 import InvertConditions from '../../../../shared/out/invert';
-
-interface Position {
-  line: number;
-  character: number;
-}
+import { FindIfStatement } from './findIfStatement';
+import { SharedUtils } from './sharedUtils';
+import { Range, TextEditor } from 'vscode';
 
 export class InvertHighlightedText {
-  private static createRange(start: Position, end: Position): Range {
-    return new Range(new VSCodePosition(start.line, start.character), new VSCodePosition(end.line, end.character));
-  }
-
   private static doesStartStatementEndLaterThanSelectionEnd(startStatementEnd: Position, endSelectionPosition: Position): boolean {
     return (
       startStatementEnd.line > endSelectionPosition.line ||
@@ -32,44 +26,12 @@ export class InvertHighlightedText {
   private static combineRanges(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): Range {
     const startPosition = startStatementRange?.start || editor.selection.start;
     const endPosition = InvertHighlightedText.getEndPosition(editor, startStatementRange, endStatementRange);
-    return InvertHighlightedText.createRange(startPosition, endPosition);
-  }
-
-  private static getIfStatementIndex(editor: TextEditor, line: number, startChar: number, endChar: number): number {
-    const lineRange = InvertHighlightedText.createRange({ line, character: startChar }, { line, character: endChar });
-    const lineText = editor.document.getText(lineRange);
-    return lineText.lastIndexOf('if');
-  }
-
-  private static findIfStatementInLine(editor: TextEditor, start: Position, end: Position, currentLine: number, endOfLineProps: Range): Position {
-    const endChar = end.line === start.line ? end.character : endOfLineProps.end.character;
-    const realIfStatement = InvertHighlightedText.getIfStatementIndex(editor, currentLine, 0, endChar);
-    return { line: currentLine, character: realIfStatement };
-  }
-
-  private static searchForIfStatementInLine(editor: TextEditor, start: Position, end: Position, currentLine: number): Position | null {
-    const endOfLineProps = editor.document.lineAt(currentLine).range;
-    const startChar = start.line === currentLine ? start.character : 0;
-    const endChar = end.line === currentLine ? end.character : endOfLineProps.end.character;
-    const ifStatement = InvertHighlightedText.getIfStatementIndex(editor, currentLine, startChar, endChar);
-    if (ifStatement > -1) {
-      return InvertHighlightedText.findIfStatementInLine(editor, start, end, currentLine, endOfLineProps);
-    }
-    return null;
-  }
-
-  private static traverseToFindIfStatementUntilPosition(editor: TextEditor, start: Position, end: Position, currentLine: number): Position | null {
-    if (currentLine === start.line) {
-      return InvertHighlightedText.searchForIfStatementInLine(editor, start, end, currentLine);
-    }
-    const positionResult = InvertHighlightedText.searchForIfStatementInLine(editor, start, end, currentLine);
-    if (positionResult) return positionResult;
-    return InvertHighlightedText.traverseToFindIfStatementUntilPosition(editor, start, end, currentLine - 1);
+    return SharedUtils.createRange(startPosition, endPosition);
   }
 
   private static getIfStatementStartIfCursorOnIfWord(editor: TextEditor, lineNumber: number, characterNumber: number, isBeside = true): number {
     const stringAroundStatement = editor.document.getText(
-      InvertHighlightedText.createRange(
+      SharedUtils.createRange(
         { line: lineNumber, character: Math.max(characterNumber - 1, 0) },
         { line: lineNumber, character: characterNumber + 2 },
       ),
@@ -85,7 +47,7 @@ export class InvertHighlightedText {
   private static getIfStatementEndPosition(editor: TextEditor, start: Position, end: Position): Position | null {
     const cursorOnIfWordStartIndex = InvertHighlightedText.getIfStatementStartIfCursorOnIfWord(editor, end.line, end.character, false);
     if (cursorOnIfWordStartIndex === -1) {
-      return InvertHighlightedText.traverseToFindIfStatementUntilPosition(editor, start, end, end.line);
+      return FindIfStatement.traverseLinesUpwards(editor, end.line, start, end);
     }
     return { line: end.line, character: cursorOnIfWordStartIndex };
   }
@@ -114,19 +76,8 @@ export class InvertHighlightedText {
     return line < endLine || (line === endLine && character < endCharacter);
   }
 
-  private static isStartInsideIfStatement(selectionStart: Position, firstIfStatementEnd: Position): boolean {
-    const { line: startLine, character: startCharacter } = selectionStart;
-    const { line, character } = firstIfStatementEnd;
-    return line > startLine || (line === startLine && character >= startCharacter);
-  }
-
   private static endSelectionIfStatementFullRange(editor: TextEditor, firstIfStatementRange: Range | null): Range | null {
-    if (
-      !firstIfStatementRange ||
-      // not sure if this is needed
-      // InvertHighlightedText.isStartInsideIfStatement(editor.selection.start, firstIfStatementRange.end) &&
-      InvertHighlightedText.isSelectionEndAfterFirstIfStatementEnd(editor.selection.end, firstIfStatementRange.end)
-    ) {
+    if (!firstIfStatementRange || InvertHighlightedText.isSelectionEndAfterFirstIfStatementEnd(editor.selection.end, firstIfStatementRange.end)) {
       return InvertHighlightedText.getEndRange(editor, firstIfStatementRange);
     }
     return null;
@@ -167,10 +118,7 @@ export class InvertHighlightedText {
   }
 
   private static getTextAboveSelectedLine(editor: TextEditor, startLineNumber: number, selectedLine: number): string {
-    const startLineToSelectedLineRange = InvertHighlightedText.createRange(
-      { line: startLineNumber, character: 0 },
-      { line: selectedLine, character: 0 },
-    );
+    const startLineToSelectedLineRange = SharedUtils.createRange({ line: startLineNumber, character: 0 }, { line: selectedLine, character: 0 });
     return editor.document.getText(startLineToSelectedLineRange);
   }
 
@@ -182,7 +130,7 @@ export class InvertHighlightedText {
     const charStartPosition = start.line === startLine ? start.character : 0;
     const end = InvertHighlightedText.getIfCloseBracketPosition(editor, text, startLine, charStartPosition, numOfOpenBrackets);
     end.character += 1;
-    return InvertHighlightedText.createRange(start, end);
+    return SharedUtils.createRange(start, end);
   }
 
   private static getIfStatementStartPositionInUpperLine(editor: TextEditor, lineNumber: number): Position | null {
@@ -192,7 +140,7 @@ export class InvertHighlightedText {
     }
     const endOfLineProps = editor.document.lineAt(upperLineNumber).range;
     const stringAroundStatement = editor.document.getText(
-      InvertHighlightedText.createRange({ line: upperLineNumber, character: 0 }, { line: upperLineNumber, character: endOfLineProps.end.character }),
+      SharedUtils.createRange({ line: upperLineNumber, character: 0 }, { line: upperLineNumber, character: endOfLineProps.end.character }),
     );
     const ifIndex = stringAroundStatement.lastIndexOf('if');
     if (ifIndex < 0) {
@@ -203,12 +151,12 @@ export class InvertHighlightedText {
 
   private static getIfStatementStartIfCursorAfterIfWord(editor: TextEditor, lineNumber: number): number {
     const startToCursorText = editor.document.getText(
-      InvertHighlightedText.createRange({ line: lineNumber, character: 0 }, { line: lineNumber, character: editor.selection.start.character }),
+      SharedUtils.createRange({ line: lineNumber, character: 0 }, { line: lineNumber, character: editor.selection.start.character }),
     );
     return startToCursorText.lastIndexOf('if');
   }
 
-  private static getIfStatementStartPosition(editor: TextEditor, lineNumber: number, lineText: string): Position | null {
+  private static getIfStatementStartPosition(editor: TextEditor, lineNumber: number): Position | null {
     const cursorOnIfWordStartIndex = InvertHighlightedText.getIfStatementStartIfCursorOnIfWord(editor, lineNumber, editor.selection.start.character);
     if (cursorOnIfWordStartIndex < 0) {
       const cursorAfterIfIndex = InvertHighlightedText.getIfStatementStartIfCursorAfterIfWord(editor, lineNumber);
@@ -224,7 +172,7 @@ export class InvertHighlightedText {
     const { line: startLine, character: startCharacter } = editor.selection.start;
     // this text is not required
     const { text } = editor.document.lineAt(startLine);
-    const start = InvertHighlightedText.getIfStatementStartPosition(editor, startLine, text);
+    const start = InvertHighlightedText.getIfStatementStartPosition(editor, startLine);
     if (!start) return null;
     const startIfStatementRange = InvertHighlightedText.getIfStatementRangeFromStart(editor, startLine, start, text);
     if (
