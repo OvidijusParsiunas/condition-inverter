@@ -409,23 +409,23 @@ export class InvertViaCursorPosition {
     return InvertConditions.runInvert(ifStatementText);
   }
 &nbsp;
-  private static getIfCloseBracketPosition(editor: TextEditor, text: string, lineNumber: number, charNumber: number, openBrackets = <span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: Position {
+  private static getIfCloseBracketPosition(editor: TextEditor, text: string, lineNum: number, charNumber: number, openBrackets = <span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: Position {
     if (charNumber &gt; text.length - 1) {
-      lineNumber += 1;
-      text = editor.document.lineAt(lineNumber).text;
+      lineNum += 1;
+      text = editor.document.lineAt(lineNum).text;
       charNumber = 0;
     }
     const nextCharacter = text.charAt(charNumber);
     if (nextCharacter === '(') {
-      return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets + 1);
+      return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets + 1);
     }
     if (nextCharacter === ')') {
       if (openBrackets === 1) {
-        return { character: charNumber, line: lineNumber };
+        return { character: charNumber, line: lineNum };
       }
-      return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets - 1);
+      return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets - 1);
     }
-    return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNumber, charNumber + 1, openBrackets);
+    return InvertViaCursorPosition.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets);
   }
 &nbsp;
   private static setSameLineCharIfNotAvailable(
@@ -433,10 +433,10 @@ export class InvertViaCursorPosition {
     start: Position,
     lineText: string,
     numOfOpenBrackets: number,
-    lineNumber: number,
+    lineNum: number,
   ): boolean {
     const doesTextBeforeOpenbracket = textBefore.indexOf('(') &gt; -1;
-    if (doesTextBeforeOpenbracket &amp;&amp; numOfOpenBrackets === 0 &amp;&amp; start.line !== lineNumber) {
+    if (doesTextBeforeOpenbracket &amp;&amp; numOfOpenBrackets === 0 &amp;&amp; start.line !== lineNum) {
       const ifStatementIndex = lineText.indexOf('if');
       <span class="missing-if-branch" title="if path not taken" >I</span>if (ifStatementIndex &gt; -1) {
 <span class="cstat-no" title="statement not covered" >        start.character = ifStatementIndex;</span>
@@ -476,10 +476,10 @@ export class InvertViaCursorPosition {
     return InvertViaCursorPosition.createRange(start, end);
   }
 &nbsp;
-  private static getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText: string, lineNumber: number): Position | null {
+  private static getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText: string, lineNum: number): Position | null {
     const ifStatementIndex = lineText.indexOf('if');
     if (ifStatementIndex &gt; -1) {
-      return { line: lineNumber, character: ifStatementIndex };
+      return { line: lineNum, character: ifStatementIndex };
     }
     return null;
   }
@@ -488,8 +488,8 @@ export class InvertViaCursorPosition {
     return new Range(new VSCodePosition(start.line, start.character), new VSCodePosition(end.line, end.character));
   }
 &nbsp;
-  private static getIfStatementStartPositionInUpperLine(editor: TextEditor, lineNumber: number): Position | null {
-    const upperLineNumber = lineNumber - 1;
+  private static getIfStatementStartPositionInUpperLine(editor: TextEditor, lineNum: number): Position | null {
+    const upperLineNumber = lineNum - 1;
     if (upperLineNumber &lt; 0) {
       return null;
     }
@@ -507,18 +507,18 @@ export class InvertViaCursorPosition {
     return { line: upperLineNumber, character: ifIndex };
   }
 &nbsp;
-  private static getIfStatementStartIfCursorAfterIfWord(editor: TextEditor, lineNumber: number): number {
+  private static getIfStatementStartIfCursorAfterIfWord(editor: TextEditor, lineNum: number): number {
     const startToCursorText = editor.document.getText(
-      InvertViaCursorPosition.createRange({ line: lineNumber, character: 0 }, { line: lineNumber, character: editor.selection.active.character }),
+      InvertViaCursorPosition.createRange({ line: lineNum, character: 0 }, { line: lineNum, character: editor.selection.active.character }),
     );
     return startToCursorText.lastIndexOf('if');
   }
 &nbsp;
-  private static getIfStatementStartIfCursorOnIfWord(editor: TextEditor, lineNumber: number): number {
+  private static getIfStatementStartIfCursorOnIfWord(editor: TextEditor, lineNum: number): number {
     const stringAroundStatement = editor.document.getText(
       InvertViaCursorPosition.createRange(
-        { line: lineNumber, character: Math.max(editor.selection.active.character - 1, 0) },
-        { line: lineNumber, character: editor.selection.active.character + 2 },
+        { line: lineNum, character: Math.max(editor.selection.active.character - 1, 0) },
+        { line: lineNum, character: editor.selection.active.character + 2 },
       ),
     );
     if (stringAroundStatement.substring(0, 2) === 'if') {
@@ -529,20 +529,20 @@ export class InvertViaCursorPosition {
     return -1;
   }
 &nbsp;
-  private static getIfStatementStartPosition(editor: TextEditor, lineNumber: number, lineText: string): Position | null {
-    const cursorOnIfWordStartIndex = InvertViaCursorPosition.getIfStatementStartIfCursorOnIfWord(editor, lineNumber);
+  private static getIfStatementStartPosition(editor: TextEditor, lineNum: number, lineText: string): Position | null {
+    const cursorOnIfWordStartIndex = InvertViaCursorPosition.getIfStatementStartIfCursorOnIfWord(editor, lineNum);
     if (cursorOnIfWordStartIndex &lt; 0) {
-      const cursorAfterIfIndex = InvertViaCursorPosition.getIfStatementStartIfCursorAfterIfWord(editor, lineNumber);
+      const cursorAfterIfIndex = InvertViaCursorPosition.getIfStatementStartIfCursorAfterIfWord(editor, lineNum);
       if (cursorAfterIfIndex &lt; 0) {
-        const startPosition = InvertViaCursorPosition.getIfStatementStartPositionInUpperLine(editor, lineNumber);
+        const startPosition = InvertViaCursorPosition.getIfStatementStartPositionInUpperLine(editor, lineNum);
         if (!startPosition) {
-          return InvertViaCursorPosition.getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText, lineNumber);
+          return InvertViaCursorPosition.getIfStatementOnSameLineStartIfNoIfBeforeCursor(lineText, lineNum);
         }
         return startPosition;
       }
-      return { line: lineNumber, character: cursorAfterIfIndex };
+      return { line: lineNum, character: cursorAfterIfIndex };
     }
-    return { line: lineNumber, character: cursorOnIfWordStartIndex };
+    return { line: lineNum, character: cursorOnIfWordStartIndex };
   }
 &nbsp;
   private static getIfStatementRange(editor: TextEditor, selectedLineNumber: number): Range | null {
@@ -554,8 +554,8 @@ export class InvertViaCursorPosition {
 &nbsp;
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) =&gt; {
-      const lineNumber = editor.selection.active.line;
-      const ifStatementRange = InvertViaCursorPosition.getIfStatementRange(editor, lineNumber);
+      const lineNum = editor.selection.active.line;
+      const ifStatementRange = InvertViaCursorPosition.getIfStatementRange(editor, lineNum);
       if (ifStatementRange) {
         const invertedText = InvertViaCursorPosition.getInvertedText(editor, ifStatementRange);
         selectedText.replace(ifStatementRange, invertedText);
