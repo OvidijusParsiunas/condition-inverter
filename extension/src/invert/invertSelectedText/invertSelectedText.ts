@@ -1,5 +1,5 @@
 import { Position as VSCodePosition, Range, TextEditor } from 'vscode';
-import InvertConditions from '../../../shared/out/invert';
+import InvertConditions from '../../../../shared/out/invert';
 
 interface Position {
   line: number;

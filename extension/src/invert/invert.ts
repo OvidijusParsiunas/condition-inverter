@@ -1,5 +1,5 @@
-import { InvertHighlightedText } from './invertHighlightedText';
-import { InvertSelectedText } from './invertSelectedText';
+import { InvertHighlightedText } from './invertHighlightedText/invertHighlightedText';
+import { InvertSelectedText } from './invertSelectedText/invertSelectedText';
 import { window } from 'vscode';
 
 export class Invert {
