@@ -6,6 +6,11 @@ import { RangeCreator } from '../shared/rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
 export class InvertHighlightedText {
+  private static getInvertedText(editor: TextEditor, ifStatementRange: Range): string {
+    const ifStatementText = editor.document.getText(ifStatementRange);
+    return InvertConditions.runInvert(ifStatementText);
+  }
+
   private static doesStartStatementEndLaterThanSelectionEnd(startStatementEnd: Position, endSelectionPosition: Position): boolean {
     return (
       startStatementEnd.line > endSelectionPosition.line ||
@@ -24,25 +29,43 @@ export class InvertHighlightedText {
     return endSelectionPosition;
   }
 
-  private static combineRanges(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): Range {
+  private static combineRanges(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): Range | null {
     const startPosition = startStatementRange?.start || editor.selection.start;
     const endPosition = InvertHighlightedText.getEndPosition(editor, startStatementRange, endStatementRange);
     return RangeCreator.create(startPosition, endPosition);
   }
 
-  private static getIfStatementRange(editor: TextEditor): Range {
+  // no logic to find exactly where the if statement is (line, character) as the inversion algorithm will traverse the full string either way
+  private static findIfStatementInsideSelection(editor: TextEditor): boolean {
+    const { start, end } = editor.selection;
+    const selectionRange = RangeCreator.create(start, end);
+    const selectionText = editor.document.getText(selectionRange);
+    return selectionText.indexOf('if') > -1;
+  }
+
+  private static haveIfStatementsBeenFound(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): boolean {
+    if (!startStatementRange && !endStatementRange) {
+      const isIfStatementBetweenSelection = InvertHighlightedText.findIfStatementInsideSelection(editor);
+      if (!isIfStatementBetweenSelection) return false;
+    }
+    return true;
+  }
+
+  private static getIfStatementsRange(editor: TextEditor): Range | null {
     const startStatementRange = SelectionStartIfRange.getStartSelectionIfStatementFullRange(editor);
     const endStatementRange = SelectionEndIfRange.get(editor, startStatementRange);
+    const haveIfStatementsBeenFound = InvertHighlightedText.haveIfStatementsBeenFound(editor, startStatementRange, endStatementRange);
+    if (!haveIfStatementsBeenFound) return null;
     return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
   }
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
-      const ifStatementRange = InvertHighlightedText.getIfStatementRange(editor);
-      // WORK - if statement range should be null if no if statements found
-      const ifStatementText = editor.document.getText(ifStatementRange);
-      const invertedText = InvertConditions.runInvert(ifStatementText);
-      selectedText.replace(ifStatementRange, invertedText);
+      const ifStatementRange = InvertHighlightedText.getIfStatementsRange(editor);
+      if (ifStatementRange) {
+        const invertedText = InvertHighlightedText.getInvertedText(editor, ifStatementRange);
+        selectedText.replace(ifStatementRange, invertedText);
+      }
     });
   }
 }
