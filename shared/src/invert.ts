@@ -1,5 +1,5 @@
-import Tokenizer from './tokenizer';
-import Evaluator from './evaluator';
+import Evaluator from './evaluator/evaluator';
+import Tokenizer from './tokenizer/tokenizer';
 import Inverter from './inverter';
 
 export default class InvertConditions {

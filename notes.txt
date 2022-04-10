@@ -1,4 +1,4 @@
-if multiple if statements on same line and user has highlighted a particular if statement - only invert that particular if statement
+bug with shift assignment - make sure that < is not follwoed by another < and > not followed by another >
 
 when current cursor at the end and inversion occurs - a cursor selection is created
 

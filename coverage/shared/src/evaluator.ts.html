@@ -1,68 +1,60 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <title>Code coverage report for shared/src/evaluator.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
     <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style type='text/css'>
-        .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
-        }
+    <style type="text/css">
+      .coverage-summary .sorter {
+        background-image: url(../../sort-arrow-sprite.png);
+      }
     </style>
-</head>
-    
-<body>
-<div class='wrapper'>
-    <div class='pad1'>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <div class="pad1">
         <h1><a href="../../index.html">All files</a> / <a href="index.html">shared/src</a> evaluator.ts</h1>
-        <div class='clearfix'>
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">66.03% </span>
-                <span class="quiet">Statements</span>
-                <span class='fraction'>70/106</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">61.29% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>57/93</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">87.5% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>7/8</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">66.99% </span>
-                <span class="quiet">Lines</span>
-                <span class='fraction'>69/103</span>
-            </div>
-        
-            
+        <div class="clearfix">
+          <div class="fl pad1y space-right2">
+            <span class="strong">66.03% </span>
+            <span class="quiet">Statements</span>
+            <span class="fraction">70/106</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">61.29% </span>
+            <span class="quiet">Branches</span>
+            <span class="fraction">57/93</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">87.5% </span>
+            <span class="quiet">Functions</span>
+            <span class="fraction">7/8</span>
+          </div>
+
+          <div class="fl pad1y space-right2">
+            <span class="strong">66.99% </span>
+            <span class="quiet">Lines</span>
+            <span class="fraction">69/103</span>
+          </div>
         </div>
         <p class="quiet">
-            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+          Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
         <template id="filterTemplate">
-            <div class="quiet">
-                Filter:
-                <input oninput="onInput()" type="search" id="fileSearch">
-            </div>
+          <div class="quiet">
+            Filter:
+            <input oninput="onInput()" type="search" id="fileSearch" />
+          </div>
         </template>
-    </div>
-    <div class='status-line medium'></div>
-    <pre><table class="coverage">
+      </div>
+      <div class="status-line medium"></div>
+      <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
 <a name='L3'></a><a href='#L3'>3</a>
@@ -405,7 +397,7 @@ export default class Evaluator {
   isCurrentlyEvaluatingIfStatement = false;
   startOfCurrentlyEvaluatedStatementIndex = 0;
   currentIfStatementCloseBracketIndex = 0;
-  indexesRequiringInversion: any = [];
+  conditionsToBeInverted: any = [];
   shouldBracketsBeRemoved = false;
   // usually involves arithmentic operations or double bangs
   isOperationWrappableInBrackets = false;
@@ -433,21 +425,21 @@ export default class Evaluator {
         tokens,
         this.startOfCurrentlyEvaluatedStatementIndex - 1,
       );
-<span class="cstat-no" title="statement not covered" >      this.indexesRequiringInversion.push({</span>
+<span class="cstat-no" title="statement not covered" >      this.conditionsToBeInverted.push({</span>
         start: this.startOfCurrentlyEvaluatedStatementIndex,
         removeNegationBrackets: { start: this.startOfCurrentlyEvaluatedStatementIndex, end: endIndex },
       });
     } else <span class="missing-if-branch" title="if path not taken" >I</span>if (this.revertBooleanLiteral &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!this.isOperationWrappableInBrackets)</span> {
-<span class="cstat-no" title="statement not covered" >      this.indexesRequiringInversion.push({</span>
+<span class="cstat-no" title="statement not covered" >      this.conditionsToBeInverted.push({</span>
         start: this.startOfCurrentlyEvaluatedStatementIndex,
         revertBooleanLiteral: this.revertBooleanLiteral,
       });
     } else <span class="missing-if-branch" title="else path not taken" >E</span>if (!this.logicalOperatorFound) {
-      this.indexesRequiringInversion.push({ start: this.startOfCurrentlyEvaluatedStatementIndex });
+      this.conditionsToBeInverted.push({ start: this.startOfCurrentlyEvaluatedStatementIndex });
     }
     <span class="missing-if-branch" title="if path not taken" >I</span>if (this.isOperationWrappableInBrackets &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!this.areBracketsAlreadyPresent)</span> {
       const endIndex = <span class="cstat-no" title="statement not covered" >TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, currentTokenIndex - 1, false);</span>
-<span class="cstat-no" title="statement not covered" >      this.indexesRequiringInversion.push({</span>
+<span class="cstat-no" title="statement not covered" >      this.conditionsToBeInverted.push({</span>
         brackets: true,
         start: this.startOfCurrentlyEvaluatedStatementIndex,
         end: endIndex,
@@ -456,7 +448,7 @@ export default class Evaluator {
   }
 &nbsp;
 <span class="fstat-no" title="function not covered" >  foundEquals(</span>tokens, index) {
-<span class="cstat-no" title="statement not covered" >    this.indexesRequiringInversion.push({ start: index });</span>
+<span class="cstat-no" title="statement not covered" >    this.conditionsToBeInverted.push({ start: index });</span>
 <span class="cstat-no" title="statement not covered" >    if (tokens[index + 1] === '=') {</span>
 <span class="cstat-no" title="statement not covered" >      if (tokens[index + 2] === '=') {</span>
 <span class="cstat-no" title="statement not covered" >        return index + 2;</span>
@@ -469,11 +461,11 @@ export default class Evaluator {
   evaluateStatementsBeforeLogicalOperator(tokens, index, nextNonSpaceCharacter) {
     if (this.numberOfBracketsOpen === 0) {
       this.dealWithStandaloneStatements(tokens, index);
-      this.indexesRequiringInversion.push({ start: index });
+      this.conditionsToBeInverted.push({ start: index });
       this.startOfCurrentlyEvaluatedStatementIndex = nextNonSpaceCharacter;
       this.refreshState();
     }
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.numberOfBracketsOpen &gt; 0 &amp;&amp; this.logicalOperatorFound) <span class="cstat-no" title="statement not covered" >this.indexesRequiringInversion.pop();</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (this.numberOfBracketsOpen &gt; 0 &amp;&amp; this.logicalOperatorFound) <span class="cstat-no" title="statement not covered" >this.conditionsToBeInverted.pop();</span>
     this.logicalOperatorFound = false;
   }
 &nbsp;
@@ -502,10 +494,10 @@ export default class Evaluator {
         } else <span class="missing-if-branch" title="if path not taken" >I</span>if (tokens[i] === '&lt;' || tokens[i] === '&gt;') {
 <span class="cstat-no" title="statement not covered" >          this.logicalOperatorFound = true;</span>
 <span class="cstat-no" title="statement not covered" >          if (tokens[i + 1] === '=') {</span>
-<span class="cstat-no" title="statement not covered" >            this.indexesRequiringInversion.push({ start: i, hasFollowupEquals: true });</span>
+<span class="cstat-no" title="statement not covered" >            this.conditionsToBeInverted.push({ start: i, hasFollowupEquals: true });</span>
 <span class="cstat-no" title="statement not covered" >            i += 1;</span>
           } else {
-<span class="cstat-no" title="statement not covered" >            this.indexesRequiringInversion.push({ start: i });</span>
+<span class="cstat-no" title="statement not covered" >            this.conditionsToBeInverted.push({ start: i });</span>
           }
         } else <span class="missing-if-branch" title="if path not taken" >I</span>if (tokens[i] === '=') {
 <span class="cstat-no" title="statement not covered" >          this.logicalOperatorFound = true;</span>
@@ -564,26 +556,27 @@ export default class Evaluator {
         this.isCurrentlyEvaluatingIfStatement = true;
       }
     }
-    return this.indexesRequiringInversion;
+    return this.conditionsToBeInverted;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
 
-                <div class='push'></div><!-- for sticky footer -->
-            </div><!-- /wrapper -->
-            <div class='footer quiet pad2 space-top1 center small'>
-                Code coverage generated by
-                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Sat Apr 02 2022 00:01:06 GMT+0100 (British Summer Time)
-            </div>
-        <script src="../../prettify.js"></script>
-        <script>
-            window.onload = function () {
-                prettyPrint();
-            };
-        </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
-    </body>
+      <div class="push"></div>
+      <!-- for sticky footer -->
+    </div>
+    <!-- /wrapper -->
+    <div class="footer quiet pad2 space-top1 center small">
+      Code coverage generated by
+      <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+      at Sat Apr 02 2022 00:01:06 GMT+0100 (British Summer Time)
+    </div>
+    <script src="../../prettify.js"></script>
+    <script>
+      window.onload = function () {
+        prettyPrint();
+      };
+    </script>
+    <script src="../../sorter.js"></script>
+    <script src="../../block-navigation.js"></script>
+  </body>
 </html>
-    
