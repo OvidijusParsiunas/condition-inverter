@@ -1,6 +1,6 @@
 import { InvertHighlightedText } from './invertHighlightedText/invertHighlightedText';
-import { UNEXPECTED_ERROR_MESSAGE_INTRODUCTION } from '../shared/consts/errors';
 import { InvertSelectedText } from './invertSelectedText/invertSelectedText';
+import { ErrorHandling } from './shared/functionality/errorHandling';
 import { window } from 'vscode';
 
 export class Invert {
@@ -21,8 +21,7 @@ export class Invert {
     try {
       Invert.start();
     } catch (error) {
-      console.log(UNEXPECTED_ERROR_MESSAGE_INTRODUCTION);
-      console.log((error as Error).message);
+      ErrorHandling.printErrorMessageOnConsole(error as Error);
     }
   }
 }
