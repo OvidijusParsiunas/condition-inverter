@@ -29,17 +29,6 @@ export default class TraversalUtils {
     return TraversalUtils.findEndingStringQuoteIndex(tokens, index + 1, typeOfQuoteString);
   }
 
-  public static findLastExclamationMarkIndex(tokens: any[], index: number): any {
-    const nextCharacterTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
-    if (tokens[nextCharacterTokenIndex] === '!') {
-      return TraversalUtils.findLastExclamationMarkIndex(tokens, nextCharacterTokenIndex);
-    }
-    if (tokens[nextCharacterTokenIndex] === '+' || tokens[nextCharacterTokenIndex] === '-') {
-      return TraversalUtils.findLastExclamationMarkIndex(tokens, nextCharacterTokenIndex);
-    }
-    return index;
-  }
-
   public static getIndexOfLastBracketOfIfStatement(tokens: any[], index: number, openBrackets = 0): any {
     if (index > tokens.length - 1) {
       console.log('index out of bounds');

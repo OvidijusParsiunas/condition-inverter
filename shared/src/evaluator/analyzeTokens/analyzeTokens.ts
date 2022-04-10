@@ -1,13 +1,13 @@
+import { AnalyzeArithmeticOperation } from './analyzeArithmeticOperation';
 import { EvaluationState } from '../../shared/types/evaluationState';
+import { AnalyzeExclamationMark } from './analyzeExclamationMark';
 import { AnalyzeBooleanLiteral } from './analyzeBooleanLiteral';
-import { Token, Tokens } from '../../shared/types/tokens';
+import { AnalyzeEqualsSign } from './analyzeEqualsSign';
+import { Tokens } from '../../shared/types/tokens';
 import TraversalUtils from '../../traversalUtils';
+import { AnalyzeBracket } from './analyzeBracket';
 
 export class AnalyzeTokens {
-  private static isTokenArithmeticOperation(token: Token) {
-    return token === '-' || token === '+' || token === '/' || token === '*';
-  }
-
   protected refreshState(evaluationState: EvaluationState) {
     evaluationState.isOperationWrappableInBrackets = false;
     evaluationState.shouldBracketsBeRemoved = false;
@@ -52,17 +52,6 @@ export class AnalyzeTokens {
     evaluationState.logicalOperatorFound = false;
   }
 
-  private foundEquals(tokens: Tokens, index, evaluationState: EvaluationState) {
-    evaluationState.conditionsToBeInverted.push({ start: index });
-    if (tokens[index + 1] === '=') {
-      if (tokens[index + 2] === '=') {
-        return index + 2;
-      } else {
-        return index + 1;
-      }
-    }
-  }
-
   protected analyzeTokens(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const currentToken = tokens[index];
     const nextToken = tokens[index + 1];
@@ -83,40 +72,15 @@ export class AnalyzeTokens {
       }
     } else if (currentToken === '=') {
       evaluationState.logicalOperatorFound = true;
-      return this.foundEquals(tokens, index, evaluationState);
+      return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
     } else if (currentToken === '!') {
-      const nextExclamationMarkIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
-      if (tokens[nextExclamationMarkIndex] === '!') {
-        evaluationState.isOperationWrappableInBrackets = true;
-        const newIndex = TraversalUtils.findLastExclamationMarkIndex(tokens, index + 1);
-        const nextNonSpaceCharacterIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, newIndex + 1);
-        if (tokens[nextNonSpaceCharacterIndex] === '(') {
-          return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, newIndex);
-        }
-        return newIndex;
-      } else if (evaluationState.numberOfBracketsOpen === 0) {
-        const nextCharacterTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
-        if (tokens[nextCharacterTokenIndex] === '(') {
-          // doesn't get called with syntax !!!!!( as the logic above captures that use case
-          // doesn't get called with syntax !!!(!( as this.numberOfBracketsOpen will be more than 1
-          // this is called for !( where we are sure that the bracket will need to be removed - which is done in dealWithStandaloneStatements
-          evaluationState.shouldBracketsBeRemoved = true;
-          return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
-        } else if (nextToken === '=') {
-          evaluationState.logicalOperatorFound = true;
-          return this.foundEquals(tokens, index, evaluationState);
-        }
-      }
-    } else if (AnalyzeTokens.isTokenArithmeticOperation(currentToken)) {
-      evaluationState.isOperationWrappableInBrackets = true;
-      if (evaluationState.areBracketsAlreadyPresent && evaluationState.numberOfBracketsOpen === 0) evaluationState.areBracketsAlreadyPresent = false;
+      return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
+    } else if (AnalyzeArithmeticOperation.isTokenArithmeticOperation(currentToken)) {
+      AnalyzeArithmeticOperation.analyze(evaluationState);
     } else if (currentToken === '(') {
-      if (!evaluationState.isOperationWrappableInBrackets && evaluationState.numberOfBracketsOpen === 0) {
-        evaluationState.areBracketsAlreadyPresent = true;
-      }
-      evaluationState.numberOfBracketsOpen += 1;
+      AnalyzeBracket.open(evaluationState);
     } else if (currentToken === ')') {
-      evaluationState.numberOfBracketsOpen -= 1;
+      AnalyzeBracket.close(evaluationState);
     } else if (currentToken === 'false' || currentToken === 'true') {
       AnalyzeBooleanLiteral.boolean(evaluationState);
     } else if (currentToken === '0' || currentToken === '1') {
