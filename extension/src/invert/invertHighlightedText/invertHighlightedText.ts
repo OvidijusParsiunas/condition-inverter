@@ -1,6 +1,6 @@
 import { SelectionStartIfRange } from './selectionBoundaryIfRanges/selectionStartIfRange';
+import { Position } from '../../shared/types/invertHighlightedText/invertHighlightedText';
 import { SelectionEndIfRange } from './selectionBoundaryIfRanges/selectionEndIfRange';
-import { Position } from '../../types/invertHighlightedText/invertHighlightedText';
 import InvertConditions from '../../../../shared/out/invert';
 import { RangeCreator } from '../shared/rangeCreator';
 import { Range, TextEditor } from 'vscode';

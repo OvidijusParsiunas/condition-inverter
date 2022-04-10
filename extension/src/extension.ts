@@ -6,7 +6,7 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the 'condition-inverter.invert' command is executed
 export function activate(context: vscode.ExtensionContext): void {
   console.log('Congratulations, your extension "condition-inverter" is now active!');
-  const disposable = vscode.commands.registerCommand('condition-inverter.invert', Invert.exec);
+  const disposable = vscode.commands.registerCommand('condition-inverter.invert', Invert.execute);
   context.subscriptions.push(disposable);
 }
 

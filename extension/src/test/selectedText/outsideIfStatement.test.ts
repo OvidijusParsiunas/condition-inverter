@@ -1,5 +1,5 @@
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
-import { TextEditorObj } from '../../types/tests/tests';
+import { TextEditorObj } from '../../shared/types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 

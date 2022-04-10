@@ -1,4 +1,4 @@
-import { Position } from '../../../types/invertHighlightedText/invertHighlightedText';
+import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { RangeCreator } from '../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
 

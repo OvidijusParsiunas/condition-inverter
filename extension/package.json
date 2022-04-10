@@ -17,7 +17,7 @@
     "commands": [
       {
         "command": "condition-inverter.invert",
-        "title": "Hello World"
+        "title": "Invert text"
       }
     ],
     "keybindings": [
