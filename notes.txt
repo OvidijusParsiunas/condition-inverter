@@ -4,3 +4,22 @@ when current cursor at the end and inversion occurs - a cursor selection is crea
 
 "key": "ctrl+shift+i",
 "mac": "cmd+shift+i",
+
+
+
+
+
+Knowledge:
+
+REF - 2000
+the project does not have bracket depth inference as it is designed the analysis during the first traversal.
+E.g:
+if ((!(hello)))
+
+will result with:
+
+if (!(hello))
+
+The core reason for this is in the following example, the algorithm doesn't know not to invert !(hello) upfront,
+hence it is always safer to invert the first bracket:
+if ((!(hello) && cat) || cat) = if (!(!(hello) && cat) && !cat)

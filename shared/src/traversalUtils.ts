@@ -1,5 +1,7 @@
+import { Tokens } from './shared/types/tokens';
+
 export default class TraversalUtils {
-  public static findNonSpaceCharacterIndexStartingFromIndex(tokens: any[], index: number, forwards = true): any {
+  public static findNonSpaceCharacterIndexStartingFromIndex(tokens: Tokens, index: number, forwards = true): any {
     if (index === 0) {
       return 0;
     }

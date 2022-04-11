@@ -3,10 +3,7 @@ import TraversalUtils from './traversalUtils';
 export default class Inverter {
   private static insertValue(tokens: any[], arrayIndex: number, newValue: string): number {
     if (tokens[arrayIndex].substring(0, 2) === `\n`) {
-      tokens[arrayIndex] = `${tokens[arrayIndex].substring(0, 2)}${newValue}${tokens[arrayIndex].substring(
-        2,
-        tokens[arrayIndex].length,
-      )}`;
+      tokens[arrayIndex] = `${tokens[arrayIndex].substring(0, 2)}${newValue}${tokens[arrayIndex].substring(2, tokens[arrayIndex].length)}`;
       return 0;
     }
     tokens.splice(arrayIndex, 0, newValue);
@@ -26,10 +23,7 @@ export default class Inverter {
   ) {
     let newElementsDelta = 0;
     conditionIndexes.forEach(
-      (
-        { start, end, brackets, hasFollowupEquals, removeNegationBrackets, revertBooleanLiteral }: any,
-        conditionIndexesCurrentIndex: number,
-      ) => {
+      ({ start, end, brackets, hasFollowupEquals, removeNegationBrackets, revertBooleanLiteral }: any, conditionIndexesCurrentIndex: number) => {
         const arrayIndex = start + newElementsDelta;
         if (brackets) {
           newElementsDelta += Inverter.insertValue(tokens, arrayIndex, '(');
