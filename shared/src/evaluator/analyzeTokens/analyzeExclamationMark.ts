@@ -32,7 +32,7 @@ export class AnalyzeExclamationMark {
     } else if (evaluationState.numberOfBracketsOpen === 0) {
       // REF - 2000
       // the logic here does not operate inside nested brackets so cases such as if ((!(hello))) will result with if (!(hello))
-      // the reason for this is because the app does not analyze the level at which inversions should be made, e.g:
+      // the reason for this is because the overall code does not analyze the level at which inversions should be made, e.g:
       // for if (((!(hello) && cat) || cat) we do not know that !(hello) is not to be inverted upfront, hence it is always
       // safe to assume that no further inversion will take place within brackets
       if (tokens[nextNonSpaceTokenIndex] === '(') {

@@ -67,6 +67,7 @@ export default class Inverter {
                 // if brackets are present, remove the exclamation mark
                 tokens.splice(arrayIndex, 1);
                 newElementsDelta -= 1;
+                // REF - 1889
                 if (removeNegationBrackets) {
                   const startIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, arrayIndex);
                   tokens.splice(startIndex, 1);
