@@ -66,7 +66,6 @@ export class AnalyzeTokens {
     } else if (currentToken === '<' || currentToken === '>') {
       return AnalyzeGreaterOrLessThan.analyze(tokens, index, evaluationState);
     } else if (currentToken === '=') {
-      evaluationState.comparisonOperatorFound = true;
       return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
     } else if (currentToken === '!') {
       return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);

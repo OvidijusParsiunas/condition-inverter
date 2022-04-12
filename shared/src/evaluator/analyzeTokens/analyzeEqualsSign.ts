@@ -10,6 +10,7 @@ export class AnalyzeEqualsSign {
   }
 
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    evaluationState.comparisonOperatorFound = true;
     evaluationState.conditionsToBeInverted.push({ start: index });
     if (tokens[index + 1] === '=') {
       return AnalyzeEqualsSign.getNewIndex(tokens, index);
