@@ -14,7 +14,7 @@ export default class Evaluator extends AnalyzeTokens {
     isOperationWrappableInBrackets: false,
     revertBooleanLiteral: false,
     // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
-    logicalOperatorFound: false,
+    comparisonOperatorFound: false,
     areBracketsAlreadyPresent: false,
     numberOfBracketsOpen: 0,
   };
@@ -22,7 +22,7 @@ export default class Evaluator extends AnalyzeTokens {
   private finishEvaluatingIfStatement(tokens: Tokens): void {
     this.dealWithStandaloneStatements(tokens, this.evaluationState.currentIfStatementCloseBracketIndex, this.evaluationState);
     this.evaluationState.isCurrentlyEvaluatingIfStatement = false;
-    this.evaluationState.logicalOperatorFound = false;
+    this.evaluationState.comparisonOperatorFound = false;
     this.refreshState(this.evaluationState);
   }
 

@@ -41,7 +41,7 @@ export class AnalyzeExclamationMark {
         return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
       } else if (tokens[nextNonSpaceTokenIndex] === '=') {
         // called for - !=...
-        evaluationState.logicalOperatorFound = true;
+        evaluationState.comparisonOperatorFound = true;
         return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
       }
     }

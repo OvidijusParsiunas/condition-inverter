@@ -16,14 +16,17 @@ export default class Inverter {
       start: any;
       end: any;
       brackets: any;
-      hasFollowupEquals: any;
+      greaterOrLessThanHasFollowupEquals: any;
       removeNegationBrackets: any;
       revertBooleanLiteral: any;
     }[],
   ) {
     let newElementsDelta = 0;
     conditionIndexes.forEach(
-      ({ start, end, brackets, hasFollowupEquals, removeNegationBrackets, revertBooleanLiteral }: any, conditionIndexesCurrentIndex: number) => {
+      (
+        { start, end, brackets, greaterOrLessThanHasFollowupEquals, removeNegationBrackets, revertBooleanLiteral }: any,
+        conditionIndexesCurrentIndex: number,
+      ) => {
         const arrayIndex = start + newElementsDelta;
         if (brackets) {
           newElementsDelta += Inverter.insertValue(tokens, arrayIndex, '(');
@@ -35,7 +38,7 @@ export default class Inverter {
               break;
             case '<':
               tokens[arrayIndex] = '>';
-              if (hasFollowupEquals) {
+              if (greaterOrLessThanHasFollowupEquals) {
                 tokens.splice(arrayIndex + 1, 1);
                 newElementsDelta -= 1;
               } else {
@@ -44,7 +47,7 @@ export default class Inverter {
               break;
             case '>':
               tokens[arrayIndex] = '<';
-              if (hasFollowupEquals) {
+              if (greaterOrLessThanHasFollowupEquals) {
                 tokens.splice(arrayIndex + 1, 1);
                 newElementsDelta -= 1;
               } else {

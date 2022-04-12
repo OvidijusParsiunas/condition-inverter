@@ -5,11 +5,11 @@ export interface EvaluationState {
   // WORK - change
   conditionsToBeInverted: any[];
   shouldBracketsBeRemoved: boolean;
-  // usually involves arithmentic operations or double bangs
+  // usually for conditions that include arithmentic operations or double bangs
   isOperationWrappableInBrackets: boolean;
   revertBooleanLiteral: boolean;
   // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
-  logicalOperatorFound: boolean;
+  comparisonOperatorFound: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;
 }

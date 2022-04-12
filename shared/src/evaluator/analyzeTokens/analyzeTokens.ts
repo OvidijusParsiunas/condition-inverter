@@ -1,5 +1,6 @@
 import { AnalyzeArithmeticOperation } from './analyzeArithmeticOperation';
 import { EvaluationState } from '../../shared/types/evaluationState';
+import { AnalyzeGreaterOrLessThan } from './analyzeLogicalOperator';
 import { AnalyzeExclamationMark } from './analyzeExclamationMark';
 import { AnalyzeBooleanLiteral } from './analyzeBooleanLiteral';
 import { AnalyzeEqualsSign } from './analyzeEqualsSign';
@@ -28,7 +29,7 @@ export class AnalyzeTokens {
         start: evaluationState.startOfCurrentlyEvaluatedStatementIndex,
         revertBooleanLiteral: evaluationState.revertBooleanLiteral,
       });
-    } else if (!evaluationState.logicalOperatorFound) {
+    } else if (!evaluationState.comparisonOperatorFound) {
       evaluationState.conditionsToBeInverted.push({ start: evaluationState.startOfCurrentlyEvaluatedStatementIndex });
     }
     if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
@@ -48,8 +49,8 @@ export class AnalyzeTokens {
       evaluationState.startOfCurrentlyEvaluatedStatementIndex = nextNonSpaceCharacter;
       this.refreshState(evaluationState);
     }
-    if (evaluationState.numberOfBracketsOpen > 0 && evaluationState.logicalOperatorFound) evaluationState.conditionsToBeInverted.pop();
-    evaluationState.logicalOperatorFound = false;
+    if (evaluationState.numberOfBracketsOpen > 0 && evaluationState.comparisonOperatorFound) evaluationState.conditionsToBeInverted.pop();
+    evaluationState.comparisonOperatorFound = false;
   }
 
   protected analyzeTokens(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
@@ -63,15 +64,9 @@ export class AnalyzeTokens {
         return nextNonSpaceCharacter - 1;
       }
     } else if (currentToken === '<' || currentToken === '>') {
-      evaluationState.logicalOperatorFound = true;
-      if (nextToken === '=') {
-        evaluationState.conditionsToBeInverted.push({ start: index, hasFollowupEquals: true });
-        return index + 1;
-      } else {
-        evaluationState.conditionsToBeInverted.push({ start: index });
-      }
+      return AnalyzeGreaterOrLessThan.analyze(tokens, index, evaluationState);
     } else if (currentToken === '=') {
-      evaluationState.logicalOperatorFound = true;
+      evaluationState.comparisonOperatorFound = true;
       return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
     } else if (currentToken === '!') {
       return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
