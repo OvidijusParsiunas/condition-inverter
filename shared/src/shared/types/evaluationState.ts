@@ -3,7 +3,7 @@ export interface EvaluationState {
   startOfCurrentlyEvaluatedStatementIndex: number;
   currentIfStatementCloseBracketIndex: number;
   // WORK - change
-  conditionsToBeInverted: any[];
+  syntaxToBeInverted: any[];
   shouldBracketsBeRemoved: boolean;
   // usually for conditions that include arithmetic operations or double bangs
   isOperationWrappableInBrackets: boolean;

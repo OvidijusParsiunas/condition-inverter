@@ -1,4 +1,4 @@
-import { EvaluationState } from '../../shared/types/evaluationState';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
 
 export class AnalyzeBracket {
   public static open(evaluationState: EvaluationState): void {

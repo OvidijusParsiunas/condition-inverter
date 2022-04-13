@@ -1,7 +1,7 @@
-import { EvaluationState } from '../../shared/types/evaluationState';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { Tokens } from '../../../../shared/types/tokens';
 import { AnalyzeEqualsSign } from './analyzeEqualsSign';
-import { Tokens } from '../../shared/types/tokens';
-import TraversalUtils from '../../traversalUtils';
+import TraversalUtils from '../../../../traversalUtils';
 
 export class AnalyzeExclamationMark {
   private static findLastExclamationMarkIndex(tokens: Tokens, index: number): any {
@@ -22,7 +22,7 @@ export class AnalyzeExclamationMark {
     return lastExclamationMarkIndex;
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static markSyntaxUpForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextNonSpaceTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
     if (tokens[nextNonSpaceTokenIndex] === '!') {
       // called for - !!..., // !!!!!... // !!!+!-!... // !!!!(...
@@ -41,7 +41,7 @@ export class AnalyzeExclamationMark {
         return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
       } else if (tokens[nextNonSpaceTokenIndex] === '=') {
         // called for - !=...
-        return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
+        return AnalyzeEqualsSign.markSyntaxUpForInversion(tokens, index, evaluationState);
       }
     }
     return index;

@@ -1,61 +1,26 @@
-import { AnalyzeStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
-import { AnalyzeTokensUtil } from './analyzeTokens/utils/analyzeTokensUtil';
-import { EvaluationState } from '../shared/types/evaluationState';
-import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
+import { AnalyzeIfStatement } from './analyzeIfStatement/analyzeIfStatement';
+import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { Tokens } from '../shared/types/tokens';
 import TraversalUtils from '../traversalUtils';
 
-export default class Evaluator extends AnalyzeTokens {
-  private evaluationState: EvaluationState = {
-    isCurrentlyEvaluatingIfStatement: false,
-    startOfCurrentlyEvaluatedStatementIndex: 0,
-    currentIfStatementCloseBracketIndex: 0,
-    conditionsToBeInverted: [],
-    shouldBracketsBeRemoved: false,
-    // usually involves arithmentic operations or double bangs
-    isOperationWrappableInBrackets: false,
-    invertBooleanLiteral: false,
-    // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
-    comparisonOperatorFound: false,
-    areBracketsAlreadyPresent: false,
-    numberOfBracketsOpen: 0,
-  };
-
-  private finishEvaluatingIfStatement(tokens: Tokens): void {
-    AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(
-      tokens,
-      this.evaluationState.currentIfStatementCloseBracketIndex,
-      this.evaluationState,
-    );
-    this.evaluationState.isCurrentlyEvaluatingIfStatement = false;
-    this.evaluationState.comparisonOperatorFound = false;
-    AnalyzeTokensUtil.refreshBooleanState(this.evaluationState);
-  }
-
-  private setConditionsToBeInverted(tokens: Tokens, index: number): number {
-    if (this.evaluationState.currentIfStatementCloseBracketIndex > index) {
-      return AnalyzeTokens.analyze(tokens, index, this.evaluationState);
-    }
-    this.finishEvaluatingIfStatement(tokens);
-    return index;
-  }
-
-  public evaluate(tokens: Tokens) {
-    this.evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
+export default class Evaluator {
+  public static evaluate(tokens: Tokens) {
+    const evaluationState = EvaluationStateUtil.generateNewState();
+    evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
-      if (this.evaluationState.isCurrentlyEvaluatingIfStatement) {
-        index = this.setConditionsToBeInverted(tokens, index);
+      if (evaluationState.isCurrentlyEvaluatingIfStatement) {
+        index = AnalyzeIfStatement.markSyntaxUpForInversion(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
-        this.evaluationState.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
+        evaluationState.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
         const bracketIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
-        this.evaluationState.startOfCurrentlyEvaluatedStatementIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(
+        evaluationState.startOfCurrentlyEvaluatedStatementIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(
           tokens,
           bracketIndex + 1,
         );
-        index = this.evaluationState.startOfCurrentlyEvaluatedStatementIndex - 1;
-        this.evaluationState.isCurrentlyEvaluatingIfStatement = true;
+        index = evaluationState.startOfCurrentlyEvaluatedStatementIndex - 1;
+        evaluationState.isCurrentlyEvaluatingIfStatement = true;
       }
     }
-    return this.evaluationState.conditionsToBeInverted;
+    return evaluationState.syntaxToBeInverted;
   }
 }

@@ -1,5 +1,5 @@
-import { EvaluationState } from '../../shared/types/evaluationState';
-import { Tokens } from '../../shared/types/tokens';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeEqualsSign {
   private static getNewIndex(tokens: Tokens, index: number): number {
@@ -9,9 +9,9 @@ export class AnalyzeEqualsSign {
     return index + 1;
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static markSyntaxUpForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     evaluationState.comparisonOperatorFound = true;
-    evaluationState.conditionsToBeInverted.push({ start: index });
+    evaluationState.syntaxToBeInverted.push({ start: index });
     if (tokens[index + 1] === '=') {
       return AnalyzeEqualsSign.getNewIndex(tokens, index);
     }

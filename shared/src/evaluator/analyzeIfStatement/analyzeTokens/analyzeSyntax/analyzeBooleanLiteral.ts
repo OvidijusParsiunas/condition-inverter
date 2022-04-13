@@ -1,8 +1,8 @@
-import { EvaluationState } from '../../shared/types/evaluationState';
-import { Token, Tokens } from '../../shared/types/tokens';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { Token, Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeBooleanLiteral {
-  public static boolean(evaluationState: EvaluationState): void {
+  public static markBooleanSyntaxUpForInversion(evaluationState: EvaluationState): void {
     evaluationState.invertBooleanLiteral = true;
   }
 
@@ -21,7 +21,7 @@ export class AnalyzeBooleanLiteral {
     return AnalyzeBooleanLiteral.findNumberEndIndex(tokens, index + 1);
   }
 
-  public static number(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static markBooleanNumberSyntaxUpForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
     if (AnalyzeBooleanLiteral.doesTokenEndNumber(nextToken)) {
       evaluationState.invertBooleanLiteral = true;

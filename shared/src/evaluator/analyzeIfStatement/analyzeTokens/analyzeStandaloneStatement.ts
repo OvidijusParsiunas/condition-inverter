@@ -1,11 +1,11 @@
-import { EvaluationState } from '../../shared/types/evaluationState';
-import { Tokens } from '../../shared/types/tokens';
-import TraversalUtils from '../../traversalUtils';
+import { EvaluationState } from '../../../shared/types/evaluationState';
+import { Tokens } from '../../../shared/types/tokens';
+import TraversalUtils from '../../../traversalUtils';
 
 export class AnalyzeStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     const endIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index - 1, false);
-    evaluationState.conditionsToBeInverted.push({
+    evaluationState.syntaxToBeInverted.push({
       brackets: true,
       start: evaluationState.startOfCurrentlyEvaluatedStatementIndex,
       end: endIndex,
@@ -13,20 +13,20 @@ export class AnalyzeStandaloneStatements {
   }
 
   private static markForVariableInversion(evaluationState: EvaluationState): void {
-    evaluationState.conditionsToBeInverted.push({ start: evaluationState.startOfCurrentlyEvaluatedStatementIndex });
+    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentlyEvaluatedStatementIndex });
   }
 
   private static markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
-    evaluationState.conditionsToBeInverted.push({
+    evaluationState.syntaxToBeInverted.push({
       start: evaluationState.startOfCurrentlyEvaluatedStatementIndex,
       invertBooleanLiteral: evaluationState.invertBooleanLiteral,
     });
   }
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
-    const { startOfCurrentlyEvaluatedStatementIndex, conditionsToBeInverted } = evaluationState;
+    const { startOfCurrentlyEvaluatedStatementIndex, syntaxToBeInverted } = evaluationState;
     const endIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, startOfCurrentlyEvaluatedStatementIndex - 1);
-    conditionsToBeInverted.push({
+    syntaxToBeInverted.push({
       start: startOfCurrentlyEvaluatedStatementIndex,
       removeNegationBrackets: { start: startOfCurrentlyEvaluatedStatementIndex, end: endIndex },
     });
