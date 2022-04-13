@@ -15,8 +15,8 @@ export class AnalyzeExclamationMark {
 
   private static getConditionEndIndex(tokens: Tokens, index: number): number {
     const lastExclamationMarkIndex = AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, index + 1);
-    const nextNonSpaceCharacterIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, lastExclamationMarkIndex + 1);
-    if (tokens[nextNonSpaceCharacterIndex] === '(') {
+    const nextNonSpaceCharIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, lastExclamationMarkIndex + 1);
+    if (tokens[nextNonSpaceCharIndex] === '(') {
       return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, lastExclamationMarkIndex);
     }
     return lastExclamationMarkIndex;

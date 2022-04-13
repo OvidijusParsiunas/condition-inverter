@@ -3,7 +3,7 @@ import { Tokens } from '../../../shared/types/tokens';
 import TraversalUtils from '../../../traversalUtils';
 
 export class AnalyzeTokensUtil {
-  public static refreshState(evaluationState: EvaluationState) {
+  public static refreshBooleanState(evaluationState: EvaluationState) {
     evaluationState.isOperationWrappableInBrackets = false;
     evaluationState.shouldBracketsBeRemoved = false;
     evaluationState.areBracketsAlreadyPresent = false;

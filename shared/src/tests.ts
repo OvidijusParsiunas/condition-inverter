@@ -465,6 +465,30 @@ export class Tests {
       'if ((1) && (12)) { console.log(1) }     if ((1) && (12)) { console.log(1) }',
       'if (!(1) || !(12)) { console.log(1) }     if (!(1) || !(12)) { console.log(1) }',
     );
+
+    Tests.test('if (dog==cat) { console.log(1) }', 'if (dog!=cat) { console.log(1) }');
+
+    Tests.test('if (dog===cat) { console.log(1) }', 'if (dog!==cat) { console.log(1) }');
+
+    Tests.test('if (dog!=cat) { console.log(1) }', 'if (dog==cat) { console.log(1) }');
+
+    Tests.test('if (dog!==cat) { console.log(1) }', 'if (dog===cat) { console.log(1) }');
+
+    Tests.test('if (dog>cat) { console.log(1) }', 'if (dog<=cat) { console.log(1) }');
+
+    Tests.test('if (dog>=cat) { console.log(1) }', 'if (dog<cat) { console.log(1) }');
+
+    Tests.test('if (dog<cat) { console.log(1) }', 'if (dog>=cat) { console.log(1) }');
+
+    Tests.test('if (dog<=cat) { console.log(1) }', 'if (dog>cat) { console.log(1) }');
+
+    Tests.test('if (dog==cat&&fish) { console.log(1) }', 'if (dog!=cat||!fish) { console.log(1) }');
+
+    Tests.test('if (dog==cat&&!fish) { console.log(1) }', 'if (dog!=cat||fish) { console.log(1) }');
+
+    Tests.test('if (dog==cat||fish) { console.log(1) }', 'if (dog!=cat&&!fish) { console.log(1) }');
+
+    Tests.test('if (dog==cat||!fish) { console.log(1) }', 'if (dog!=cat&&fish) { console.log(1) }');
   }
 }
 

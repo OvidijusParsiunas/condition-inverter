@@ -24,7 +24,7 @@ export default class Evaluator extends AnalyzeTokens {
     AnalyzeTokensUtil.dealWithStandaloneStatements(tokens, this.evaluationState.currentIfStatementCloseBracketIndex, this.evaluationState);
     this.evaluationState.isCurrentlyEvaluatingIfStatement = false;
     this.evaluationState.comparisonOperatorFound = false;
-    AnalyzeTokensUtil.refreshState(this.evaluationState);
+    AnalyzeTokensUtil.refreshBooleanState(this.evaluationState);
   }
 
   private setConditionsToBeInverted(tokens: Tokens, index: number): number {
