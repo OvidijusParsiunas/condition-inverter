@@ -12,26 +12,42 @@ import { AnalyzeBracket } from './analyzeBracket';
 export class AnalyzeTokens {
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const currentToken = tokens[index];
-    if (currentToken === '&' || currentToken === '|') {
-      return AnalyzeLogicalOperator.analyze(tokens, index, evaluationState);
-    } else if (currentToken === '<' || currentToken === '>') {
-      return AnalyzeGreaterOrLessThanSign.analyze(tokens, index, evaluationState);
-    } else if (currentToken === '=') {
-      return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
-    } else if (currentToken === '!') {
-      return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
-    } else if (AnalyzeArithmeticOperation.isTokenArithmeticOperation(currentToken)) {
-      AnalyzeArithmeticOperation.analyze(evaluationState);
-    } else if (currentToken === '(') {
-      AnalyzeBracket.open(evaluationState);
-    } else if (currentToken === ')') {
-      AnalyzeBracket.close(evaluationState);
-    } else if (currentToken === 'false' || currentToken === 'true') {
-      AnalyzeBooleanLiteral.boolean(evaluationState);
-    } else if (currentToken === '0' || currentToken === '1') {
-      return AnalyzeBooleanLiteral.number(tokens, index, evaluationState);
-    } else if (currentToken === `'` || currentToken === '`' || currentToken === '"') {
-      return TraversalUtils.findEndingStringQuoteIndex(tokens, index + 1, currentToken);
+    switch (currentToken) {
+      case '&':
+      case '|':
+        return AnalyzeLogicalOperator.analyze(tokens, index, evaluationState);
+      case '<':
+      case '>':
+        return AnalyzeGreaterOrLessThanSign.analyze(tokens, index, evaluationState);
+      case '=':
+        return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
+      case '!':
+        return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
+      case '-':
+      case '+':
+      case '/':
+      case '*':
+        AnalyzeArithmeticOperation.analyze(evaluationState);
+        break;
+      case '(':
+        AnalyzeBracket.open(evaluationState);
+        break;
+      case ')':
+        AnalyzeBracket.close(evaluationState);
+        break;
+      case 'false':
+      case 'true':
+        AnalyzeBooleanLiteral.boolean(evaluationState);
+        break;
+      case '0':
+      case '1':
+        return AnalyzeBooleanLiteral.number(tokens, index, evaluationState);
+      case `'`:
+      case '`':
+      case '"':
+        return TraversalUtils.findEndingStringQuoteIndex(tokens, index + 1, currentToken);
+      default: {
+      }
     }
     return index;
   }

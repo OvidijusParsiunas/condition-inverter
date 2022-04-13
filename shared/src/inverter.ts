@@ -18,13 +18,13 @@ export default class Inverter {
       brackets: any;
       greaterOrLessThanHasFollowupEquals: any;
       removeNegationBrackets: any;
-      revertBooleanLiteral: any;
+      invertBooleanLiteral: any;
     }[],
   ) {
     let newElementsDelta = 0;
     conditionIndexes.forEach(
       (
-        { start, end, brackets, greaterOrLessThanHasFollowupEquals, removeNegationBrackets, revertBooleanLiteral }: any,
+        { start, end, brackets, greaterOrLessThanHasFollowupEquals, removeNegationBrackets, invertBooleanLiteral }: any,
         conditionIndexesCurrentIndex: number,
       ) => {
         const arrayIndex = start + newElementsDelta;
@@ -81,22 +81,22 @@ export default class Inverter {
                 break;
               }
             case 'true':
-              if (revertBooleanLiteral) {
+              if (invertBooleanLiteral) {
                 tokens[arrayIndex] = false;
                 break;
               }
             case 'false':
-              if (revertBooleanLiteral) {
+              if (invertBooleanLiteral) {
                 tokens[arrayIndex] = true;
                 break;
               }
             case '0':
-              if (revertBooleanLiteral) {
+              if (invertBooleanLiteral) {
                 tokens[arrayIndex] = 1;
                 break;
               }
             case '1':
-              if (revertBooleanLiteral) {
+              if (invertBooleanLiteral) {
                 tokens[arrayIndex] = 0;
                 break;
               }

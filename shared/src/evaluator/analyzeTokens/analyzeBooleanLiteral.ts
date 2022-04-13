@@ -1,19 +1,32 @@
 import { EvaluationState } from '../../shared/types/evaluationState';
-import { Tokens } from '../../shared/types/tokens';
-import TraversalUtils from '../../traversalUtils';
+import { Token, Tokens } from '../../shared/types/tokens';
 
 export class AnalyzeBooleanLiteral {
   public static boolean(evaluationState: EvaluationState): void {
-    evaluationState.revertBooleanLiteral = true;
+    evaluationState.invertBooleanLiteral = true;
+  }
+
+  private static doesTokenEndNumber(token: Token): boolean {
+    return token === ' ' || token === ')' || token === '&' || token === '|';
+  }
+
+  public static findNumberEndIndex(tokens: Tokens, index: number): number {
+    if (index > tokens.length - 1) {
+      console.log('attempt to retrieve when number declaration stops is out of bounds');
+      return -1;
+    }
+    if (AnalyzeBooleanLiteral.doesTokenEndNumber(tokens[index])) {
+      return index;
+    }
+    return AnalyzeBooleanLiteral.findNumberEndIndex(tokens, index + 1);
   }
 
   public static number(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
-    if (nextToken === ' ' || nextToken === ')' || nextToken === '&' || nextToken === '|') {
-      evaluationState.revertBooleanLiteral = true;
+    if (AnalyzeBooleanLiteral.doesTokenEndNumber(nextToken)) {
+      evaluationState.invertBooleanLiteral = true;
       return index;
-    } else {
-      return TraversalUtils.getWhenNumberStops(tokens, index);
     }
+    return AnalyzeBooleanLiteral.findNumberEndIndex(tokens, index);
   }
 }

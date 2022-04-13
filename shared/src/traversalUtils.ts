@@ -12,18 +12,6 @@ export default class TraversalUtils {
     return TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, newIndex, forwards);
   }
 
-  public static getWhenNumberStops(tokens: string | any[], index: number): any {
-    if (index > tokens.length - 1) {
-      console.log('attempt to retrieve when number declaration stops is out of bounds');
-      return -1;
-    }
-    const nextCharacter = tokens[index];
-    if (nextCharacter === ' ' || nextCharacter === ')' || nextCharacter === '&' || nextCharacter === '|') {
-      return index;
-    }
-    return TraversalUtils.getWhenNumberStops(tokens, index + 1);
-  }
-
   public static findEndingStringQuoteIndex(tokens: { [x: string]: any }, index: number, typeOfQuoteString: any): any {
     if (tokens[index] === typeOfQuoteString) {
       return index;

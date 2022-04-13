@@ -1,3 +1,4 @@
+import { AnalyzeStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
 import { AnalyzeTokensUtil } from './analyzeTokens/utils/analyzeTokensUtil';
 import { EvaluationState } from '../shared/types/evaluationState';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
@@ -13,7 +14,7 @@ export default class Evaluator extends AnalyzeTokens {
     shouldBracketsBeRemoved: false,
     // usually involves arithmentic operations or double bangs
     isOperationWrappableInBrackets: false,
-    revertBooleanLiteral: false,
+    invertBooleanLiteral: false,
     // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
     comparisonOperatorFound: false,
     areBracketsAlreadyPresent: false,
@@ -21,7 +22,11 @@ export default class Evaluator extends AnalyzeTokens {
   };
 
   private finishEvaluatingIfStatement(tokens: Tokens): void {
-    AnalyzeTokensUtil.dealWithStandaloneStatements(tokens, this.evaluationState.currentIfStatementCloseBracketIndex, this.evaluationState);
+    AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(
+      tokens,
+      this.evaluationState.currentIfStatementCloseBracketIndex,
+      this.evaluationState,
+    );
     this.evaluationState.isCurrentlyEvaluatingIfStatement = false;
     this.evaluationState.comparisonOperatorFound = false;
     AnalyzeTokensUtil.refreshBooleanState(this.evaluationState);

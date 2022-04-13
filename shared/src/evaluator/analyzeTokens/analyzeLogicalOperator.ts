@@ -1,3 +1,4 @@
+import { AnalyzeStandaloneStatements } from './analyzeStandaloneStatement';
 import { EvaluationState } from '../../shared/types/evaluationState';
 import { AnalyzeTokensUtil } from './utils/analyzeTokensUtil';
 import { Tokens } from '../../shared/types/tokens';
@@ -5,7 +6,7 @@ import TraversalUtils from '../../traversalUtils';
 
 export class AnalyzeLogicalOperator {
   private static analyzeStandaloneStatements(tokens: Tokens, index: number, nextNonSpaceCharIndex: number, evaluationState: EvaluationState): void {
-    AnalyzeTokensUtil.dealWithStandaloneStatements(tokens, index, evaluationState);
+    AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
     evaluationState.conditionsToBeInverted.push({ start: index });
     evaluationState.startOfCurrentlyEvaluatedStatementIndex = nextNonSpaceCharIndex;
     AnalyzeTokensUtil.refreshBooleanState(evaluationState);
