@@ -12,9 +12,9 @@ export class AnalyzeIfStatement {
     EvaluationStateUtil.refresh(evaluationState);
   }
 
-  public static markSyntaxUpForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     if (evaluationState.currentIfStatementCloseBracketIndex > index) {
-      return AnalyzeTokens.markSyntaxUpForInversion(tokens, index, evaluationState);
+      return AnalyzeTokens.analyze(tokens, index, evaluationState);
     }
     AnalyzeIfStatement.finishEvaluatingIfStatement(tokens, evaluationState);
     return index;

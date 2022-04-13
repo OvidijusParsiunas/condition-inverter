@@ -22,7 +22,7 @@ export class AnalyzeLogicalOperator {
     evaluationState.comparisonOperatorFound = false;
   }
 
-  public static markSyntaxUpForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
     if (nextToken === '&' || nextToken === '|') {
       const nextNonSpaceCharIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 2);

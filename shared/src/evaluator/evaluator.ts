@@ -9,7 +9,7 @@ export default class Evaluator {
     evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
       if (evaluationState.isCurrentlyEvaluatingIfStatement) {
-        index = AnalyzeIfStatement.markSyntaxUpForInversion(tokens, index, evaluationState);
+        index = AnalyzeIfStatement.analyze(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
         evaluationState.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
         const bracketIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);

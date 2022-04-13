@@ -10,32 +10,32 @@ import { Tokens } from '../../../shared/types/tokens';
 import TraversalUtils from '../../../traversalUtils';
 
 export class AnalyzeTokens {
-  public static markSyntaxUpForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const currentToken = tokens[index];
     switch (currentToken) {
       case '!':
-        return AnalyzeExclamationMark.markSyntaxUpForInversion(tokens, index, evaluationState);
+        return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
       case '(':
-        AnalyzeBracket.open(evaluationState);
+        AnalyzeBracket.analyzeOpen(evaluationState);
         break;
       case ')':
-        AnalyzeBracket.close(evaluationState);
+        AnalyzeBracket.analyzeClose(evaluationState);
         break;
       case '&':
       case '|':
-        return AnalyzeLogicalOperator.markSyntaxUpForInversion(tokens, index, evaluationState);
+        return AnalyzeLogicalOperator.analyze(tokens, index, evaluationState);
       case '<':
       case '>':
-        return AnalyzeGreaterOrLessThanSign.markSyntaxUpForInversion(tokens, index, evaluationState);
+        return AnalyzeGreaterOrLessThanSign.analyze(tokens, index, evaluationState);
       case '=':
-        return AnalyzeEqualsSign.markSyntaxUpForInversion(tokens, index, evaluationState);
+        return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
       case 'false':
       case 'true':
-        AnalyzeBooleanLiteral.markBooleanSyntaxUpForInversion(evaluationState);
+        AnalyzeBooleanLiteral.analyzeBoolean(evaluationState);
         break;
       case '0':
       case '1':
-        return AnalyzeBooleanLiteral.markBooleanNumberSyntaxUpForInversion(tokens, index, evaluationState);
+        return AnalyzeBooleanLiteral.analyzeBooleanNumber(tokens, index, evaluationState);
       case `'`:
       case '`':
       case '"':
@@ -44,7 +44,7 @@ export class AnalyzeTokens {
       case '+':
       case '/':
       case '*':
-        AnalyzeArithmeticOperation.markSyntaxUpForInversion(evaluationState);
+        AnalyzeArithmeticOperation.analyze(evaluationState);
         break;
       default: {
       }
