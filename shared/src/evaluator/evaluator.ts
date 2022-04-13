@@ -1,3 +1,4 @@
+import { AnalyzeTokensUtil } from './analyzeTokens/utils/analyzeTokensUtil';
 import { EvaluationState } from '../shared/types/evaluationState';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
 import { Tokens } from '../shared/types/tokens';
@@ -20,15 +21,15 @@ export default class Evaluator extends AnalyzeTokens {
   };
 
   private finishEvaluatingIfStatement(tokens: Tokens): void {
-    this.dealWithStandaloneStatements(tokens, this.evaluationState.currentIfStatementCloseBracketIndex, this.evaluationState);
+    AnalyzeTokensUtil.dealWithStandaloneStatements(tokens, this.evaluationState.currentIfStatementCloseBracketIndex, this.evaluationState);
     this.evaluationState.isCurrentlyEvaluatingIfStatement = false;
     this.evaluationState.comparisonOperatorFound = false;
-    this.refreshState(this.evaluationState);
+    AnalyzeTokensUtil.refreshState(this.evaluationState);
   }
 
   private setConditionsToBeInverted(tokens: Tokens, index: number): number {
     if (this.evaluationState.currentIfStatementCloseBracketIndex > index) {
-      return this.analyzeTokens(tokens, index, this.evaluationState);
+      return AnalyzeTokens.analyze(tokens, index, this.evaluationState);
     }
     this.finishEvaluatingIfStatement(tokens);
     return index;
