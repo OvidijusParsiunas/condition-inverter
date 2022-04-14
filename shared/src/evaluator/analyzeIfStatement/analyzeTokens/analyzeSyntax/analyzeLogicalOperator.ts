@@ -9,7 +9,7 @@ export class AnalyzeLogicalOperator {
     AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
     evaluationState.syntaxToBeInverted.push({ start: index });
     evaluationState.startOfCurrentlyEvaluatedStatementIndex = nextNonSpaceCharIndex;
-    EvaluationStateUtil.refresh(evaluationState);
+    EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 
   private static analyzeStatementsBeforeOperator(tokens: Tokens, index: number, nextNonSpaceCharIndex: number, evaluationState: EvaluationState) {
@@ -25,7 +25,7 @@ export class AnalyzeLogicalOperator {
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
     if (nextToken === '&' || nextToken === '|') {
-      const nextNonSpaceCharIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 2);
+      const nextNonSpaceCharIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 2);
       AnalyzeLogicalOperator.analyzeStatementsBeforeOperator(tokens, index, nextNonSpaceCharIndex, evaluationState);
       // subtracting one due to the for loop automatically adding one
       return nextNonSpaceCharIndex - 1;

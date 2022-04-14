@@ -4,7 +4,7 @@ import TraversalUtils from '../../../traversalUtils';
 
 export class AnalyzeStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-    const endIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index - 1, false);
+    const endIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
       brackets: true,
       start: evaluationState.startOfCurrentlyEvaluatedStatementIndex,

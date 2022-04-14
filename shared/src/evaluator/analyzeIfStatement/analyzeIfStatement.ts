@@ -9,7 +9,7 @@ export class AnalyzeIfStatement {
     AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, evaluationState.currentIfStatementCloseBracketIndex, evaluationState);
     evaluationState.isCurrentlyEvaluatingIfStatement = false;
     evaluationState.comparisonOperatorFound = false;
-    EvaluationStateUtil.refresh(evaluationState);
+    EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

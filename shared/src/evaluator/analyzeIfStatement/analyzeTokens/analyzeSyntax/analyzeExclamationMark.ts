@@ -5,7 +5,7 @@ import TraversalUtils from '../../../../traversalUtils';
 
 export class AnalyzeExclamationMark {
   private static findLastExclamationMarkIndex(tokens: Tokens, index: number): any {
-    const nextNonSpaceTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
+    const nextNonSpaceTokenIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 1);
     // a direct plus or minus after exclamation mark are regarded as part of the condition
     if (tokens[nextNonSpaceTokenIndex] === '!' || tokens[nextNonSpaceTokenIndex] === '+' || tokens[nextNonSpaceTokenIndex] === '-') {
       return AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, nextNonSpaceTokenIndex);
@@ -15,7 +15,7 @@ export class AnalyzeExclamationMark {
 
   private static getConditionEndIndex(tokens: Tokens, index: number): number {
     const lastExclamationMarkIndex = AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, index + 1);
-    const nextNonSpaceCharIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, lastExclamationMarkIndex + 1);
+    const nextNonSpaceCharIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, lastExclamationMarkIndex + 1);
     if (tokens[nextNonSpaceCharIndex] === '(') {
       return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, lastExclamationMarkIndex);
     }
@@ -23,7 +23,7 @@ export class AnalyzeExclamationMark {
   }
 
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const nextNonSpaceTokenIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, index + 1);
+    const nextNonSpaceTokenIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 1);
     if (tokens[nextNonSpaceTokenIndex] === '!') {
       // called for - !!..., // !!!!!... // !!!+!-!... // !!!!(...
       // if there are multiple exclamation marks, wrap the condition inside brackets with an exclamation mark

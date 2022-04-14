@@ -72,7 +72,7 @@ export default class Inverter {
                 newElementsDelta -= 1;
                 // REF - 1889
                 if (removeNegationBrackets) {
-                  const startIndex = TraversalUtils.findNonSpaceCharacterIndexStartingFromIndex(tokens, arrayIndex);
+                  const startIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, arrayIndex);
                   tokens.splice(startIndex, 1);
                   newElementsDelta -= 1;
                   tokens.splice(removeNegationBrackets.end + newElementsDelta, 1);

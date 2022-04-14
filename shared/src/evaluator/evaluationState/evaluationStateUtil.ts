@@ -18,7 +18,7 @@ export class EvaluationStateUtil {
     };
   }
 
-  public static refresh(evaluationState: EvaluationState) {
+  public static refreshBooleanState(evaluationState: EvaluationState) {
     evaluationState.isOperationWrappableInBrackets = false;
     evaluationState.shouldBracketsBeRemoved = false;
     evaluationState.areBracketsAlreadyPresent = false;

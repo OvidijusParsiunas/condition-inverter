@@ -39,7 +39,7 @@ export class AnalyzeTokens {
       case `'`:
       case '`':
       case '"':
-        return TraversalUtils.findEndingStringQuoteIndex(tokens, index + 1, currentToken);
+        return TraversalUtils.getEndQuoteIndex(tokens, index + 1, currentToken);
       case '-':
       case '+':
       case '/':
