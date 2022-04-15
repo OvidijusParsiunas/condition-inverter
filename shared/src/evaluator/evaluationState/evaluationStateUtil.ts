@@ -3,8 +3,8 @@ import { EvaluationState } from '../../shared/types/evaluationState';
 export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
     return {
-      isCurrentlyEvaluatingIfStatement: false,
-      startOfCurrentlyEvaluatedStatementIndex: 0,
+      isCurrentlyInsideIfStatement: false,
+      startOfCurrentIfStatementInsideIndex: 0,
       currentIfStatementCloseBracketIndex: 0,
       syntaxToBeInverted: [],
       shouldBracketsBeRemoved: false,

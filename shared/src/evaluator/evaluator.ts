@@ -8,14 +8,10 @@ export default class Evaluator {
     const evaluationState = EvaluationStateUtil.generateNewState();
     evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
-      if (evaluationState.isCurrentlyEvaluatingIfStatement) {
+      if (evaluationState.isCurrentlyInsideIfStatement) {
         index = AnalyzeIfStatement.analyze(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
-        evaluationState.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
-        const bracketIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 1);
-        evaluationState.startOfCurrentlyEvaluatedStatementIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, bracketIndex + 1);
-        index = evaluationState.startOfCurrentlyEvaluatedStatementIndex - 1;
-        evaluationState.isCurrentlyEvaluatingIfStatement = true;
+        index = AnalyzeIfStatement.setNewIfStatemetState(tokens, index, evaluationState);
       }
     }
     return evaluationState.syntaxToBeInverted;

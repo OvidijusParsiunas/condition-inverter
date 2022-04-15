@@ -1,6 +1,6 @@
 export interface EvaluationState {
-  isCurrentlyEvaluatingIfStatement: boolean;
-  startOfCurrentlyEvaluatedStatementIndex: number;
+  isCurrentlyInsideIfStatement: boolean;
+  startOfCurrentIfStatementInsideIndex: number;
   currentIfStatementCloseBracketIndex: number;
   // WORK - change
   syntaxToBeInverted: any[];

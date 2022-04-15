@@ -8,7 +8,7 @@ export class AnalyzeLogicalOperator {
   private static analyzeStandaloneStatements(tokens: Tokens, index: number, nextNonSpaceCharIndex: number, evaluationState: EvaluationState): void {
     AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
     evaluationState.syntaxToBeInverted.push({ start: index });
-    evaluationState.startOfCurrentlyEvaluatedStatementIndex = nextNonSpaceCharIndex;
+    evaluationState.startOfCurrentIfStatementInsideIndex = nextNonSpaceCharIndex;
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 
