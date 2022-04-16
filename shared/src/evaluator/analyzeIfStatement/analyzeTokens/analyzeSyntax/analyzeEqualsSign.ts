@@ -11,7 +11,7 @@ export class AnalyzeEqualsSign {
 
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     evaluationState.comparisonOperatorFound = true;
-    evaluationState.syntaxToBeInverted.push({ start: index });
+    evaluationState.invertableSyntaxIndexes.push({ start: index });
     if (tokens[index + 1] === '=') {
       return AnalyzeEqualsSign.getNewIndex(tokens, index);
     }

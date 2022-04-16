@@ -21,7 +21,7 @@ export class AnalyzeIfStatement {
     return index;
   }
 
-  public static setNewIfStatemetState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static setNewIfStatementState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const openBracketIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 1);
     evaluationState.startOfCurrentIfStatementInsideIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
     evaluationState.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);

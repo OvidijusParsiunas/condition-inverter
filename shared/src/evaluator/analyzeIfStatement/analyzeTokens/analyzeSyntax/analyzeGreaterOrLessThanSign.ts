@@ -6,10 +6,10 @@ export class AnalyzeGreaterOrLessThanSign {
     const nextToken = tokens[index + 1];
     evaluationState.comparisonOperatorFound = true;
     if (nextToken === '=') {
-      evaluationState.syntaxToBeInverted.push({ start: index, greaterOrLessThanHasFollowupEquals: true });
+      evaluationState.invertableSyntaxIndexes.push({ start: index, greaterOrLessThanHasFollowupEquals: true });
       return index + 1;
     }
-    evaluationState.syntaxToBeInverted.push({ start: index });
+    evaluationState.invertableSyntaxIndexes.push({ start: index });
     return index;
   }
 }

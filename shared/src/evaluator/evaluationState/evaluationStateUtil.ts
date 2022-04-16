@@ -6,7 +6,7 @@ export class EvaluationStateUtil {
       isCurrentlyInsideIfStatement: false,
       startOfCurrentIfStatementInsideIndex: 0,
       currentIfStatementCloseBracketIndex: 0,
-      syntaxToBeInverted: [],
+      invertableSyntaxIndexes: [],
       shouldBracketsBeRemoved: false,
       // usually involves arithmentic operations or double bangs
       isOperationWrappableInBrackets: false,

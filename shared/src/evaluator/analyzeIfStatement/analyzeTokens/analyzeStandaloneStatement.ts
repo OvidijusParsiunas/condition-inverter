@@ -5,7 +5,7 @@ import TraversalUtils from '../../../traversalUtils';
 export class AnalyzeStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     const endIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index - 1, false);
-    evaluationState.syntaxToBeInverted.push({
+    evaluationState.invertableSyntaxIndexes.push({
       brackets: true,
       start: evaluationState.startOfCurrentIfStatementInsideIndex,
       end: endIndex,
@@ -13,20 +13,20 @@ export class AnalyzeStandaloneStatements {
   }
 
   private static markForVariableInversion(evaluationState: EvaluationState): void {
-    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentIfStatementInsideIndex });
+    evaluationState.invertableSyntaxIndexes.push({ start: evaluationState.startOfCurrentIfStatementInsideIndex });
   }
 
   private static markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
-    evaluationState.syntaxToBeInverted.push({
+    evaluationState.invertableSyntaxIndexes.push({
       start: evaluationState.startOfCurrentIfStatementInsideIndex,
       invertBooleanLiteral: evaluationState.invertBooleanLiteral,
     });
   }
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
-    const { startOfCurrentIfStatementInsideIndex, syntaxToBeInverted } = evaluationState;
+    const { startOfCurrentIfStatementInsideIndex, invertableSyntaxIndexes } = evaluationState;
     const endIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, startOfCurrentIfStatementInsideIndex - 1);
-    syntaxToBeInverted.push({
+    invertableSyntaxIndexes.push({
       start: startOfCurrentIfStatementInsideIndex,
       removeNegationBrackets: { start: startOfCurrentIfStatementInsideIndex, end: endIndex },
     });

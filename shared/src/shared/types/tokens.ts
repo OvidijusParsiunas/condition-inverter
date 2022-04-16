@@ -1,3 +1,3 @@
-export type Token = string | number;
+export type Token = string | number | boolean;
 
 export type Tokens = Token[];

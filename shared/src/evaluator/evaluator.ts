@@ -1,7 +1,6 @@
 import { AnalyzeIfStatement } from './analyzeIfStatement/analyzeIfStatement';
 import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { Tokens } from '../shared/types/tokens';
-import TraversalUtils from '../traversalUtils';
 
 export default class Evaluator {
   public static evaluate(tokens: Tokens) {
@@ -11,9 +10,9 @@ export default class Evaluator {
       if (evaluationState.isCurrentlyInsideIfStatement) {
         index = AnalyzeIfStatement.analyze(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
-        index = AnalyzeIfStatement.setNewIfStatemetState(tokens, index, evaluationState);
+        index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
       }
     }
-    return evaluationState.syntaxToBeInverted;
+    return evaluationState.invertableSyntaxIndexes;
   }
 }
