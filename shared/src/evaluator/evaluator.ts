@@ -1,9 +1,10 @@
 import { AnalyzeIfStatement } from './analyzeIfStatement/analyzeIfStatement';
 import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
+import { SyntaxToBeInverted } from '../shared/types/evaluationState';
 import { Tokens } from '../shared/types/tokens';
 
 export default class Evaluator {
-  public static evaluate(tokens: Tokens) {
+  public static evaluate(tokens: Tokens): SyntaxToBeInverted[] {
     const evaluationState = EvaluationStateUtil.generateNewState();
     evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
@@ -13,6 +14,6 @@ export default class Evaluator {
         index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
       }
     }
-    return evaluationState.invertableSyntaxIndexes;
+    return evaluationState.syntaxToBeInverted;
   }
 }

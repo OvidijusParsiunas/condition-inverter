@@ -1,8 +1,7 @@
 import {
   Brackets,
   GreaterOrLessThanHasFollowupEquals,
-  InvertableSyntaxIndex,
-  InvertableSyntaxIndexes,
+  SyntaxToBeInverted,
   InvertBooleanLiteral,
   RemoveNegationBrackets,
 } from './shared/types/evaluationState';
@@ -19,103 +18,103 @@ export default class Inverter {
     return 1;
   }
 
-  private static isBrackets(invertableSyntax?: InvertableSyntaxIndex): invertableSyntax is Brackets {
-    return (invertableSyntax as Brackets)?.brackets;
+  private static isBrackets(invertableSyntaxEntry?: SyntaxToBeInverted): invertableSyntaxEntry is Brackets {
+    return (invertableSyntaxEntry as Brackets)?.brackets;
   }
 
-  private static isRemoveNegationBrackets(invertableSyntax: InvertableSyntaxIndex): invertableSyntax is RemoveNegationBrackets {
-    return !!(invertableSyntax as RemoveNegationBrackets).removeNegationBrackets;
+  private static isRemoveNegationBrackets(invertableSyntaxEntry: SyntaxToBeInverted): invertableSyntaxEntry is RemoveNegationBrackets {
+    return !!(invertableSyntaxEntry as RemoveNegationBrackets).removeNegationBrackets;
   }
 
-  private static isInvertBooleanLiteral(invertableSyntax: InvertableSyntaxIndex): invertableSyntax is InvertBooleanLiteral {
-    return !!(invertableSyntax as InvertBooleanLiteral).invertBooleanLiteral;
+  private static isInvertBooleanLiteral(invertableSyntaxEntry: SyntaxToBeInverted): invertableSyntaxEntry is InvertBooleanLiteral {
+    return !!(invertableSyntaxEntry as InvertBooleanLiteral).invertBooleanLiteral;
   }
 
   private static isGreaterOrLessThanHasFollowupEquals(
-    invertableSyntax: InvertableSyntaxIndex,
-  ): invertableSyntax is GreaterOrLessThanHasFollowupEquals {
-    return (invertableSyntax as GreaterOrLessThanHasFollowupEquals).greaterOrLessThanHasFollowupEquals;
+    invertableSyntaxEntry: SyntaxToBeInverted,
+  ): invertableSyntaxEntry is GreaterOrLessThanHasFollowupEquals {
+    return (invertableSyntaxEntry as GreaterOrLessThanHasFollowupEquals).greaterOrLessThanHasFollowupEquals;
   }
 
-  static invertIfStatements(tokens: Tokens, invertableSyntaxIndexes: InvertableSyntaxIndexes) {
+  static invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]) {
     let newElementsDelta = 0;
-    invertableSyntaxIndexes.forEach((invertableSyntaxIndex, conditionIndexesCurrentIndex: number) => {
-      const arrayIndex = invertableSyntaxIndex.start + newElementsDelta;
-      if (Inverter.isBrackets(invertableSyntaxIndex)) {
-        newElementsDelta += Inverter.insertValue(tokens, arrayIndex, '(');
-        newElementsDelta += Inverter.insertValue(tokens, invertableSyntaxIndex.end + newElementsDelta + 1, ')');
+    syntaxToBeInverted.forEach((syntaxToBeInvertedEntry, index) => {
+      const relativeTokenIndex = syntaxToBeInvertedEntry.start + newElementsDelta;
+      if (Inverter.isBrackets(syntaxToBeInvertedEntry)) {
+        newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex, '(');
+        newElementsDelta += Inverter.insertValue(tokens, syntaxToBeInvertedEntry.end + newElementsDelta + 1, ')');
       } else {
-        switch (tokens[arrayIndex]) {
+        switch (tokens[relativeTokenIndex]) {
           case '=':
-            tokens[arrayIndex] = '!';
+            tokens[relativeTokenIndex] = '!';
             break;
           case '<':
-            tokens[arrayIndex] = '>';
-            if (Inverter.isGreaterOrLessThanHasFollowupEquals(invertableSyntaxIndex)) {
-              tokens.splice(arrayIndex + 1, 1);
+            tokens[relativeTokenIndex] = '>';
+            if (Inverter.isGreaterOrLessThanHasFollowupEquals(syntaxToBeInvertedEntry)) {
+              tokens.splice(relativeTokenIndex + 1, 1);
               newElementsDelta -= 1;
             } else {
-              newElementsDelta += Inverter.insertValue(tokens, arrayIndex + 1, '=');
+              newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex + 1, '=');
             }
             break;
           case '>':
-            tokens[arrayIndex] = '<';
-            if (Inverter.isGreaterOrLessThanHasFollowupEquals(invertableSyntaxIndex)) {
-              tokens.splice(arrayIndex + 1, 1);
+            tokens[relativeTokenIndex] = '<';
+            if (Inverter.isGreaterOrLessThanHasFollowupEquals(syntaxToBeInvertedEntry)) {
+              tokens.splice(relativeTokenIndex + 1, 1);
               newElementsDelta -= 1;
             } else {
-              newElementsDelta += Inverter.insertValue(tokens, arrayIndex + 1, '=');
+              newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex + 1, '=');
             }
             break;
           case '&':
-            tokens[arrayIndex] = '|';
-            tokens[arrayIndex + 1] = '|';
+            tokens[relativeTokenIndex] = '|';
+            tokens[relativeTokenIndex + 1] = '|';
             break;
           case '|':
-            tokens[arrayIndex] = '&';
-            tokens[arrayIndex + 1] = '&';
+            tokens[relativeTokenIndex] = '&';
+            tokens[relativeTokenIndex + 1] = '&';
             break;
           case '!':
-            if (tokens[arrayIndex + 1] === '=') {
-              tokens[arrayIndex] = '=';
+            if (tokens[relativeTokenIndex + 1] === '=') {
+              tokens[relativeTokenIndex] = '=';
               break;
-            } else if (!Inverter.isBrackets(invertableSyntaxIndexes[conditionIndexesCurrentIndex + 1])) {
+            } else if (!Inverter.isBrackets(syntaxToBeInverted[index + 1])) {
               // if brackets are present, remove the exclamation mark
-              tokens.splice(arrayIndex, 1);
+              tokens.splice(relativeTokenIndex, 1);
               newElementsDelta -= 1;
               // REF - 1889
-              if (Inverter.isRemoveNegationBrackets(invertableSyntaxIndex)) {
-                const startIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, arrayIndex);
+              if (Inverter.isRemoveNegationBrackets(syntaxToBeInvertedEntry)) {
+                const startIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, relativeTokenIndex);
                 tokens.splice(startIndex, 1);
                 newElementsDelta -= 1;
-                tokens.splice(invertableSyntaxIndex.removeNegationBrackets.end + newElementsDelta, 1);
+                tokens.splice(syntaxToBeInvertedEntry.removeNegationBrackets.end + newElementsDelta, 1);
                 newElementsDelta -= 1;
               }
               break;
             }
           case 'true':
-            if (Inverter.isInvertBooleanLiteral(invertableSyntaxIndex)) {
-              tokens[arrayIndex] = false;
+            if (Inverter.isInvertBooleanLiteral(syntaxToBeInvertedEntry)) {
+              tokens[relativeTokenIndex] = false;
               break;
             }
           case 'false':
-            if (Inverter.isInvertBooleanLiteral(invertableSyntaxIndex)) {
-              tokens[arrayIndex] = true;
+            if (Inverter.isInvertBooleanLiteral(syntaxToBeInvertedEntry)) {
+              tokens[relativeTokenIndex] = true;
               break;
             }
           case '0':
-            if (Inverter.isInvertBooleanLiteral(invertableSyntaxIndex)) {
-              tokens[arrayIndex] = 1;
+            if (Inverter.isInvertBooleanLiteral(syntaxToBeInvertedEntry)) {
+              tokens[relativeTokenIndex] = 1;
               break;
             }
           case '1':
-            if (Inverter.isInvertBooleanLiteral(invertableSyntaxIndex)) {
-              tokens[arrayIndex] = 0;
+            if (Inverter.isInvertBooleanLiteral(syntaxToBeInvertedEntry)) {
+              tokens[relativeTokenIndex] = 0;
               break;
             }
           // if brackets are required - proceed to go onto the next section and append a ! at the start before the brackets
           default: {
-            newElementsDelta += Inverter.insertValue(tokens, arrayIndex, '!');
+            newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex, '!');
           }
         }
       }

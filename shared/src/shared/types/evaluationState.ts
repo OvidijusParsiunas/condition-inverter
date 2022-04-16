@@ -23,16 +23,14 @@ export interface GreaterOrLessThanHasFollowupEquals {
   greaterOrLessThanHasFollowupEquals: boolean;
 }
 
-export type InvertableSyntaxIndex = GreaterOrLessThanHasFollowupEquals | RemoveNegationBrackets | InvertBooleanLiteral | Brackets | Start;
-
-export type InvertableSyntaxIndexes = InvertableSyntaxIndex[];
+export type SyntaxToBeInverted = GreaterOrLessThanHasFollowupEquals | RemoveNegationBrackets | InvertBooleanLiteral | Brackets | Start;
 
 export interface EvaluationState {
   isCurrentlyInsideIfStatement: boolean;
   startOfCurrentIfStatementInsideIndex: number;
   currentIfStatementCloseBracketIndex: number;
   // WORK - change
-  invertableSyntaxIndexes: InvertableSyntaxIndexes;
+  syntaxToBeInverted: SyntaxToBeInverted[];
   shouldBracketsBeRemoved: boolean;
   // usually for conditions that include arithmetic operations or double bangs
   isOperationWrappableInBrackets: boolean;

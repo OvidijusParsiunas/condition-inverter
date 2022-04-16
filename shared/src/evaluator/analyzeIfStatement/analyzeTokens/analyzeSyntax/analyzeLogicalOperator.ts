@@ -7,7 +7,7 @@ import TraversalUtils from '../../../../traversalUtils';
 export class AnalyzeLogicalOperator {
   private static analyzeStandaloneStatements(tokens: Tokens, index: number, nextNonSpaceCharIndex: number, evaluationState: EvaluationState): void {
     AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
-    evaluationState.invertableSyntaxIndexes.push({ start: index });
+    evaluationState.syntaxToBeInverted.push({ start: index });
     evaluationState.startOfCurrentIfStatementInsideIndex = nextNonSpaceCharIndex;
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
@@ -17,7 +17,7 @@ export class AnalyzeLogicalOperator {
       AnalyzeLogicalOperator.analyzeStandaloneStatements(tokens, index, nextNonSpaceCharIndex, evaluationState);
     } else if (evaluationState.numberOfBracketsOpen > 0 && evaluationState.comparisonOperatorFound) {
       // instead of inverting the comparison operator, the brackets are inverted
-      evaluationState.invertableSyntaxIndexes.pop();
+      evaluationState.syntaxToBeInverted.pop();
     }
     evaluationState.comparisonOperatorFound = false;
   }
