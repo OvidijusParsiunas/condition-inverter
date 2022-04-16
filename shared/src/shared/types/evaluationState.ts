@@ -1,29 +1,25 @@
-export interface Brackets {
+interface Generic {
   start: number;
+}
+
+export interface Brackets extends Generic {
   end: number;
   brackets: boolean;
 }
 
-interface Start {
-  start: number;
-}
-
-export interface InvertBooleanLiteral {
-  start: number;
+export interface InvertBooleanLiteral extends Generic {
   invertBooleanLiteral: boolean;
 }
 
-export interface RemoveNegationBrackets {
-  start: number;
+export interface RemoveNegationBrackets extends Generic {
   removeNegationBrackets: { start: number; end: number };
 }
 
-export interface GreaterOrLessThanHasFollowupEquals {
-  start: number;
-  greaterOrLessThanHasFollowupEquals: boolean;
+export interface GreaterOrLessThanHasFollowupEquals extends Generic {
+  greaterOrLessThanFollowedUpByEquals: boolean;
 }
 
-export type SyntaxToBeInverted = GreaterOrLessThanHasFollowupEquals | RemoveNegationBrackets | InvertBooleanLiteral | Brackets | Start;
+export type SyntaxToBeInverted = Generic | GreaterOrLessThanHasFollowupEquals | RemoveNegationBrackets | InvertBooleanLiteral | Brackets;
 
 export interface EvaluationState {
   isCurrentlyInsideIfStatement: boolean;

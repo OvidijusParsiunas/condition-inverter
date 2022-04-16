@@ -33,7 +33,7 @@ export default class Inverter {
   private static isGreaterOrLessThanHasFollowupEquals(
     invertableSyntaxEntry: SyntaxToBeInverted,
   ): invertableSyntaxEntry is GreaterOrLessThanHasFollowupEquals {
-    return (invertableSyntaxEntry as GreaterOrLessThanHasFollowupEquals).greaterOrLessThanHasFollowupEquals;
+    return (invertableSyntaxEntry as GreaterOrLessThanHasFollowupEquals).greaterOrLessThanFollowedUpByEquals;
   }
 
   static invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]) {
