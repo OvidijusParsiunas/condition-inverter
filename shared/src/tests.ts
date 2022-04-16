@@ -1,4 +1,4 @@
-import InvertConditions from './invert';
+import { InvertConditions } from './invert';
 
 // WORK - refactor
 
@@ -15,10 +15,7 @@ export class Tests {
   }
 
   public static runExclusiveTests() {
-    Tests.test(
-      'if (mouse && cat) { console.log(2) } else if (dog) { console.log(1) }',
-      'if (!mouse || !cat) { console.log(2) } else if (!dog) { console.log(1) }',
-    );
+    Tests.test('if (mouse && cat) { console.log(2) }', 'if (!mouse || !cat) { console.log(2) }');
   }
 
   public static runTests() {

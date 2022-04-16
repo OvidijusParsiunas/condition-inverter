@@ -2,8 +2,8 @@ import { AnalyzeStandaloneStatements } from './analyzeTokens/analyzeStandaloneSt
 import { EvaluationStateUtil } from '../evaluationState/evaluationStateUtil';
 import { EvaluationState } from '../../shared/types/evaluationState';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
+import { TraversalUtils } from '../../traversalUtils';
 import { Tokens } from '../../shared/types/tokens';
-import TraversalUtils from '../../traversalUtils';
 
 export class AnalyzeIfStatement {
   private static finishEvaluatingIfStatement(tokens: Tokens, evaluationState: EvaluationState): void {

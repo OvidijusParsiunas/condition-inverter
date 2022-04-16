@@ -1,6 +1,6 @@
 import { EvaluationState } from '../../../shared/types/evaluationState';
+import { TraversalUtils } from '../../../traversalUtils';
 import { Tokens } from '../../../shared/types/tokens';
-import TraversalUtils from '../../../traversalUtils';
 
 export class AnalyzeStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {

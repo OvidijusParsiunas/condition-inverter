@@ -1,23 +1,15 @@
 import {
-  Brackets,
   GreaterOrLessThanHasFollowupEquals,
-  SyntaxToBeInverted,
-  InvertBooleanLiteral,
   RemoveNegationBrackets,
-} from './shared/types/evaluationState';
-import { Tokens } from './shared/types/tokens';
-import TraversalUtils from './traversalUtils';
+  InvertBooleanLiteral,
+  SyntaxToBeInverted,
+  Brackets,
+} from '../shared/types/evaluationState';
+import { Tokens } from '../shared/types/tokens';
+import { TraversalUtils } from '../traversalUtils';
+import { InsertNewSyntax } from './insertNewSyntax';
 
-export default class Inverter {
-  private static insertValue(tokens: any[], arrayIndex: number, newValue: string): number {
-    if (tokens[arrayIndex].substring(0, 2) === `\n`) {
-      tokens[arrayIndex] = `${tokens[arrayIndex].substring(0, 2)}${newValue}${tokens[arrayIndex].substring(2, tokens[arrayIndex].length)}`;
-      return 0;
-    }
-    tokens.splice(arrayIndex, 0, newValue);
-    return 1;
-  }
-
+export class Inverter {
   private static isBrackets(invertableSyntaxEntry?: SyntaxToBeInverted): invertableSyntaxEntry is Brackets {
     return (invertableSyntaxEntry as Brackets)?.brackets;
   }
@@ -41,8 +33,8 @@ export default class Inverter {
     syntaxToBeInverted.forEach((syntaxToBeInvertedEntry, index) => {
       const relativeTokenIndex = syntaxToBeInvertedEntry.start + newElementsDelta;
       if (Inverter.isBrackets(syntaxToBeInvertedEntry)) {
-        newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex, '(');
-        newElementsDelta += Inverter.insertValue(tokens, syntaxToBeInvertedEntry.end + newElementsDelta + 1, ')');
+        newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex, '(');
+        newElementsDelta += InsertNewSyntax.insert(tokens, syntaxToBeInvertedEntry.end + newElementsDelta + 1, ')');
       } else {
         switch (tokens[relativeTokenIndex]) {
           case '=':
@@ -54,7 +46,7 @@ export default class Inverter {
               tokens.splice(relativeTokenIndex + 1, 1);
               newElementsDelta -= 1;
             } else {
-              newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex + 1, '=');
+              newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex + 1, '=');
             }
             break;
           case '>':
@@ -63,7 +55,7 @@ export default class Inverter {
               tokens.splice(relativeTokenIndex + 1, 1);
               newElementsDelta -= 1;
             } else {
-              newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex + 1, '=');
+              newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex + 1, '=');
             }
             break;
           case '&':
@@ -114,7 +106,7 @@ export default class Inverter {
             }
           // if brackets are required - proceed to go onto the next section and append a ! at the start before the brackets
           default: {
-            newElementsDelta += Inverter.insertValue(tokens, relativeTokenIndex, '!');
+            newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex, '!');
           }
         }
       }

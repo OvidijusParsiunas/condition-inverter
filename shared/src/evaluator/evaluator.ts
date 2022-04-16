@@ -3,7 +3,7 @@ import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { SyntaxToBeInverted } from '../shared/types/evaluationState';
 import { Tokens } from '../shared/types/tokens';
 
-export default class Evaluator {
+export class Evaluator {
   public static evaluate(tokens: Tokens): SyntaxToBeInverted[] {
     const evaluationState = EvaluationStateUtil.generateNewState();
     evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;

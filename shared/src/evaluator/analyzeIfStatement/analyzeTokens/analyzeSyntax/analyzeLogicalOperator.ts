@@ -1,8 +1,8 @@
 import { EvaluationStateUtil } from '../../../evaluationState/evaluationStateUtil';
 import { AnalyzeStandaloneStatements } from '../analyzeStandaloneStatement';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { TraversalUtils } from '../../../../traversalUtils';
 import { Tokens } from '../../../../shared/types/tokens';
-import TraversalUtils from '../../../../traversalUtils';
 
 export class AnalyzeLogicalOperator {
   private static analyzeStandaloneStatements(tokens: Tokens, index: number, nextNonSpaceCharIndex: number, evaluationState: EvaluationState): void {

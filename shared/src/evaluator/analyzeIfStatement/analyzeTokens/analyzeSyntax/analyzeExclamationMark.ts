@@ -1,7 +1,7 @@
 import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { TraversalUtils } from '../../../../traversalUtils';
 import { Tokens } from '../../../../shared/types/tokens';
 import { AnalyzeEqualsSign } from './analyzeEqualsSign';
-import TraversalUtils from '../../../../traversalUtils';
 
 export class AnalyzeExclamationMark {
   private static findLastExclamationMarkIndex(tokens: Tokens, index: number): any {

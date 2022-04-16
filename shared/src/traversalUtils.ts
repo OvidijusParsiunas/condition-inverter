@@ -1,6 +1,6 @@
 import { Tokens } from './shared/types/tokens';
 
-export default class TraversalUtils {
+export class TraversalUtils {
   public static getNonSpaceCharacterIndex(tokens: Tokens, index: number, traverseForwards = true): number {
     if (index === 0) {
       return 0;
@@ -21,6 +21,7 @@ export default class TraversalUtils {
 
   public static getIndexOfLastBracketOfIfStatement(tokens: Tokens, index: number, openBrackets = 0): number {
     if (index > tokens.length - 1) {
+      // WORK - need this inside errors
       console.log('index out of bounds');
       return -1;
     }

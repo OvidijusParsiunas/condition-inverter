@@ -6,8 +6,8 @@ import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { AnalyzeEqualsSign } from './analyzeSyntax/analyzeEqualsSign';
 import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
+import { TraversalUtils } from '../../../traversalUtils';
 import { Tokens } from '../../../shared/types/tokens';
-import TraversalUtils from '../../../traversalUtils';
 
 export class AnalyzeTokens {
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
