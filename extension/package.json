@@ -1,5 +1,5 @@
 {
-  "name": "condition-inverter",
+  "name": "if-inverter",
   "displayName": "Condition Inverter",
   "description": "Invert conditional statements",
   "version": "0.0.1",
@@ -10,19 +10,19 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:condition-inverter.invert"
+    "onCommand:if-inverter.invert"
   ],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "condition-inverter.invert",
+        "command": "if-inverter.invert",
         "title": "Invert text"
       }
     ],
     "keybindings": [
       {
-        "command": "condition-inverter.invert",
+        "command": "if-inverter.invert",
         "key": "ctrl+i",
         "mac": "cmd+i",
         "when": "editorTextFocus"

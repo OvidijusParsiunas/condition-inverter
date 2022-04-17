@@ -1,1 +1,1 @@
-# condition-inverter
+# if-inverter

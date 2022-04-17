@@ -51,7 +51,7 @@ export class TestUtil {
     const { selection } = testProps;
     textEditor.selection = new vscode.Selection(selection.start, selection.end);
     // execute the inversion command
-    await vscode.commands.executeCommand('condition-inverter.invert');
+    await vscode.commands.executeCommand('if-inverter.invert');
     // test output after command execution
     setTimeout(() => TestUtil.testOutput(textEditor, testProps, doneCallback), TestUtil.commandExecutionTimeMl);
   }

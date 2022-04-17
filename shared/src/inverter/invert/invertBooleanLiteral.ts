@@ -3,7 +3,7 @@ import { InsertNewSyntax } from '../insert/insertNewSyntax';
 import { Tokens } from '../../shared/types/tokens';
 
 export class InvertBooleanLiteral {
-  private static readonly booleanLiteralToInveted = {
+  private static readonly booleanLiteralToInveted: { [key: string]: number | boolean } = {
     [0]: 1,
     [1]: 0,
     true: false,

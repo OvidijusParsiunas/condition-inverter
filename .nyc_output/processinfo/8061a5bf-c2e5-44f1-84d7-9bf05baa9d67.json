@@ -1,1 +1,28 @@
-{"parent":null,"pid":17607,"argv":["/Users/ovidijusparsiunas/Desktop/condition-inverter/extension/.vscode-test/vscode-darwin-1.66.0/Visual Studio Code.app/Contents/MacOS/Electron","/Users/ovidijusparsiunas/Desktop/condition-inverter/extension/.vscode-test/vscode-darwin-1.66.0/Visual Studio Code.app/Contents/Resources/app/out/bootstrap-fork","--type=extensionHost","--skipWorkspaceStorageLock"],"execArgv":["--expose-gc"],"cwd":"/Users/ovidijusparsiunas/Desktop/condition-inverter/extension","time":1648854064390,"ppid":17594,"coverageFilename":"/Users/ovidijusparsiunas/Desktop/condition-inverter/.nyc_output/8061a5bf-c2e5-44f1-84d7-9bf05baa9d67.json","externalId":"","uuid":"8061a5bf-c2e5-44f1-84d7-9bf05baa9d67","files":["/Users/ovidijusparsiunas/Desktop/condition-inverter/extension/out/extension.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/extension/out/invert/invert.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/extension/out/invert/invertViaCursorPosition.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/shared/out/invert.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/shared/out/tokenizer.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/shared/out/evaluator.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/shared/out/traversalUtils.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/shared/out/inverter.js","/Users/ovidijusparsiunas/Desktop/condition-inverter/extension/out/invert/invertSelection.js"]}
+{
+  "parent": null,
+  "pid": 17607,
+  "argv": [
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/extension/.vscode-test/vscode-darwin-1.66.0/Visual Studio Code.app/Contents/MacOS/Electron",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/extension/.vscode-test/vscode-darwin-1.66.0/Visual Studio Code.app/Contents/Resources/app/out/bootstrap-fork",
+    "--type=extensionHost",
+    "--skipWorkspaceStorageLock"
+  ],
+  "execArgv": ["--expose-gc"],
+  "cwd": "/Users/ovidijusparsiunas/Desktop/if-inverter/extension",
+  "time": 1648854064390,
+  "ppid": 17594,
+  "coverageFilename": "/Users/ovidijusparsiunas/Desktop/if-inverter/.nyc_output/8061a5bf-c2e5-44f1-84d7-9bf05baa9d67.json",
+  "externalId": "",
+  "uuid": "8061a5bf-c2e5-44f1-84d7-9bf05baa9d67",
+  "files": [
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/extension/out/extension.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/extension/out/invert/invert.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/extension/out/invert/invertViaCursorPosition.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/shared/out/invert.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/shared/out/tokenizer.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/shared/out/evaluator.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/shared/out/traversalUtils.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/shared/out/inverter.js",
+    "/Users/ovidijusparsiunas/Desktop/if-inverter/extension/out/invert/invertSelection.js"
+  ]
+}
