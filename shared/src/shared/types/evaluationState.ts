@@ -2,9 +2,9 @@ interface Generic {
   start: number;
 }
 
-export interface Brackets extends Generic {
+export interface InsertNewBrackets extends Generic {
   end: number;
-  brackets: boolean;
+  insertNewBrackets: boolean;
 }
 
 export interface InvertBooleanLiteral extends Generic {
@@ -12,14 +12,14 @@ export interface InvertBooleanLiteral extends Generic {
 }
 
 export interface RemoveNegationBrackets extends Generic {
-  removeNegationBrackets: { start: number; end: number };
+  removeNegatedBrackets: { start: number; end: number };
 }
 
-export interface GreaterOrLessThanHasFollowupEquals extends Generic {
-  greaterOrLessThanFollowedUpByEquals: boolean;
+export interface GreaterOrLessThanHasFollowUpEquals extends Generic {
+  greaterOrLessThanHasFollowUpEquals: boolean;
 }
 
-export type SyntaxToBeInverted = Generic | GreaterOrLessThanHasFollowupEquals | RemoveNegationBrackets | InvertBooleanLiteral | Brackets;
+export type SyntaxToBeInverted = Generic | GreaterOrLessThanHasFollowUpEquals | RemoveNegationBrackets | InvertBooleanLiteral | InsertNewBrackets;
 
 export interface EvaluationState {
   isCurrentlyInsideIfStatement: boolean;

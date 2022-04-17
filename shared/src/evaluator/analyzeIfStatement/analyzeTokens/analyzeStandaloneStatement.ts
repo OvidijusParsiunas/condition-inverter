@@ -6,7 +6,7 @@ export class AnalyzeStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     const endIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
-      brackets: true,
+      insertNewBrackets: true,
       start: evaluationState.startOfCurrentIfStatementInsideIndex,
       end: endIndex,
     });
@@ -28,7 +28,7 @@ export class AnalyzeStandaloneStatements {
     const endIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, startOfCurrentIfStatementInsideIndex - 1);
     syntaxToBeInverted.push({
       start: startOfCurrentIfStatementInsideIndex,
-      removeNegationBrackets: { start: startOfCurrentIfStatementInsideIndex, end: endIndex },
+      removeNegatedBrackets: { start: startOfCurrentIfStatementInsideIndex, end: endIndex },
     });
   }
 

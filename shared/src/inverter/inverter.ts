@@ -1,62 +1,39 @@
 import {
-  GreaterOrLessThanHasFollowupEquals,
+  GreaterOrLessThanHasFollowUpEquals,
   RemoveNegationBrackets,
   InvertBooleanLiteral,
   SyntaxToBeInverted,
-  Brackets,
+  InsertNewBrackets,
 } from '../shared/types/evaluationState';
-import { Tokens } from '../shared/types/tokens';
-import { TraversalUtils } from '../traversalUtils';
+import { InvertGreaterOrLessThanSign } from './invertGreaterOrLessThanSign';
 import { InsertNewSyntax } from './insertNewSyntax';
+import { TraversalUtils } from '../traversalUtils';
+import { InsertBrackets } from './insertBrackets';
+import { Tokens } from '../shared/types/tokens';
 
 export class Inverter {
-  private static isBrackets(invertableSyntaxEntry?: SyntaxToBeInverted): invertableSyntaxEntry is Brackets {
-    return (invertableSyntaxEntry as Brackets)?.brackets;
-  }
-
   private static isRemoveNegationBrackets(invertableSyntaxEntry: SyntaxToBeInverted): invertableSyntaxEntry is RemoveNegationBrackets {
-    return !!(invertableSyntaxEntry as RemoveNegationBrackets).removeNegationBrackets;
+    return !!(invertableSyntaxEntry as RemoveNegationBrackets).removeNegatedBrackets;
   }
 
   private static isInvertBooleanLiteral(invertableSyntaxEntry: SyntaxToBeInverted): invertableSyntaxEntry is InvertBooleanLiteral {
     return !!(invertableSyntaxEntry as InvertBooleanLiteral).invertBooleanLiteral;
   }
 
-  private static isGreaterOrLessThanHasFollowupEquals(
-    invertableSyntaxEntry: SyntaxToBeInverted,
-  ): invertableSyntaxEntry is GreaterOrLessThanHasFollowupEquals {
-    return (invertableSyntaxEntry as GreaterOrLessThanHasFollowupEquals).greaterOrLessThanFollowedUpByEquals;
-  }
-
-  static invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]) {
+  public static invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
     let newElementsDelta = 0;
     syntaxToBeInverted.forEach((syntaxToBeInvertedEntry, index) => {
       const relativeTokenIndex = syntaxToBeInvertedEntry.start + newElementsDelta;
-      if (Inverter.isBrackets(syntaxToBeInvertedEntry)) {
-        newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex, '(');
-        newElementsDelta += InsertNewSyntax.insert(tokens, syntaxToBeInvertedEntry.end + newElementsDelta + 1, ')');
+      if (InsertBrackets.isInsertNewBrackets(syntaxToBeInvertedEntry)) {
+        newElementsDelta = InsertBrackets.insert(tokens, relativeTokenIndex, syntaxToBeInvertedEntry.end, newElementsDelta);
       } else {
         switch (tokens[relativeTokenIndex]) {
           case '=':
             tokens[relativeTokenIndex] = '!';
             break;
           case '<':
-            tokens[relativeTokenIndex] = '>';
-            if (Inverter.isGreaterOrLessThanHasFollowupEquals(syntaxToBeInvertedEntry)) {
-              tokens.splice(relativeTokenIndex + 1, 1);
-              newElementsDelta -= 1;
-            } else {
-              newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex + 1, '=');
-            }
-            break;
           case '>':
-            tokens[relativeTokenIndex] = '<';
-            if (Inverter.isGreaterOrLessThanHasFollowupEquals(syntaxToBeInvertedEntry)) {
-              tokens.splice(relativeTokenIndex + 1, 1);
-              newElementsDelta -= 1;
-            } else {
-              newElementsDelta += InsertNewSyntax.insert(tokens, relativeTokenIndex + 1, '=');
-            }
+            newElementsDelta = InvertGreaterOrLessThanSign.invert(tokens, relativeTokenIndex, newElementsDelta, syntaxToBeInvertedEntry);
             break;
           case '&':
             tokens[relativeTokenIndex] = '|';
@@ -70,7 +47,7 @@ export class Inverter {
             if (tokens[relativeTokenIndex + 1] === '=') {
               tokens[relativeTokenIndex] = '=';
               break;
-            } else if (!Inverter.isBrackets(syntaxToBeInverted[index + 1])) {
+            } else if (!InsertBrackets.isInsertNewBrackets(syntaxToBeInverted[index + 1])) {
               // if brackets are present, remove the exclamation mark
               tokens.splice(relativeTokenIndex, 1);
               newElementsDelta -= 1;
@@ -79,7 +56,7 @@ export class Inverter {
                 const startIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, relativeTokenIndex);
                 tokens.splice(startIndex, 1);
                 newElementsDelta -= 1;
-                tokens.splice(syntaxToBeInvertedEntry.removeNegationBrackets.end + newElementsDelta, 1);
+                tokens.splice(syntaxToBeInvertedEntry.removeNegatedBrackets.end + newElementsDelta, 1);
                 newElementsDelta -= 1;
               }
               break;
