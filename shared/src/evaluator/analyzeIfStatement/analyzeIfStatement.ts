@@ -1,8 +1,8 @@
 import { AnalyzeStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
 import { EvaluationStateUtil } from '../evaluationState/evaluationStateUtil';
+import { TraversalUtil } from '../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../shared/types/evaluationState';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
-import { TraversalUtils } from '../../traversalUtils';
 import { Tokens } from '../../shared/types/tokens';
 
 export class AnalyzeIfStatement {
@@ -22,9 +22,9 @@ export class AnalyzeIfStatement {
   }
 
   public static setNewIfStatementState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const openBracketIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 1);
-    evaluationState.startOfCurrentIfStatementInsideIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
-    evaluationState.currentIfStatementCloseBracketIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index);
+    const openBracketIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
+    evaluationState.startOfCurrentIfStatementInsideIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
+    evaluationState.currentIfStatementCloseBracketIndex = TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
     evaluationState.isCurrentlyInsideIfStatement = true;
     return evaluationState.startOfCurrentIfStatementInsideIndex - 1;
   }

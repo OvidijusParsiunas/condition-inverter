@@ -1,7 +1,7 @@
 import { EvaluationStateUtil } from '../../../evaluationState/evaluationStateUtil';
+import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { AnalyzeStandaloneStatements } from '../analyzeStandaloneStatement';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { TraversalUtils } from '../../../../traversalUtils';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeLogicalOperator {
@@ -25,7 +25,7 @@ export class AnalyzeLogicalOperator {
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
     if (nextToken === '&' || nextToken === '|') {
-      const nextNonSpaceCharIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index + 2);
+      const nextNonSpaceCharIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 2);
       AnalyzeLogicalOperator.analyzeStatementsBeforeOperator(tokens, index, nextNonSpaceCharIndex, evaluationState);
       // subtracting one due to the for loop automatically adding one
       return nextNonSpaceCharIndex - 1;

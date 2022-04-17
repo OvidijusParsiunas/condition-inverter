@@ -1,10 +1,10 @@
+import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
-import { TraversalUtils } from '../../../traversalUtils';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-    const endIndex = TraversalUtils.getNonSpaceCharacterIndex(tokens, index - 1, false);
+    const endIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
       start: evaluationState.startOfCurrentIfStatementInsideIndex,
@@ -25,7 +25,7 @@ export class AnalyzeStandaloneStatements {
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
     const { startOfCurrentIfStatementInsideIndex, syntaxToBeInverted } = evaluationState;
-    const endIndex = TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, startOfCurrentIfStatementInsideIndex - 1);
+    const endIndex = TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, startOfCurrentIfStatementInsideIndex - 1);
     syntaxToBeInverted.push({
       start: startOfCurrentIfStatementInsideIndex,
       removeNegatedBrackets: { start: startOfCurrentIfStatementInsideIndex, end: endIndex },

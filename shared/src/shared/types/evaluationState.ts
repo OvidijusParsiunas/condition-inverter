@@ -19,19 +19,17 @@ export interface GreaterOrLessThanHasFollowUpEquals extends Generic {
   greaterOrLessThanHasFollowUpEquals: boolean;
 }
 
-export type SyntaxToBeInverted = Generic | GreaterOrLessThanHasFollowUpEquals | RemoveNegationBrackets | InvertBooleanLiteral | InsertNewBrackets;
+export type SyntaxToBeInverted = Generic | InsertNewBrackets | InvertBooleanLiteral | RemoveNegationBrackets | GreaterOrLessThanHasFollowUpEquals;
 
 export interface EvaluationState {
   isCurrentlyInsideIfStatement: boolean;
   startOfCurrentIfStatementInsideIndex: number;
   currentIfStatementCloseBracketIndex: number;
-  // WORK - change
   syntaxToBeInverted: SyntaxToBeInverted[];
   shouldBracketsBeRemoved: boolean;
-  // usually for conditions that include arithmetic operations or double bangs
+  // for conditions that include arithmetic operations or double bangs
   isOperationWrappableInBrackets: boolean;
   invertBooleanLiteral: boolean;
-  // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
   comparisonOperatorFound: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;

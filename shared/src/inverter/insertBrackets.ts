@@ -7,9 +7,9 @@ export class InsertBrackets {
     return (invertableSyntaxEntry as InsertNewBrackets)?.insertNewBrackets;
   }
 
-  public static insert(tokens: Tokens, startIndex: number, endIndex: number, newElementsDelta: number): number {
-    newElementsDelta += InsertNewSyntax.insert(tokens, startIndex, '(');
-    newElementsDelta += InsertNewSyntax.insert(tokens, endIndex + newElementsDelta + 1, ')');
-    return newElementsDelta;
+  public static insert(tokens: Tokens, startIndex: number, endIndex: number, tokenIndexDelta: number): number {
+    tokenIndexDelta += InsertNewSyntax.insert(tokens, startIndex, '(');
+    tokenIndexDelta += InsertNewSyntax.insert(tokens, endIndex + tokenIndexDelta + 1, ')');
+    return tokenIndexDelta;
   }
 }

@@ -1,6 +1,6 @@
-import { Tokens } from './shared/types/tokens';
+import { Tokens } from '../types/tokens';
 
-export class TraversalUtils {
+export class TraversalUtil {
   public static getNonSpaceCharacterIndex(tokens: Tokens, index: number, traverseForwards = true): number {
     if (index === 0) {
       return 0;
@@ -9,14 +9,14 @@ export class TraversalUtils {
       return index;
     }
     const newIndex = traverseForwards ? index + 1 : index - 1;
-    return TraversalUtils.getNonSpaceCharacterIndex(tokens, newIndex, traverseForwards);
+    return TraversalUtil.getNonSpaceCharacterIndex(tokens, newIndex, traverseForwards);
   }
 
   public static getEndQuoteIndex(tokens: Tokens, index: number, quoteString: `'` | '`' | '"'): number {
     if (tokens[index] === quoteString) {
       return index;
     }
-    return TraversalUtils.getEndQuoteIndex(tokens, index + 1, quoteString);
+    return TraversalUtil.getEndQuoteIndex(tokens, index + 1, quoteString);
   }
 
   public static getIndexOfLastBracketOfIfStatement(tokens: Tokens, index: number, openBrackets = 0): number {
@@ -26,14 +26,14 @@ export class TraversalUtils {
       return -1;
     }
     if (tokens[index + 1] === '(') {
-      return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);
+      return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);
     }
     if (tokens[index + 1] === ')') {
       if (openBrackets === 1) {
         return index + 1;
       }
-      return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets - 1);
+      return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets - 1);
     }
-    return TraversalUtils.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets);
+    return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets);
   }
 }

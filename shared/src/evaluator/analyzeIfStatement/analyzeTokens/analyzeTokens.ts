@@ -3,10 +3,10 @@ import { AnalyzeArithmeticOperation } from './analyzeSyntax/analyzeArithmeticOpe
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
 import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
+import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { AnalyzeEqualsSign } from './analyzeSyntax/analyzeEqualsSign';
 import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
-import { TraversalUtils } from '../../../traversalUtils';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeTokens {
@@ -39,7 +39,7 @@ export class AnalyzeTokens {
       case `'`:
       case '`':
       case '"':
-        return TraversalUtils.getEndQuoteIndex(tokens, index + 1, currentToken);
+        return TraversalUtil.getEndQuoteIndex(tokens, index + 1, currentToken);
       case '-':
       case '+':
       case '/':
