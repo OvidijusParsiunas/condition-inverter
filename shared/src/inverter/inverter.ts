@@ -1,10 +1,10 @@
-import { InvertGreaterOrLessThanSign } from './invertGreaterOrLessThanSign';
+import { InvertGreaterOrLessThanSign } from './invert/invertGreaterOrLessThanSign';
+import { InvertLogicalOperator } from './invert/invertLogicalOperator';
 import { SyntaxToBeInverted } from '../shared/types/evaluationState';
-import { InvertLogicalOperator } from './invertLogicalOperator';
-import { InvertBooleanLiteral } from './invertBooleanLiteral';
-import { InvertNegatedSyntax } from './invertNegatedSyntax';
-import { InsertNewSyntax } from './insertNewSyntax';
-import { InsertBrackets } from './insertBrackets';
+import { InvertBooleanLiteral } from './invert/invertBooleanLiteral';
+import { InvertNegatedSyntax } from './invert/invertNegatedSyntax';
+import { InsertNewSyntax } from './insert/insertNewSyntax';
+import { InsertBrackets } from './insert/insertBrackets';
 import { Tokens } from '../shared/types/tokens';
 
 export class Inverter {

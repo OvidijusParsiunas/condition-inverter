@@ -30,5 +30,5 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-unsafe-argument': 'error',
   },
-  ignorePatterns: ['out', 'dist', '**/*.d.ts'],
+  ignorePatterns: ['out', '**/*.d.ts', 'node_modules'],
 };

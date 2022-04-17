@@ -1,6 +1,6 @@
-import { InsertNewBrackets, SyntaxToBeInverted } from '../shared/types/evaluationState';
+import { InsertNewBrackets, SyntaxToBeInverted } from '../../shared/types/evaluationState';
 import { InsertNewSyntax } from './insertNewSyntax';
-import { Tokens } from '../shared/types/tokens';
+import { Tokens } from '../../shared/types/tokens';
 
 export class InsertBrackets {
   public static isInsertNewBrackets(invertableSyntaxEntry?: SyntaxToBeInverted): invertableSyntaxEntry is InsertNewBrackets {

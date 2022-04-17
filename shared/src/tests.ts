@@ -3,7 +3,7 @@ import { InvertConditions } from './invert';
 // WORK - refactor
 
 export class Tests {
-  private static test(input, expectedResult) {
+  private static test(input: string, expectedResult: string): void {
     const result = InvertConditions.runInvert(input);
     if (result === expectedResult) {
       console.log('PASS');
@@ -14,11 +14,9 @@ export class Tests {
     }
   }
 
-  public static runExclusiveTests() {
-    Tests.test('if (mouse && cat) { console.log(2) }', 'if (!mouse || !cat) { console.log(2) }');
-  }
+  public static runExclusiveTests(): void {}
 
-  public static runTests() {
+  public static runTests(): void {
     Tests.test('if (mouse && cat) { console.log(2) }', 'if (!mouse || !cat) { console.log(2) }');
 
     Tests.test('if (mouse &&cat) { console.log(2) }', 'if (!mouse ||!cat) { console.log(2) }');
@@ -163,7 +161,9 @@ export class Tests {
     );
 
     Tests.test(
+      // eslint-disable-next-line max-len
       'if ((((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) && (((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
+      // eslint-disable-next-line max-len
       'if (!(((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat)))) || !(((mouse - cat) && ((mouse - cat))) || ((mouse - cat) && ((mouse - cat))))) { console.log(2) }',
     );
 

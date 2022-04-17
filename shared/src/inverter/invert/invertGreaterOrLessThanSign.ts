@@ -1,6 +1,6 @@
-import { GreaterOrLessThanHasFollowUpEquals, SyntaxToBeInverted } from '../shared/types/evaluationState';
-import { InsertNewSyntax } from './insertNewSyntax';
-import { Tokens } from '../shared/types/tokens';
+import { SyntaxToBeInverted, GreaterOrLessThanHasFollowUpEquals } from '../../shared/types/evaluationState';
+import { InsertNewSyntax } from '../insert/insertNewSyntax';
+import { Tokens } from '../../shared/types/tokens';
 
 export class InvertGreaterOrLessThanSign {
   private static isGreaterOrLessThanHasFollowUpEquals(

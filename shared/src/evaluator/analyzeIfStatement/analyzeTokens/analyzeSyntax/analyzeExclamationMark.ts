@@ -4,7 +4,7 @@ import { Tokens } from '../../../../shared/types/tokens';
 import { AnalyzeEqualsSign } from './analyzeEqualsSign';
 
 export class AnalyzeExclamationMark {
-  private static findLastExclamationMarkIndex(tokens: Tokens, index: number): any {
+  private static findLastExclamationMarkIndex(tokens: Tokens, index: number): number {
     const nextNonSpaceTokenIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
     // a direct plus or minus after exclamation mark are regarded as part of the condition
     if (tokens[nextNonSpaceTokenIndex] === '!' || tokens[nextNonSpaceTokenIndex] === '+' || tokens[nextNonSpaceTokenIndex] === '-') {

@@ -1,3 +1,4 @@
+import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from '../consts/errors';
 import { Tokens } from '../types/tokens';
 
 export class TraversalUtil {
@@ -21,9 +22,7 @@ export class TraversalUtil {
 
   public static getIndexOfLastBracketOfIfStatement(tokens: Tokens, index: number, openBrackets = 0): number {
     if (index > tokens.length - 1) {
-      // WORK - need this inside errors
-      console.log('index out of bounds');
-      return -1;
+      throw new Error(INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL);
     }
     if (tokens[index + 1] === '(') {
       return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);

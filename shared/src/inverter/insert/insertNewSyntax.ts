@@ -1,4 +1,4 @@
-import { Tokens } from '../shared/types/tokens';
+import { Tokens } from '../../shared/types/tokens';
 
 export class InsertNewSyntax {
   public static insert(tokens: Tokens, tokenIndex: number, newSyntax: string): number {

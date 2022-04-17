@@ -1,8 +1,8 @@
-import { RemoveNegationBrackets, SyntaxToBeInverted } from '../shared/types/evaluationState';
-import { TraversalUtil } from '../shared/functionality/traversalUtil';
-import { InsertNewSyntax } from './insertNewSyntax';
-import { InsertBrackets } from './insertBrackets';
-import { Tokens } from '../shared/types/tokens';
+import { RemoveNegationBrackets, SyntaxToBeInverted } from '../../shared/types/evaluationState';
+import { TraversalUtil } from '../../shared/functionality/traversalUtil';
+import { InsertNewSyntax } from '../insert/insertNewSyntax';
+import { InsertBrackets } from '../insert/insertBrackets';
+import { Tokens } from '../../shared/types/tokens';
 
 export class InvertNegatedSyntax {
   private static removeBrackets(

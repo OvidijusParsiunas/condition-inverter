@@ -2,7 +2,7 @@ import { UNEXPECTED_ERROR_MESSAGE_INTRODUCTION } from '../../../shared/consts/er
 
 export class ErrorHandling {
   private static constructUnexpectedMessage(errorMessage: string): string {
-    return `${UNEXPECTED_ERROR_MESSAGE_INTRODUCTION}: \n${errorMessage}`;
+    return `${UNEXPECTED_ERROR_MESSAGE_INTRODUCTION}. \nError: ${errorMessage}`;
   }
 
   public static printErrorMessageOnConsole(error: Error): void {

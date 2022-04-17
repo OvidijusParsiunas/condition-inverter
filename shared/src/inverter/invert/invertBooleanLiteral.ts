@@ -1,11 +1,11 @@
-import { InvertBooleanLiteral as InvertBooleanLiteralT, SyntaxToBeInverted } from '../shared/types/evaluationState';
-import { InsertNewSyntax } from './insertNewSyntax';
-import { Tokens } from '../shared/types/tokens';
+import { SyntaxToBeInverted, InvertBooleanLiteral as InvertBooleanLiteralT } from '../../shared/types/evaluationState';
+import { InsertNewSyntax } from '../insert/insertNewSyntax';
+import { Tokens } from '../../shared/types/tokens';
 
 export class InvertBooleanLiteral {
   private static readonly booleanLiteralToInveted = {
-    0: 1,
-    1: 0,
+    [0]: 1,
+    [1]: 0,
     true: false,
     false: true,
   };

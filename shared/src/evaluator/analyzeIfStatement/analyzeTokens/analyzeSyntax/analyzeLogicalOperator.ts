@@ -12,9 +12,9 @@ export class AnalyzeLogicalOperator {
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 
-  private static analyzeStatementsBeforeOperator(tokens: Tokens, index: number, nextNonSpaceCharIndex: number, evaluationState: EvaluationState) {
+  private static analyzeStatementsBeforeOperator(tokens: Tokens, index: number, nextNonSpaceIndex: number, evaluationState: EvaluationState): void {
     if (evaluationState.numberOfBracketsOpen === 0) {
-      AnalyzeLogicalOperator.analyzeStandaloneStatements(tokens, index, nextNonSpaceCharIndex, evaluationState);
+      AnalyzeLogicalOperator.analyzeStandaloneStatements(tokens, index, nextNonSpaceIndex, evaluationState);
     } else if (evaluationState.numberOfBracketsOpen > 0 && evaluationState.comparisonOperatorFound) {
       // instead of inverting the comparison operator, the brackets are inverted
       evaluationState.syntaxToBeInverted.pop();
