@@ -1,3 +1,4 @@
+import { AnalyzeRedundantBrackets } from './analyzeRedundancies/analyzeRedundantBrackets';
 import { AnalyzeStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
 import { EvaluationStateUtil } from '../evaluationState/evaluationStateUtil';
 import { TraversalUtil } from '../../shared/functionality/traversalUtil';
@@ -21,10 +22,17 @@ export class AnalyzeIfStatement {
     return index;
   }
 
+  private static setStartAndEndIndexes(tokens: Tokens, index: number, evaluationState: EvaluationState, openBracketIndex: number): void {
+    const startIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
+    const endIndex = TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
+    const result = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, startIndex, endIndex - 1);
+    evaluationState.startOfCurrentIfStatementInsideIndex = result.start;
+    evaluationState.currentIfStatementCloseBracketIndex = result.end + 1;
+  }
+
   public static setNewIfStatementState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const openBracketIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
-    evaluationState.startOfCurrentIfStatementInsideIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
-    evaluationState.currentIfStatementCloseBracketIndex = TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
+    AnalyzeIfStatement.setStartAndEndIndexes(tokens, index, evaluationState, openBracketIndex);
     evaluationState.isCurrentlyInsideIfStatement = true;
     return evaluationState.startOfCurrentIfStatementInsideIndex - 1;
   }

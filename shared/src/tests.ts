@@ -486,6 +486,18 @@ export class Tests {
     Tests.test('if (dog==cat||fish) { console.log(1) }', 'if (dog!=cat&&!fish) { console.log(1) }');
 
     Tests.test('if (dog==cat||!fish) { console.log(1) }', 'if (dog!=cat&&fish) { console.log(1) }');
+
+    Tests.test('if () { console.log(2) }', 'if () { console.log(2) }');
+
+    Tests.test('if (  ) { console.log(2) }', 'if (  ) { console.log(2) }');
+
+    Tests.test('if ( ( (dog  ) ) ) { console.log(2) }', 'if ( ( (!dog  ) ) ) { console.log(2) }');
+
+    Tests.test('if ( ( (dog || cat) ) ) { console.log(2) }', 'if ( ( (!dog && !cat) ) ) { console.log(2) }');
+
+    Tests.test('if ( ( (dog || cat && (fish)) ) ) { console.log(2) }', 'if ( ( (!dog && !cat || !(fish)) ) ) { console.log(2) }');
+
+    Tests.test('if ( ( ((dog || cat) && (fish)) ) ) { console.log(2) }', 'if ( ( (!(dog || cat) || !(fish)) ) ) { console.log(2) }');
   }
 }
 

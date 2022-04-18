@@ -1,3 +1,4 @@
+import { AnalyzeEmptyIfStatement } from './analyzeIfStatement/analyzeRedundancies/analyzeEmptyIfStatement';
 import { AnalyzeIfStatement } from './analyzeIfStatement/analyzeIfStatement';
 import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { SyntaxToBeInverted } from '../shared/types/evaluationState';
@@ -12,6 +13,8 @@ export class Evaluator {
         index = AnalyzeIfStatement.analyze(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
         index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
+        const isEmpty = AnalyzeEmptyIfStatement.isEmpty(tokens, evaluationState);
+        if (isEmpty) return [];
       }
     }
     return evaluationState.syntaxToBeInverted;

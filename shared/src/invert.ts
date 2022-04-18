@@ -1,5 +1,5 @@
-import { Evaluator } from './evaluator/evaluator';
 import { Tokenizer } from './tokenizer/tokenizer';
+import { Evaluator } from './evaluator/evaluator';
 import { Inverter } from './inverter/inverter';
 
 export class InvertConditions {
