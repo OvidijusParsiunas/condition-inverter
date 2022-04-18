@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-logo {
@@ -35,4 +35,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.code-mirror > div > div > div > div > span {
+  color: grey !important;
+}
+
+.code-mirror > div {
+  color: grey;
 }
