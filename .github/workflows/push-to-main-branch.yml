@@ -16,7 +16,10 @@ jobs:
           persist-credentials: false
       - name: Install and Test 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
-          cd extension
+          cd shared
+          npm install
+          npm run test
+          cd ../extension
           npm install
           npm run compile
           npm run test
