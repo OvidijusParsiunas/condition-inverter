@@ -5,8 +5,18 @@
   "main": ".eslintrc.js",
   "author": "",
   "license": "ISC",
+  "scripts": {
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/**/*.ts'"
+  },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.19.0",
     "@typescript-eslint/parser": "^5.19.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.0",
+    "chai": "^4.3.6",
+    "mocha": "^9.2.2",
+    "ts-node": "^10.7.0"
   }
 }
