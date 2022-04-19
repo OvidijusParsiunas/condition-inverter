@@ -1,5 +1,5 @@
 import { javascript } from '@codemirror/lang-javascript';
-import { InvertConditions } from 'inverter/invert';
+import { IfInverter } from 'inverter/src/ifInverter';
 import CodeMirror from '@uiw/react-codemirror';
 import React from 'react';
 import './App.css';
@@ -17,7 +17,7 @@ function App() {
   };
 
   const invert = () => {
-    const result = InvertConditions.runInvert(code);
+    const result = IfInverter.invert(code);
     setResult(result);
     if (inputEditorClass !== '') setInputEditorClass('');
     if (resultEditorClass !== '') setResultEditorClass('');

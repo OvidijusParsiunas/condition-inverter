@@ -1,4 +1,4 @@
-import { InvertConditions } from '../src/invert';
+import { IfInverter } from '../src/ifInverter';
 import { expect } from 'chai';
 
 describe('Inversion tests', () => {
@@ -704,7 +704,7 @@ describe('Inversion tests', () => {
     },
   ].forEach((test) => {
     it(test.input, () => {
-      const result = InvertConditions.runInvert(test.input);
+      const result = IfInverter.invert(test.input);
       expect(result).to.equal(test.output);
     });
   });

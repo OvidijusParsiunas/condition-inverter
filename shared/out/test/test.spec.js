@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const invert_1 = require("../src/invert");
+const ifInverter_1 = require("../src/ifInverter");
 const chai_1 = require("chai");
 describe('Inversion tests', () => {
     [
@@ -705,7 +705,7 @@ describe('Inversion tests', () => {
         },
     ].forEach((test) => {
         it(test.input, () => {
-            const result = invert_1.InvertConditions.runInvert(test.input);
+            const result = ifInverter_1.IfInverter.invert(test.input);
             (0, chai_1.expect)(result).to.equal(test.output);
         });
     });

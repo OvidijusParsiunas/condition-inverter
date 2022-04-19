@@ -1,10 +1,16 @@
+shared:
 bug with shift assignment - make sure that < is not follwoed by another < and > not followed by another >
 
+extension:
 when current cursor at the end and inversion occurs - a cursor selection is created
 
 "key": "ctrl+shift+i",
 "mac": "cmd+shift+i",
 
+website:
+
+currently not detecting the language used, but can implement this via:
+https://www.npmjs.com/package/lang-detector
 
 Suggestions:
 
@@ -13,33 +19,3 @@ E.g:
 if (!(hello)) = if (hello)
 
 The code can easily be changed to fit this by simply removing the code at REF - 1889
-
-
-Knowledge:
-
-REF - 2000
-The project does not have bracket depth inference as it is designed to analyse the if statement during a single traversal.
-This means that the following will not be simplified by removing the exclamation mark and the bracket:
-E.g:
-if ((!(hello)))
-
-and will instead result:
-
-if (!(hello))
-
-The core reason for this is the algorithm doesn't know that !(hello) should not be marked for inversion upfront,
-hence it always takes the safer path and invert the first bracket immediately:
-
-if ((!(hello) && cat) || cat) = if (!(!(hello) && cat) && !cat)
-
-Depth analysis to take into account at what bracket level the statement should be inverted at should be implemented:
-The following:
-
-if (((hello && cat) || cat))
-
-should result with:
-
-if ((!(hello && cat) && !cat))
-
-instead of:
-if (!((hello && cat) || cat))
