@@ -4,11 +4,11 @@
   width: 30vw;
 }
 
-.code-mirror > div > div > div > div > span {
+.initial-editor-coloring > div > div > div > div > span {
   color: grey;
 }
 
-.code-mirror > div {
+.initial-editor-coloring > div {
   color: grey;
 }
 

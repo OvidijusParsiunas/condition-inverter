@@ -29,7 +29,7 @@ suite('Selected Text Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+          output: 'if (!dog || !cat && !mousea) { console.log(2) }',
         },
       ],
       selection: {

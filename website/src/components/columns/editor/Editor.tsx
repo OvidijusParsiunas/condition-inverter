@@ -21,17 +21,19 @@ export default function Editor(props: Props) {
 
   const getClassName = () => (isDirty ? '' : className);
 
+  const customCss: React.CSSProperties = {
+    border: '1px solid silver',
+    borderRadius: '10px',
+  };
+
   return (
     <div className="editor-container">
       <CodeMirror
         value={text}
-        height="80vh"
+        height="80vh" // defined here as the editor doesn't auto fill the container height
         extensions={[javascript({ jsx: true })]}
         onChange={(value) => handleInputChange(value)}
-        style={{
-          border: '1px solid silver',
-          borderRadius: '10px',
-        }}
+        style={customCss}
         className={getClassName()}
         editable={isEditable}
       />
