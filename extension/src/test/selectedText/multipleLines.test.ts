@@ -553,23 +553,23 @@ suite('Selected Text Suite', () => {
         },
         {
           input: `(!dog\n`,
-          output: '!(!dog',
+          output: '(dog',
         },
         {
           input: `&& !cat\n`,
-          output: '&& !cat',
+          output: '|| cat',
         },
         {
           input: `&& !cat\n`,
-          output: '&& !cat',
+          output: '|| cat',
         },
         {
           input: `||\n`,
-          output: '||',
+          output: '&&',
         },
         {
           input: `mouse\n`,
-          output: 'mouse',
+          output: '!mouse',
         },
         {
           input: `)\n`,
@@ -597,27 +597,27 @@ suite('Selected Text Suite', () => {
         },
         {
           input: `(\n`,
-          output: '!(',
+          output: '(',
         },
         {
           input: `!dog\n`,
-          output: '!dog',
+          output: 'dog',
         },
         {
           input: `&& !cat\n`,
-          output: '&& !cat',
+          output: '|| cat',
         },
         {
           input: `&& !cat\n`,
-          output: '&& !cat',
+          output: '|| cat',
         },
         {
           input: `||\n`,
-          output: '||',
+          output: '&&',
         },
         {
           input: `mouse\n`,
-          output: 'mouse',
+          output: '!mouse',
         },
         {
           input: `)\n`,
