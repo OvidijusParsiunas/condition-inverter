@@ -1,23 +1,16 @@
-import { javascript } from '@codemirror/lang-javascript';
-import { IfInverter } from 'inverter/src/ifInverter';
-import CodeMirror from '@uiw/react-codemirror';
+import InvertButton from './components/invertButton/InvertButton';
+import Editor from './components/editor/Editor';
 import React from 'react';
 import './App.css';
 
-function App() {
-  const [code, setCode] = React.useState('if (dog - !cat && dog - !cat) {\n  console.log(2)\n}');
+export default function App() {
+  const initialClassName = 'code-mirror';
+  const [input, setInput] = React.useState('if (dog - !cat && dog - !cat) {\n  console.log(2)\n}');
   const [result, setResult] = React.useState('if (!(dog - !cat) || !(dog - !cat)) {\n  console.log(2)\n}');
-  const [inputEditorClass, setInputEditorClass] = React.useState('code-mirror');
-  const [resultEditorClass, setResultEditorClass] = React.useState('code-mirror');
+  const [inputEditorClass, setInputEditorClass] = React.useState(initialClassName);
+  const [resultEditorClass, setResultEditorClass] = React.useState(initialClassName);
 
-  const handleInputChange = (inputText: string) => {
-    if (inputEditorClass !== '') setInputEditorClass('');
-    console.log(inputText);
-    setCode(inputText);
-  };
-
-  const invert = () => {
-    const result = IfInverter.invert(code);
+  const invert = (result: string) => {
     setResult(result);
     if (inputEditorClass !== '') setInputEditorClass('');
     if (resultEditorClass !== '') setResultEditorClass('');
@@ -25,39 +18,13 @@ function App() {
 
   return (
     <div className="App">
-      <div style={{ height: '100vh', width: '50%', float: 'left' }}>
-        <div style={{ marginTop: '10vh', marginLeft: '10vw', width: '30vw' }}>
-          <CodeMirror
-            value={code}
-            height="80vh"
-            extensions={[javascript({ jsx: true })]}
-            onChange={(value) => handleInputChange(value)}
-            style={{
-              border: '1px solid silver',
-            }}
-            className={inputEditorClass}
-          />
-        </div>
+      <div className="column">
+        <Editor text={input} className={inputEditorClass} isEditable={true} updateText={setInput}></Editor>
       </div>
-      <div style={{ position: 'absolute', display: 'flex', justifyContent: 'center', top: '50%', left: '48%' }}>
-        <button onClick={invert}>INVERT</button>
-      </div>
-      <div style={{ height: '100vh', width: '50%', float: 'left' }}>
-        <div style={{ marginTop: '10vh', marginLeft: '10vw', width: '30vw' }}>
-          <CodeMirror
-            value={result}
-            height="80vh"
-            editable={false}
-            extensions={[javascript({ jsx: true })]}
-            style={{
-              border: '1px solid silver',
-            }}
-            className={resultEditorClass}
-          />
-        </div>
+      <InvertButton input={input} inversionCallback={invert}></InvertButton>
+      <div className="column">
+        <Editor text={result} className={inputEditorClass} isEditable={false}></Editor>
       </div>
     </div>
   );
 }
-
-export default App;

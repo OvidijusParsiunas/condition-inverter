@@ -1,0 +1,22 @@
+.editor-container {
+  margin-top: 10vh;
+  margin-left: 10vw;
+  width: 30vw;
+}
+
+.code-mirror > div > div > div > div > span {
+  color: grey;
+}
+
+.code-mirror > div {
+  color: grey;
+}
+
+.cm-editor,
+.cm-scroller {
+  border-radius: 10px;
+}
+
+.ͼ1.cm-editor.cm-focused {
+  outline: 1px solid rgb(175, 175, 175);
+}

@@ -19,7 +19,7 @@ jobs:
           cd shared
           npm install
           npm run test
-          cd extension
+          cd ../extension
           npm install
           npm run compile
       - name: Run headless test
