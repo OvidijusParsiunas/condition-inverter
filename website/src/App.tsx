@@ -3,6 +3,7 @@ import InvertButton from './components/invertButton/InvertButton';
 import Column from './components/columns/wrapper/Column';
 import Editor from './components/columns/editor/Editor';
 import React from 'react';
+import './App.css';
 
 export default function App() {
   const [input, setInput] = React.useState('if (dog - !cat && dog - !cat) {\n  console.log(2)\n}');
@@ -18,6 +19,7 @@ export default function App() {
 
   return (
     <div>
+      <div className="header">If Inverter</div>
       <Column>
         <Editor text={input} className={inputEditorClass} isEditable={true} updateText={setInput}></Editor>
       </Column>

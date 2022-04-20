@@ -14,8 +14,8 @@ export default function InvertButton(props: Props) {
   };
 
   return (
-    <button id="invert-button" onClick={invert}>
-      INVERT
+    <button id="invert-button" className="screen-center-position" onClick={invert}>
+      Invert
     </button>
   );
 }

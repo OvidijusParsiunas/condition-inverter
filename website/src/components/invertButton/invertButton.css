@@ -1,5 +1,37 @@
 #invert-button {
-  position: absolute;
+  color: rgb(92, 92, 92);
+  background-color: #fff;
+  border-color: #ccc;
+  padding: 6px 13px;
+  font-size: 17px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+#invert-button:hover {
+  color: #333;
+  background-color: #e6e6e6;
+}
+
+#invert-button:active {
+  color: #333;
+  background-color: #d4d4d4;
+}
+
+.screen-center-position {
+  position: fixed;
   top: 50%;
-  left: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
