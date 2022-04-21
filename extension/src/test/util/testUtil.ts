@@ -3,7 +3,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 
 export class TestUtil {
-  private static readonly commandExecutionTimeMl = 10;
+  private static readonly commandExecutionTimeMl = 200;
 
   public static createTextDocument(textEditorObj: TextEditorObj): Promise<boolean> {
     return new Promise((resolve) => {
