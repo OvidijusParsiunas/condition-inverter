@@ -3,7 +3,8 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 
 export class TestUtil {
-  private static readonly commandExecutionTimeMl = 200;
+  // headless tests aoppear to take longer to finishe executing the invert command
+  private static readonly commandExecutionTimeMl = process.env.NODE_ENV ? 200 : 10;
 
   public static createTextDocument(textEditorObj: TextEditorObj): Promise<boolean> {
     return new Promise((resolve) => {
