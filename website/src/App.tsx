@@ -21,14 +21,14 @@ export default function App() {
 
   return (
     <div>
-      <HeaderLogos></HeaderLogos>
+      <HeaderLogos />
       <div id="title">If Inverter</div>
       <Column>
-        <Editor text={input} className={inputEditorClass} isEditable={true} updateText={setInput}></Editor>
+        <Editor text={input} className={inputEditorClass} isEditable={true} updateText={setInput} />
       </Column>
-      <InvertButton input={input} inversionCallback={invert}></InvertButton>
+      <InvertButton input={input} inversionCallback={invert} />
       <Column>
-        <Editor text={result} className={inputEditorClass} isEditable={false}></Editor>
+        <Editor text={result} className={inputEditorClass} isEditable={false} />
       </Column>
     </div>
   );
