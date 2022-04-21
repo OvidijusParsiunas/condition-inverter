@@ -34,7 +34,7 @@
     "compile": "tsc --build ./",
     "watch": "tsc --build -watch ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint './src' '../shared' --ext ts",
+    "lint": "eslint ./src ../shared --ext ts",
     "test": "node ./out/test/runTest.js",
     "testreport": "export COVERAGE=true && npm run test && codecov",
     "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
