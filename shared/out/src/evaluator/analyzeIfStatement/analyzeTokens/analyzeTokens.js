@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnalyzeTokens = void 0;
 const analyzeGreaterOrLessThanSign_1 = require("./analyzeSyntax/analyzeGreaterOrLessThanSign");
-const analyzeArithmeticOperation_1 = require("./analyzeSyntax/analyzeArithmeticOperation");
+const analyzeBrackatableSyntax_1 = require("./analyzeSyntax/analyzeBrackatableSyntax");
 const analyzeExclamationMark_1 = require("./analyzeSyntax/analyzeExclamationMark");
 const analyzeLogicalOperator_1 = require("./analyzeSyntax/analyzeLogicalOperator");
 const analyzeBooleanLiteral_1 = require("./analyzeSyntax/analyzeBooleanLiteral");
@@ -44,7 +44,9 @@ class AnalyzeTokens {
             case '+':
             case '/':
             case '*':
-                analyzeArithmeticOperation_1.AnalyzeArithmeticOperation.analyze(evaluationState);
+            case '^':
+            case '~':
+                analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.analyze(evaluationState);
                 break;
             default: {
             }

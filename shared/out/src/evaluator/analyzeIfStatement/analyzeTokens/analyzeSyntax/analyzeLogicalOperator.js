@@ -4,6 +4,7 @@ exports.AnalyzeLogicalOperator = void 0;
 const evaluationStateUtil_1 = require("../../../evaluationState/evaluationStateUtil");
 const traversalUtil_1 = require("../../../../shared/functionality/traversalUtil");
 const analyzeStandaloneStatement_1 = require("../analyzeStandaloneStatement");
+const analyzeBrackatableSyntax_1 = require("./analyzeBrackatableSyntax");
 class AnalyzeLogicalOperator {
     static analyzeStandaloneStatements(tokens, index, nextNonSpaceCharIndex, evaluationState) {
         analyzeStandaloneStatement_1.AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
@@ -29,6 +30,8 @@ class AnalyzeLogicalOperator {
             // subtracting one due to the for loop automatically adding one
             return nextNonSpaceCharIndex - 1;
         }
+        // if & or | is by itself then it is regarded as a bitwise operator
+        analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.analyze(evaluationState);
         return index;
     }
 }

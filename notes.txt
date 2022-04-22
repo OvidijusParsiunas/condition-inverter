@@ -1,5 +1,14 @@
-shared:
-bug with shift assignment - make sure that < is not follwoed by another < and > not followed by another >
+tasks:
+* Take care of the bugs
+* Make the Website responsive
+* Get a font style for the title
+* Get the animation for the logos to work
+* Purchase domain
+* Test out different variations of the logo
+* Get the ci-cd to deploy correctly
+* Publish extension
+* Get a logo for the app
+* Update all of the readmes
 
 extension:
 when current cursor at the end and inversion occurs - a cursor selection is created

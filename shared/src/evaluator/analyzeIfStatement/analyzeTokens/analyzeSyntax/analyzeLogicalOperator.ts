@@ -2,6 +2,7 @@ import { EvaluationStateUtil } from '../../../evaluationState/evaluationStateUti
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { AnalyzeStandaloneStatements } from '../analyzeStandaloneStatement';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeLogicalOperator {
@@ -30,6 +31,8 @@ export class AnalyzeLogicalOperator {
       // subtracting one due to the for loop automatically adding one
       return nextNonSpaceCharIndex - 1;
     }
+    // if & or | is by itself then it is regarded as a bitwise operator
+    AnalyzeBrackatableSyntax.analyze(evaluationState);
     return index;
   }
 }

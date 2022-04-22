@@ -702,6 +702,62 @@ describe('Inversion tests', () => {
       input: 'if ( ( ((dog || cat) && (fish)) ) ) { console.log(2) }',
       output: 'if ( ( (!(dog || cat) || !(fish)) ) ) { console.log(2) }',
     },
+    {
+      input: 'if (dog << cat) { console.log(2) }',
+      output: 'if (!(dog << cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog << cat)) { console.log(2) }',
+      output: 'if (dog << cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog >> cat) { console.log(2) }',
+      output: 'if (!(dog >> cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog >> cat)) { console.log(2) }',
+      output: 'if (dog >> cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog >>> cat) { console.log(2) }',
+      output: 'if (!(dog >>> cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog >>> cat)) { console.log(2) }',
+      output: 'if (dog >>> cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog & cat) { console.log(2) }',
+      output: 'if (!(dog & cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog & cat)) { console.log(2) }',
+      output: 'if (dog & cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog | cat) { console.log(2) }',
+      output: 'if (!(dog | cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog | cat)) { console.log(2) }',
+      output: 'if (dog | cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog ^ cat) { console.log(2) }',
+      output: 'if (!(dog ^ cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog ^ cat)) { console.log(2) }',
+      output: 'if (dog ^ cat) { console.log(2) }',
+    },
+    {
+      input: 'if (~dog) { console.log(2) }',
+      output: 'if (!(~dog)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(~dog)) { console.log(2) }',
+      output: 'if (~dog) { console.log(2) }',
+    },
   ].forEach((test) => {
     it(test.input, () => {
       const result = IfInverter.invert(test.input);

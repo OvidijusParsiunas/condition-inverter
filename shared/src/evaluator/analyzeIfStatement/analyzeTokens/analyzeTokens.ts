@@ -1,5 +1,5 @@
 import { AnalyzeGreaterOrLessThanSign } from './analyzeSyntax/analyzeGreaterOrLessThanSign';
-import { AnalyzeArithmeticOperation } from './analyzeSyntax/analyzeArithmeticOperation';
+import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSyntax';
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
 import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
@@ -44,7 +44,9 @@ export class AnalyzeTokens {
       case '+':
       case '/':
       case '*':
-        AnalyzeArithmeticOperation.analyze(evaluationState);
+      case '^':
+      case '~':
+        AnalyzeBrackatableSyntax.analyze(evaluationState);
         break;
       default: {
       }
