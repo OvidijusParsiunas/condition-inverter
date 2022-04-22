@@ -9,7 +9,7 @@ export class AnalyzeEqualsSign {
     return index + 1;
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     evaluationState.comparisonOperatorFound = true;
     evaluationState.syntaxToBeInverted.push({ start: index });
     if (tokens[index + 1] === '=') {

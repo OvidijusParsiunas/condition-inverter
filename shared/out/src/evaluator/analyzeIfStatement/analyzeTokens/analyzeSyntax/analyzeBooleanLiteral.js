@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnalyzeBooleanLiteral = void 0;
 class AnalyzeBooleanLiteral {
-    static analyzeBoolean(evaluationState) {
+    static updateStateForBoolean(evaluationState) {
         evaluationState.invertBooleanLiteral = true;
     }
     static doesTokenEndNumber(token) {
@@ -19,7 +19,7 @@ class AnalyzeBooleanLiteral {
         return AnalyzeBooleanLiteral.findNumberEndIndex(tokens, index + 1);
     }
     // boolean numbers are considered to being 0 and 1
-    static analyzeBooleanNumber(tokens, index, evaluationState) {
+    static updateStateForBooleanNumber(tokens, index, evaluationState) {
         const nextToken = tokens[index + 1];
         if (AnalyzeBooleanLiteral.doesTokenEndNumber(nextToken)) {
             evaluationState.invertBooleanLiteral = true;

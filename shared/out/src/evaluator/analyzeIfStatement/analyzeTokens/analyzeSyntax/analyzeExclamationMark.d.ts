@@ -3,5 +3,5 @@ import { Tokens } from '../../../../shared/types/tokens';
 export declare class AnalyzeExclamationMark {
     private static findLastExclamationMarkIndex;
     private static getConditionEndIndex;
-    static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number;
+    static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number;
 }

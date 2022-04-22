@@ -1,5 +1,5 @@
+import { UpdateStateForStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
 import { AnalyzeRedundantBrackets } from './analyzeRedundancies/analyzeRedundantBrackets';
-import { AnalyzeStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
 import { EvaluationStateUtil } from '../evaluationState/evaluationStateUtil';
 import { TraversalUtil } from '../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../shared/types/evaluationState';
@@ -8,15 +8,19 @@ import { Tokens } from '../../shared/types/tokens';
 
 export class AnalyzeIfStatement {
   private static finishEvaluatingIfStatement(tokens: Tokens, evaluationState: EvaluationState): void {
-    AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, evaluationState.currentIfStatementCloseBracketIndex, evaluationState);
+    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(
+      tokens,
+      evaluationState.currentIfStatementCloseBracketIndex,
+      evaluationState,
+    );
     evaluationState.isCurrentlyInsideIfStatement = false;
     evaluationState.comparisonOperatorFound = false;
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     if (evaluationState.currentIfStatementCloseBracketIndex > index) {
-      return AnalyzeTokens.analyze(tokens, index, evaluationState);
+      return AnalyzeTokens.updateState(tokens, index, evaluationState);
     }
     AnalyzeIfStatement.finishEvaluatingIfStatement(tokens, evaluationState);
     return index;

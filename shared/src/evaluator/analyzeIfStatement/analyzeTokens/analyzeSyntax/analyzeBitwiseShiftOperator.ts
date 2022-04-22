@@ -9,8 +9,8 @@ export class AnalyzeBitwiseShiftOperator {
     return currentToken === nextToken;
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    AnalyzeBrackatableSyntax.analyze(evaluationState);
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    AnalyzeBrackatableSyntax.updateState(evaluationState);
     const thirdToken = tokens[index + 1];
     const currentToken = tokens[index];
     return currentToken === '>' && thirdToken === '>' ? index + 2 : index + 1;

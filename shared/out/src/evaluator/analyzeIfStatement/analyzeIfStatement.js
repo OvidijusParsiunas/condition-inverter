@@ -1,21 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnalyzeIfStatement = void 0;
-const analyzeRedundantBrackets_1 = require("./analyzeRedundancies/analyzeRedundantBrackets");
 const analyzeStandaloneStatement_1 = require("./analyzeTokens/analyzeStandaloneStatement");
+const analyzeRedundantBrackets_1 = require("./analyzeRedundancies/analyzeRedundantBrackets");
 const evaluationStateUtil_1 = require("../evaluationState/evaluationStateUtil");
 const traversalUtil_1 = require("../../shared/functionality/traversalUtil");
 const analyzeTokens_1 = require("./analyzeTokens/analyzeTokens");
 class AnalyzeIfStatement {
     static finishEvaluatingIfStatement(tokens, evaluationState) {
-        analyzeStandaloneStatement_1.AnalyzeStandaloneStatements.markStandaloneStatementsForInversion(tokens, evaluationState.currentIfStatementCloseBracketIndex, evaluationState);
+        analyzeStandaloneStatement_1.UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(tokens, evaluationState.currentIfStatementCloseBracketIndex, evaluationState);
         evaluationState.isCurrentlyInsideIfStatement = false;
         evaluationState.comparisonOperatorFound = false;
         evaluationStateUtil_1.EvaluationStateUtil.refreshBooleanState(evaluationState);
     }
-    static analyze(tokens, index, evaluationState) {
+    static updateState(tokens, index, evaluationState) {
         if (evaluationState.currentIfStatementCloseBracketIndex > index) {
-            return analyzeTokens_1.AnalyzeTokens.analyze(tokens, index, evaluationState);
+            return analyzeTokens_1.AnalyzeTokens.updateState(tokens, index, evaluationState);
         }
         AnalyzeIfStatement.finishEvaluatingIfStatement(tokens, evaluationState);
         return index;

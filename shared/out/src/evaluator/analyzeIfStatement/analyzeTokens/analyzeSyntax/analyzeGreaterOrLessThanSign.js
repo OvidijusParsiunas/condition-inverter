@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnalyzeGreaterOrLessThanSign = void 0;
 const analyzeBitwiseShiftOperator_1 = require("./analyzeBitwiseShiftOperator");
 class AnalyzeGreaterOrLessThanSign {
-    static analyzeComparisonOperator(tokens, index, evaluationState) {
+    static updateStateForComparisonOperator(tokens, index, evaluationState) {
         const nextToken = tokens[index + 1];
         evaluationState.comparisonOperatorFound = true;
         if (nextToken === '=') {
@@ -13,11 +13,11 @@ class AnalyzeGreaterOrLessThanSign {
         evaluationState.syntaxToBeInverted.push({ start: index });
         return index;
     }
-    static analyze(tokens, index, evaluationState) {
+    static updateState(tokens, index, evaluationState) {
         if (analyzeBitwiseShiftOperator_1.AnalyzeBitwiseShiftOperator.isBitwise(tokens, index)) {
-            return analyzeBitwiseShiftOperator_1.AnalyzeBitwiseShiftOperator.analyze(tokens, index, evaluationState);
+            return analyzeBitwiseShiftOperator_1.AnalyzeBitwiseShiftOperator.updateState(tokens, index, evaluationState);
         }
-        return AnalyzeGreaterOrLessThanSign.analyzeComparisonOperator(tokens, index, evaluationState);
+        return AnalyzeGreaterOrLessThanSign.updateStateForComparisonOperator(tokens, index, evaluationState);
     }
 }
 exports.AnalyzeGreaterOrLessThanSign = AnalyzeGreaterOrLessThanSign;

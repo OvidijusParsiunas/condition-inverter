@@ -10,32 +10,32 @@ import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeTokens {
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const currentToken = tokens[index];
     switch (currentToken) {
       case '!':
-        return AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
+        return AnalyzeExclamationMark.updateState(tokens, index, evaluationState);
       case '(':
-        AnalyzeBracket.analyzeOpen(evaluationState);
+        AnalyzeBracket.updateStateForOpen(evaluationState);
         break;
       case ')':
-        AnalyzeBracket.analyzeClose(evaluationState);
+        AnalyzeBracket.updateStateForClose(evaluationState);
         break;
       case '&':
       case '|':
-        return AnalyzeLogicalOperator.analyze(tokens, index, evaluationState);
+        return AnalyzeLogicalOperator.updateState(tokens, index, evaluationState);
       case '<':
       case '>':
-        return AnalyzeGreaterOrLessThanSign.analyze(tokens, index, evaluationState);
+        return AnalyzeGreaterOrLessThanSign.updateState(tokens, index, evaluationState);
       case '=':
-        return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
+        return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);
       case 'false':
       case 'true':
-        AnalyzeBooleanLiteral.analyzeBoolean(evaluationState);
+        AnalyzeBooleanLiteral.updateStateForBoolean(evaluationState);
         break;
       case '0':
       case '1':
-        return AnalyzeBooleanLiteral.analyzeBooleanNumber(tokens, index, evaluationState);
+        return AnalyzeBooleanLiteral.updateStateForBooleanNumber(tokens, index, evaluationState);
       case `'`:
       case '`':
       case '"':
@@ -46,7 +46,7 @@ export class AnalyzeTokens {
       case '*':
       case '^':
       case '~':
-        AnalyzeBrackatableSyntax.analyze(evaluationState);
+        AnalyzeBrackatableSyntax.updateState(evaluationState);
         break;
       default: {
       }

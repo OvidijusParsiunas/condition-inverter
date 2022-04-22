@@ -22,7 +22,7 @@ export class AnalyzeExclamationMark {
     return lastExclamationMarkIndex;
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextNonSpaceTokenIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
     if (tokens[nextNonSpaceTokenIndex] === '!') {
       // called for - !!..., // !!!!!... // !!!+!-!... // !!!!(...
@@ -36,7 +36,7 @@ export class AnalyzeExclamationMark {
         return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
       } else if (tokens[nextNonSpaceTokenIndex] === '=') {
         // called for - !=...
-        return AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
+        return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);
       }
     }
     return index;

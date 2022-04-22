@@ -2,7 +2,7 @@ import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { Token, Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeBooleanLiteral {
-  public static analyzeBoolean(evaluationState: EvaluationState): void {
+  public static updateStateForBoolean(evaluationState: EvaluationState): void {
     evaluationState.invertBooleanLiteral = true;
   }
 
@@ -22,7 +22,7 @@ export class AnalyzeBooleanLiteral {
   }
 
   // boolean numbers are considered to being 0 and 1
-  public static analyzeBooleanNumber(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static updateStateForBooleanNumber(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
     if (AnalyzeBooleanLiteral.doesTokenEndNumber(nextToken)) {
       evaluationState.invertBooleanLiteral = true;

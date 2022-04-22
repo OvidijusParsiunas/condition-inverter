@@ -5,8 +5,8 @@ export class AnalyzeBrackatableSyntax {
     return evaluationState.areBracketsAlreadyPresent && evaluationState.numberOfBracketsOpen === 0;
   }
 
-  // this analyzes arithmetic and bitwise operators
-  public static analyze(evaluationState: EvaluationState): void {
+  // this updates state for arithmetic and bitwise operators
+  public static updateState(evaluationState: EvaluationState): void {
     evaluationState.isOperationWrappableInBrackets = true;
     if (AnalyzeBrackatableSyntax.doesStatementBeforeArithmeticOperationHasBrackets(evaluationState)) {
       evaluationState.areBracketsAlreadyPresent = false;

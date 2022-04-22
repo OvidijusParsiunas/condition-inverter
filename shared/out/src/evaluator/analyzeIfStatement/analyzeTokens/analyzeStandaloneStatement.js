@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AnalyzeStandaloneStatements = void 0;
+exports.UpdateStateForStandaloneStatements = void 0;
 const traversalUtil_1 = require("../../../shared/functionality/traversalUtil");
-class AnalyzeStandaloneStatements {
+class UpdateStateForStandaloneStatements {
     static markForBracketAddition(tokens, index, evaluationState) {
         const endIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, index - 1, false);
         evaluationState.syntaxToBeInverted.push({
@@ -31,18 +31,18 @@ class AnalyzeStandaloneStatements {
     // a look back to see if previous syntax defines a standalone statement
     static markStandaloneStatementsForInversion(tokens, index, evaluationState) {
         if (evaluationState.shouldBracketsBeRemoved) {
-            AnalyzeStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
+            UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
         }
         else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
-            AnalyzeStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
+            UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
         }
         else if (!evaluationState.comparisonOperatorFound) {
-            AnalyzeStandaloneStatements.markForVariableInversion(evaluationState);
+            UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
         }
         if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
-            AnalyzeStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
+            UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
         }
     }
 }
-exports.AnalyzeStandaloneStatements = AnalyzeStandaloneStatements;
+exports.UpdateStateForStandaloneStatements = UpdateStateForStandaloneStatements;
 //# sourceMappingURL=analyzeStandaloneStatement.js.map

@@ -1,6 +1,6 @@
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { Tokens } from '../../../shared/types/tokens';
-export declare class AnalyzeStandaloneStatements {
+export declare class UpdateStateForStandaloneStatements {
     private static markForBracketAddition;
     private static markForVariableInversion;
     private static markForBooleanLiteralInversion;

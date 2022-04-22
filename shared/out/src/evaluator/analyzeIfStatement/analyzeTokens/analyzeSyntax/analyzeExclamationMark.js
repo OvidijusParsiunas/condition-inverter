@@ -20,7 +20,7 @@ class AnalyzeExclamationMark {
         }
         return lastExclamationMarkIndex;
     }
-    static analyze(tokens, index, evaluationState) {
+    static updateState(tokens, index, evaluationState) {
         const nextNonSpaceTokenIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
         if (tokens[nextNonSpaceTokenIndex] === '!') {
             // called for - !!..., // !!!!!... // !!!+!-!... // !!!!(...
@@ -36,7 +36,7 @@ class AnalyzeExclamationMark {
             }
             else if (tokens[nextNonSpaceTokenIndex] === '=') {
                 // called for - !=...
-                return analyzeEqualsSign_1.AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
+                return analyzeEqualsSign_1.AnalyzeEqualsSign.updateState(tokens, index, evaluationState);
             }
         }
         return index;

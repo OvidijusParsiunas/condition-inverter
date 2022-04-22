@@ -3,7 +3,7 @@ import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeGreaterOrLessThanSign {
-  private static analyzeComparisonOperator(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  private static updateStateForComparisonOperator(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
     evaluationState.comparisonOperatorFound = true;
     if (nextToken === '=') {
@@ -14,10 +14,10 @@ export class AnalyzeGreaterOrLessThanSign {
     return index;
   }
 
-  public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     if (AnalyzeBitwiseShiftOperator.isBitwise(tokens, index)) {
-      return AnalyzeBitwiseShiftOperator.analyze(tokens, index, evaluationState);
+      return AnalyzeBitwiseShiftOperator.updateState(tokens, index, evaluationState);
     }
-    return AnalyzeGreaterOrLessThanSign.analyzeComparisonOperator(tokens, index, evaluationState);
+    return AnalyzeGreaterOrLessThanSign.updateStateForComparisonOperator(tokens, index, evaluationState);
   }
 }

@@ -8,7 +8,7 @@ class AnalyzeEqualsSign {
         }
         return index + 1;
     }
-    static analyze(tokens, index, evaluationState) {
+    static updateState(tokens, index, evaluationState) {
         evaluationState.comparisonOperatorFound = true;
         evaluationState.syntaxToBeInverted.push({ start: index });
         if (tokens[index + 1] === '=') {

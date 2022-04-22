@@ -2,7 +2,7 @@ import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { Tokens } from '../../../shared/types/tokens';
 
-export class AnalyzeStandaloneStatements {
+export class UpdateStateForStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     const endIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
@@ -35,14 +35,14 @@ export class AnalyzeStandaloneStatements {
   // a look back to see if previous syntax defines a standalone statement
   public static markStandaloneStatementsForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     if (evaluationState.shouldBracketsBeRemoved) {
-      AnalyzeStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
+      UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
     } else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
-      AnalyzeStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
+      UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
     } else if (!evaluationState.comparisonOperatorFound) {
-      AnalyzeStandaloneStatements.markForVariableInversion(evaluationState);
+      UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
     }
     if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
-      AnalyzeStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
+      UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
     }
   }
 }

@@ -10,7 +10,7 @@ export class Evaluator {
     evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
       if (evaluationState.isCurrentlyInsideIfStatement) {
-        index = AnalyzeIfStatement.analyze(tokens, index, evaluationState);
+        index = AnalyzeIfStatement.updateState(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
         index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
         const isEmpty = AnalyzeEmptyIfStatement.isEmpty(tokens, evaluationState);

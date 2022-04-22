@@ -10,32 +10,32 @@ const traversalUtil_1 = require("../../../shared/functionality/traversalUtil");
 const analyzeEqualsSign_1 = require("./analyzeSyntax/analyzeEqualsSign");
 const analyzeBracket_1 = require("./analyzeSyntax/analyzeBracket");
 class AnalyzeTokens {
-    static analyze(tokens, index, evaluationState) {
+    static updateState(tokens, index, evaluationState) {
         const currentToken = tokens[index];
         switch (currentToken) {
             case '!':
-                return analyzeExclamationMark_1.AnalyzeExclamationMark.analyze(tokens, index, evaluationState);
+                return analyzeExclamationMark_1.AnalyzeExclamationMark.updateState(tokens, index, evaluationState);
             case '(':
-                analyzeBracket_1.AnalyzeBracket.analyzeOpen(evaluationState);
+                analyzeBracket_1.AnalyzeBracket.updateStateForOpen(evaluationState);
                 break;
             case ')':
-                analyzeBracket_1.AnalyzeBracket.analyzeClose(evaluationState);
+                analyzeBracket_1.AnalyzeBracket.updateStateForClose(evaluationState);
                 break;
             case '&':
             case '|':
-                return analyzeLogicalOperator_1.AnalyzeLogicalOperator.analyze(tokens, index, evaluationState);
+                return analyzeLogicalOperator_1.AnalyzeLogicalOperator.updateState(tokens, index, evaluationState);
             case '<':
             case '>':
-                return analyzeGreaterOrLessThanSign_1.AnalyzeGreaterOrLessThanSign.analyze(tokens, index, evaluationState);
+                return analyzeGreaterOrLessThanSign_1.AnalyzeGreaterOrLessThanSign.updateState(tokens, index, evaluationState);
             case '=':
-                return analyzeEqualsSign_1.AnalyzeEqualsSign.analyze(tokens, index, evaluationState);
+                return analyzeEqualsSign_1.AnalyzeEqualsSign.updateState(tokens, index, evaluationState);
             case 'false':
             case 'true':
-                analyzeBooleanLiteral_1.AnalyzeBooleanLiteral.analyzeBoolean(evaluationState);
+                analyzeBooleanLiteral_1.AnalyzeBooleanLiteral.updateStateForBoolean(evaluationState);
                 break;
             case '0':
             case '1':
-                return analyzeBooleanLiteral_1.AnalyzeBooleanLiteral.analyzeBooleanNumber(tokens, index, evaluationState);
+                return analyzeBooleanLiteral_1.AnalyzeBooleanLiteral.updateStateForBooleanNumber(tokens, index, evaluationState);
             case `'`:
             case '`':
             case '"':
@@ -46,7 +46,7 @@ class AnalyzeTokens {
             case '*':
             case '^':
             case '~':
-                analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.analyze(evaluationState);
+                analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.updateState(evaluationState);
                 break;
             default: {
             }

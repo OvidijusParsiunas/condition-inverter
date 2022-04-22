@@ -8,8 +8,8 @@ class AnalyzeBitwiseShiftOperator {
         const nextToken = tokens[index + 1];
         return currentToken === nextToken;
     }
-    static analyze(tokens, index, evaluationState) {
-        analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.analyze(evaluationState);
+    static updateState(tokens, index, evaluationState) {
+        analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.updateState(evaluationState);
         const thirdToken = tokens[index + 1];
         const currentToken = tokens[index];
         return currentToken === '>' && thirdToken === '>' ? index + 2 : index + 1;
