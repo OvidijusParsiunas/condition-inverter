@@ -5,7 +5,7 @@ import Column from './components/columns/wrapper/Column';
 import HeaderLogos from './components/links/HeaderLogos';
 import Editor from './components/columns/editor/Editor';
 import React from 'react';
-import './App.css';
+import './app.css';
 
 export default function App() {
   const [input, setInput] = React.useState(INITIAL_INPUT_VALUE);
@@ -13,8 +13,8 @@ export default function App() {
   const [inputEditorClass, setInputEditorClass] = React.useState(INITIAL_EDITOR_COLORING_CLASS);
   const [resultEditorClass, setResultEditorClass] = React.useState(INITIAL_EDITOR_COLORING_CLASS);
 
-  const invert = (result: string) => {
-    setResult(result);
+  const invert = (resultText: string) => {
+    setResult(resultText);
     if (inputEditorClass !== '') setInputEditorClass('');
     if (resultEditorClass !== '') setResultEditorClass('');
   };
@@ -24,7 +24,7 @@ export default function App() {
       <HeaderLogos />
       <div id="title">If Inverter</div>
       <Column>
-        <Editor text={input} className={inputEditorClass} isEditable={true} updateText={setInput} />
+        <Editor text={input} className={inputEditorClass} isEditable updateText={setInput} />
       </Column>
       <InvertButton input={input} inversionCallback={invert} />
       <Column>

@@ -1,5 +1,4 @@
 tasks:
-* Take care of the bugs
 * Make the Website responsive
 * Get a font style for the title
 * Get the animation for the logos to work

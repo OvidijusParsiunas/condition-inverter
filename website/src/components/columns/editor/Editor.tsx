@@ -40,3 +40,7 @@ export default function Editor(props: Props) {
     </div>
   );
 }
+
+Editor.defaultProps = {
+  updateText: () => {},
+};
