@@ -1,5 +1,5 @@
-import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { RangeCreator } from '../rangeCreator';
+import { Position } from '../../../../shared/types/invertHighlightedText/invertHighlightedText';
+import { RangeCreator } from '../../rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
 export class FindIfStatementFullRange {

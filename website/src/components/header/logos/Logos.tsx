@@ -1,10 +1,10 @@
-import { GITHUB_REPO_URL } from '../../shared/consts/externalURLs';
+import { GITHUB_REPO_URL } from '../../../shared/consts/externalURLs';
 // import GithubCornerSVG from '../../static/GithubCornerSVG';
-import vscodeLogo from '../../static/vscode-logo.png';
-import githubLogo from '../../static/github-logo.png';
-import './headerLogos.css';
+import vscodeLogo from '../../../static/vscode-logo.png';
+import githubLogo from '../../../static/github-logo.png';
+import './logos.css';
 
-export default function HeaderLogos() {
+export default function Logos() {
   return (
     <div>
       <a id="github-corner" className="logo" href={GITHUB_REPO_URL} target="_blank" rel="noreferrer">

@@ -1,0 +1,10 @@
+#title {
+  left: 50%;
+  color: white;
+  font-size: 35px;
+  margin-top: 3.6vh;
+  position: absolute;
+  pointer-events: none;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+}

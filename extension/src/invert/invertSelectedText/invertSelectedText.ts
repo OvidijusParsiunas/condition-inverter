@@ -1,5 +1,5 @@
-import { FindIfStatementFullRange } from '../shared/traversal/findIfStatementFullRange';
-import { FindIfStatementStart } from '../shared/traversal/findIfStatementStart';
+import { FindIfStatementFullRange } from '../shared/functionality/traversal/findIfStatementFullRange';
+import { FindIfStatementStart } from '../shared/functionality/traversal/findIfStatementStart';
 import { IfInverter } from '../../../../shared/out/src/ifInverter';
 import { Range, TextEditor } from 'vscode';
 

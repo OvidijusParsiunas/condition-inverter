@@ -1,6 +1,6 @@
-import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { IsCursorOnIfWord } from '../isCursorOnIfWord';
-import { RangeCreator } from '../rangeCreator';
+import { Position } from '../../../../shared/types/invertHighlightedText/invertHighlightedText';
+import { IsCursorOnIfWord } from '../../isCursorOnIfWord';
+import { RangeCreator } from '../../rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class FindIfStatementStart {

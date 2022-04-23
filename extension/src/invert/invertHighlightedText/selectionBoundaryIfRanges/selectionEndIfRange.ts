@@ -1,5 +1,5 @@
+import { FindIfStatementFullRange } from '../../shared/functionality/traversal/findIfStatementFullRange';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { FindIfStatementFullRange } from '../../shared/traversal/findIfStatementFullRange';
 import { FindIfStatementAtSelectionEnd } from '../traversal/findIfStatementAtSelectionEnd';
 import { IsCursorOnIfWord } from '../../shared/isCursorOnIfWord';
 import { Range, TextEditor } from 'vscode';
