@@ -8,3 +8,10 @@
   transform: translateX(-50%);
   font-family: 'Inter', sans-serif;
 }
+
+/* when screen is narrow - move panel higher */
+@media (max-height: 600px) {
+  #title {
+    font-size: 26px;
+  }
+}
