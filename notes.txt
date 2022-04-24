@@ -9,7 +9,6 @@ tasks:
 * Update all of the readmes
 
 extension:
-when current cursor at the end and inversion occurs - a cursor selection is created
 
 "key": "ctrl+shift+i",
 "mac": "cmd+shift+i",
