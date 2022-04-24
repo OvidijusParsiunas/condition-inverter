@@ -39,6 +39,9 @@
     "testreport": "export COVERAGE=true && npm run test && codecov",
     "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
   },
+  "dependencies": {
+    "inverter": "../shared/out/"
+  },
   "devDependencies": {
     "@types/glob": "^7.2.0",
     "@types/mocha": "^9.1.0",

@@ -1,0 +1,17 @@
+.MuiAlert-icon {
+  color: white !important;
+}
+
+#error-alert {
+  width: 100%;
+  background-color: #ff4949;
+  color: white;
+}
+
+#error-alert-text-prefix {
+  pointer-events: none;
+}
+
+#error-alert-url-text {
+  color: white;
+}

@@ -41,6 +41,7 @@ module.exports = {
     'object-curly-newline': 'off',
     'import/order': 'off',
     'import/prefer-default-export': 'off',
+    'import/no-relative-packages': 'off',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'off',
   },

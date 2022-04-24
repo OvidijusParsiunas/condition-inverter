@@ -4,13 +4,19 @@ import './invertButton.css';
 interface Props {
   input: string;
   inversionCallback: (result: string) => void;
+  errorHandlerCallback: (message: string) => void;
 }
 
 export default function InvertButton(props: Props) {
-  const { input, inversionCallback } = props;
+  const { input, inversionCallback, errorHandlerCallback } = props;
+
   const invert = () => {
-    const inversionResult = IfInverter.invert(input);
-    inversionCallback(inversionResult);
+    try {
+      const inversionResult = IfInverter.invert(input);
+      inversionCallback(inversionResult);
+    } catch (error) {
+      errorHandlerCallback((error as Error).message);
+    }
   };
 
   return (

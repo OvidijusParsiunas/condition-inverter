@@ -1,4 +1,4 @@
-import { UNEXPECTED_ERROR_MESSAGE_INTRODUCTION } from '../../../shared/consts/errors';
+import { UNEXPECTED_ERROR_MESSAGE_INTRODUCTION } from 'inverter/consts/errors';
 
 export class ErrorHandling {
   private static constructUnexpectedMessage(errorMessage: string): string {

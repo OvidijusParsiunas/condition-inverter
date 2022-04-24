@@ -1,6 +1,5 @@
 tasks:
 * Make the Website responsive
-* Error handling
 * Get the animation for the logos to work
 * Purchase domain
 * Test out different variations of the logo
