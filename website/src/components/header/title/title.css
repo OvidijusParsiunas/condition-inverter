@@ -4,6 +4,7 @@
   font-size: 34px;
   margin-top: 3.6vh;
   position: absolute;
+  white-space: nowrap;
   pointer-events: none;
   transform: translateX(-50%);
   font-family: 'Inter', sans-serif;

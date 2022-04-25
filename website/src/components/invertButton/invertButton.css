@@ -29,9 +29,44 @@
   background-color: #d4d4d4;
 }
 
-/* when screen height is small - move the invert button down (this overrides the screen-center-position class top property) */
-@media (max-height: 230px) {
+/* when screen width is small - move the button lower */
+@media (max-width: 860px) {
+  #invert-button {
+    top: 52%;
+  }
+}
+
+/* when screen width is small - move the button lower */
+@media (max-width: 860px) and (max-height: 330px) {
   #invert-button {
     top: 54%;
+  }
+}
+
+/* when screen width is small - move the button lower */
+@media (max-width: 860px) and (max-height: 290px) {
+  #invert-button {
+    top: 55%;
+  }
+}
+
+/* when screen width is small - move the button lower */
+@media (max-width: 860px) and (max-height: 270px) {
+  #invert-button {
+    top: 56%;
+  }
+}
+
+/* when screen width is small - move the button lower */
+@media (max-width: 860px) and (max-height: 251px) {
+  #invert-button {
+    top: 57%;
+  }
+}
+
+/* when screen width is small - move the button lower */
+@media (max-width: 860px) and (max-height: 220px) {
+  #invert-button {
+    top: 58%;
   }
 }

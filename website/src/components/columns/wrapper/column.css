@@ -18,3 +18,86 @@
     margin-left: 5vw;
   }
 }
+
+/* when screen width is small - stack columns vertically instead of horizontally */
+/* the reason why this is changed in this file is because css selectors do not work for individual .editor-container class elements */
+@media (max-width: 860px) {
+  .column {
+    height: 50vh;
+    width: 100%;
+  }
+  .column > .editor-container {
+    width: 90vw;
+    margin-left: 5vw;
+  }
+  .column:nth-child(2) > .editor-container {
+    margin-top: 16vh;
+  }
+  .column:nth-child(4) > .editor-container {
+    margin-top: 12vh;
+  }
+  .column > .editor-container > .initial-editor-coloring > .cm-editor {
+    height: 27vh;
+  }
+}
+
+/* when screen width is small - move editors towards bottom */
+/* the reason why this is changed in this file is because css selectors do not work for individual .editor-container class elements */
+@media (max-width: 860px) and (max-height: 330px) {
+  .column:nth-child(2) > .editor-container {
+    margin-top: 17vh;
+  }
+  .column:nth-child(4) > .editor-container {
+    margin-top: 14vh;
+  }
+}
+
+/* when screen width is small - move editors towards bottom */
+/* the reason why this is changed in this file is because css selectors do not work for individual .editor-container class elements */
+@media (max-width: 860px) and (max-height: 290px) {
+  .column:nth-child(2) > .editor-container {
+    margin-top: 18vh;
+  }
+  .column:nth-child(4) > .editor-container {
+    margin-top: 15vh;
+  }
+}
+
+/* when screen width is small - move editors towards bottom */
+/* the reason why this is changed in this file is because css selectors do not work for individual .editor-container class elements */
+@media (max-width: 860px) and (max-height: 270px) {
+  .column:nth-child(2) > .editor-container {
+    margin-top: 19vh;
+  }
+  .column:nth-child(4) > .editor-container {
+    margin-top: 16vh;
+  }
+}
+
+/* when screen width is small - move editors towards bottom and decrease their height */
+/* the reason why this is changed in this file is because css selectors do not work for individual .editor-container class elements */
+@media (max-width: 860px) and (max-height: 251px) {
+  .column:nth-child(2) > .editor-container {
+    margin-top: 22vh;
+  }
+  .column:nth-child(4) > .editor-container {
+    margin-top: 19vh;
+  }
+  .column > .editor-container > .initial-editor-coloring > .cm-editor {
+    height: 23vh;
+  }
+}
+
+/* when screen width is small - move editors towards bottom and decrease their height */
+/* the reason why this is changed in this file is because css selectors do not work for individual .editor-container class elements */
+@media (max-width: 860px) and (max-height: 220px) {
+  .column:nth-child(2) > .editor-container {
+    margin-top: 24vh;
+  }
+  .column:nth-child(4) > .editor-container {
+    margin-top: 21vh;
+  }
+  .column > .editor-container > .initial-editor-coloring > .cm-editor {
+    height: 20vh;
+  }
+}
