@@ -1,6 +1,4 @@
 tasks:
-* Make the Website responsive
-* Get the animation for the logos to work
 * Purchase domain
 * Test out different variations of the logo
 * Get the ci-cd to deploy correctly
@@ -14,6 +12,8 @@ extension:
 "mac": "cmd+shift+i",
 
 website:
+
+the website has an alternative top right logo that is a github corner, however decided to not use it as we need to use a vscode logo as well
 
 currently not detecting the language used, but can implement this via:
 https://www.npmjs.com/package/lang-detector

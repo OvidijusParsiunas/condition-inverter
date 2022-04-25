@@ -1,5 +1,5 @@
 import { GITHUB_REPO_URL } from '../../../shared/consts/externalURLs';
-// import GithubCornerSVG from '../../static/GithubCornerSVG';
+// import GithubCornerSVG from '../../../static/GithubCornerSVG';
 import vscodeLogo from '../../../static/vscode-logo.png';
 import githubLogo from '../../../static/github-logo.png';
 import './logos.css';

@@ -6,6 +6,7 @@
   width: 100%;
   background-color: #ff4949;
   color: white;
+  overflow: auto;
 }
 
 #error-alert-text-prefix {
@@ -14,4 +15,46 @@
 
 #error-alert-url-text {
   color: white;
+}
+
+/* when screen width is small - increase the size of alert so that text can fit in without creating a new line */
+@media (max-width: 1090px) {
+  #error-alert {
+    width: 55vw;
+  }
+}
+
+/* when screen width is small - increase the size of alert so that text can fit in without creating a new line */
+@media (max-width: 930px) {
+  #error-alert {
+    width: 60vw;
+  }
+}
+
+/* when screen width is small - increase the size of alert so that text can fit in without creating a new line */
+@media (max-width: 860px) {
+  #error-alert {
+    width: 65vw;
+  }
+}
+
+/* when screen width is small - increase the size of alert so that text can fit in without creating a new line */
+@media (max-width: 790px) {
+  #error-alert {
+    width: 70vw;
+  }
+}
+
+/* when screen width is small - increase the size of alert so that text can fit in without creating a new line */
+@media (max-width: 730px) {
+  #error-alert {
+    width: 80vw;
+  }
+}
+
+/* when screen width is small - increase the size of alert so that text can fit in without creating a new line */
+@media (max-width: 640px) {
+  #error-alert {
+    width: 90vw;
+  }
 }

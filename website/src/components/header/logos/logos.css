@@ -51,3 +51,18 @@
 .logo {
   cursor: pointer;
 }
+
+/* when screen width is small - make icons smaller, reduce distance between them and move them closer to top rigt of screen */
+@media (max-width: 420px) {
+  #small-logos-container {
+    top: 4px;
+    right: 3px;
+  }
+  #vscode-logo {
+    width: 25px;
+  }
+  #github-logo {
+    width: 20px;
+    margin-left: 1px;
+  }
+}
