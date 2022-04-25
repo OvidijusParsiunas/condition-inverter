@@ -30,7 +30,6 @@ export default function Editor(props: Props) {
     <div className="editor-container">
       <CodeMirror
         value={text}
-        height="80vh" // defined here as the editor doesn't auto fill the container height
         extensions={[javascript({ jsx: true })]}
         onChange={(value) => handleInputChange(value)}
         style={customCss}

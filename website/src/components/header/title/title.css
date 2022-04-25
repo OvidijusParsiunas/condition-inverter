@@ -9,9 +9,25 @@
   font-family: 'Inter', sans-serif;
 }
 
-/* when screen is narrow - move panel higher */
-@media (max-height: 600px) {
+/* when screen height is small - move the title higher and make the font smaller */
+@media (max-height: 700px) {
   #title {
-    font-size: 26px;
+    margin-top: 17px;
+    font-size: 32px;
+  }
+}
+
+/* when screen height is small - move the title higher and make the font smaller */
+@media (max-height: 500px) {
+  #title {
+    margin-top: 14px;
+    font-size: 30px;
+  }
+}
+
+/* when screen height is small - move the title higher */
+@media (max-height: 400px) {
+  #title {
+    margin-top: 10px;
   }
 }

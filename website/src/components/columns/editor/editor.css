@@ -20,3 +20,24 @@
 .ͼ1.cm-editor.cm-focused {
   outline: 1px solid rgb(175, 175, 175);
 }
+
+.cm-editor {
+  height: 80vh;
+}
+
+/* when screen width height is small - move the editor higher and reduce it's height */
+@media (max-height: 440px) {
+  .editor-container {
+    margin-top: 56px;
+  }
+  .cm-editor {
+    height: calc(90vh - 50px);
+  }
+}
+
+/* when screen width height is small - reduce the editor's height */
+@media (max-height: 300px) {
+  .cm-editor {
+    height: calc(90vh - 65px);
+  }
+}

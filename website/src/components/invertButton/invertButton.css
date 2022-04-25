@@ -29,9 +29,9 @@
   background-color: #d4d4d4;
 }
 
-.screen-center-position {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+/* when screen height is small - move the invert button down (this overrides the screen-center-position class top property) */
+@media (max-height: 230px) {
+  #invert-button {
+    top: 54%;
+  }
 }
