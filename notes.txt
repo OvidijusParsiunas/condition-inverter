@@ -1,6 +1,5 @@
 tasks:
 * Purchase domain
-* Test out different variations of the logo
 * Get the ci-cd to deploy correctly
 * Publish extension
 * Get a logo for the app
