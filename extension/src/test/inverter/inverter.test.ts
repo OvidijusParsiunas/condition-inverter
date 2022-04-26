@@ -1,7 +1,8 @@
 import { IfInverter } from 'inverter/src/ifInverter';
 import * as assert from 'assert';
 
-suite('Generic Inversion tests', () => {
+// the reason why these tests are done in the extension directory instead of shared is because they are used to achieve 100% test coverage
+suite('Inverter Suite', () => {
   [
     { input: 'if (mouse && cat) { console.log(2) }', output: 'if (!mouse || !cat) { console.log(2) }' },
     { input: 'if (mouse &&cat) { console.log(2) }', output: 'if (!mouse ||!cat) { console.log(2) }' },
