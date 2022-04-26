@@ -35,28 +35,13 @@ export class InvertHighlightedText {
     return RangeCreator.create(startPosition, endPosition);
   }
 
-  // no logic to find exactly where the if statement is (line, character) as the inversion algorithm will traverse the full string either way
-  private static findIfStatementInsideSelection(editor: TextEditor): boolean {
-    const { start, end } = editor.selection;
-    const selectionRange = RangeCreator.create(start, end);
-    const selectionText = editor.document.getText(selectionRange);
-    return selectionText.indexOf('if') > -1;
-  }
-
-  private static haveIfStatementsBeenFound(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): boolean {
-    if (!startStatementRange && !endStatementRange) {
-      const isIfStatementBetweenSelection = InvertHighlightedText.findIfStatementInsideSelection(editor);
-      if (!isIfStatementBetweenSelection) return false;
-    }
-    return true;
-  }
-
   private static getIfStatementsRange(editor: TextEditor): Range | null {
     const startStatementRange = SelectionStartIfRange.getStartSelectionIfStatementFullRange(editor);
     const endStatementRange = SelectionEndIfRange.get(editor, startStatementRange);
-    const haveIfStatementsBeenFound = InvertHighlightedText.haveIfStatementsBeenFound(editor, startStatementRange, endStatementRange);
-    if (!haveIfStatementsBeenFound) return null;
-    return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
+    if (startStatementRange || endStatementRange) {
+      return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
+    }
+    return null;
   }
 
   public static invert(editor: TextEditor): void {

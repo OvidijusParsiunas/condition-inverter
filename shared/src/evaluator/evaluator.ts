@@ -13,7 +13,7 @@ export class Evaluator {
         index = AnalyzeIfStatement.updateState(tokens, index, evaluationState);
       } else if (tokens[index] === 'if') {
         index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
-        const isEmpty = AnalyzeEmptyIfStatement.isEmpty(tokens, evaluationState);
+        const isEmpty = AnalyzeEmptyIfStatement.isEmpty(evaluationState);
         if (isEmpty) return [];
       }
     }

@@ -11,11 +11,11 @@ suite('Exceptions Suite', () => {
 
   mocha.beforeEach(() => TestUtil.removeTextFromEditor(textEditorObj));
 
-  mocha.after(() => TestUtil.removeTextDocument());
+  mocha.after(() => TestUtil.executCloseEditorCommand());
 
-  // not testing console.log outputs as cannot listen to them for extension testing
-  // this is only validing that an error has not been thrown
-  TestUtil.runInversionTests(textEditorObj, 'No error in the editor', [
+  // not testing for console.log outputs as cannot listen to them in extension
+  // tets here are only validing if an error has not been thrown
+  TestUtil.runInversionTests(textEditorObj, 'No exception thrown by vscode extension', [
     {
       lines: [
         {
@@ -65,11 +65,9 @@ suite('Exceptions Suite', () => {
       },
     },
   ]);
-});
 
-suite('Generic Inversion tests', () => {
   [{ input: 'if (mouse && cat { console.log(2) }', output: 'if (!mouse || !cat { console.log(2) }' }].forEach((testProps) => {
-    test('Error in the library', (done) => {
+    test('Exception thrown by the library when input is invalid', (done) => {
       try {
         IfInverter.invert(testProps.input);
       } catch (message) {

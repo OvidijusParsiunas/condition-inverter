@@ -4,7 +4,15 @@ import * as vscode from 'vscode';
 
 export class TestUtil {
   // headless tests aoppear to take longer to finishe executing the invert command
-  private static readonly commandExecutionTimeMl = process.env.NODE_ENV ? 200 : 10;
+  private static readonly commandExecutionTimeMl = process.env.NODE_ENV ? 200 : 30;
+
+  public static async executCloseEditorCommand(): Promise<void> {
+    return vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+  }
+
+  private static async executeInversionCommand(): Promise<void> {
+    return vscode.commands.executeCommand('if-inverter.invert');
+  }
 
   public static createTextDocument(textEditorObj: TextEditorObj): Promise<boolean> {
     return new Promise((resolve) => {
@@ -33,10 +41,6 @@ export class TestUtil {
     });
   }
 
-  public static async removeTextDocument(): Promise<void> {
-    return vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-  }
-
   private static testOutput(textEditor: vscode.TextEditor, testProps: TestProps, doneCallback: () => void): void {
     const { selection, lines } = testProps;
     textEditor.selection = new vscode.Selection(selection.start, selection.end);
@@ -52,7 +56,7 @@ export class TestUtil {
     const { selection } = testProps;
     textEditor.selection = new vscode.Selection(selection.start, selection.end);
     // execute the inversion command
-    await vscode.commands.executeCommand('if-inverter.invert');
+    await TestUtil.executeInversionCommand();
     // test output after command execution
     setTimeout(() => TestUtil.testOutput(textEditor, testProps, doneCallback), TestUtil.commandExecutionTimeMl);
   }
@@ -75,6 +79,12 @@ export class TestUtil {
           TestUtil.runTest(textEditorObj.textEditor, testProps, done);
         }
       });
+    });
+  }
+
+  public static runInversionCommandWithNoEditor(doneCallback: () => void): void {
+    TestUtil.executeInversionCommand().then(() => {
+      setTimeout(doneCallback, TestUtil.commandExecutionTimeMl);
     });
   }
 }

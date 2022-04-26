@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>37/37</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.23% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>20/21</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>9/9</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>35/35</span>
+                <span class='fraction'>27/27</span>
             </div>
         
             
@@ -119,22 +119,7 @@
 <a name='L54'></a><a href='#L54'>54</a>
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
-<a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a>
-<a name='L67'></a><a href='#L67'>67</a>
-<a name='L68'></a><a href='#L68'>68</a>
-<a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a>
-<a name='L72'></a><a href='#L72'>72</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L57'></a><a href='#L57'>57</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -172,27 +157,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">109x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-yes">18x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">91x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">109x</span>
 <span class="cline-any cline-yes">109x</span>
 <span class="cline-any cline-yes">109x</span>
 <span class="cline-any cline-yes">109x</span>
 <span class="cline-any cline-yes">91x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -242,28 +212,13 @@ export class InvertHighlightedText {
     return RangeCreator.create(startPosition, endPosition);
   }
 &nbsp;
-  // no logic to find exactly where the if statement is (line, character) as the inversion algorithm will traverse the full string either way
-  private static findIfStatementInsideSelection(editor: TextEditor): boolean {
-    const { start, end } = editor.selection;
-    const selectionRange = RangeCreator.create(start, end);
-    const selectionText = editor.document.getText(selectionRange);
-    return selectionText.indexOf('if') &gt; -1;
-  }
-&nbsp;
-  private static haveIfStatementsBeenFound(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): boolean {
-    if (!startStatementRange &amp;&amp; !endStatementRange) {
-      const isIfStatementBetweenSelection = InvertHighlightedText.findIfStatementInsideSelection(editor);
-      <span class="missing-if-branch" title="else path not taken" >E</span>if (!isIfStatementBetweenSelection) return false;
-    }
-    return true;
-  }
-&nbsp;
   private static getIfStatementsRange(editor: TextEditor): Range | null {
     const startStatementRange = SelectionStartIfRange.getStartSelectionIfStatementFullRange(editor);
     const endStatementRange = SelectionEndIfRange.get(editor, startStatementRange);
-    const haveIfStatementsBeenFound = InvertHighlightedText.haveIfStatementsBeenFound(editor, startStatementRange, endStatementRange);
-    if (!haveIfStatementsBeenFound) return null;
-    return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
+    if (startStatementRange || endStatementRange) {
+      return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
+    }
+    return null;
   }
 &nbsp;
   public static invert(editor: TextEditor): void {
@@ -283,7 +238,7 @@ export class InvertHighlightedText {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 21:59:52 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 22:53:48 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

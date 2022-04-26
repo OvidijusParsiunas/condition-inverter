@@ -14,7 +14,7 @@ class Evaluator {
             }
             else if (tokens[index] === 'if') {
                 index = analyzeIfStatement_1.AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
-                const isEmpty = analyzeEmptyIfStatement_1.AnalyzeEmptyIfStatement.isEmpty(tokens, evaluationState);
+                const isEmpty = analyzeEmptyIfStatement_1.AnalyzeEmptyIfStatement.isEmpty(evaluationState);
                 if (isEmpty)
                     return [];
             }

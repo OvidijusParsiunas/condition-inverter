@@ -6,9 +6,8 @@ import { window } from 'vscode';
 export class Invert {
   private static start(): void {
     const editor = window.activeTextEditor;
-    const selection = editor?.selection;
-    if (selection) {
-      const { start, end } = selection;
+    if (editor) {
+      const { start, end } = editor.selection;
       if (start.line === end.line && start.character === end.character) {
         InvertSelectedText.invert(editor);
       } else {

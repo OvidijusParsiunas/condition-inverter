@@ -10,7 +10,7 @@ suite('Highlighted Text Suite', () => {
 
   mocha.beforeEach(() => TestUtil.removeTextFromEditor(textEditorObj));
 
-  mocha.after(() => TestUtil.removeTextDocument());
+  mocha.after(() => TestUtil.executCloseEditorCommand());
 
   TestUtil.runInversionTests(textEditorObj, 'Multiple Lines', [
     {
