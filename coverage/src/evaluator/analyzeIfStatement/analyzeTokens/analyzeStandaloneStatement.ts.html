@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.76% </span>
+                <span class="strong">47.05% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/17</span>
+                <span class='fraction'>8/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>6/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">40% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>2/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">11.76% </span>
+                <span class="strong">47.05% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/17</span>
+                <span class='fraction'>8/17</span>
             </div>
         
             
@@ -126,7 +126,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -147,14 +147,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -173,8 +173,8 @@ export class UpdateStateForStandaloneStatements {
     });
   }
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >static </span>markForVariableInversion(evaluationState: EvaluationState): void {
-<span class="cstat-no" title="statement not covered" >    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentIfStatementInsideIndex });</span>
+  private static markForVariableInversion(evaluationState: EvaluationState): void {
+    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentIfStatementInsideIndex });
   }
 &nbsp;
   private <span class="fstat-no" title="function not covered" >static </span>markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
@@ -194,15 +194,15 @@ export class UpdateStateForStandaloneStatements {
   }
 &nbsp;
   // a look back to see if previous syntax defines a standalone statement
-  public <span class="fstat-no" title="function not covered" >static </span>markStandaloneStatementsForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-<span class="cstat-no" title="statement not covered" >    if (evaluationState.shouldBracketsBeRemoved) {</span>
+  public static markStandaloneStatementsForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (evaluationState.shouldBracketsBeRemoved) {
 <span class="cstat-no" title="statement not covered" >      UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);</span>
-    } else <span class="cstat-no" title="statement not covered" >if (evaluationState.invertBooleanLiteral &amp;&amp; !evaluationState.isOperationWrappableInBrackets) {</span>
+    } else <span class="missing-if-branch" title="if path not taken" >I</span>if (evaluationState.invertBooleanLiteral &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!evaluationState.isOperationWrappableInBrackets)</span> {
 <span class="cstat-no" title="statement not covered" >      UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);</span>
-    } else <span class="cstat-no" title="statement not covered" >if (!evaluationState.comparisonOperatorFound) {</span>
-<span class="cstat-no" title="statement not covered" >      UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);</span>
+    } else <span class="missing-if-branch" title="else path not taken" >E</span>if (!evaluationState.comparisonOperatorFound) {
+      UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
     }
-<span class="cstat-no" title="statement not covered" >    if (evaluationState.isOperationWrappableInBrackets &amp;&amp; !evaluationState.areBracketsAlreadyPresent) {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (evaluationState.isOperationWrappableInBrackets &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!evaluationState.areBracketsAlreadyPresent)</span> {
 <span class="cstat-no" title="statement not covered" >      UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);</span>
     }
   }
@@ -214,7 +214,7 @@ export class UpdateStateForStandaloneStatements {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

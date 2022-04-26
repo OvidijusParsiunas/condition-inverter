@@ -3,6 +3,6 @@ import { Tokens } from '../../../../shared/types/tokens';
 export declare class AnalyzeBooleanLiteral {
     static updateStateForBoolean(evaluationState: EvaluationState): void;
     private static doesTokenEndNumber;
-    static findNumberEndIndex(tokens: Tokens, index: number): number;
+    private static findNumberEndIndex;
     static updateStateForBooleanNumber(tokens: Tokens, index: number, evaluationState: EvaluationState): number;
 }

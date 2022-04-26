@@ -3,7 +3,7 @@ import { RangeCreator } from '../../rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
 export class FindIfStatementFullRange {
-  public static getIfCloseBracketPosition(editor: TextEditor, text: string, lineNum: number, charNumber: number, openBrackets = 0): Position {
+  public static getIfCloseBracketPosition(editor: TextEditor, text: string, lineNum: number, charNumber: number, openBrackets: number): Position {
     if (charNumber > text.length - 1) {
       lineNum += 1;
       text = editor.document.lineAt(lineNum).text;

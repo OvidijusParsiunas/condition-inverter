@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.61% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>9/26</span>
+                <span class='fraction'>13/26</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">13.63% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/22</span>
+                <span class='fraction'>3/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">34.61% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/26</span>
+                <span class='fraction'>13/26</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -132,8 +132,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -144,7 +144,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -172,7 +172,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { AnalyzeGreaterOrLessThanSign } from './analyzeSyntax/analyzeGreaterOrLessThanSign';
@@ -187,48 +187,48 @@ import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
 import { Tokens } from '../../../shared/types/tokens';
 &nbsp;
 export class AnalyzeTokens {
-  public <span class="fstat-no" title="function not covered" >static </span>updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const currentToken = <span class="cstat-no" title="statement not covered" >tokens[index];</span>
-<span class="cstat-no" title="statement not covered" >    switch (currentToken) {</span>
-      case '!':
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    const currentToken = tokens[index];
+    switch (currentToken) {
+<span class="branch-0 cbranch-no" title="branch not covered" >      case '!':</span>
 <span class="cstat-no" title="statement not covered" >        return AnalyzeExclamationMark.updateState(tokens, index, evaluationState);</span>
-      case '(':
+<span class="branch-1 cbranch-no" title="branch not covered" >      case '(':</span>
 <span class="cstat-no" title="statement not covered" >        AnalyzeBracket.updateStateForOpen(evaluationState);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
-      case ')':
+<span class="branch-2 cbranch-no" title="branch not covered" >      case ')':</span>
 <span class="cstat-no" title="statement not covered" >        AnalyzeBracket.updateStateForClose(evaluationState);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
       case '&amp;':
       case '|':
-<span class="cstat-no" title="statement not covered" >        return AnalyzeLogicalOperator.updateState(tokens, index, evaluationState);</span>
-      case '&lt;':
-      case '&gt;':
+        return AnalyzeLogicalOperator.updateState(tokens, index, evaluationState);
+<span class="branch-5 cbranch-no" title="branch not covered" >      case '&lt;':</span>
+<span class="branch-6 cbranch-no" title="branch not covered" >      case '&gt;':</span>
 <span class="cstat-no" title="statement not covered" >        return AnalyzeGreaterOrLessThanSign.updateState(tokens, index, evaluationState);</span>
-      case '=':
+<span class="branch-7 cbranch-no" title="branch not covered" >      case '=':</span>
 <span class="cstat-no" title="statement not covered" >        return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);</span>
-      case 'false':
-      case 'true':
+<span class="branch-8 cbranch-no" title="branch not covered" >      case 'false':</span>
+<span class="branch-9 cbranch-no" title="branch not covered" >      case 'true':</span>
 <span class="cstat-no" title="statement not covered" >        AnalyzeBooleanLiteral.updateStateForBoolean(evaluationState);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
-      case '0':
-      case '1':
+<span class="branch-10 cbranch-no" title="branch not covered" >      case '0':</span>
+<span class="branch-11 cbranch-no" title="branch not covered" >      case '1':</span>
 <span class="cstat-no" title="statement not covered" >        return AnalyzeBooleanLiteral.updateStateForBooleanNumber(tokens, index, evaluationState);</span>
-      case `'`:
-      case '`':
-      case '"':
+<span class="branch-12 cbranch-no" title="branch not covered" >      case `'`:</span>
+<span class="branch-13 cbranch-no" title="branch not covered" >      case '`':</span>
+<span class="branch-14 cbranch-no" title="branch not covered" >      case '"':</span>
 <span class="cstat-no" title="statement not covered" >        return TraversalUtil.getEndQuoteIndex(tokens, index + 1, currentToken);</span>
-      case '-':
-      case '+':
-      case '/':
-      case '*':
-      case '^':
-      case '~':
+<span class="branch-15 cbranch-no" title="branch not covered" >      case '-':</span>
+<span class="branch-16 cbranch-no" title="branch not covered" >      case '+':</span>
+<span class="branch-17 cbranch-no" title="branch not covered" >      case '/':</span>
+<span class="branch-18 cbranch-no" title="branch not covered" >      case '*':</span>
+<span class="branch-19 cbranch-no" title="branch not covered" >      case '^':</span>
+<span class="branch-20 cbranch-no" title="branch not covered" >      case '~':</span>
 <span class="cstat-no" title="statement not covered" >        AnalyzeBrackatableSyntax.updateState(evaluationState);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
       default: {
       }
     }
-<span class="cstat-no" title="statement not covered" >    return index;</span>
+    return index;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -238,7 +238,7 @@ export class AnalyzeTokens {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">93.75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/16</span>
+                <span class='fraction'>15/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>5/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.57% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -93,18 +93,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { AnalyzeEmptyIfStatement } from './analyzeIfStatement/analyzeRedundancies/analyzeEmptyIfStatement';
@@ -114,19 +114,19 @@ import { SyntaxToBeInverted } from '../shared/types/evaluationState';
 import { Tokens } from '../shared/types/tokens';
 &nbsp;
 export class Evaluator {
-  public <span class="fstat-no" title="function not covered" >static </span>evaluate(tokens: Tokens): SyntaxToBeInverted[] {
-    const evaluationState = <span class="cstat-no" title="statement not covered" >EvaluationStateUtil.generateNewState();</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;</span>
-<span class="cstat-no" title="statement not covered" >    for (let index = <span class="cstat-no" title="statement not covered" >0;</span> index &lt; tokens.length; index += 1) {</span>
-<span class="cstat-no" title="statement not covered" >      if (evaluationState.isCurrentlyInsideIfStatement) {</span>
-<span class="cstat-no" title="statement not covered" >        index = AnalyzeIfStatement.updateState(tokens, index, evaluationState);</span>
-      } else <span class="cstat-no" title="statement not covered" >if (tokens[index] === 'if') {</span>
-<span class="cstat-no" title="statement not covered" >        index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);</span>
-        const isEmpty = <span class="cstat-no" title="statement not covered" >AnalyzeEmptyIfStatement.isEmpty(tokens, evaluationState);</span>
-<span class="cstat-no" title="statement not covered" >        if (isEmpty) <span class="cstat-no" title="statement not covered" >return [];</span></span>
+  public static evaluate(tokens: Tokens): SyntaxToBeInverted[] {
+    const evaluationState = EvaluationStateUtil.generateNewState();
+    evaluationState.currentIfStatementCloseBracketIndex = tokens.length - 1;
+    for (let index = 0; index &lt; tokens.length; index += 1) {
+      if (evaluationState.isCurrentlyInsideIfStatement) {
+        index = AnalyzeIfStatement.updateState(tokens, index, evaluationState);
+      } else if (tokens[index] === 'if') {
+        index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
+        const isEmpty = AnalyzeEmptyIfStatement.isEmpty(tokens, evaluationState);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (isEmpty) <span class="cstat-no" title="statement not covered" >return [];</span>
       }
     }
-<span class="cstat-no" title="statement not covered" >    return evaluationState.syntaxToBeInverted;</span>
+    return evaluationState.syntaxToBeInverted;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -136,7 +136,7 @@ export class Evaluator {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

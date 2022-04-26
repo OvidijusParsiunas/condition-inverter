@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.33% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>2/15</span>
+                <span class='fraction'>12/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">42.85% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>6/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.33% </span>
+                <span class="strong">80% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>2/15</span>
+                <span class='fraction'>12/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -121,25 +121,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -148,10 +148,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -167,38 +167,38 @@ interface Result {
 }
 &nbsp;
 export class AnalyzeRedundantBrackets {
-  private <span class="fstat-no" title="function not covered" >static </span>isNestedUnaryOperator(tokens: Tokens, startTokenIndex: number, layers: number): boolean {
-<span class="cstat-no" title="statement not covered" >    return layers &gt; 0 &amp;&amp; (tokens[startTokenIndex] === '+' || tokens[startTokenIndex] === '-');</span>
+  private static isNestedUnaryOperator(tokens: Tokens, startTokenIndex: number, layers: number): boolean {
+    return layers &gt; 0 &amp;&amp; (<span class="branch-1 cbranch-no" title="branch not covered" >tokens[startTokenIndex] === '+' </span>|| <span class="branch-2 cbranch-no" title="branch not covered" >tokens[startTokenIndex] === '-')</span>;
   }
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >static </span>createNewResult(startIndex: number, endIndex: number): Result {
-<span class="cstat-no" title="statement not covered" >    return { start: startIndex, end: endIndex };</span>
+  private static createNewResult(startIndex: number, endIndex: number): Result {
+    return { start: startIndex, end: endIndex };
   }
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >static </span>constructResult(tokens: Tokens, startTokenIndex: number, endTokenIndex: number, layers: number): Result {
-    const result = <span class="cstat-no" title="statement not covered" >AnalyzeRedundantBrackets.createNewResult(startTokenIndex, endTokenIndex);</span>
+  private static constructResult(tokens: Tokens, startTokenIndex: number, endTokenIndex: number, layers: number): Result {
+    const result = AnalyzeRedundantBrackets.createNewResult(startTokenIndex, endTokenIndex);
     // statements can start with unary operators, in such instances we usually add a bracket by default, however if there
     // is one already - use it
-<span class="cstat-no" title="statement not covered" >    if (AnalyzeRedundantBrackets.isNestedUnaryOperator(tokens, startTokenIndex, layers)) {</span>
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (AnalyzeRedundantBrackets.isNestedUnaryOperator(tokens, startTokenIndex, layers)) {
 <span class="cstat-no" title="statement not covered" >      result.usePreviousTraversalResult = true;</span>
     }
-<span class="cstat-no" title="statement not covered" >    return result;</span>
+    return result;
   }
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >static </span>isValidBracket(tokens: Tokens, startIndex: number, startTokenIndex: number, endTokenIndex: number): boolean {
-<span class="cstat-no" title="statement not covered" >    return (</span>
+  private static isValidBracket(tokens: Tokens, startIndex: number, startTokenIndex: number, endTokenIndex: number): boolean {
+    return (
       startTokenIndex &lt; endTokenIndex &amp;&amp;
       tokens[startTokenIndex] === '(' &amp;&amp;
-      tokens[endTokenIndex] === ')' &amp;&amp;
-      TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, startIndex - 1) === endTokenIndex
+<span class="branch-2 cbranch-no" title="branch not covered" >      tokens[endTokenIndex] === ')' </span>&amp;&amp;
+<span class="branch-3 cbranch-no" title="branch not covered" >      TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, startIndex - 1) === endTokenIndex</span>
     );
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >static </span>getIndexesOfNestedStartAndEndBrackets(tokens: Tokens, startIndex: number, endIndex: number, layers = <span class="branch-0 cbranch-no" title="branch not covered" >0)</span>: Result {
-    const startTokenIndex = <span class="cstat-no" title="statement not covered" >TraversalUtil.getNonSpaceCharacterIndex(tokens, startIndex);</span>
-    const endTokenIndex = <span class="cstat-no" title="statement not covered" >TraversalUtil.getNonSpaceCharacterIndex(tokens, endIndex, false);</span>
-<span class="cstat-no" title="statement not covered" >    if (!AnalyzeRedundantBrackets.isValidBracket(tokens, startIndex, startTokenIndex, endTokenIndex)) {</span>
-<span class="cstat-no" title="statement not covered" >      return AnalyzeRedundantBrackets.constructResult(tokens, startTokenIndex, endTokenIndex, layers);</span>
+  public static getIndexesOfNestedStartAndEndBrackets(tokens: Tokens, startIndex: number, endIndex: number, layers = 0): Result {
+    const startTokenIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, startIndex);
+    const endTokenIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, endIndex, false);
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (!AnalyzeRedundantBrackets.isValidBracket(tokens, startIndex, startTokenIndex, endTokenIndex)) {
+      return AnalyzeRedundantBrackets.constructResult(tokens, startTokenIndex, endTokenIndex, layers);
     }
     const result = <span class="cstat-no" title="statement not covered" >AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, startTokenIndex + 1, endTokenIndex - 1, layers + 1);</span>
 <span class="cstat-no" title="statement not covered" >    return result.usePreviousTraversalResult ? AnalyzeRedundantBrackets.createNewResult(startTokenIndex, endTokenIndex) : result;</span>
@@ -211,7 +211,7 @@ export class AnalyzeRedundantBrackets {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

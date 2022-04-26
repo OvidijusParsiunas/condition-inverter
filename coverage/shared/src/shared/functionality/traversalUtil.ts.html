@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>18/20</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>18/20</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">90% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>18/20</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
@@ -98,45 +98,39 @@
 <a name='L33'></a><a href='#L33'>33</a>
 <a name='L34'></a><a href='#L34'>34</a>
 <a name='L35'></a><a href='#L35'>35</a>
-<a name='L36'></a><a href='#L36'>36</a>
-<a name='L37'></a><a href='#L37'>37</a>
-<a name='L38'></a><a href='#L38'>38</a>
-<a name='L39'></a><a href='#L39'>39</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9931x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3589x</span>
+<span class="cline-any cline-yes">2488x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">9931x</span>
-<span class="cline-any cline-yes">7049x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2882x</span>
-<span class="cline-any cline-yes">2882x</span>
+<span class="cline-any cline-yes">1101x</span>
+<span class="cline-any cline-yes">1101x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">532x</span>
-<span class="cline-any cline-yes">48x</span>
+<span class="cline-any cline-yes">133x</span>
+<span class="cline-any cline-yes">12x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">484x</span>
+<span class="cline-any cline-yes">121x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27737x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8675x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">27737x</span>
-<span class="cline-any cline-yes">3255x</span>
+<span class="cline-any cline-yes">8674x</span>
+<span class="cline-any cline-yes">938x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24482x</span>
-<span class="cline-any cline-yes">3255x</span>
-<span class="cline-any cline-yes">1701x</span>
+<span class="cline-any cline-yes">7736x</span>
+<span class="cline-any cline-yes">937x</span>
+<span class="cline-any cline-yes">546x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1554x</span>
+<span class="cline-any cline-yes">391x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">21227x</span>
+<span class="cline-any cline-yes">6799x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from '../consts/errors';
@@ -144,9 +138,6 @@ import { Tokens } from '../types/tokens';
 &nbsp;
 export class TraversalUtil {
   public static getNonSpaceCharacterIndex(tokens: Tokens, index: number, traverseForwards = true): number {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (index === 0) {
-<span class="cstat-no" title="statement not covered" >      return 0;</span>
-    }
     if (tokens[index] !== ' ' &amp;&amp; tokens[index] !== `\n`) {
       return index;
     }
@@ -162,8 +153,8 @@ export class TraversalUtil {
   }
 &nbsp;
   public static getIndexOfLastBracketOfIfStatement(tokens: Tokens, index: number, openBrackets = 0): number {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (index &gt; tokens.length - 1) {
-<span class="cstat-no" title="statement not covered" >      throw new Error(INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL);</span>
+    if (index &gt; tokens.length - 1) {
+      throw new Error(INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL);
     }
     if (tokens[index + 1] === '(') {
       return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);
@@ -184,7 +175,7 @@ export class TraversalUtil {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 19:50:55 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 21:59:52 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../../prettify.js"></script>
         <script>

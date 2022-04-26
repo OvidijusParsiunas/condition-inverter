@@ -9,10 +9,6 @@ class AnalyzeBooleanLiteral {
         return token === ' ' || token === ')' || token === '&' || token === '|';
     }
     static findNumberEndIndex(tokens, index) {
-        if (index > tokens.length - 1) {
-            console.log('attempt to retrieve when number declaration stops is out of bounds');
-            return -1;
-        }
         if (AnalyzeBooleanLiteral.doesTokenEndNumber(tokens[index])) {
             return index;
         }

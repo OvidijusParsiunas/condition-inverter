@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25.92% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>7/27</span>
+                <span class='fraction'>18/27</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">30.76% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>4/13</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25.92% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>7/27</span>
+                <span class='fraction'>18/27</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -138,8 +138,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -149,8 +149,8 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -161,20 +161,20 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -189,50 +189,50 @@ import { InsertBrackets } from './insert/insertBrackets';
 import { Tokens } from '../shared/types/tokens';
 &nbsp;
 export class Inverter {
-  private <span class="fstat-no" title="function not covered" >static </span>invert(
+  private static invert(
     tokens: Tokens,
     tokenIndex: number,
     tokenIndexDelta: number,
     syntaxToBeInverted: SyntaxToBeInverted[],
     entryIndex: number,
   ): number {
-    const syntaxToBeInvertedEntry = <span class="cstat-no" title="statement not covered" >syntaxToBeInverted[entryIndex];</span>
-<span class="cstat-no" title="statement not covered" >    switch (tokens[tokenIndex]) {</span>
-      case '=':
+    const syntaxToBeInvertedEntry = syntaxToBeInverted[entryIndex];
+    switch (tokens[tokenIndex]) {
+<span class="branch-0 cbranch-no" title="branch not covered" >      case '=':</span>
 <span class="cstat-no" title="statement not covered" >        tokens[tokenIndex] = '!';</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
-      case '&lt;':
-      case '&gt;':
+<span class="branch-1 cbranch-no" title="branch not covered" >      case '&lt;':</span>
+<span class="branch-2 cbranch-no" title="branch not covered" >      case '&gt;':</span>
 <span class="cstat-no" title="statement not covered" >        tokenIndexDelta = InvertGreaterOrLessThanSign.invert(tokens, tokenIndex, tokenIndexDelta, syntaxToBeInvertedEntry);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
       case '&amp;':
       case '|':
-<span class="cstat-no" title="statement not covered" >        InvertLogicalOperator.invert(tokens, tokenIndex);</span>
-<span class="cstat-no" title="statement not covered" >        break;</span>
-      case '!':
+        InvertLogicalOperator.invert(tokens, tokenIndex);
+        break;
+<span class="branch-5 cbranch-no" title="branch not covered" >      case '!':</span>
 <span class="cstat-no" title="statement not covered" >        tokenIndexDelta = InvertNegatedSyntax.invert(tokens, tokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
-      case 'true':
-      case 'false':
-      case '0':
-      case '1':
+<span class="branch-6 cbranch-no" title="branch not covered" >      case 'true':</span>
+<span class="branch-7 cbranch-no" title="branch not covered" >      case 'false':</span>
+<span class="branch-8 cbranch-no" title="branch not covered" >      case '0':</span>
+<span class="branch-9 cbranch-no" title="branch not covered" >      case '1':</span>
 <span class="cstat-no" title="statement not covered" >        tokenIndexDelta = InvertBooleanLiteral.invert(tokens, tokenIndex, syntaxToBeInvertedEntry, tokenIndexDelta);</span>
 <span class="cstat-no" title="statement not covered" >        break;</span>
       default: {
-<span class="cstat-no" title="statement not covered" >        tokenIndexDelta += InsertNewSyntax.insert(tokens, tokenIndex, '!');</span>
+        tokenIndexDelta += InsertNewSyntax.insert(tokens, tokenIndex, '!');
       }
     }
-<span class="cstat-no" title="statement not covered" >    return tokenIndexDelta;</span>
+    return tokenIndexDelta;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >static </span>invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
-    let tokenIndexDelta = <span class="cstat-no" title="statement not covered" >0;</span>
-<span class="cstat-no" title="statement not covered" >    syntaxToBeInverted.forEach(<span class="fstat-no" title="function not covered" >(s</span>yntaxToBeInvertedEntry, entryIndex) =&gt; {</span>
-      const relativeTokenIndex = <span class="cstat-no" title="statement not covered" >syntaxToBeInvertedEntry.start + tokenIndexDelta;</span>
-<span class="cstat-no" title="statement not covered" >      if (InsertBrackets.isInsertNewBrackets(syntaxToBeInvertedEntry)) {</span>
+  public static invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
+    let tokenIndexDelta = 0;
+    syntaxToBeInverted.forEach((syntaxToBeInvertedEntry, entryIndex) =&gt; {
+      const relativeTokenIndex = syntaxToBeInvertedEntry.start + tokenIndexDelta;
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (InsertBrackets.isInsertNewBrackets(syntaxToBeInvertedEntry)) {
 <span class="cstat-no" title="statement not covered" >        tokenIndexDelta = InsertBrackets.insert(tokens, relativeTokenIndex, syntaxToBeInvertedEntry.end, tokenIndexDelta);</span>
       } else {
-<span class="cstat-no" title="statement not covered" >        tokenIndexDelta = Inverter.invert(tokens, relativeTokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);</span>
+        tokenIndexDelta = Inverter.invert(tokens, relativeTokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);
       }
     });
   }
@@ -244,7 +244,7 @@ export class Inverter {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

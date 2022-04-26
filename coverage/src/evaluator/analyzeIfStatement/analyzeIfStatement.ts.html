@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.08% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/23</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">26.08% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>6/23</span>
+                <span class='fraction'>23/23</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -116,37 +116,37 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { UpdateStateForStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
@@ -158,38 +158,38 @@ import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
 import { Tokens } from '../../shared/types/tokens';
 &nbsp;
 export class AnalyzeIfStatement {
-  private <span class="fstat-no" title="function not covered" >static </span>finishEvaluatingIfStatement(tokens: Tokens, evaluationState: EvaluationState): void {
-<span class="cstat-no" title="statement not covered" >    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(</span>
+  private static finishEvaluatingIfStatement(tokens: Tokens, evaluationState: EvaluationState): void {
+    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(
       tokens,
       evaluationState.currentIfStatementCloseBracketIndex,
       evaluationState,
     );
-<span class="cstat-no" title="statement not covered" >    evaluationState.isCurrentlyInsideIfStatement = false;</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.comparisonOperatorFound = false;</span>
-<span class="cstat-no" title="statement not covered" >    EvaluationStateUtil.refreshBooleanState(evaluationState);</span>
+    evaluationState.isCurrentlyInsideIfStatement = false;
+    evaluationState.comparisonOperatorFound = false;
+    EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >static </span>updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-<span class="cstat-no" title="statement not covered" >    if (evaluationState.currentIfStatementCloseBracketIndex &gt; index) {</span>
-<span class="cstat-no" title="statement not covered" >      return AnalyzeTokens.updateState(tokens, index, evaluationState);</span>
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    if (evaluationState.currentIfStatementCloseBracketIndex &gt; index) {
+      return AnalyzeTokens.updateState(tokens, index, evaluationState);
     }
-<span class="cstat-no" title="statement not covered" >    AnalyzeIfStatement.finishEvaluatingIfStatement(tokens, evaluationState);</span>
-<span class="cstat-no" title="statement not covered" >    return index;</span>
+    AnalyzeIfStatement.finishEvaluatingIfStatement(tokens, evaluationState);
+    return index;
   }
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >static </span>setStartAndEndIndexes(tokens: Tokens, index: number, evaluationState: EvaluationState, openBracketIndex: number): void {
-    const startIndex = <span class="cstat-no" title="statement not covered" >TraversalUtil.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);</span>
-    const endIndex = <span class="cstat-no" title="statement not covered" >TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);</span>
-    const result = <span class="cstat-no" title="statement not covered" >AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, startIndex, endIndex - 1);</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.startOfCurrentIfStatementInsideIndex = result.start;</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.currentIfStatementCloseBracketIndex = result.end + 1;</span>
+  private static setStartAndEndIndexes(tokens: Tokens, index: number, evaluationState: EvaluationState, openBracketIndex: number): void {
+    const startIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
+    const endIndex = TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
+    const result = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, startIndex, endIndex - 1);
+    evaluationState.startOfCurrentIfStatementInsideIndex = result.start;
+    evaluationState.currentIfStatementCloseBracketIndex = result.end + 1;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >static </span>setNewIfStatementState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const openBracketIndex = <span class="cstat-no" title="statement not covered" >TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);</span>
-<span class="cstat-no" title="statement not covered" >    AnalyzeIfStatement.setStartAndEndIndexes(tokens, index, evaluationState, openBracketIndex);</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.isCurrentlyInsideIfStatement = true;</span>
-<span class="cstat-no" title="statement not covered" >    return evaluationState.startOfCurrentIfStatementInsideIndex - 1;</span>
+  public static setNewIfStatementState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    const openBracketIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
+    AnalyzeIfStatement.setStartAndEndIndexes(tokens, index, evaluationState, openBracketIndex);
+    evaluationState.isCurrentlyInsideIfStatement = true;
+    return evaluationState.startOfCurrentIfStatementInsideIndex - 1;
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -199,7 +199,7 @@ export class AnalyzeIfStatement {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../prettify.js"></script>
         <script>

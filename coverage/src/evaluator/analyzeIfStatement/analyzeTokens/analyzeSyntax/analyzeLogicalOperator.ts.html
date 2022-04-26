@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.8% </span>
+                <span class="strong">80.95% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/21</span>
+                <span class='fraction'>17/21</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">30% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/10</span>
+                <span class='fraction'>3/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/3</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.8% </span>
+                <span class="strong">80.95% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/21</span>
+                <span class='fraction'>17/21</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -125,10 +125,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -137,22 +137,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -167,40 +167,40 @@ import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { Tokens } from '../../../../shared/types/tokens';
 &nbsp;
 export class AnalyzeLogicalOperator {
-  private <span class="fstat-no" title="function not covered" >static </span>updateStateForStandaloneStatements(
+  private static updateStateForStandaloneStatements(
     tokens: Tokens,
     index: number,
     nextNonSpaceCharIndex: number,
     evaluationState: EvaluationState,
   ): void {
-<span class="cstat-no" title="statement not covered" >    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.syntaxToBeInverted.push({ start: index });</span>
-<span class="cstat-no" title="statement not covered" >    evaluationState.startOfCurrentIfStatementInsideIndex = nextNonSpaceCharIndex;</span>
-<span class="cstat-no" title="statement not covered" >    EvaluationStateUtil.refreshBooleanState(evaluationState);</span>
+    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
+    evaluationState.syntaxToBeInverted.push({ start: index });
+    evaluationState.startOfCurrentIfStatementInsideIndex = nextNonSpaceCharIndex;
+    EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 &nbsp;
-  private <span class="fstat-no" title="function not covered" >static </span>updateStateForStatementsBeforeOperator(
+  private static updateStateForStatementsBeforeOperator(
     tokens: Tokens,
     index: number,
     nextNonSpaceIndex: number,
     evaluationState: EvaluationState,
   ): void {
-<span class="cstat-no" title="statement not covered" >    if (evaluationState.numberOfBracketsOpen === 0) {</span>
-<span class="cstat-no" title="statement not covered" >      AnalyzeLogicalOperator.updateStateForStandaloneStatements(tokens, index, nextNonSpaceIndex, evaluationState);</span>
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (evaluationState.numberOfBracketsOpen === 0) {
+      AnalyzeLogicalOperator.updateStateForStandaloneStatements(tokens, index, nextNonSpaceIndex, evaluationState);
     } else <span class="cstat-no" title="statement not covered" >if (evaluationState.numberOfBracketsOpen &gt; 0 &amp;&amp; evaluationState.comparisonOperatorFound) {</span>
       // instead of inverting the comparison operator, the brackets are inverted
 <span class="cstat-no" title="statement not covered" >      evaluationState.syntaxToBeInverted.pop();</span>
     }
-<span class="cstat-no" title="statement not covered" >    evaluationState.comparisonOperatorFound = false;</span>
+    evaluationState.comparisonOperatorFound = false;
   }
 &nbsp;
-  public <span class="fstat-no" title="function not covered" >static </span>updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const nextToken = <span class="cstat-no" title="statement not covered" >tokens[index + 1];</span>
-<span class="cstat-no" title="statement not covered" >    if (nextToken === '&amp;' || nextToken === '|') {</span>
-      const nextNonSpaceCharIndex = <span class="cstat-no" title="statement not covered" >TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 2);</span>
-<span class="cstat-no" title="statement not covered" >      AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, index, nextNonSpaceCharIndex, evaluationState);</span>
+  public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    const nextToken = tokens[index + 1];
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (nextToken === '&amp;' || <span class="branch-1 cbranch-no" title="branch not covered" >nextToken === '|')</span> {
+      const nextNonSpaceCharIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 2);
+      AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, index, nextNonSpaceCharIndex, evaluationState);
       // subtracting one due to the for loop automatically adding one
-<span class="cstat-no" title="statement not covered" >      return nextNonSpaceCharIndex - 1;</span>
+      return nextNonSpaceCharIndex - 1;
     }
     // if &amp; or | is by itself then it is regarded as a bitwise operator
 <span class="cstat-no" title="statement not covered" >    AnalyzeBrackatableSyntax.updateState(evaluationState);</span>
@@ -214,7 +214,7 @@ export class AnalyzeLogicalOperator {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Tue Apr 26 2022 17:23:12 GMT+0100 (British Summer Time)
+                at Tue Apr 26 2022 20:09:27 GMT+0100 (British Summer Time)
             </div>
         <script src="../../../../../prettify.js"></script>
         <script>
