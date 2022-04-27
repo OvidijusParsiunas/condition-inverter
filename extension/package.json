@@ -6,6 +6,10 @@
   "engines": {
     "vscode": "^1.64.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OvidijusParsiunas/if-inverter/tree/main/extension"
+  },
   "categories": [
     "Other"
   ],
@@ -36,7 +40,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint ./src ../shared --ext ts",
     "test": "node ./out/test/runTest.js",
-    "testreport": "export COVERAGE=true && npm run test && codecov",
+    "testreport": "export COVERAGE=true && npm run test",
     "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
   },
   "dependencies": {
