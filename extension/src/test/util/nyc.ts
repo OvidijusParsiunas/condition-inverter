@@ -63,7 +63,7 @@ export class NYC {
         if (isThresholdMet) isThresholdMet = false;
       }
     });
-    if (!isThresholdMet) throw new Error('Coverage has not been met');
+    if (!isThresholdMet) throw new Error('Coverage threshold has not been met');
   }
 
   public static async generateAndAnalyzeCoverage(nyc: NYCWithBasicMethods): Promise<void> {

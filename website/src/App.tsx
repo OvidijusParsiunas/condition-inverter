@@ -16,16 +16,17 @@ export default function App() {
   const [inputEditorClass, setInputEditorClass] = React.useState(INITIAL_EDITOR_COLORING_CLASS);
   const [resultEditorClass, setResultEditorClass] = React.useState(INITIAL_EDITOR_COLORING_CLASS);
   const [isErrorSnackbarDisplayed, setIsErrorSnackbarDisplayed] = React.useState(false);
+  const [isSyntaxErrorDisplayed, setIsSyntaxErrorDisplayed] = React.useState(false);
 
   const invert = (resultText: string) => {
     setResult(resultText);
     if (inputEditorClass !== '') setInputEditorClass('');
     if (resultEditorClass !== '') setResultEditorClass('');
+    setIsSyntaxErrorDisplayed(false);
   };
 
   const errorHandlerCallback = (message: string) => {
-    ErrorHandler.displayMessageOnConsole(message);
-    setIsErrorSnackbarDisplayed(true);
+    ErrorHandler.errorHandlerCallback(message, setIsErrorSnackbarDisplayed, setIsSyntaxErrorDisplayed);
   };
 
   return (
@@ -34,7 +35,7 @@ export default function App() {
       <AppLoadDelay errorHandlerCallback={errorHandlerCallback}>
         <Header />
         <Column>
-          <Editor text={input} className={inputEditorClass} isEditable updateText={setInput} />
+          <Editor text={input} className={inputEditorClass} isEditable updateText={setInput} isSyntaxError={isSyntaxErrorDisplayed} />
         </Column>
         <InvertButton input={input} inversionCallback={invert} errorHandlerCallback={errorHandlerCallback} />
         <Column>

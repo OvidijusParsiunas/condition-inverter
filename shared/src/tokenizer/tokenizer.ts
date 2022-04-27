@@ -2,6 +2,7 @@ import { Tokens } from '../shared/types/tokens';
 
 export class Tokenizer {
   static tokenize(inputString: string): Tokens {
+    if (inputString === '') return [];
     // tokenizes string into words/numbers and symbols
     // \w+ gets words
     // \s gets spaces

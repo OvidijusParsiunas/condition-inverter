@@ -7,11 +7,12 @@ interface Props {
   text: string;
   className: string;
   isEditable: boolean;
+  isSyntaxError?: boolean;
   updateText?: (text: string) => void;
 }
 
 export default function Editor(props: Props) {
-  const { text, className, isEditable, updateText } = props;
+  const { text, className, isEditable, isSyntaxError, updateText } = props;
   const [isDirty, setIsDirty] = React.useState(false);
 
   const handleInputChange = (inputText: string) => {
@@ -22,7 +23,7 @@ export default function Editor(props: Props) {
   const getClassName = () => (isDirty ? '' : className);
 
   const customCss: React.CSSProperties = {
-    border: '1px solid silver',
+    border: isSyntaxError ? '3px solid red' : '1px solid silver',
     borderRadius: '10px',
   };
 
@@ -42,4 +43,5 @@ export default function Editor(props: Props) {
 
 Editor.defaultProps = {
   updateText: () => {},
+  isSyntaxError: false,
 };
