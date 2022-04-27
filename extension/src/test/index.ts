@@ -30,9 +30,7 @@ export async function run(): Promise<void> {
     });
   } catch (err) {
     console.error(err);
-    // WORK
-    // process.exitCode = 1;
-    new Error((err as Error).message);
+    process.exitCode = 1;
   } finally {
     if (nyc) await NYC.generateAndAnalyzeCoverage(nyc);
   }
