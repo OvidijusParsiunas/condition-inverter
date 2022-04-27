@@ -1,36 +1,10 @@
+import { NYC } from './util/nyc';
 import * as Mocha from 'mocha';
 import * as path from 'path';
 import * as glob from 'glob';
 
-interface NYCWithBasicMethods {
-  writeCoverageFile: () => void;
-  report: () => Promise<void>;
-}
-
-// create an nyc instance, config here is the same as your package.json
-async function setupCoverage(): Promise<NYCWithBasicMethods> {
-  const NYC = require('nyc');
-  const nyc = new NYC({
-    cwd: path.join(__dirname, '..', '..', '..'),
-    exclude: ['extension/.vscode-test', 'extension/node_modules', '**/test/**'],
-    include: ['extension', 'shared'],
-    reporter: ['text', 'html'],
-    instrument: true,
-    hookRequire: true,
-    hookRunInContext: true,
-    hookRunInThisContext: true,
-    branches: 85,
-    lines: 95,
-    statements: 95,
-    functions: 100,
-  });
-  await nyc.reset();
-  nyc.wrap();
-  return nyc;
-}
-
 export async function run(): Promise<void> {
-  const nyc = process.env.COVERAGE ? await setupCoverage() : null;
+  const nyc = process.env.COVERAGE ? await NYC.setupCoverage() : null;
 
   // Create the mocha test
   const mocha = new Mocha({
@@ -57,9 +31,6 @@ export async function run(): Promise<void> {
   } catch (err) {
     console.error(err);
   } finally {
-    if (nyc) {
-      nyc.writeCoverageFile();
-      await nyc.report();
-    }
+    if (nyc) await NYC.generateAndAnalyzeCoverage(nyc);
   }
 }
