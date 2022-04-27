@@ -31,5 +31,7 @@ export async function run(): Promise<void> {
   } catch (err) {
     console.error(err);
     process.exit(1);
+  } finally {
+    if (nyc) await NYC.generateAndAnalyzeCoverage(nyc);
   }
 }
