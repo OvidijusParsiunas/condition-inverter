@@ -39,7 +39,7 @@ export class NYC {
       cwd: path.join(__dirname, '..', '..', '..', '..'),
       exclude: ['extension/.vscode-test', 'extension/node_modules', '**/test/**'],
       include: ['extension', 'shared'],
-      reporter: ['text', 'html'],
+      reporter: ['text', 'lcov'],
       instrument: true,
       hookRequire: true,
       hookRunInContext: true,
