@@ -32,9 +32,9 @@ jobs:
         with:
           run: npm --prefix ./extension testreport
       - name: Deploy coverage 🚀
-        - uses: codecov/codecov-action@v2
-          with:
-            token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-            files: ./coverage/lcov.info # optional
-            fail_ci_if_error: true # optional (default = false)
-            verbose: true # optional (default = false)
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: ./coverage/lcov.info # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)
