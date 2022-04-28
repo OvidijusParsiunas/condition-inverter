@@ -30,7 +30,7 @@ jobs:
       - name: Run headless test
         uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: npm --prefix ./extension testreport
+          run: npm --prefix ./extension test
       - name: Display coverage 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
         run: |
           npm run codecov
