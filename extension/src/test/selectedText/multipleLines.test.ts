@@ -117,7 +117,7 @@ suite('Selected Text Suite', () => {
         },
         {
           input: `dog && cat || mouse) { console.log(2) }`,
-          output: '!doga || !cat && !mouse) { console.log(2) }',
+          output: '!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
       selection: {
