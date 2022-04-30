@@ -1,6 +1,6 @@
 {
   "name": "if-inverter",
-  "displayName": "Condition Inverter",
+  "displayName": "If Inverter",
   "description": "Invert conditional statements",
   "version": "0.0.1",
   "engines": {
@@ -39,9 +39,8 @@
     "watch": "tsc --build -watch ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint ./src ../shared --ext ts",
-    "test": "export COVERAGE=true && node ./out/test/runTest.js",
-    "testreport": "node ./out/test/runTest.js",
-    "codecov": "codecov",
+    "test": "node ./out/test/runTest.js",
+    "test:coverage": "export COVERAGE=true && node ./out/test/runTest.js",
     "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
   },
   "dependencies": {
@@ -62,7 +61,6 @@
     "mocha": "^9.2.1",
     "nyc": "^15.1.0",
     "prettier": "^2.6.1",
-    "typescript": "^4.5.5",
-    "codecov": "^3.8.3"
+    "typescript": "^4.5.5"
   }
 }

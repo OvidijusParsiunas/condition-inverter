@@ -18,21 +18,24 @@ Insert gif here
 
 ## Theory
 
-If statement inversion is the same as condition inversion. This project has been specifically designed to directly invert the logical syntax within if statements for them to produce an absolute opposite result. This is illustrated by the following table:
+This project has been designed to directly invert the conditional syntax within an if statement for it to produce an absolute opposite result. This is illustrated by the following table:
 
-Whilst a direct inversion problem can be solved by simply negating the if statement syntax with an exclamation mark; such solution would not produce ideal results in more complex scenarios as the conditional logic would still need to be comprehended by the reader which coupled with the overhead negation would only introduce more cognitive complexity. Hence, to retain the cohesion and maintainability of an if statement - this project aims to analyze its syntax with more granularity and add inversion where necessary:
+Index: ```dog``` = true, ```cat``` = false.
 
-Input: if (!(dog))
-Simple Result: if (!(!(dog)))
-If Inverter Result: if (dog)
+| Original if statement | Result | Inverted if statement | Result |
+| :---  | :---- | :---- | :---- |
+| ```if (dog)``` | ```true``` |  ```if (!dog)``` | ```false``` |
+| ```if (dog && cat)``` | ```false```  | ```if (!dog || !cat)``` | ```true``` |
+| ```if (dog || cat)``` | ```true``` | ```if (!dog && !cat)``` | ```false``` |
+| ```if (dog < cat)``` | ```false``` |  ```if (dog >= cat)``` | ```true``` |
 
-Input: if (true && 0)
-Simple Result: if (!(true && 0))
-If Inverter Result: if (false || 1)
+Whilst the if statement inversion problem could be solved by simply wrapping the conditional logic between brackets and adding an exclamation mark in the front; such process would not yield ideal results as it would only add more complexity to the existing codebase - lowering its cohesion and making it more difficult to maintain. Hence, to produce the most sound results and uphold the quality of the if statement syntax - this project carefully analyzes the encompassing conditional logic and procedurally inverts it in a manner that preserves its original structure and maintains its cohesion:
 
-Input: if (((dog && cat)))
-Simple Result: if (!((dog && cat)))
-If Inverter Result: if (((!dog || !cat)))
+| Input | Naive result :ballot_box_with_check: | If Inverter result :white_check_mark: |
+| :--- | :---- | :--- |
+| ```if (!(dog))``` | ```if (!(!(dog)))``` | ```if (dog)``` |
+| ```if (true && 0)``` | ```if (!(true && 0))``` | ```if (false || 1)``` |
+| ```if (((dog && cat)))``` | ```if (!((dog && cat)))``` | ```if (((!dog || !cat))```) |
 
 ## Contributions
 

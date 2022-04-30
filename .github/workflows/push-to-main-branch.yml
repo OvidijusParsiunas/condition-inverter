@@ -30,11 +30,10 @@ jobs:
       - name: Run headless test
         uses: GabrielBB/xvfb-action@v1.0
         with:
-          run: npm --prefix ./extension test
+          run: npm --prefix ./extension run test:coverage
       - name: Deploy coverage 🚀
         uses: codecov/codecov-action@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: ./coverage/lcov.info # optional
-          fail_ci_if_error: true # optional (default = false)
-          verbose: true # optional (default = false)
+          files: ./coverage/lcov.info
+          fail_ci_if_error: true # (default = false)
+          verbose: true # (default = false)

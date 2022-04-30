@@ -7,9 +7,7 @@ tasks:
 
 extension:
 
-add logic for function execution within if statements
-
-remove codecov
+add testing for function execution within if statements
 
 "key": "ctrl+shift+i",
 "mac": "cmd+shift+i",
