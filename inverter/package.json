@@ -4,5 +4,9 @@
   "description": "",
   "main": ".eslintrc.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1"
+  }
 }

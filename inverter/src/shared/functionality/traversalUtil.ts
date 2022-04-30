@@ -3,7 +3,7 @@ import { Tokens } from '../types/tokens';
 
 export class TraversalUtil {
   public static getNonSpaceCharacterIndex(tokens: Tokens, index: number, traverseForwards = true): number {
-    if (tokens[index] !== ' ' && tokens[index] !== `\n`) {
+    if (tokens[index] !== ' ' && tokens[index] !== `\n` && tokens[index] !== `\r`) {
       return index;
     }
     const newIndex = traverseForwards ? index + 1 : index - 1;

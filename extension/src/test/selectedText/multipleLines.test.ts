@@ -677,5 +677,41 @@ suite('Selected Text Suite', () => {
         end: new vscode.Position(2, 0),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (dog && \r\n`,
+          output: 'if (!dog || ',
+        },
+        {
+          input: `cat || mouse) { console.log(2) }`,
+          output: '!cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && \r`,
+          output: 'if (!dog || ',
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+        {
+          input: `cat || mouse) { console.log(2) }`,
+          output: '!cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
   ]);
 });

@@ -4,7 +4,7 @@ exports.TraversalUtil = void 0;
 const errors_1 = require("../consts/errors");
 class TraversalUtil {
     static getNonSpaceCharacterIndex(tokens, index, traverseForwards = true) {
-        if (tokens[index] !== ' ' && tokens[index] !== `\n`) {
+        if (tokens[index] !== ' ' && tokens[index] !== `\n` && tokens[index] !== `\r`) {
             return index;
         }
         const newIndex = traverseForwards ? index + 1 : index - 1;
