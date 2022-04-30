@@ -38,13 +38,13 @@
     "compile": "tsc --build ./",
     "watch": "tsc --build -watch ./",
     "pretest": "npm run compile && npm run lint",
-    "lint": "eslint ./src ../shared --ext ts",
+    "lint": "eslint ./src ../inverter --ext ts",
     "test": "node ./out/test/runTest.js",
     "test:coverage": "export COVERAGE=true && node ./out/test/runTest.js",
-    "format": "prettier --write \"src/**/*.ts\" \"../shared/**/*.ts\""
+    "format": "prettier --write \"src/**/*.ts\" \"../inverter/**/*.ts\""
   },
   "dependencies": {
-    "inverter": "../shared/out/"
+    "inverter": "../inverter/out/"
   },
   "devDependencies": {
     "@types/glob": "^7.2.0",

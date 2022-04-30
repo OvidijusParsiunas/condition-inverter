@@ -1,7 +1,7 @@
 import { SelectionStartIfRange } from './selectionBoundaryIfRanges/selectionStartIfRange';
 import { Position } from '../../shared/types/invertHighlightedText/invertHighlightedText';
 import { SelectionEndIfRange } from './selectionBoundaryIfRanges/selectionEndIfRange';
-import { IfInverter } from '../../../../shared/out/src/ifInverter';
+import { IfInverter } from '../../../../inverter/src/ifInverter';
 import { RangeCreator } from '../shared/rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
