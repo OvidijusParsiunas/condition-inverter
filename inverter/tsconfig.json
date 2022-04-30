@@ -9,5 +9,5 @@
     "noImplicitAny": true,
     "strict": true
   },
-  "include": ["src", "test", "consts"]
+  "include": ["src", "consts"]
 }
