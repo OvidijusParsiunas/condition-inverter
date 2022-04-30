@@ -1,5 +1,6 @@
 import { AnalyzeGreaterOrLessThanSign } from './analyzeSyntax/analyzeGreaterOrLessThanSign';
 import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSyntax';
+import { AnalyzeMethodInvocation } from './analyzeSyntax/analyzeMethodInvocation';
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
 import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
@@ -49,6 +50,9 @@ export class AnalyzeTokens {
         AnalyzeBrackatableSyntax.updateState(evaluationState);
         break;
       default: {
+        // it is easier to check if the current token is part of a method invocation rather than checking
+        // if the previous token is a method name using the AnalyzeBracket class
+        return AnalyzeMethodInvocation.updateState(tokens, index);
       }
     }
     return index;

@@ -637,5 +637,45 @@ suite('Selected Text Suite', () => {
         end: new vscode.Position(4, 1),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (myFunc(\n`,
+          output: 'if (!myFunc(',
+        },
+        {
+          input: `dog < cat\n`,
+          output: 'dog < cat',
+        },
+        {
+          input: `)) { console.log(2) }`,
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 2),
+        end: new vscode.Position(1, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (myFunc(\n`,
+          output: 'if (!myFunc(',
+        },
+        {
+          input: `dog < cat\n`,
+          output: 'dog < cat',
+        },
+        {
+          input: `)) { console.log(2) }`,
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
   ]);
 });

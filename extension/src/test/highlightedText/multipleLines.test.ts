@@ -1161,5 +1161,85 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(5, 10),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (myFunc(\n`,
+          output: 'if (!myFunc(',
+        },
+        {
+          input: `dog < cat\n`,
+          output: 'dog < cat',
+        },
+        {
+          input: `)) { console.log(2) }`,
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (myFunc(\n`,
+          output: 'if (!myFunc(',
+        },
+        {
+          input: `dog < cat\n`,
+          output: 'dog < cat',
+        },
+        {
+          input: `)) { console.log(2) }`,
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 2),
+        end: new vscode.Position(1, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (myFunc(\n`,
+          output: 'if (!myFunc(',
+        },
+        {
+          input: `dog < cat\n`,
+          output: 'dog < cat',
+        },
+        {
+          input: `)) { console.log(2) }`,
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 4),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (myFunc(\n`,
+          output: 'if (!myFunc(',
+        },
+        {
+          input: `dog < cat\n`,
+          output: 'dog < cat',
+        },
+        {
+          input: `)) { console.log(2) }`,
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 4),
+        end: new vscode.Position(2, 1),
+      },
+    },
   ]);
 });

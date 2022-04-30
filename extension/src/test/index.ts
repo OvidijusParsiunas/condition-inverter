@@ -30,7 +30,9 @@ export async function run(): Promise<void> {
     });
   } catch (err) {
     console.error(err);
-    process.exit(1);
+    // this is a workaround for when tests are run and fail within a github workflow step
+    // as the catch clause inside the runTests.ts main function is not executed
+    if (process.env.NODE_ENV) process.exit(1);
   } finally {
     if (nyc) await NYC.generateAndAnalyzeCoverage(nyc);
   }

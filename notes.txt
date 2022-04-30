@@ -7,8 +7,6 @@ tasks:
 
 extension:
 
-add testing for function execution within if statements
-
 "key": "ctrl+shift+i",
 "mac": "cmd+shift+i",
 

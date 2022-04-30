@@ -1,7 +1,7 @@
 import { IfInverter } from 'inverter/src/ifInverter';
 import * as assert from 'assert';
 
-// the reason why these tests are done in the extension directory instead of shared is because they are used to achieve 100% test coverage
+// the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite('Inverter Suite', () => {
   [
     { input: '', output: '' },
@@ -760,6 +760,70 @@ suite('Inverter Suite', () => {
     {
       input: 'if (!(~dog)) { console.log(2) }',
       output: 'if (~dog) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc()) { console.log(2) }',
+      output: 'if (!testFunc()) { console.log(2) }',
+    },
+    {
+      input: 'if ((testFunc())) { console.log(2) }',
+      output: 'if ((!testFunc())) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc(true)) { console.log(2) }',
+      output: 'if (!testFunc(true)) { console.log(2) }',
+    },
+    {
+      input: 'if ((testFunc(true))) { console.log(2) }',
+      output: 'if ((!testFunc(true))) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc(dog && cat)) { console.log(2) }',
+      output: 'if (!testFunc(dog && cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc(dog < cat)) { console.log(2) }',
+      output: 'if (!testFunc(dog < cat)) { console.log(2) }',
+    },
+    {
+      input: 'if ((testFunc(dog < cat))) { console.log(2) }',
+      output: 'if ((!testFunc(dog < cat))) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc(dog === cat)) { console.log(2) }',
+      output: 'if (!testFunc(dog === cat)) { console.log(2) }',
+    },
+    {
+      input: 'if ((testFunc(dog === cat))) { console.log(2) }',
+      output: 'if ((!testFunc(dog === cat))) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc((dog < cat))) { console.log(2) }',
+      output: 'if (!testFunc((dog < cat))) { console.log(2) }',
+    },
+    {
+      input: 'if ((testFunc((dog < cat)))) { console.log(2) }',
+      output: 'if ((!testFunc((dog < cat)))) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc(testFunc2(dog < cat))) { console.log(2) }',
+      output: 'if (!testFunc(testFunc2(dog < cat))) { console.log(2) }',
+    },
+    {
+      input: 'if ((testFunc(testFunc2(dog < cat)))) { console.log(2) }',
+      output: 'if ((!testFunc(testFunc2(dog < cat)))) { console.log(2) }',
+    },
+    {
+      input: 'if (!(testFunc(testFunc2(dog < cat))) || !(testFunc(testFunc2(dog < cat)))) { console.log(2) }',
+      output: 'if (testFunc(testFunc2(dog < cat)) && testFunc(testFunc2(dog < cat))) { console.log(2) }',
+    },
+    {
+      input: 'if ((!(testFunc(testFunc2(dog < cat))) || !(testFunc(testFunc2(dog < cat))))) { console.log(2) }',
+      output: 'if ((testFunc(testFunc2(dog < cat)) && testFunc(testFunc2(dog < cat)))) { console.log(2) }',
+    },
+    {
+      input: 'if (testFunc.bind(dog < cat)) { console.log(2) }',
+      output: 'if (!testFunc.bind(dog < cat)) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {
