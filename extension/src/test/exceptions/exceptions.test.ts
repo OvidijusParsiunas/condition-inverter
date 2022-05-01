@@ -1,6 +1,6 @@
+import { IfInverter } from '../../../../inverter/out/src/ifInverter';
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
 import { TextEditorObj } from '../../shared/types/tests/tests';
-import { IfInverter } from 'inverter/src/ifInverter';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 

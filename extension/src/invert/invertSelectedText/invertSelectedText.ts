@@ -1,6 +1,6 @@
 import { FindIfStatementFullRange } from '../shared/functionality/traversal/findIfStatementFullRange';
 import { FindIfStatementStart } from '../shared/functionality/traversal/findIfStatementStart';
-import { IfInverter } from 'inverter/src/ifInverter';
+import { IfInverter } from '../../../../inverter/out/src/ifInverter';
 import { Range, TextEditor } from 'vscode';
 
 export class InvertSelectedText {
