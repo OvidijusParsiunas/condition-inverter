@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+#If Inverter
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A simple tool used to invert if statements for all programming languages.
 
-## Available Scripts
+[insert gif here]
 
-In the project directory, you can run:
+## Theory
 
-### `npm start`
+This tool has been designed to directly invert the conditional syntax within an if statement for it to produce an absolute opposite result. This is illustrated by the following table:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Properties: dog = true, cat = false.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+| Original if statement | Result | Inverted if statement | Result |
+| :---  | :---- | :---- | :---- |
+| if (dog) | true |  if (!dog) | false |
+| if (dog && cat) | false  | if (!dog &#124; &#124; !cat) | true |
+| if (dog &#124;&#124; cat) | true | if (!dog && !cat) | false |
+| if (dog < cat) | false |  if (dog >= cat) | true |
 
-### `npm test`
+Whilst the if statement inversion problem can be solved by simply wrapping the conditional logic between brackets and adding an exclamation mark in the front; such process would only add redundant complexity - lowering code cohesion and maintainability. Hence, to produce sound results and uphold code quality - this tool has been designed to invert specific areas of code that would yield maximum cohesion with minimal intrusion to its existing structure:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Input | Naive result :ballot_box_with_check: | If Inverter result :white_check_mark: |
+| :--- | :---- | :--- |
+| if (!(dog)) | if (!(!(dog))) | if (dog) |
+| if (true && 0) | if (!(true && 0)) | if (false &#124;&#124; 1) |
+| if (((dog && cat))) | if (!((dog && cat))) | if (((!dog &#124;&#124; !cat))) |
 
-### `npm run build`
+## Local setup
+```
+# Requirements: Node version 11+ and NPM version 6+
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# Install node dependencies:
+$ npm install
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Run the project in watch mode:
+$ npm run start
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# If you are making changes inside the ../inverter directory
+# Compile those changes in watch mode:
+$ npm run compile:watch
+```
 
-### `npm run eject`
+## Contributions
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Open source is built by the community for the community. All contributions to this project are welcome!
+<br> Additionally, if you have any suggestions for enhancements, ideas on how to take the project further or have discovered a bug, do not hesitate to create a new ticket and we will look into it as soon as possible!

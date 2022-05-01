@@ -57,8 +57,6 @@ export class NYC {
     keysOfThresholds.forEach((key) => {
       const coverage = (summary[key] as Totals).pct;
       if (coverage < NYC.thresholds[key]) {
-        // WORK - check if this works
-        // process.exitCode = 1;
         console.error(`ERROR: Coverage for ${key} (${coverage}%) does not meet global threshold (${NYC.thresholds[key]}%)`);
         if (isThresholdMet) isThresholdMet = false;
       }

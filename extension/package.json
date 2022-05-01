@@ -36,7 +36,7 @@
   "scripts": {
     "vscode:prepublish": "npm run compile",
     "compile": "tsc --build ./",
-    "watch": "tsc --build -watch ./",
+    "compile:watch": "tsc --build -watch ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint ./src ../inverter --ext ts",
     "test": "node ./out/test/runTest.js",
