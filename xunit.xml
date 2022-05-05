@@ -1,0 +1,412 @@
+<testsuite name="Mocha Tests" tests="410" failures="0" errors="0" skipped="0" timestamp="Thu, 05 May 2022 20:40:53 GMT" time="7.461">
+<testcase classname="Editor Functionality Suite" name="When the extension is deactivated, nothing should start happening" time="0"/>
+<testcase classname="Editor Functionality Suite" name="When no editor is provided, no exception should be thrown" time="0.073"/>
+<testcase classname="Exceptions Suite" name="No exception thrown by vscode extension" time="0.034"/>
+<testcase classname="Exceptions Suite" name="No exception thrown by vscode extension" time="0.061"/>
+<testcase classname="Exceptions Suite" name="No exception thrown by vscode extension" time="0.035"/>
+<testcase classname="Exceptions Suite" name="No exception thrown by vscode extension" time="0.039"/>
+<testcase classname="Exceptions Suite" name="No exception thrown by vscode extension" time="0.036"/>
+<testcase classname="Exceptions Suite" name="Exception thrown by the inverter library when input is invalid" time="0.001"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.039"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.032"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.039"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Outside If Statement" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.033"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.038"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.032"/>
+<testcase classname="Highlighted Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Inverter Suite" name="" time="0"/>
+<testcase classname="Inverter Suite" name=" " time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse &#x26;&#x26;cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if(mouse &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if(mouse &#x26;&#x26;cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog &#x26;&#x26; cat) { console.log(2) }" time="0.001"/>
+<testcase classname="Inverter Suite" name="if (dog &#x26;&#x26; cat || mouse) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog - cat || mouse) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog - cat  || mouse) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!dog - cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!dog - cat &#x26;&#x26; !dog - cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!  dog - cat &#x26;&#x26; !  dog - cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog - !cat &#x26;&#x26; dog - !cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog -   !cat &#x26;&#x26; dog -  !cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog -   !cat &#x26;&#x26; dog -  !  cat  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((!(!dog - cat)) &#x26;&#x26; (!(!dog - cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  (!  (!  dog - cat)) &#x26;&#x26; (  !(  !dog - cat))) { console.log(2) }" time="0.001"/>
+<testcase classname="Inverter Suite" name="if (dog - cat ||   mouse) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if   (dog - cat ||   mouse) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog - cat || mouse  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if   (  dog   -  cat  ||   mouse  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if   (   mouse  ||   dog   -  cat  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(mouse - cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  !  (  mouse - cat)  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  !  (  mouse - cat)  &#x26;&#x26;   !  (  mouse - cat)  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse || dog - cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog - cat || mouse &#x26;&#x26; cat - dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse || (dog - cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse &#x3C; cat) { console.log(2) }" time="0.001"/>
+<testcase classname="Inverter Suite" name="if (mouse &#x3E; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse &#x3C;= cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (mouse &#x3C;= cat || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (hello || mouse &#x3C;= cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (hello || (mouse &#x3C;= cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (hello || ((mouse &#x3C;= cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (hello || (mouse &#x3C;= cat &#x26;&#x26; mouse - cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (hello || (mouse &#x3C;= cat &#x26;&#x26; (mouse - cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((hello) === (2) &#x26;&#x26; start || number &#x3C; 2 &#x26;&#x26; hello &#x26;&#x26; end) { console.log(2) }" time="0.001"/>
+<testcase classname="Inverter Suite" name="if ((hello) !== (2) &#x26;&#x26; start || number != 2 &#x26;&#x26; hello &#x26;&#x26; end) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((hello) !== (2) &#x26;&#x26; !start || number != 2 &#x26;&#x26; hello &#x26;&#x26; end) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (hello || (mouse &#x3C;= cat &#x26;&#x26; ((mouse - cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((mouse &#x3C;= cat &#x26;&#x26; mouse - cat) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((mouse &#x3C;= cat &#x26;&#x26; (mouse - cat)) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((mouse &#x3C;= cat &#x26;&#x26; ((mouse - cat))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  (mouse &#x3C;= cat &#x26;&#x26;   (    (mouse   -   cat)    )  ) || hello  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse &#x3C;= cat) &#x26;&#x26; ((mouse - cat))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse - cat) &#x26;&#x26; ((mouse - cat))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if  (  (  (mouse - cat) &#x26;&#x26; (  (mouse - cat) )    ) ||   hello  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse - cat) &#x26;&#x26; ((mouse - cat)) &#x26;&#x26; ((mouse - cat) &#x26;&#x26; ((mouse - cat)))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  (mouse &#x3C;= cat &#x26;&#x26;   (    (mouse   -   cat)    )  ) || hello  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse &#x3C;= cat) &#x26;&#x26; ((mouse - cat))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse - cat) &#x26;&#x26; ((mouse - cat))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if  (  (  (mouse - cat) &#x26;&#x26; (  (mouse - cat) )    ) ||   hello  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse - cat) &#x26;&#x26; ((mouse - cat)) &#x26;&#x26; ((mouse - cat) &#x26;&#x26; ((mouse - cat)))) || hello) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (((mouse - cat) &#x26;&#x26; ((mouse - cat))) || ((mouse - cat) &#x26;&#x26; ((mouse - cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((((mouse - cat) &#x26;&#x26; ((mouse - cat))) || ((mouse - cat) &#x26;&#x26; ((mouse - cat)))) &#x26;&#x26; (((mouse - cat) &#x26;&#x26; ((mouse - cat))) || ((mouse - cat) &#x26;&#x26; ((mouse - cat))))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (! !dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(! !dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (! !(dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(! !(dog))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (! !!! (dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (! !!!  (  dog != 1)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!(!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!(!!dog) &#x26;&#x26; !!!(!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!(!!dog)) || !(!!!(!!dog))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!(!!dog + 1) &#x26;&#x26; !!!(!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!(!!dog + 1)) || !(!!!(!!dog))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!(!!dog &#x26;&#x26; cat) &#x26;&#x26; !!!(!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!(!!dog &#x26;&#x26; cat)) || !(!!!(!!dog))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!-!!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!+!!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!dog + 2) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!dog &#x26;&#x26; !!dog + 2) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!dog &#x26;&#x26; !!dog +  2) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((!!dog &#x26;&#x26; !!dog + 2) &#x26;&#x26; (!!dog &#x26;&#x26; !!dog + 2)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!(dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!  !(dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!!(dog))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!!  (  dog))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!(dog != cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!(dog != cat &#x26;&#x26; cat - dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (! !!  !(dog != cat &#x26;&#x26; cat   - dog) ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!!(dog != cat &#x26;&#x26; cat - dog)) &#x26;&#x26; !(!!!!(dog != cat &#x26;&#x26; cat - dog))) { console.log(2) }" time="0.001"/>
+<testcase classname="Inverter Suite" name="if (!!!+!(dog != cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!+!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!  +  !!(dog !=   cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!(!!  +  !!(dog !=   cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!+!!(dog != cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!+!!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!!+(dog != cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!!!+(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (+!!!!!(dog != cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(+!!!!!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((+!!!!!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((-!!!!!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (( - !!!!!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!( - !!!!!(dog != cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!(!(dog || cat)) || !!!!(!(dog || cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!!!  (! (dog || cat) ) || !!  !!(! (dog || cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!!!(!(dog || cat))) &#x26;&#x26; !(!!!!(!(dog || cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  !(!!! !(!(dog || cat))) &#x26;&#x26; !(!! ! !(!(dog ||  cat) ))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!! + - + -!!(!(dog || cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!! + - + -!!(!(dog ||  + - + - cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (+ - + -!!(!(dog ||  + - + - cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (+ - + - !!(!(dog ||  + - + - cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(+ - + - !!(!(dog ||  + - + - cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (-dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (- + dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((- + dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((- + dog) &#x26;&#x26; (- + dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (( - + - + dog) &#x26;&#x26; (- + - + dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!(- + - + dog) &#x26;&#x26; !!( - + - + dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!!(- + - + dog + cat) &#x26;&#x26; !!(- + - + dog - cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (- + - + dog + cat &#x26;&#x26; - + - + dog - cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (- + - + dog + !!cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (- + -   + dog + !!cat &#x26;&#x26; - + - + !!dog - cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(- + -   + dog + !!cat) || !(- + - + !!dog - cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(- + dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (+dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (+!!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (-+!!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(-+!!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (-  +  !!dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(-  +  !!dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(-  +  !!dog - !!cat + - + - (dog &#x26;&#x26; !!cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (false) { console.log(1) }" time="0.001"/>
+<testcase classname="Inverter Suite" name="if (0) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (0123123) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (0123123 &#x26;&#x26; 0123123) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (0123123 + 123213123) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (1) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (0.0) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (1_1) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (0.0 + 2) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (true) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  !!  false  ) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(!!  false)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (false &#x26;&#x26; true) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(false &#x26;&#x26; true)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (false   &#x26;&#x26;   true) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(false &#x26;&#x26; true)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(  false   &#x26;&#x26;   true  )) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (false + dog &#x26;&#x26; true + cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(false + dog) || !(true + cat)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(false   &#x26;&#x26; true  ) &#x26;&#x26;   true) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  true   ||   false   &#x26;&#x26;   true  ) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1) + 12) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1) + (12)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (( ( 1 ) ) + ( ( 12 ) )) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1 - 1) + (12 + 0)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!((1 - 1) + (12 + 0))) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1 &#x26;&#x26; 4) + (12 || 4)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1) + ((2 + 5)) + 12) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!((1) + ((2 + 5)) + 12)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1) + 12) { console.log(1) } if ((1) + 12) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((1) + 12) { console.log(1) }     if ((1) + 12) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((2 &#x3C; 5) &#x26;&#x26; (4 &#x3E; 2)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((2 &#x3E;= 5) || (4 &#x3C;= 2)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x27;mouse&#x27; &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x27;false&#x27; &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x27;false &#x26;&#x26; cat&#x27; &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x60;false &#x26;&#x26; cat&#x60; &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x22;false &#x26;&#x26; cat&#x22; &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x22;false &#x26;&#x26; &#x60;cat&#x60;&#x22; &#x26;&#x26; &#x60;&#x22;cat&#x22;&#x60;) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!&#x22;false &#x26;&#x26; &#x60;cat&#x60;&#x22; || !&#x60;&#x22;cat&#x22;&#x60;) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x22;1&#x22; + 2 &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(&#x22;1&#x22; + 2) || !(&#x22;1&#x22; + 2)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (&#x27;if (!(&#x22;1&#x22; + 2) || !(&#x22;1&#x22; + 2)) { console.log(2) }&#x27; &#x26;&#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!&#x27;if (!(&#x22;1&#x22; + 2) || !(&#x22;1&#x22; + 2)) { console.log(2) }&#x27; || !cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  " time="0"/>
+<testcase classname="Inverter Suite" name="  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  " time="0"/>
+<testcase classname="Inverter Suite" name="  if   (  !(dog   -  cat)  &#x26;&#x26;   !mouse  ) { console.log(2) }  if   (  !(dog   -  cat)  &#x26;&#x26;   !mouse  ) { console.log(2) }  " time="0"/>
+<testcase classname="Inverter Suite" name="if ((1) &#x26;&#x26; (12)) { console.log(1) }     if ((1) &#x26;&#x26; (12)) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog==cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog===cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog!=cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog!==cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog&#x3E;cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog&#x3E;=cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog&#x3C;cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog&#x3C;=cat) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog==cat&#x26;&#x26;fish) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog==cat&#x26;&#x26;!fish) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog==cat||fish) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog==cat||!fish) { console.log(1) }" time="0"/>
+<testcase classname="Inverter Suite" name="if () { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (  ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ( ( (dog  ) ) ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ( ( (dog || cat) ) ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ( ( (dog || cat &#x26;&#x26; (fish)) ) ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ( ( ((dog || cat) &#x26;&#x26; (fish)) ) ) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog &#x3C;&#x3C; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(dog &#x3C;&#x3C; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog &#x3E;&#x3E; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(dog &#x3E;&#x3E; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog &#x3E;&#x3E;&#x3E; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(dog &#x3E;&#x3E;&#x3E; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog &#x26; cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(dog &#x26; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog | cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(dog | cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (dog ^ cat) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(dog ^ cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (~dog) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(~dog)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc()) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((testFunc())) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc(true)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((testFunc(true))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc(dog &#x26;&#x26; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc(dog &#x3C; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((testFunc(dog &#x3C; cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc(dog === cat)) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((testFunc(dog === cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc((dog &#x3C; cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((testFunc((dog &#x3C; cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc(testFunc2(dog &#x3C; cat))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((testFunc(testFunc2(dog &#x3C; cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (!(testFunc(testFunc2(dog &#x3C; cat))) || !(testFunc(testFunc2(dog &#x3C; cat)))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if ((!(testFunc(testFunc2(dog &#x3C; cat))) || !(testFunc(testFunc2(dog &#x3C; cat))))) { console.log(2) }" time="0"/>
+<testcase classname="Inverter Suite" name="if (testFunc.bind(dog &#x3C; cat)) { console.log(2) }" time="0"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.032"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.032"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.032"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.038"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.033"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Multiple Lines" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Outside If Statement" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Outside If Statement" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Outside If Statement" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Outside If Statement" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.036"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.033"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.033"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.037"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.034"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+<testcase classname="Selected Text Suite" name="Single Line" time="0.035"/>
+</testsuite>

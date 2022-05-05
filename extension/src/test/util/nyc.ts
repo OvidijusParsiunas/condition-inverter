@@ -51,7 +51,7 @@ export class NYC {
     return nyc;
   }
 
-  private static checkCoverage(summary: CoverageSummary): void {
+  private static validateCoverage(summary: CoverageSummary): void {
     let isThresholdMet = true;
     const keysOfThresholds = Object.keys(NYC.thresholds) as Array<keyof CoverageSummary>;
     keysOfThresholds.forEach((key) => {
@@ -69,6 +69,6 @@ export class NYC {
     await nyc.report();
     const result = await nyc.getCoverageMapFromAllCoverageFiles();
     const summary = result.getCoverageSummary();
-    NYC.checkCoverage(summary);
+    NYC.validateCoverage(summary);
   }
 }
