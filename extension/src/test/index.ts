@@ -4,18 +4,17 @@ import * as path from 'path';
 import * as glob from 'glob';
 
 export async function run(): Promise<void> {
-  const nyc = process.env.COVERAGE ? await NYC.setupCoverage() : null;
-
   // Create the mocha test
   const mocha = new Mocha({
     ui: 'tdd',
     color: true,
   });
 
+  const nyc = process.env.COVERAGE ? await NYC.setupCoverage() : null;
+  if (process.env.COVERAGE) mocha.reporter('xunit', { output: '../testspace/xunit.xml' });
+
   const testsRoot = path.resolve(__dirname, '..');
   const files = glob.sync('**/**.test.js', { cwd: testsRoot });
-  // WORK - move to testspace
-  mocha.reporter('xunit', { output: '../xunit.xml' });
   // Add files to the test suite
   files.forEach((f) => mocha.addFile(path.resolve(testsRoot, f)));
 
