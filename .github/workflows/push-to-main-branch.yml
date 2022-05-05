@@ -36,3 +36,12 @@ jobs:
           files: ./coverage/lcov.info
           fail_ci_if_error: true # (default = false)
           verbose: true # (default = false)
+      - name: Publish Results to Testspace
+        run: testspace "[ ${{ matrix.os }} ]results.xml"
+        uses: testspace-com/setup-testspace@v1
+        with:
+          domain: ${{ github.repository_owner }}
+      - name: Push result to Testspace server
+        run: |
+          testspace results.xml
+        if: always()
