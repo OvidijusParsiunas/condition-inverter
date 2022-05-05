@@ -7,9 +7,6 @@ tasks:
 
 extension:
 
-"key": "ctrl+shift+i",
-"mac": "cmd+shift+i",
-
 website:
 
 the website has an alternative top right logo that is a github corner, however decided to not use it as we need to use a vscode logo as well

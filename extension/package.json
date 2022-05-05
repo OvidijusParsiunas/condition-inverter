@@ -1,8 +1,28 @@
 {
   "name": "if-inverter",
   "displayName": "If Inverter",
-  "description": "Invert conditional statements",
   "version": "0.0.1",
+  "description": "Invert if statements for all programming languages",
+  "keywords": [
+    "if",
+    "statement",
+    "condition",
+    "inverter",
+    "reverser"
+  ],
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Other"
+  ],
+  "galleryBanner": {
+    "color": "#FFFFFF",
+    "theme": "dark"
+  },
+  "author": {
+    "name": "Ovidijus Parsiunas"
+  },
+  "publisher": "Ovidijus Parsiunas",
   "engines": {
     "vscode": "^1.64.0"
   },
@@ -10,13 +30,15 @@
     "type": "git",
     "url": "https://github.com/OvidijusParsiunas/if-inverter/tree/main/extension"
   },
-  "categories": [
-    "Other"
-  ],
+  "bugs": {
+    "url": "https://github.com/OvidijusParsiunas/if-inverter/issues",
+    "email": "oparsiunas@googlemail.com"
+  },
+  "license": "MIT",
+  "main": "./out/extension.js",
   "activationEvents": [
     "onCommand:if-inverter.invert"
   ],
-  "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
@@ -27,8 +49,8 @@
     "keybindings": [
       {
         "command": "if-inverter.invert",
-        "key": "ctrl+i",
-        "mac": "cmd+i",
+        "key": "ctrl+shift+i",
+        "mac": "cmd+shift+i",
         "when": "editorTextFocus"
       }
     ]

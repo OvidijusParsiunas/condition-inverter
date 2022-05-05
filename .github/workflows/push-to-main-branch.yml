@@ -36,8 +36,9 @@ jobs:
           files: ./coverage/lcov.info
           fail_ci_if_error: true # (default = false)
           verbose: true # (default = false)
-      - name: Publish Results to Testspace
+      - name: Prepare config for Testspace
         uses: testspace-com/setup-testspace@v1
-        run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
         with:
           domain: ${{ github.repository_owner }}
+      - name: Publish results to Testspace
+        run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
