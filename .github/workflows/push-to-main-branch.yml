@@ -14,31 +14,36 @@ jobs:
       NODE_ENV: development
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        uses: actions/checkout@v2
         with:
           persist-credentials: false
-      - name: Install and Test inverter 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
-        run: |
-          npm install
-        working-directory: ./inverter
-      - name: Install and Test extension/inverter 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+      - name: Install and Test extension/inverter 🔧
         run: |
           npm install
           npm run compile
         working-directory: ./extension
-      - name: Run headless test
+      - name: Run headless test 🔧
         uses: GabrielBB/xvfb-action@v1.0
         with:
           run: npm --prefix ./extension run test:coverage
+
+  report-results:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      NODE_ENV: development
+    steps:
       - name: Deploy coverage 🚀
         uses: codecov/codecov-action@v2
         with:
           files: ./coverage/lcov.info
           fail_ci_if_error: true # (default = false)
           verbose: true # (default = false)
-      - name: Prepare config for Testspace
+      - name: Prepare config for Testspace 🔧
         uses: testspace-com/setup-testspace@v1
         with:
           domain: ${{ github.repository_owner }}
-      - name: Publish results to Testspace
+      - name: Publish results to Testspace 🚀
         run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
