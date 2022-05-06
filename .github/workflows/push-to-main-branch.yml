@@ -26,15 +26,6 @@ jobs:
         uses: GabrielBB/xvfb-action@v1.0
         with:
           run: npm --prefix ./extension run test:coverage
-
-  report-results:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    env:
-      NODE_ENV: development
-    steps:
       - name: Deploy coverage 🚀
         uses: codecov/codecov-action@v2
         with:
