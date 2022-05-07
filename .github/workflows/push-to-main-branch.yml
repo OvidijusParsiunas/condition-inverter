@@ -38,3 +38,14 @@ jobs:
           domain: ${{ github.repository_owner }}
       - name: Publish results to Testspace 🚀
         run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
+      - name: Install and Build Wesbite 🔧
+        run: |
+          npm install
+          npm run build
+        working-directory: ./website
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: website/build # The folder the action should deploy from (source branch).
