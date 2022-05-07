@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "./static/css/main.5d042719.css",
+    "main.js": "./static/js/main.b613ca26.js",
+    "static/media/vscode-logo.png": "./static/media/vscode-logo.db93542ad04e4aac958e.png",
+    "index.html": "./index.html",
+    "main.5d042719.css.map": "./static/css/main.5d042719.css.map",
+    "main.b613ca26.js.map": "./static/js/main.b613ca26.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5d042719.css",
+    "static/js/main.b613ca26.js"
+  ]
+}
