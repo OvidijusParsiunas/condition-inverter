@@ -5,7 +5,7 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build-and-test-extension:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
@@ -38,6 +38,12 @@ jobs:
           domain: ${{ github.repository_owner }}
       - name: Publish results to Testspace 🚀
         run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
+
+  build-and-deploy-website:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: development
+    steps:
       - name: Install and Build Wesbite 🔧
         run: |
           npm install
