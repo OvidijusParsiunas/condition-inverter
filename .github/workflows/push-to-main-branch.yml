@@ -5,39 +5,39 @@ on:
       - main
 
 jobs:
-  # build-and-test-extension:
-  #   strategy:
-  #     matrix:
-  #       os: [macos-latest, ubuntu-latest, windows-latest]
-  #   runs-on: ${{ matrix.os }}
-  #   env:
-  #     NODE_ENV: development
-  #   steps:
-  #     - name: Checkout 🛎️
-  #       uses: actions/checkout@v2
-  #       with:
-  #         persist-credentials: false
-  #     - name: Install and Test extension/inverter 🔧
-  #       run: |
-  #         npm install
-  #         npm run compile
-  #       working-directory: ./extension
-  #     - name: Run headless test 🔧
-  #       uses: GabrielBB/xvfb-action@v1.0
-  #       with:
-  #         run: npm --prefix ./extension run test:coverage
-  #     - name: Deploy coverage 🚀
-  #       uses: codecov/codecov-action@v2
-  #       with:
-  #         files: ./coverage/lcov.info
-  #         fail_ci_if_error: true # (default = false)
-  #         verbose: true # (default = false)
-  #     - name: Prepare config for Testspace 🔧
-  #       uses: testspace-com/setup-testspace@v1
-  #       with:
-  #         domain: ${{ github.repository_owner }}
-  #     - name: Publish results to Testspace 🚀
-  #       run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
+  build-and-test-extension:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      NODE_ENV: development
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install and Test extension/inverter 🔧
+        run: |
+          npm install
+          npm run compile
+        working-directory: ./extension
+      - name: Run headless test 🔧
+        uses: GabrielBB/xvfb-action@v1.0
+        with:
+          run: npm --prefix ./extension run test:coverage
+      - name: Deploy coverage 🚀
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./coverage/lcov.info
+          fail_ci_if_error: true # (default = false)
+          verbose: true # (default = false)
+      - name: Prepare config for Testspace 🔧
+        uses: testspace-com/setup-testspace@v1
+        with:
+          domain: ${{ github.repository_owner }}
+      - name: Publish results to Testspace 🚀
+        run: testspace "[${{ github.workflow }} / ${{ matrix.os}}]./testspace/xunit.xml"
 
   build-and-deploy-website:
     runs-on: ubuntu-latest
@@ -59,4 +59,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages # The branch the action should deploy to.
           FOLDER: website/build # The folder the action should deploy from (source branch).
-    # needs: build-and-test-extension # Wait for the build-and-test-extension to succeed
+    needs: build-and-test-extension # Wait for the build-and-test-extension to succeed
