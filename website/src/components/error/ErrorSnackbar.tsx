@@ -1,4 +1,4 @@
-import { UNEXPECTED_ERROR_MESSAGE_PREFIX, UNEXPECTED_ERROR_MESSAGE_LINK } from 'inverter/consts/errors';
+import { UNEXPECTED_ERROR_MESSAGE_PREFIX, UNEXPECTED_ERROR_MESSAGE_LINK } from 'shared/inverter/consts/errors';
 import Snackbar from '@mui/material/Snackbar';
 import { Alert } from '@mui/material';
 import './errorSnackbar.css';

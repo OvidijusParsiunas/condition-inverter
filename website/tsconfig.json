@@ -17,5 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "references": [{ "path": "../inverter" }]
+  "references": [{ "path": "../shared" }]
 }

@@ -1,4 +1,4 @@
-import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from 'inverter/src/shared/consts/errors';
+import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from 'shared/inverter/src/shared/consts/errors';
 
 export class ErrorHandler {
   public static displayMessageOnConsole(message: string): void {

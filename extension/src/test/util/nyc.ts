@@ -38,7 +38,7 @@ export class NYC {
     const nyc = new NYC({
       cwd: path.join(__dirname, '..', '..', '..', '..'),
       exclude: ['extension/.vscode-test', 'extension/node_modules', '**/test/**'],
-      include: ['extension', 'inverter'],
+      include: ['extension', 'shared'],
       reporter: ['text', 'lcov'],
       instrument: true,
       hookRequire: true,

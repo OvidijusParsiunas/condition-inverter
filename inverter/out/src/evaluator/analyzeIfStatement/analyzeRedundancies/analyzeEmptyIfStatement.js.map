@@ -1,1 +1,0 @@
-{"version":3,"file":"analyzeEmptyIfStatement.js","sourceRoot":"","sources":["../../../../../src/evaluator/analyzeIfStatement/analyzeRedundancies/analyzeEmptyIfStatement.ts"],"names":[],"mappings":";;;AAEA,MAAa,uBAAuB;IAC3B,MAAM,CAAC,OAAO,CAAC,eAAgC;QACpD,OAAO,eAAe,CAAC,oCAAoC,IAAI,eAAe,CAAC,mCAAmC,CAAC;IACrH,CAAC;CACF;AAJD,0DAIC"}

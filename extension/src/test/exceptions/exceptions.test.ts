@@ -1,4 +1,4 @@
-import { IfInverter } from '../../../../inverter/out/src/ifInverter';
+import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
 import { TextEditorObj } from '../../shared/types/tests/tests';
 import { TestUtil } from '../util/testUtil';

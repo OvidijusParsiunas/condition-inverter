@@ -48,7 +48,7 @@ $ npm install
 $ npm run compile:watch
 
 # To run tests
-# Navigate to the ../inverter directory and install node dependencies:
+# Navigate to the ../shared directory and install shared node dependencies:
 $ npm install
 
 # Navigate back to the ./extension directory and run tests:

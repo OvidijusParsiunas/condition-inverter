@@ -1,4 +1,4 @@
-import { IfInverter } from 'inverter/src/ifInverter';
+import { IfInverter } from 'shared/inverter/src/ifInverter';
 import './invertButton.css';
 
 interface Props {
