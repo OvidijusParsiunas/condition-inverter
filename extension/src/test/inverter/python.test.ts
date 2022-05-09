@@ -1,4 +1,4 @@
-import { IfInverter } from 'shared/inverter/src/ifInverter';
+import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // WORK: test with all python operators
