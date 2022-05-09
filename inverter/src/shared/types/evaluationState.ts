@@ -1,3 +1,5 @@
+import { StartEndIndexes } from './StartEndIndexes';
+
 interface Generic {
   start: number;
 }
@@ -12,7 +14,7 @@ export interface InvertBooleanLiteral extends Generic {
 }
 
 export interface RemoveNegationBrackets extends Generic {
-  removeNegatedBrackets: { start: number; end: number };
+  removeNegatedBrackets: StartEndIndexes;
 }
 
 export interface GreaterOrLessThanHasFollowUpEquals extends Generic {

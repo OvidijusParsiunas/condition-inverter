@@ -20,16 +20,28 @@ class AnalyzeIfStatement {
         AnalyzeIfStatement.finishEvaluatingIfStatement(tokens, evaluationState);
         return index;
     }
-    static setStartAndEndIndexes(tokens, index, evaluationState, openBracketIndex) {
-        const startIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, openBracketIndex + 1);
-        const endIndex = traversalUtil_1.TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
-        const result = analyzeRedundantBrackets_1.AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, startIndex, endIndex - 1);
-        evaluationState.startOfCurrentIfStatementInsideIndex = result.start;
-        evaluationState.currentIfStatementCloseBracketIndex = result.end + 1;
+    static getInnerIndexesOfIfStatement(tokens, index) {
+        const startSymbolIndex = traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index + 1);
+        if (tokens[startSymbolIndex] === '(') {
+            return {
+                start: traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, startSymbolIndex + 1),
+                end: traversalUtil_1.TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index) - 1,
+            };
+        }
+        // WORK: need tests for selection and highlighted scenarios
+        return {
+            start: startSymbolIndex,
+            end: tokens.indexOf(':') - 1,
+        };
+    }
+    static setEvaluationStartAndEndIndexes(tokens, index, evaluationState) {
+        const { start, end } = AnalyzeIfStatement.getInnerIndexesOfIfStatement(tokens, index);
+        const noRedundantBracketsIndexes = analyzeRedundantBrackets_1.AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
+        evaluationState.startOfCurrentIfStatementInsideIndex = noRedundantBracketsIndexes.start;
+        evaluationState.currentIfStatementCloseBracketIndex = noRedundantBracketsIndexes.end + 1;
     }
     static setNewIfStatementState(tokens, index, evaluationState) {
-        const openBracketIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 1);
-        AnalyzeIfStatement.setStartAndEndIndexes(tokens, index, evaluationState, openBracketIndex);
+        AnalyzeIfStatement.setEvaluationStartAndEndIndexes(tokens, index, evaluationState);
         evaluationState.isCurrentlyInsideIfStatement = true;
         return evaluationState.startOfCurrentIfStatementInsideIndex - 1;
     }

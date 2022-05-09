@@ -24,7 +24,10 @@ class AnalyzeTokens {
                 break;
             case '&':
             case '|':
-                return analyzeLogicalOperator_1.AnalyzeLogicalOperator.updateState(tokens, index, evaluationState);
+                return analyzeLogicalOperator_1.AnalyzeLogicalOperator.updateStateForSymbol(tokens, index, evaluationState);
+            case 'and':
+            case 'or':
+                return analyzeLogicalOperator_1.AnalyzeLogicalOperator.updateStateForKeyword(tokens, index, evaluationState);
             case '<':
             case '>':
                 return analyzeGreaterOrLessThanSign_1.AnalyzeGreaterOrLessThanSign.updateState(tokens, index, evaluationState);

@@ -4,7 +4,7 @@ import { Tokens } from '../../../shared/types/tokens';
 
 export class UpdateStateForStandaloneStatements {
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-    const endIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, index - 1, false);
+    const endIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
       start: evaluationState.startOfCurrentIfStatementInsideIndex,

@@ -12,7 +12,7 @@ class Evaluator {
             if (evaluationState.isCurrentlyInsideIfStatement) {
                 index = analyzeIfStatement_1.AnalyzeIfStatement.updateState(tokens, index, evaluationState);
             }
-            else if (tokens[index] === 'if') {
+            else if (tokens[index] === 'if' || tokens[index] === 'elif') {
                 index = analyzeIfStatement_1.AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
                 const isEmpty = analyzeEmptyIfStatement_1.AnalyzeEmptyIfStatement.isEmpty(evaluationState);
                 if (isEmpty)

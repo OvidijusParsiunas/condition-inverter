@@ -26,7 +26,11 @@ export class Inverter {
         break;
       case '&':
       case '|':
-        InvertLogicalOperator.invert(tokens, tokenIndex);
+        InvertLogicalOperator.invertSymbol(tokens, tokenIndex);
+        break;
+      case 'and':
+      case 'or':
+        InvertLogicalOperator.invertKeyword(tokens, tokenIndex);
         break;
       case '!':
         tokenIndexDelta = InvertNegatedSyntax.invert(tokens, tokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);

@@ -4,7 +4,7 @@ exports.UpdateStateForStandaloneStatements = void 0;
 const traversalUtil_1 = require("../../../shared/functionality/traversalUtil");
 class UpdateStateForStandaloneStatements {
     static markForBracketAddition(tokens, index, evaluationState) {
-        const endIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, index - 1, false);
+        const endIndex = traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index - 1, false);
         evaluationState.syntaxToBeInverted.push({
             insertNewBrackets: true,
             start: evaluationState.startOfCurrentIfStatementInsideIndex,

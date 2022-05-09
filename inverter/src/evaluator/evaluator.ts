@@ -11,7 +11,7 @@ export class Evaluator {
     for (let index = 0; index < tokens.length; index += 1) {
       if (evaluationState.isCurrentlyInsideIfStatement) {
         index = AnalyzeIfStatement.updateState(tokens, index, evaluationState);
-      } else if (tokens[index] === 'if') {
+      } else if (tokens[index] === 'if' || tokens[index] === 'elif') {
         index = AnalyzeIfStatement.setNewIfStatementState(tokens, index, evaluationState);
         const isEmpty = AnalyzeEmptyIfStatement.isEmpty(evaluationState);
         if (isEmpty) return [];

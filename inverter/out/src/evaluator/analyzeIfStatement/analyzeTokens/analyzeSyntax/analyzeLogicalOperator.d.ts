@@ -3,5 +3,7 @@ import { Tokens } from '../../../../shared/types/tokens';
 export declare class AnalyzeLogicalOperator {
     private static updateStateForStandaloneStatements;
     private static updateStateForStatementsBeforeOperator;
-    static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number;
+    private static updateState;
+    static updateStateForSymbol(tokens: Tokens, index: number, evaluationState: EvaluationState): number;
+    static updateStateForKeyword(tokens: Tokens, index: number, evaluationState: EvaluationState): number;
 }

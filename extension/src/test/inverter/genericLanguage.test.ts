@@ -1,8 +1,8 @@
-import { IfInverter } from '../../../../inverter/out/src/ifInverter';
+import { IfInverter } from 'inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-suite('Inverter Suite', () => {
+suite('Generic Language Inversion Suite', () => {
   [
     { input: '', output: '' },
     { input: ' ', output: ' ' },

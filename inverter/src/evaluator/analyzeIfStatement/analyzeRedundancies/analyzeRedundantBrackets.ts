@@ -1,11 +1,8 @@
 import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
+import { StartEndIndexes } from '../../../shared/types/StartEndIndexes';
 import { Tokens } from '../../../shared/types/tokens';
 
-interface Result {
-  start: number;
-  end: number;
-  usePreviousTraversalResult?: true;
-}
+type Result = { usePreviousTraversalResult?: true } & StartEndIndexes;
 
 export class AnalyzeRedundantBrackets {
   private static isNestedUnaryOperator(tokens: Tokens, startTokenIndex: number, layers: number): boolean {
@@ -36,8 +33,8 @@ export class AnalyzeRedundantBrackets {
   }
 
   public static getIndexesOfNestedStartAndEndBrackets(tokens: Tokens, startIndex: number, endIndex: number, layers = 0): Result {
-    const startTokenIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, startIndex);
-    const endTokenIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, endIndex, false);
+    const startTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, startIndex);
+    const endTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, endIndex, false);
     if (!AnalyzeRedundantBrackets.isValidBracket(tokens, startIndex, startTokenIndex, endTokenIndex)) {
       return AnalyzeRedundantBrackets.constructResult(tokens, startTokenIndex, endTokenIndex, layers);
     }

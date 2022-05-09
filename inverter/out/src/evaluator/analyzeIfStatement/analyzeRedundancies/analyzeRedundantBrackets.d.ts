@@ -1,9 +1,8 @@
+import { StartEndIndexes } from '../../../shared/types/StartEndIndexes';
 import { Tokens } from '../../../shared/types/tokens';
-interface Result {
-    start: number;
-    end: number;
+declare type Result = {
     usePreviousTraversalResult?: true;
-}
+} & StartEndIndexes;
 export declare class AnalyzeRedundantBrackets {
     private static isNestedUnaryOperator;
     private static createNewResult;

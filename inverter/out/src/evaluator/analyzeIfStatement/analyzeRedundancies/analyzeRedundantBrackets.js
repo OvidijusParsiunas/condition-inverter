@@ -25,8 +25,8 @@ class AnalyzeRedundantBrackets {
             traversalUtil_1.TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, startIndex - 1) === endTokenIndex);
     }
     static getIndexesOfNestedStartAndEndBrackets(tokens, startIndex, endIndex, layers = 0) {
-        const startTokenIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, startIndex);
-        const endTokenIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, endIndex, false);
+        const startTokenIndex = traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, startIndex);
+        const endTokenIndex = traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, endIndex, false);
         if (!AnalyzeRedundantBrackets.isValidBracket(tokens, startIndex, startTokenIndex, endTokenIndex)) {
             return AnalyzeRedundantBrackets.constructResult(tokens, startTokenIndex, endTokenIndex, layers);
         }

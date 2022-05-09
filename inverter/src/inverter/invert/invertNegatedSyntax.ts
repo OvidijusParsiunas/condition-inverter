@@ -11,7 +11,7 @@ export class InvertNegatedSyntax {
     tokenIndexDelta: number,
     syntaxToBeInvertedEntry: RemoveNegationBrackets,
   ): number {
-    const startIndex = TraversalUtil.getNonSpaceCharacterIndex(tokens, tokenIndex);
+    const startIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, tokenIndex);
     tokens.splice(startIndex, 1);
     tokenIndexDelta -= 1;
     tokens.splice(syntaxToBeInvertedEntry.removeNegatedBrackets.end + tokenIndexDelta, 1);

@@ -3,6 +3,7 @@ import { RangeCreator } from '../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class FindIfStatementAtSelectionEnd {
+  // WORK: needs to be expandable for elif, also tests for highlighted/selected scenarios
   private static getIfStatementIndex(editor: TextEditor, line: number, startChar: number, endChar: number): number {
     const lineRange = RangeCreator.create({ line, character: startChar }, { line: line, character: endChar });
     const lineText = editor.document.getText(lineRange);

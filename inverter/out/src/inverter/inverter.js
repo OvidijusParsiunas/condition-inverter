@@ -20,7 +20,11 @@ class Inverter {
                 break;
             case '&':
             case '|':
-                invertLogicalOperator_1.InvertLogicalOperator.invert(tokens, tokenIndex);
+                invertLogicalOperator_1.InvertLogicalOperator.invertSymbol(tokens, tokenIndex);
+                break;
+            case 'and':
+            case 'or':
+                invertLogicalOperator_1.InvertLogicalOperator.invertKeyword(tokens, tokenIndex);
                 break;
             case '!':
                 tokenIndexDelta = invertNegatedSyntax_1.InvertNegatedSyntax.invert(tokens, tokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);

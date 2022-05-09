@@ -15,6 +15,7 @@ class AnalyzeLogicalOperator {
     static updateStateForStatementsBeforeOperator(tokens, index, nextNonSpaceIndex, evaluationState) {
         if (evaluationState.numberOfBracketsOpen === 0) {
             AnalyzeLogicalOperator.updateStateForStandaloneStatements(tokens, index, nextNonSpaceIndex, evaluationState);
+            // WORK: not sure if evaluationState.numberOfBracketsOpen > 0 is needed
         }
         else if (evaluationState.numberOfBracketsOpen > 0 && evaluationState.comparisonOperatorFound) {
             // instead of inverting the comparison operator, the brackets are inverted
@@ -22,17 +23,23 @@ class AnalyzeLogicalOperator {
         }
         evaluationState.comparisonOperatorFound = false;
     }
-    static updateState(tokens, index, evaluationState) {
+    static updateState(tokens, currentIndex, nextIndexToAnalayze, evaluationState) {
+        const nextNonSpaceCharIndex = traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, nextIndexToAnalayze);
+        AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, currentIndex, nextNonSpaceCharIndex, evaluationState);
+        // subtracting one due to the for loop automatically adding one
+        return nextNonSpaceCharIndex - 1;
+    }
+    static updateStateForSymbol(tokens, index, evaluationState) {
         const nextToken = tokens[index + 1];
         if (nextToken === '&' || nextToken === '|') {
-            const nextNonSpaceCharIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, index + 2);
-            AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, index, nextNonSpaceCharIndex, evaluationState);
-            // subtracting one due to the for loop automatically adding one
-            return nextNonSpaceCharIndex - 1;
+            return AnalyzeLogicalOperator.updateState(tokens, index, index + 2, evaluationState);
         }
         // if & or | is by itself then it is regarded as a bitwise operator
         analyzeBrackatableSyntax_1.AnalyzeBrackatableSyntax.updateState(evaluationState);
         return index;
+    }
+    static updateStateForKeyword(tokens, index, evaluationState) {
+        return AnalyzeLogicalOperator.updateState(tokens, index, index + 1, evaluationState);
     }
 }
 exports.AnalyzeLogicalOperator = AnalyzeLogicalOperator;

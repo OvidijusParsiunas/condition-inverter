@@ -2,12 +2,12 @@ import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from '../consts/errors';
 import { Tokens } from '../types/tokens';
 
 export class TraversalUtil {
-  public static getNonSpaceCharacterIndex(tokens: Tokens, index: number, traverseForwards = true): number {
+  public static getSiblingNonSpaceCharacterIndex(tokens: Tokens, index: number, traverseForwards = true): number {
     if (tokens[index] !== ' ' && tokens[index] !== `\n` && tokens[index] !== `\r`) {
       return index;
     }
     const newIndex = traverseForwards ? index + 1 : index - 1;
-    return TraversalUtil.getNonSpaceCharacterIndex(tokens, newIndex, traverseForwards);
+    return TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, newIndex, traverseForwards);
   }
 
   public static getEndQuoteIndex(tokens: Tokens, index: number, quoteString: `'` | '`' | '"'): number {

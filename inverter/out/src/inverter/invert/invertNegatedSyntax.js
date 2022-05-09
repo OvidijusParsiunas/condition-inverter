@@ -6,7 +6,7 @@ const insertNewSyntax_1 = require("../insert/insertNewSyntax");
 const insertBrackets_1 = require("../insert/insertBrackets");
 class InvertNegatedSyntax {
     static removeBrackets(tokens, tokenIndex, tokenIndexDelta, syntaxToBeInvertedEntry) {
-        const startIndex = traversalUtil_1.TraversalUtil.getNonSpaceCharacterIndex(tokens, tokenIndex);
+        const startIndex = traversalUtil_1.TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, tokenIndex);
         tokens.splice(startIndex, 1);
         tokenIndexDelta -= 1;
         tokens.splice(syntaxToBeInvertedEntry.removeNegatedBrackets.end + tokenIndexDelta, 1);
