@@ -44,11 +44,11 @@ Whilst the if statement inversion problem can be solved by simply wrapping the c
 # Install node dependencies:
 $ npm install
 
-# Run the project in watch mode:
+# Compile dependencies and run the project in watch mode:
 $ npm run compile:watch
 
 # To run tests
-# Navigate to the ../shared directory and install shared node dependencies:
+# Navigate to the ../shared directory and install its node dependencies:
 $ npm install
 
 # Navigate back to the ./extension directory and run tests:

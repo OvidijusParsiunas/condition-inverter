@@ -32,12 +32,13 @@ Whilst the if statement inversion problem can be solved by simply wrapping the c
 # Install node dependencies:
 $ npm install
 
-# Run the project in watch mode:
-$ npm run start
-
-# If you are making changes inside the ../inverter directory
-# Compile those changes in watch mode:
+# Compile dependency to the '../shared' directory:
+$ npm run compile
+# or watch for any further changes in that directory using the watch mode:
 $ npm run compile:watch
+
+# Run the website in watch mode:
+$ npm run start
 ```
 
 ## Contributions

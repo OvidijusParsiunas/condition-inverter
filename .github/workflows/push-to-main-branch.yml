@@ -51,6 +51,7 @@ jobs:
       - name: Install and Build Wesbite 🔧
         run: |
           npm install
+          npm run compile
           npm run build
         working-directory: ./website
       - name: Deploy 🚀
