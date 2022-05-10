@@ -34,7 +34,7 @@ $ npm install
 
 # Compile dependency to the '../shared' directory:
 $ npm run compile
-# or watch for any further changes in that directory using the watch mode:
+# or watch for any further changes in that directory using watch mode:
 $ npm run compile:watch
 
 # Run the website in watch mode:

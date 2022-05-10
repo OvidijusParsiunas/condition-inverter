@@ -713,5 +713,25 @@ suite('Selected Text Suite', () => {
         end: new vscode.Position(1, 0),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd') if (dog) console.log('asdasd') if (dog && \n`,
+          output: `if (dog) console.log('asdasd') if (dog) console.log('asdasd') if (!dog || `,
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+        {
+          input: `cat || mouse) { console.log(2) }`,
+          output: '!cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
   ]);
 });
