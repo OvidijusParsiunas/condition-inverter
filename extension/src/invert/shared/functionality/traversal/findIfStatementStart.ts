@@ -1,7 +1,7 @@
+import { IsCursorOnIfWord } from '../../../invertHighlightedText/selectionBoundaryIfRanges/isCursorOnIfWord';
 import { Position } from '../../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { Tokens } from '../../../../../../shared/inverter/src/shared/types/tokens';
-import { Tokenizer } from '../../../../../../shared/out/tokenizer/tokenizer';
-import { IsCursorOnIfWord } from '../../isCursorOnIfWord';
+import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { RangeCreator } from '../../rangeCreator';
 import { TextEditor } from 'vscode';
 
@@ -44,6 +44,7 @@ export class FindIfStatementStart {
   }
 
   private static getIfIndexOnLineFromStartToSpecifiedIndex(editor: TextEditor, line: number, finalIndex: number): number {
+    // WORK - reuse
     const { tokens, lastIndex } = FindIfStatementStart.findLastSpecifiedTokenInString(editor, line, finalIndex);
     if (lastIndex > -1 && FindIfStatementStart.verifyIfStatementIsPresent(editor, line, finalIndex, tokens, lastIndex)) {
       return tokens.slice(0, lastIndex).join('').length;

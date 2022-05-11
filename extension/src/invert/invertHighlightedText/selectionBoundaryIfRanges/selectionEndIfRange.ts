@@ -1,7 +1,7 @@
 import { FindIfStatementFullRange } from '../../shared/functionality/traversal/findIfStatementFullRange';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { FindIfStatementAtSelectionEnd } from '../traversal/findIfStatementAtSelectionEnd';
-import { IsCursorOnIfWord } from '../../shared/isCursorOnIfWord';
+import { IsCursorOnIfWord } from './isCursorOnIfWord';
 import { Range, TextEditor } from 'vscode';
 
 export class SelectionEndIfRange {

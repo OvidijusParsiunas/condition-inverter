@@ -297,5 +297,197 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(2, 42),
       },
     },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
+          output: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
+          output: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
+          output: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 45),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 46),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 49),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 50),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 47),
+        end: new vscode.Position(0, 49),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 47),
+        end: new vscode.Position(0, 50),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) }`,
+          output: `dogif if (dogif && cat) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) } dogif`,
+          output: `dogif if (dogif && cat) { console.log(2) } dogif`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 46),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif if (dogif && cat) { console.log(2) } dogif`,
+          output: `dogif if (dogif && cat) { console.log(2) } dogif`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 47),
+        end: new vscode.Position(0, 48),
+      },
+    },
   ]);
 });

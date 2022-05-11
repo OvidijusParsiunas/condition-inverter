@@ -1241,5 +1241,153 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(2, 1),
       },
     },
+    {
+      lines: [
+        {
+          input: `console.log(dog) if (dogif && \n`,
+          output: `console.log(dog) if (!dogif || `,
+        },
+        {
+          input: `cat || mouseif) { console.log(2) }`,
+          output: '!cat && !mouseif) { console.log(2) }',
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dogif\n`,
+          output: `dogif`,
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+        {
+          input: `if (\n`,
+          output: `if (`,
+        },
+        {
+          input: `dogif && \n`,
+          output: `!dogif || `,
+        },
+        {
+          input: `cat || mouseif) { console.log(2) }`,
+          output: '!cat && !mouseif) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(3, 3),
+        end: new vscode.Position(4, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (\n`,
+          output: `if (`,
+        },
+        {
+          input: `dogif && \n`,
+          output: `!dogif || `,
+        },
+        {
+          input: `cat || mouseif) { console.log(2) }`,
+          output: '!cat && !mouseif) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 5),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (\n`,
+          output: `if (`,
+        },
+        {
+          input: `dogif && \n`,
+          output: `!dogif || `,
+        },
+        {
+          input: `cat || mouseif) { console.log(2) }`,
+          output: '!cat && !mouseif) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `console.log(dog)\n`,
+          output: `console.log(dog)`,
+        },
+        {
+          input: `if (dogif && cat || mouseif) { console.log(2) }`,
+          output: 'if (!dogif || !cat && !mouseif) { console.log(2) }',
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `console.log(dog)\n`,
+          output: `console.log(dog)`,
+        },
+        {
+          input: `if (dogif && cat || mouseif) { console.log(2) }`,
+          output: 'if (!dogif || !cat && !mouseif) { console.log(2) }',
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `console.log(dog)\n`,
+          output: `console.log(dog)`,
+        },
+        {
+          input: `if (dogif && cat || mouseif) { console.log(2) }`,
+          output: 'if (!dogif || !cat && !mouseif) { console.log(2) }',
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 14),
+      },
+    },
   ]);
 });

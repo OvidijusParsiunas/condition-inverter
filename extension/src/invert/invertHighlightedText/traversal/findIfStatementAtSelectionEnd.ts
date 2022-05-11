@@ -1,13 +1,20 @@
+import { ValidateIfCursorBesideIfStatement } from '../shared/validateIfCursorBesideIfStatement';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
+import { Tokenizer } from '../../../../../shared/out/tokenizer/tokenizer';
 import { RangeCreator } from '../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class FindIfStatementAtSelectionEnd {
   // WORK: needs to be expandable for elif, also tests for highlighted/selected scenarios
   private static getIfStatementIndex(editor: TextEditor, line: number, startChar: number, endChar: number): number {
-    const lineRange = RangeCreator.create({ line, character: startChar }, { line: line, character: endChar });
+    const lineRange = RangeCreator.create({ line, character: startChar }, { line, character: endChar });
     const lineText = editor.document.getText(lineRange);
-    return lineText.lastIndexOf('if');
+    const tokens = Tokenizer.tokenize(lineText);
+    if (ValidateIfCursorBesideIfStatement.validate(editor, tokens, line, startChar, endChar, false)) {
+      const index = tokens.lastIndexOf('if');
+      return tokens.slice(0, index).join('').length;
+    }
+    return -1;
   }
 
   private static searchFromSelectionStart(editor: TextEditor, line: number, startChar: number, end: Position): number {
