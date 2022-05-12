@@ -1,6 +1,6 @@
 import { InvertHighlightedText } from './invertHighlightedText/invertHighlightedText';
 import { InvertSelectedText } from './invertSelectedText/invertSelectedText';
-import { ErrorHandling } from './shared/functionality/errorHandling';
+import { ErrorHandling } from './shared/errorHandling';
 import { window } from 'vscode';
 
 export class Invert {

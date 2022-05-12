@@ -1,5 +1,5 @@
-import { FindIfStatementFullRange } from '../../shared/functionality/traversal/findIfStatementFullRange';
-import { FindIfStatementStart } from '../../shared/functionality/traversal/findIfStatementStart';
+import { FindIfStatementFullRange } from '../../shared/traversal/findIfStatementFullRange';
+import { FindIfStatementStart } from '../../shared/traversal/findIfStatementStart';
 import { TextEditor, Range } from 'vscode';
 
 export class SelectionStartIfRange {
