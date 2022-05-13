@@ -18,11 +18,16 @@ export class InvertHighlightedText {
     );
   }
 
-  // WORK - refactor
-  private static validateIfStatementAtEnd(editor: TextEditor): Position {
-    const lineRange1 = RangeCreator.create(editor.selection.start, editor.selection.end);
-    const text1 = editor.document.getText(lineRange1);
-    if (editor.selection.end.character > 2 && text1.substring(text1.length - 2, text1.length) === 'if') {
+  private static getSelectionRangeText(editor: TextEditor): string {
+    const range = RangeCreator.create(editor.selection.start, editor.selection.end);
+    return editor.document.getText(range);
+  }
+
+  // the reason why the position is changed is because if previous traversal has not found an if statement at end of selection
+  // returning editor.selection.end would not make sense as the if at the end is not an actual if, but part of another word
+  private static changePositionIfStatementAtEnd(editor: TextEditor): Position {
+    const text = InvertHighlightedText.getSelectionRangeText(editor);
+    if (editor.selection.end.character > 2 && text.substring(text.length - 2, text.length) === 'if') {
       return new VSCodePosition(editor.selection.end.line, editor.selection.end.character - 2);
     }
     return editor.selection.end;
@@ -36,14 +41,14 @@ export class InvertHighlightedText {
     if (startStatementRange && InvertHighlightedText.doesStartStatementEndLaterThanSelectionEnd(startStatementRange.end, endSelectionPosition)) {
       return startStatementRange.end;
     }
-    return InvertHighlightedText.validateIfStatementAtEnd(editor);
+    return InvertHighlightedText.changePositionIfStatementAtEnd(editor);
   }
 
-  // WORK - refactor
-  private static validateIfStatementAtStart(editor: TextEditor): Position {
-    const lineRange1 = RangeCreator.create({ line: editor.selection.start.line, character: editor.selection.start.character }, editor.selection.end);
-    const text1 = editor.document.getText(lineRange1);
-    if (editor.selection.start.character > 0 && text1.substring(0, 2) === 'if') {
+  // the reason why the position is changed is because if previous traversal has not found an if statement from start of selection
+  // returning editor.selection.start would not make sense as the if at the start is not an actual if, but part of another word
+  private static changePositionIfStatementAtStart(editor: TextEditor): Position {
+    const text = InvertHighlightedText.getSelectionRangeText(editor);
+    if (editor.selection.start.character > 0 && text.substring(0, 2) === 'if') {
       return new VSCodePosition(editor.selection.start.line, editor.selection.start.character + 2);
     }
     return editor.selection.start;
@@ -51,7 +56,7 @@ export class InvertHighlightedText {
 
   private static getStartPosition(editor: TextEditor, startStatementRange: Range | null): Position {
     if (startStatementRange) return startStatementRange.start;
-    return InvertHighlightedText.validateIfStatementAtStart(editor);
+    return InvertHighlightedText.changePositionIfStatementAtStart(editor);
   }
 
   private static combineRanges(editor: TextEditor, startStatementRange: Range | null, endStatementRange: Range | null): Range | null {

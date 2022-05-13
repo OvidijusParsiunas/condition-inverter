@@ -26,8 +26,7 @@ export class AnalyzeLogicalOperator {
   ): void {
     if (evaluationState.numberOfBracketsOpen === 0) {
       AnalyzeLogicalOperator.updateStateForStandaloneStatements(tokens, index, nextNonSpaceIndex, evaluationState);
-      // WORK: not sure if evaluationState.numberOfBracketsOpen > 0 is needed
-    } else if (evaluationState.numberOfBracketsOpen > 0 && evaluationState.comparisonOperatorFound) {
+    } else if (evaluationState.comparisonOperatorFound) {
       // instead of inverting the comparison operator, the brackets are inverted
       evaluationState.syntaxToBeInverted.pop();
     }

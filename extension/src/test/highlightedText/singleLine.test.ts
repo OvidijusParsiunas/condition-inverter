@@ -376,6 +376,18 @@ suite('Highlighted Text Suite', () => {
     {
       lines: [
         {
+          input: 'if (dog) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat && ifdog) { console.log(2) }',
+          output: 'if (!dog) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat || !ifdog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 83),
+      },
+    },
+    {
+      lines: [
+        {
           input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat || mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
