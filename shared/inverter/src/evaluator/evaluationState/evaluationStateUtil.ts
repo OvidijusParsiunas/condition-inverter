@@ -3,9 +3,9 @@ import { EvaluationState } from '../../shared/types/evaluationState';
 export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
     return {
-      isCurrentlyInsideIfStatement: false,
-      startOfCurrentIfStatementInsideIndex: 0,
-      currentIfStatementCloseBracketIndex: 0,
+      isCurrentlyInsideStatement: false,
+      startOfCurrentStatementInsideIndex: 0,
+      currentStatementCloseBracketIndex: 0,
       syntaxToBeInverted: [],
       shouldBracketsBeRemoved: false,
       // usually involves arithmentic operations or double bangs

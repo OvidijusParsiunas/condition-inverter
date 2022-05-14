@@ -1,5 +1,5 @@
-import { GetIfStatementPositionAtEdge } from '../shared/getIfStatementPositionAtEdge';
 import { TextTraversalUtil } from '../../../shared/functionality/textTraversalUtil';
+import { GetStatementPositionAtEdge } from '../shared/getStatementPositionAtEdge';
 import { GetStringFromRange } from '../shared/getStringAroundSelection';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
@@ -11,10 +11,10 @@ export class IsCursorOnIfWord {
 
   // prettier-ignore
   private static getCursorPositionIfOnString(
-      target: string, cursorNumber: number, stringAroundSelection: string, checkIsOnLeftOfIf: boolean): number {
-    const cursorPositionRelativeToSubstring = IsCursorOnIfWord.getCursorPositionRelativeToExtractedString(cursorNumber, target.length);
+      statement: string, cursorNumber: number, stringAroundSelection: string, checkIsOnLeftOfIf: boolean): number {
+    const cursorPositionRelativeToSubstring = IsCursorOnIfWord.getCursorPositionRelativeToExtractedString(cursorNumber, statement.length);
     const { word, index } = TextTraversalUtil.getWordAtCursor(stringAroundSelection, cursorPositionRelativeToSubstring);
-    if (target === word) {
+    if (statement === word) {
       if (index === 0 && !checkIsOnLeftOfIf) {
         return -1;
       }
@@ -24,18 +24,17 @@ export class IsCursorOnIfWord {
   }
 
   // WORK - optimize as string should not be tokenized multiple times
-  // the reason why this is not checking rightOfIfStatement is because all use cases would be traversing to left anyway
-  public static getIndexIfTrue(target: string, editor: TextEditor, lineNum: number, cursorNumber: number, checkIsOnLeftOfIf = true): number {
-    const spacesAroundSelection = target.length;
-    const stringAroundSelection = GetStringFromRange.get(editor, lineNum, cursorNumber, cursorNumber, spacesAroundSelection);
+  // the reason why this is not checking rightOfStatement is because all use cases would be traversing to left anyway
+  public static getIndexIfTrue(statement: string, editor: TextEditor, lineNum: number, cursorNumber: number, checkIsOnLeftOfIf = true): number {
+    const stringAroundSelection = GetStringFromRange.get(editor, lineNum, cursorNumber, cursorNumber, statement.length);
     const tokens = Tokenizer.tokenize(stringAroundSelection);
     // the reason why we need this is because a string can simply have a name with the if substring (naifme), hence to make sure
     // that an actual if statement is captured - we need to tokenizer the string
     // prettier-ignore
-    const ifStatementIndex = GetIfStatementPositionAtEdge.validateAndGetTokenIndex(
-      target, editor, tokens, lineNum, cursorNumber, cursorNumber, true, target.length);
-    if (ifStatementIndex > -1) {
-      return IsCursorOnIfWord.getCursorPositionIfOnString(target, cursorNumber, stringAroundSelection, checkIsOnLeftOfIf);
+    const statementIndex = GetStatementPositionAtEdge.validateAndGetTokenIndex(
+      statement, editor, tokens, lineNum, cursorNumber, cursorNumber, true, statement.length);
+    if (statementIndex > -1) {
+      return IsCursorOnIfWord.getCursorPositionIfOnString(statement, cursorNumber, stringAroundSelection, checkIsOnLeftOfIf);
     }
     return -1;
   }

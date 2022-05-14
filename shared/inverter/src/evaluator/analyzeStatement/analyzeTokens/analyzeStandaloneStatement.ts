@@ -7,28 +7,28 @@ export class UpdateStateForStandaloneStatements {
     const endIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
-      start: evaluationState.startOfCurrentIfStatementInsideIndex,
+      start: evaluationState.startOfCurrentStatementInsideIndex,
       end: endIndex,
     });
   }
 
   private static markForVariableInversion(evaluationState: EvaluationState): void {
-    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentIfStatementInsideIndex });
+    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentStatementInsideIndex });
   }
 
   private static markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
-      start: evaluationState.startOfCurrentIfStatementInsideIndex,
+      start: evaluationState.startOfCurrentStatementInsideIndex,
       invertBooleanLiteral: evaluationState.invertBooleanLiteral,
     });
   }
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
-    const { startOfCurrentIfStatementInsideIndex, syntaxToBeInverted } = evaluationState;
-    const endIndex = TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, startOfCurrentIfStatementInsideIndex - 1);
+    const { startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
+    const endIndex = TraversalUtil.getIndexOfLastBracketOfStatement(tokens, startOfCurrentStatementInsideIndex - 1);
     syntaxToBeInverted.push({
-      start: startOfCurrentIfStatementInsideIndex,
-      removeNegatedBrackets: { start: startOfCurrentIfStatementInsideIndex, end: endIndex },
+      start: startOfCurrentStatementInsideIndex,
+      removeNegatedBrackets: { start: startOfCurrentStatementInsideIndex, end: endIndex },
     });
   }
 

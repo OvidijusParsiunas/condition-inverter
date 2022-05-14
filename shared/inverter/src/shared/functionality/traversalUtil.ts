@@ -17,19 +17,19 @@ export class TraversalUtil {
     return TraversalUtil.getEndQuoteIndex(tokens, index + 1, quoteString);
   }
 
-  public static getIndexOfLastBracketOfIfStatement(tokens: Tokens, index: number, openBrackets = 0): number {
+  public static getIndexOfLastBracketOfStatement(tokens: Tokens, index: number, openBrackets = 0): number {
     if (index > tokens.length - 1) {
       throw new Error(INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL);
     }
     if (tokens[index + 1] === '(') {
-      return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets + 1);
+      return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index + 1, openBrackets + 1);
     }
     if (tokens[index + 1] === ')') {
       if (openBrackets === 1) {
         return index + 1;
       }
-      return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets - 1);
+      return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index + 1, openBrackets - 1);
     }
-    return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index + 1, openBrackets);
+    return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index + 1, openBrackets);
   }
 }

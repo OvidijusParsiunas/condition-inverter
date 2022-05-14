@@ -1,20 +1,20 @@
-import { FindIfStatementFullRange } from '../../shared/traversal/findIfStatementFullRange';
-import { FindIfStatementStart } from '../../shared/traversal/findIfStatementStart';
+import { FindStatementFullRange } from '../../shared/traversal/findStatementFullRange';
+import { FindStatementStart } from '../../shared/traversal/findStatementStart';
 import { TextEditor, Range } from 'vscode';
 
 export class SelectionStartIfRange {
-  private static doesIfStatementAfterBeforeSelectionStart(ifStatementRange: Range, startLine: number, startCharacter: number): boolean {
-    return ifStatementRange.end.line >= startLine && (ifStatementRange.end.line > startLine || ifStatementRange.end.character > startCharacter);
+  private static doesStatementAfterBeforeSelectionStart(statementRange: Range, startLine: number, startCharacter: number): boolean {
+    return statementRange.end.line >= startLine && (statementRange.end.line > startLine || statementRange.end.character > startCharacter);
   }
 
-  public static getStartSelectionIfStatementFullRange(editor: TextEditor): Range | null {
+  public static getStartSelectionStatementFullRange(editor: TextEditor): Range | null {
     const { line: startLine, character: startCharacter } = editor.selection.start;
     const { text } = editor.document.lineAt(startLine);
-    const start = FindIfStatementStart.find(editor, startLine, editor.selection.start.character, '', false);
+    const start = FindStatementStart.find(editor, startLine, editor.selection.start.character, '', false);
     if (!start) return null;
-    const ifStatementRange = FindIfStatementFullRange.findFromStartPosition(editor, startLine, start, text);
-    if (ifStatementRange && SelectionStartIfRange.doesIfStatementAfterBeforeSelectionStart(ifStatementRange, startLine, startCharacter)) {
-      return ifStatementRange;
+    const statementRange = FindStatementFullRange.findFromStartPosition(editor, startLine, start, text);
+    if (statementRange && SelectionStartIfRange.doesStatementAfterBeforeSelectionStart(statementRange, startLine, startCharacter)) {
+      return statementRange;
     }
     return null;
   }

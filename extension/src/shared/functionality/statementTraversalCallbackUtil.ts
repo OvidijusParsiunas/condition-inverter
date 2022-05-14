@@ -1,6 +1,6 @@
 import { STATEMENTS } from '../../../../shared/out/inverter/src/shared/consts/statements';
 
-type ParametersExceptFirst<F, R> = F extends (target: string, ...rest: infer E) => R ? E : never;
+type ParametersExceptFirst<F, R> = F extends (statement: string, ...rest: infer E) => R ? E : never;
 
 export class StatementTraversalCallbackUtil {
   public static traverse<T extends (...args: any[]) => number, E extends ParametersExceptFirst<T, ReturnType<T>>>(

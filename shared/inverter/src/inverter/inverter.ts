@@ -48,7 +48,7 @@ export class Inverter {
     return tokenIndexDelta;
   }
 
-  public static invertIfStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
+  public static invertStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
     let tokenIndexDelta = 0;
     syntaxToBeInverted.forEach((syntaxToBeInvertedEntry, entryIndex) => {
       const relativeTokenIndex = syntaxToBeInvertedEntry.start + tokenIndexDelta;

@@ -6,7 +6,7 @@ export class IfInverter {
   public static invert(inputString: string): string {
     const tokens = Tokenizer.tokenize(inputString);
     const syntaxToBeInverted = Evaluator.evaluate(tokens);
-    Inverter.invertIfStatements(tokens, syntaxToBeInverted);
+    Inverter.invertStatements(tokens, syntaxToBeInverted);
     return tokens.join('');
   }
 }

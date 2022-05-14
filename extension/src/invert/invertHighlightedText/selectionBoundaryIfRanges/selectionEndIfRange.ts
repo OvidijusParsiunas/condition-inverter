@@ -1,46 +1,46 @@
 import { StatementTraversalCallbackUtil } from '../../../shared/functionality/statementTraversalCallbackUtil';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { FindIfStatementFullRange } from '../../shared/traversal/findIfStatementFullRange';
-import { FindIfStatementAtSelectionEnd } from '../traversal/findIfStatementAtSelectionEnd';
+import { FindStatementAtSelectionEnd } from '../traversal/findStatementAtSelectionEnd';
+import { FindStatementFullRange } from '../../shared/traversal/findStatementFullRange';
 import { IsCursorOnIfWord } from './isCursorOnIfWord';
 import { Range, TextEditor } from 'vscode';
 
 export class SelectionEndIfRange {
-  private static isEndIfStatementSameAsStart(endIfStatementPosition: Position, startIfStatementRange: Range | null): boolean {
+  private static isEndStatementSameAsStart(endStatementPosition: Position, startStatementRange: Range | null): boolean {
     return Boolean(
-      startIfStatementRange &&
-        endIfStatementPosition.line === startIfStatementRange.start.line &&
-        endIfStatementPosition.character === startIfStatementRange.start.character,
+      startStatementRange &&
+        endStatementPosition.line === startStatementRange.start.line &&
+        endStatementPosition.character === startStatementRange.start.character,
     );
   }
 
-  private static getIfStatementEndPosition(editor: TextEditor, start: Position, end: Position): Position | null {
+  private static getStatementEndPosition(editor: TextEditor, start: Position, end: Position): Position | null {
     const cursorOnIfWordStartIndex = StatementTraversalCallbackUtil.traverse(IsCursorOnIfWord.getIndexIfTrue, editor, end.line, end.character, false);
     if (cursorOnIfWordStartIndex === -1) {
-      return FindIfStatementAtSelectionEnd.upwardLineTraversal(editor, end.line, start, end);
+      return FindStatementAtSelectionEnd.upwardLineTraversal(editor, end.line, start, end);
     }
     return { line: end.line, character: cursorOnIfWordStartIndex };
   }
 
-  private static findEndSelectionIfStatementRange(editor: TextEditor, startIfStatementRange: Range | null): Range | null {
-    const startPosition = startIfStatementRange?.end || editor.selection.start;
-    const endIfStatementPosition = SelectionEndIfRange.getIfStatementEndPosition(editor, startPosition, editor.selection.end);
-    if (endIfStatementPosition && !SelectionEndIfRange.isEndIfStatementSameAsStart(endIfStatementPosition, startIfStatementRange)) {
-      const { text } = editor.document.lineAt(endIfStatementPosition.line);
-      return FindIfStatementFullRange.findFromStartPosition(editor, endIfStatementPosition.line, endIfStatementPosition, text);
+  private static findEndSelectionStatementRange(editor: TextEditor, startStatementRange: Range | null): Range | null {
+    const startPosition = startStatementRange?.end || editor.selection.start;
+    const endStatementPosition = SelectionEndIfRange.getStatementEndPosition(editor, startPosition, editor.selection.end);
+    if (endStatementPosition && !SelectionEndIfRange.isEndStatementSameAsStart(endStatementPosition, startStatementRange)) {
+      const { text } = editor.document.lineAt(endStatementPosition.line);
+      return FindStatementFullRange.findFromStartPosition(editor, endStatementPosition.line, endStatementPosition, text);
     }
     return null;
   }
 
-  private static doesSelectionEndAfterStartIfStatementEnds(selectionEnd: Position, startIfStatementRangeEnd: Position): boolean {
-    const { line: startIfEndLine, character: startIfEndChar } = startIfStatementRangeEnd;
+  private static doesSelectionEndAfterStartStatementEnds(selectionEnd: Position, startStatementRangeEnd: Position): boolean {
+    const { line: startIfEndLine, character: startIfEndChar } = startStatementRangeEnd;
     const { line: selectionEndLine, character: selectionEndChar } = selectionEnd;
     return startIfEndLine < selectionEndLine || (startIfEndLine === selectionEndLine && startIfEndChar < selectionEndChar);
   }
 
-  public static get(editor: TextEditor, startIfStatementRange: Range | null): Range | null {
-    if (!startIfStatementRange || SelectionEndIfRange.doesSelectionEndAfterStartIfStatementEnds(editor.selection.end, startIfStatementRange.end)) {
-      return SelectionEndIfRange.findEndSelectionIfStatementRange(editor, startIfStatementRange);
+  public static get(editor: TextEditor, startStatementRange: Range | null): Range | null {
+    if (!startStatementRange || SelectionEndIfRange.doesSelectionEndAfterStartStatementEnds(editor.selection.end, startStatementRange.end)) {
+      return SelectionEndIfRange.findEndSelectionStatementRange(editor, startStatementRange);
     }
     return null;
   }

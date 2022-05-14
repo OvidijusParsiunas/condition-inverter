@@ -1,28 +1,28 @@
-import { FindIfStatementFullRange } from '../shared/traversal/findIfStatementFullRange';
-import { FindIfStatementStart } from '../shared/traversal/findIfStatementStart';
+import { FindStatementFullRange } from '../shared/traversal/findStatementFullRange';
 import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
+import { FindStatementStart } from '../shared/traversal/findStatementStart';
 import { Range, TextEditor } from 'vscode';
 
 export class InvertSelectedText {
-  private static getInvertedText(editor: TextEditor, ifStatementRange: Range): string {
-    const ifStatementText = editor.document.getText(ifStatementRange);
-    return IfInverter.invert(ifStatementText);
+  private static getInvertedText(editor: TextEditor, statementRange: Range): string {
+    const statementText = editor.document.getText(statementRange);
+    return IfInverter.invert(statementText);
   }
 
-  private static getIfStatementRange(editor: TextEditor): Range | null {
+  private static getStatementRange(editor: TextEditor): Range | null {
     const lineNum = editor.selection.active.line;
     const { text } = editor.document.lineAt(lineNum);
-    const start = FindIfStatementStart.find(editor, lineNum, editor.selection.active.character, text);
+    const start = FindStatementStart.find(editor, lineNum, editor.selection.active.character, text);
     if (!start) return start;
-    return FindIfStatementFullRange.findFromStartPosition(editor, lineNum, start, text);
+    return FindStatementFullRange.findFromStartPosition(editor, lineNum, start, text);
   }
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
-      const ifStatementRange = InvertSelectedText.getIfStatementRange(editor);
-      if (ifStatementRange) {
-        const invertedText = InvertSelectedText.getInvertedText(editor, ifStatementRange);
-        selectedText.replace(ifStatementRange, invertedText);
+      const statementRange = InvertSelectedText.getStatementRange(editor);
+      if (statementRange) {
+        const invertedText = InvertSelectedText.getInvertedText(editor, statementRange);
+        selectedText.replace(statementRange, invertedText);
       }
     });
   }

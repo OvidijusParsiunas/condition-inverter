@@ -2,7 +2,7 @@ import { Position } from '../../../shared/types/invertHighlightedText/invertHigh
 import { RangeCreator } from '../rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
-export class FindIfStatementFullRange {
+export class FindStatementFullRange {
   public static getIfCloseBracketPosition(editor: TextEditor, text: string, lineNum: number, charNumber: number, openBrackets: number): Position {
     if (charNumber > text.length - 1) {
       lineNum += 1;
@@ -11,15 +11,15 @@ export class FindIfStatementFullRange {
     }
     const nextCharacter = text.charAt(charNumber);
     if (nextCharacter === '(') {
-      return FindIfStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets + 1);
+      return FindStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets + 1);
     }
     if (nextCharacter === ')') {
       if (openBrackets === 1) {
         return { character: charNumber, line: lineNum };
       }
-      return FindIfStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets - 1);
+      return FindStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets - 1);
     }
-    return FindIfStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets);
+    return FindStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets);
   }
 
   private static shouldContinueToAnalyse(textAboveSelectedLine: string, numOfOpenBrackets: number): boolean {
@@ -43,12 +43,12 @@ export class FindIfStatementFullRange {
   }
 
   public static findFromStartPosition(editor: TextEditor, startLine: number, start: Position, text: string): Range | null {
-    const textAboveSelectedLine = FindIfStatementFullRange.getTextAboveSelectedLine(editor, start.line, startLine);
-    const numOfOpenBrackets = FindIfStatementFullRange.getNumberOfOpenBrackets(textAboveSelectedLine);
-    const shouldContinue = FindIfStatementFullRange.shouldContinueToAnalyse(textAboveSelectedLine, numOfOpenBrackets);
+    const textAboveSelectedLine = FindStatementFullRange.getTextAboveSelectedLine(editor, start.line, startLine);
+    const numOfOpenBrackets = FindStatementFullRange.getNumberOfOpenBrackets(textAboveSelectedLine);
+    const shouldContinue = FindStatementFullRange.shouldContinueToAnalyse(textAboveSelectedLine, numOfOpenBrackets);
     if (!shouldContinue) return null;
     const charStartPosition = start.line === startLine ? start.character : 0;
-    const end = FindIfStatementFullRange.getIfCloseBracketPosition(editor, text, startLine, charStartPosition, numOfOpenBrackets);
+    const end = FindStatementFullRange.getIfCloseBracketPosition(editor, text, startLine, charStartPosition, numOfOpenBrackets);
     end.character += 1;
     return RangeCreator.create(start, end);
   }

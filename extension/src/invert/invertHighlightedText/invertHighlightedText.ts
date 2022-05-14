@@ -7,9 +7,9 @@ import { Range, TextEditor, Position as VSCodePosition } from 'vscode';
 import { RangeCreator } from '../shared/rangeCreator';
 
 export class InvertHighlightedText {
-  private static getInvertedText(editor: TextEditor, ifStatementRange: Range): string {
-    const ifStatementText = editor.document.getText(ifStatementRange);
-    return IfInverter.invert(ifStatementText);
+  private static getInvertedText(editor: TextEditor, statementRange: Range): string {
+    const statementText = editor.document.getText(statementRange);
+    return IfInverter.invert(statementText);
   }
 
   private static doesStartStatementEndLaterThanSelectionEnd(startStatementEnd: Position, endSelectionPosition: Position): boolean {
@@ -26,10 +26,10 @@ export class InvertHighlightedText {
 
   // the reason why the position is changed is because if previous traversal has not found an if statement at end of selection
   // returning editor.selection.end would not make sense as the if at the end is not an actual if, but part of another word
-  private static changePositionIfStatementAtEnd(target: string, editor: TextEditor): VSCodePosition | null {
+  private static changePositionIfStatementAtEnd(statement: string, editor: TextEditor): VSCodePosition | null {
     const text = InvertHighlightedText.getSelectionRangeText(editor);
-    if (editor.selection.end.character > target.length && text.substring(text.length - target.length, text.length) === target) {
-      return new VSCodePosition(editor.selection.end.line, editor.selection.end.character - target.length);
+    if (editor.selection.end.character > statement.length && text.substring(text.length - statement.length, text.length) === statement) {
+      return new VSCodePosition(editor.selection.end.line, editor.selection.end.character - statement.length);
     }
     return null;
   }
@@ -47,10 +47,10 @@ export class InvertHighlightedText {
 
   // the reason why the position is changed is because if previous traversal has not found an if statement from start of selection
   // returning editor.selection.start would not make sense as the if at the start is not an actual if, but part of another word
-  private static changePositionIfStatementAtStart(target: string, editor: TextEditor): VSCodePosition | null {
+  private static changePositionIfStatementAtStart(statement: string, editor: TextEditor): VSCodePosition | null {
     const text = InvertHighlightedText.getSelectionRangeText(editor);
-    if (editor.selection.start.character > 0 && text.substring(0, target.length) === target) {
-      return new VSCodePosition(editor.selection.start.line, editor.selection.start.character + target.length);
+    if (editor.selection.start.character > 0 && text.substring(0, statement.length) === statement) {
+      return new VSCodePosition(editor.selection.start.line, editor.selection.start.character + statement.length);
     }
     return null;
   }
@@ -66,8 +66,8 @@ export class InvertHighlightedText {
     return RangeCreator.create(startPosition, endPosition);
   }
 
-  private static getIfStatementsRange(editor: TextEditor): Range | null {
-    const startStatementRange = SelectionStartIfRange.getStartSelectionIfStatementFullRange(editor);
+  private static getStatementsRange(editor: TextEditor): Range | null {
+    const startStatementRange = SelectionStartIfRange.getStartSelectionStatementFullRange(editor);
     const endStatementRange = SelectionEndIfRange.get(editor, startStatementRange);
     if (startStatementRange || endStatementRange) {
       return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
@@ -77,10 +77,10 @@ export class InvertHighlightedText {
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
-      const ifStatementRange = InvertHighlightedText.getIfStatementsRange(editor);
-      if (ifStatementRange) {
-        const invertedText = InvertHighlightedText.getInvertedText(editor, ifStatementRange);
-        selectedText.replace(ifStatementRange, invertedText);
+      const statementsRange = InvertHighlightedText.getStatementsRange(editor);
+      if (statementsRange) {
+        const invertedText = InvertHighlightedText.getInvertedText(editor, statementsRange);
+        selectedText.replace(statementsRange, invertedText);
       }
     });
   }

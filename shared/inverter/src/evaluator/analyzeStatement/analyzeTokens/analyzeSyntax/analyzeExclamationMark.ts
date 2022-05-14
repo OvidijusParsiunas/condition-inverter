@@ -17,7 +17,7 @@ export class AnalyzeExclamationMark {
     const lastExclamationMarkIndex = AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, index + 1);
     const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, lastExclamationMarkIndex + 1);
     if (tokens[nextNonSpaceCharIndex] === '(') {
-      return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, lastExclamationMarkIndex);
+      return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, lastExclamationMarkIndex);
     }
     return lastExclamationMarkIndex;
   }
@@ -33,7 +33,7 @@ export class AnalyzeExclamationMark {
       if (tokens[nextNonSpaceTokenIndex] === '(') {
         // called for - !(...
         evaluationState.shouldBracketsBeRemoved = true;
-        return TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, index);
+        return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index);
       } else if (tokens[nextNonSpaceTokenIndex] === '=') {
         // called for - !=...
         return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);

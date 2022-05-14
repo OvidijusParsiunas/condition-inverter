@@ -28,7 +28,7 @@ export class AnalyzeRedundantBrackets {
       startTokenIndex < endTokenIndex &&
       tokens[startTokenIndex] === '(' &&
       tokens[endTokenIndex] === ')' &&
-      TraversalUtil.getIndexOfLastBracketOfIfStatement(tokens, startIndex - 1) === endTokenIndex
+      TraversalUtil.getIndexOfLastBracketOfStatement(tokens, startIndex - 1) === endTokenIndex
     );
   }
 
