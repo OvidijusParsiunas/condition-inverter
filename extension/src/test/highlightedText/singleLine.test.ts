@@ -125,18 +125,6 @@ suite('Highlighted Text Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 10),
-        end: new vscode.Position(0, 45),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if (dog && cat || mouse) { console.log(2) }  if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) }  if (!dog || !cat && !mouse) { console.log(2) }',
         },
       ],
@@ -340,18 +328,6 @@ suite('Highlighted Text Suite', () => {
     {
       lines: [
         {
-          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 24),
-        end: new vscode.Position(0, 44),
-      },
-    },
-    {
-      lines: [
-        {
           input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) } if (!dog || !cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
         },
@@ -491,18 +467,6 @@ suite('Highlighted Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 2),
         end: new vscode.Position(0, 3),
-      },
-    },
-    {
-      lines: [
-        {
-          input: '    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
-          output: '    if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 2),
-        end: new vscode.Position(0, 4),
       },
     },
     {

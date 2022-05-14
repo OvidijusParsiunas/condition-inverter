@@ -16,26 +16,6 @@ suite('Highlighted Text Suite', () => {
     {
       lines: [
         {
-          input: `    if (dog\n`,
-          output: '    if (dog',
-        },
-        {
-          input: `&& cat\n`,
-          output: '&& cat',
-        },
-        {
-          input: `|| mouse) { console.log(2) }`,
-          output: '|| mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 4),
-      },
-    },
-    {
-      lines: [
-        {
           input: `if (dog\n`,
           output: 'if (dog',
         },
@@ -212,34 +192,6 @@ suite('Highlighted Text Suite', () => {
     {
       lines: [
         {
-          input: `    \n`,
-          output: '    ',
-        },
-        {
-          input: `  if (dog\n`,
-          output: '  if (dog',
-        },
-        {
-          input: `&& cat\n`,
-          output: '&& cat',
-        },
-        {
-          input: `|| mouse)\n`,
-          output: '|| mouse)',
-        },
-        {
-          input: `{ console.log(2) }\n`,
-          output: '{ console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 2),
-        end: new vscode.Position(1, 2),
-      },
-    },
-    {
-      lines: [
-        {
           input: 'if (dog && cat || mouse) { console.log(2) }\n',
           output: 'if (dog && cat || mouse) { console.log(2) }',
         },
@@ -324,18 +276,6 @@ suite('Highlighted Text Suite', () => {
     {
       lines: [
         {
-          input: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
-          output: `dogif if (dogif && cat || mouseif) { console.log(2) }`,
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 3),
-        end: new vscode.Position(0, 6),
-      },
-    },
-    {
-      lines: [
-        {
           input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
           output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
         },
@@ -413,32 +353,8 @@ suite('Highlighted Text Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(0, 43),
-        end: new vscode.Position(0, 50),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
-          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
-        },
-      ],
-      selection: {
         start: new vscode.Position(0, 47),
         end: new vscode.Position(0, 49),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
-          output: `dogif if (dogif && cat) { console.log(2) }  dogif if (dogif && cat) { console.log(2) }`,
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 47),
-        end: new vscode.Position(0, 50),
       },
     },
     {

@@ -505,67 +505,66 @@ suite('Selected Text Suite', () => {
         end: new vscode.Position(0, 40),
       },
     },
-    // WORK
-    // {
-    //   lines: [
-    //     {
-    //       input: 'elif dog and cat: print("2") if dog and cat: print("2")',
-    //       output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 0),
-    //     end: new vscode.Position(0, 0),
-    //   },
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'elif dog and cat: print("2") if dog and cat: print("2")',
-    //       output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 1),
-    //     end: new vscode.Position(0, 1),
-    //   },
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'elif dog and cat: print("2") if dog and cat: print("2")',
-    //       output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 2),
-    //     end: new vscode.Position(0, 2),
-    //   },
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'elif dog and cat: print("2") if dog and cat: print("2")',
-    //       output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 3),
-    //     end: new vscode.Position(0, 3),
-    //   },
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'elif dog and cat: print("2") if dog and cat: print("2")',
-    //       output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 4),
-    //     end: new vscode.Position(0, 4),
-    //   },
-    // },
+    {
+      lines: [
+        {
+          input: 'elif dog and cat: print("2") if dog and cat: print("2")',
+          output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'elif dog and cat: print("2") if dog and cat: print("2")',
+          output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'elif dog and cat: print("2") if dog and cat: print("2")',
+          output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'elif dog and cat: print("2") if dog and cat: print("2")',
+          output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'elif dog and cat: print("2") if dog and cat: print("2")',
+          output: 'elif !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
     {
       lines: [
         {
