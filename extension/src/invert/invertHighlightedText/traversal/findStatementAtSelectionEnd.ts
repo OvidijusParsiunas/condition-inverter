@@ -1,6 +1,5 @@
-import { StatementTraversalCallbackUtil } from '../../../shared/functionality/statementTraversalCallbackUtil';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { GetStatementPositionAtEdge } from '../shared/getStatementPositionAtEdge';
+import { GetStatementIndex } from '../shared/getStatementIndex';
 import { TextEditor } from 'vscode';
 
 export class FindStatementAtSelectionEnd {
@@ -8,7 +7,7 @@ export class FindStatementAtSelectionEnd {
     const endOfLineChar = editor.document.lineAt(line).range.end.character;
     const endChar = end.line === line ? end.character : endOfLineChar;
     // WORK: needs to be expandable for elif, also tests for highlighted/selected scenarios
-    return StatementTraversalCallbackUtil.traverse(GetStatementPositionAtEdge.validateAndGetCharIndex, editor, line, startChar, endChar);
+    return GetStatementIndex.findViaRangeAndValidate(editor, line, startChar, endChar, false);
   }
 
   private static searchForStatementInLine(editor: TextEditor, line: number, start: Position, end: Position): Position | null {

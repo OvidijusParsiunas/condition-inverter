@@ -568,6 +568,138 @@ suite('Selected Text Suite', () => {
     {
       lines: [
         {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while dog and cat: print("2") if dog and cat: print("2")',
+          output: 'while !dog or !cat: print("2") if dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog and cat: print("2") while dog and cat: print("2")',
+          output: 'if !dog or !cat: print("2") while dog and cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog: print("2") while dog: print("2") if dog: print("2")',
+          output: 'if dog: print("2") while !dog: print("2") if dog: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog and cat: print("2") while dog and cat: print("2")',
+          output: 'if dog and cat: print("2") while !dog or !cat: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 30),
+      },
+    },
+    {
+      lines: [
+        {
           input: 'if fishif and catif: print("2") if ifcat and dogif: print("2")',
           output: 'if !fishif or !catif: print("2") if ifcat and dogif: print("2")',
         },

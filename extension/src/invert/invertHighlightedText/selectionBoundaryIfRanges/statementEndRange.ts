@@ -1,4 +1,3 @@
-import { StatementTraversalCallbackUtil } from '../../../shared/functionality/statementTraversalCallbackUtil';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { FindStatementAtSelectionEnd } from '../traversal/findStatementAtSelectionEnd';
 import { FindStatementFullRange } from '../../shared/traversal/findStatementFullRange';
@@ -15,13 +14,7 @@ export class StatementEndRange {
   }
 
   private static getStatementEndPosition(editor: TextEditor, start: Position, end: Position): Position | null {
-    const cursorOnIfWordStartIndex = StatementTraversalCallbackUtil.traverse(
-      IsCursorOnStatementWord.getIndexIfTrue,
-      editor,
-      end.line,
-      end.character,
-      false,
-    );
+    const cursorOnIfWordStartIndex = IsCursorOnStatementWord.getIndexIfTrue(editor, end.line, end.character, false);
     if (cursorOnIfWordStartIndex === -1) {
       return FindStatementAtSelectionEnd.upwardLineTraversal(editor, end.line, start, end);
     }

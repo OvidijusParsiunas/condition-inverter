@@ -756,8 +756,8 @@ suite('Selected Text Suite', () => {
     {
       lines: [
         {
-          input: `if (dog) console.log('asdasd') if (dogif && \n`,
-          output: `if (dog) console.log('asdasd') if (!dogif || `,
+          input: `if (dog) console.log('asdasd') if (dog) console.log('asdasd') while (dogif && \n`,
+          output: `if (dog) console.log('asdasd') if (dog) console.log('asdasd') while (!dogif || `,
         },
         {
           input: `\n`,
@@ -769,108 +769,8 @@ suite('Selected Text Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(0, 31),
+        start: new vscode.Position(1, 0),
         end: new vscode.Position(1, 0),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog) console.log('asdasd') if (dogif && \n`,
-          output: `if (dog) console.log('asdasd') if (!dogif || `,
-        },
-        {
-          input: `\n`,
-          output: '',
-        },
-        {
-          input: `cat || mouse) { console.log(2) }`,
-          output: '!cat && !mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 38),
-        end: new vscode.Position(1, 0),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog) console.log('asdasd')\n`,
-          output: `if (!dog) console.log('asdasd')`,
-        },
-        {
-          input: `if (dogif && \n`,
-          output: 'if (!dogif || ',
-        },
-        {
-          input: `cat || mouse) { console.log(2) }`,
-          output: '!cat && !mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 5),
-        end: new vscode.Position(1, 7),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `dogif if (dog) console.log('asdasd')\n`,
-          output: `dogif if (!dog) console.log('asdasd')`,
-        },
-        {
-          input: `if (dogif && \n`,
-          output: 'if (!dogif || ',
-        },
-        {
-          input: `cat || mouse) { console.log(2) }`,
-          output: '!cat && !mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 3),
-        end: new vscode.Position(1, 7),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog) console.log('asdasd')\n`,
-          output: `if (!dog) console.log('asdasd')`,
-        },
-        {
-          input: `if (dogif && \n`,
-          output: 'if (!dogif || ',
-        },
-        {
-          input: `cat || mouse) { console.log(2) } dogif`,
-          output: '!cat && !mouse) { console.log(2) } dogif',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 5),
-        end: new vscode.Position(2, 36),
-      },
-    },
-    {
-      lines: [
-        {
-          input: `if (dog) console.log('asdasd')\n`,
-          output: `if (!dog) console.log('asdasd')`,
-        },
-        {
-          input: `if (dogif && \n`,
-          output: 'if (!dogif || ',
-        },
-        {
-          input: `cat || mouse) { console.log(2) } dogif`,
-          output: '!cat && !mouse) { console.log(2) } dogif',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 5),
-        end: new vscode.Position(2, 38),
       },
     },
   ]);

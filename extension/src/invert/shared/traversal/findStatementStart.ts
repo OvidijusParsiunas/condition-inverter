@@ -1,7 +1,7 @@
 import { IsCursorOnStatementWord } from '../../invertHighlightedText/selectionBoundaryIfRanges/isCursorOnStatementWord';
 import { StatementTraversalCallbackUtil } from '../../../shared/functionality/statementTraversalCallbackUtil';
-import { GetStatementPositionAtEdge } from '../../invertHighlightedText/shared/getStatementPositionAtEdge';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
+import { GetStatementIndex } from '../../invertHighlightedText/shared/getStatementIndex';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
@@ -33,10 +33,7 @@ export class FindStatementStart {
       return null;
     }
     const endOfLineProperties = editor.document.lineAt(upperLineNum).range;
-    // prettier-ignore
-    const characterNum = StatementTraversalCallbackUtil.traverse(
-      GetStatementPositionAtEdge.validateAndGetCharIndex, editor, upperLineNum, 0, endOfLineProperties.end.character,
-    );
+    const characterNum = GetStatementIndex.findViaRangeAndValidate(editor, upperLineNum, 0, endOfLineProperties.end.character, false);
     if (characterNum < 0) {
       return FindStatementStart.getStatementStartPositionInUpperLine(editor, upperLineNum);
     }
@@ -53,13 +50,12 @@ export class FindStatementStart {
 
   public static find(editor: TextEditor, line: number, startChar: number, lineText: string, autoInvertStatementOnRight = true): Position | null {
     // i|f (dog)  or  |if (dog)
-    const cursorOnIfWordStartIndex = StatementTraversalCallbackUtil.traverse(IsCursorOnStatementWord.getIndexIfTrue, editor, line, startChar);
-    if (cursorOnIfWordStartIndex < 0) {
+    // need to run this as the code below does not check area around cursor to get if statement
+    const cursorOnIfWordStartIndex = IsCursorOnStatementWord.getIndexIfTrue(editor, line, startChar);
+    if (cursorOnIfWordStartIndex === -1) {
       // if| (dog)  or  if (dog) | if (dog) - gets the left one of the cursor
-      // prettier-ignore
-      const cursorAfterIfIndex = StatementTraversalCallbackUtil.traverse(
-        GetStatementPositionAtEdge.validateAndGetCharIndex, editor, line, 0, startChar);
-      if (cursorAfterIfIndex < 0) {
+      const cursorAfterIfIndex = GetStatementIndex.findViaRangeAndValidate(editor, line, 0, startChar, false);
+      if (cursorAfterIfIndex === -1) {
         return FindStatementStart.searchUpAndRight(editor, line, lineText, autoInvertStatementOnRight);
       }
       return { line: line, character: cursorAfterIfIndex };
