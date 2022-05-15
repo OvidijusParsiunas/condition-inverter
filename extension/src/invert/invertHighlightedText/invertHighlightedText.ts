@@ -1,7 +1,7 @@
 import { StatementTraversalCallbackUtil } from '../../shared/functionality/statementTraversalCallbackUtil';
-import { SelectionStartIfRange } from './selectionBoundaryIfRanges/selectionStartIfRange';
 import { Position } from '../../shared/types/invertHighlightedText/invertHighlightedText';
-import { SelectionEndIfRange } from './selectionBoundaryIfRanges/selectionEndIfRange';
+import { StatementStartRange } from './selectionBoundaryIfRanges/statementStartRange';
+import { StatementEndRange } from './selectionBoundaryIfRanges/statementEndRange';
 import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
 import { Range, TextEditor, Position as VSCodePosition } from 'vscode';
 import { RangeCreator } from '../shared/rangeCreator';
@@ -67,8 +67,8 @@ export class InvertHighlightedText {
   }
 
   private static getStatementsRange(editor: TextEditor): Range | null {
-    const startStatementRange = SelectionStartIfRange.getStartSelectionStatementFullRange(editor);
-    const endStatementRange = SelectionEndIfRange.get(editor, startStatementRange);
+    const startStatementRange = StatementStartRange.getStartSelectionStatementFullRange(editor);
+    const endStatementRange = StatementEndRange.get(editor, startStatementRange);
     if (startStatementRange || endStatementRange) {
       return InvertHighlightedText.combineRanges(editor, startStatementRange, endStatementRange);
     }

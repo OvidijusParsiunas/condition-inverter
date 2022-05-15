@@ -4,7 +4,7 @@ import { GetStringFromRange } from '../shared/getStringAroundSelection';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
-export class IsCursorOnIfWord {
+export class IsCursorOnStatementWord {
   private static getCursorPositionRelativeToExtractedString(cursorNumber: number, spacesAroundSelection: number): number {
     return cursorNumber - spacesAroundSelection > -1 ? spacesAroundSelection : cursorNumber;
   }
@@ -12,7 +12,7 @@ export class IsCursorOnIfWord {
   // prettier-ignore
   private static getCursorPositionIfOnString(
       statement: string, cursorNumber: number, stringAroundSelection: string, checkIsOnLeftOfIf: boolean): number {
-    const cursorPositionRelativeToSubstring = IsCursorOnIfWord.getCursorPositionRelativeToExtractedString(cursorNumber, statement.length);
+    const cursorPositionRelativeToSubstring = IsCursorOnStatementWord.getCursorPositionRelativeToExtractedString(cursorNumber, statement.length);
     const { word, index } = TextTraversalUtil.getWordAtCursor(stringAroundSelection, cursorPositionRelativeToSubstring);
     if (statement === word) {
       if (index === 0 && !checkIsOnLeftOfIf) {
@@ -34,7 +34,7 @@ export class IsCursorOnIfWord {
     const statementIndex = GetStatementPositionAtEdge.validateAndGetTokenIndex(
       statement, editor, tokens, lineNum, cursorNumber, cursorNumber, true, statement.length);
     if (statementIndex > -1) {
-      return IsCursorOnIfWord.getCursorPositionIfOnString(statement, cursorNumber, stringAroundSelection, checkIsOnLeftOfIf);
+      return IsCursorOnStatementWord.getCursorPositionIfOnString(statement, cursorNumber, stringAroundSelection, checkIsOnLeftOfIf);
     }
     return -1;
   }

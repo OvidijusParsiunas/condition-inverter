@@ -1,6 +1,6 @@
+import { IsCursorOnStatementWord } from '../../invertHighlightedText/selectionBoundaryIfRanges/isCursorOnStatementWord';
 import { StatementTraversalCallbackUtil } from '../../../shared/functionality/statementTraversalCallbackUtil';
 import { GetStatementPositionAtEdge } from '../../invertHighlightedText/shared/getStatementPositionAtEdge';
-import { IsCursorOnIfWord } from '../../invertHighlightedText/selectionBoundaryIfRanges/isCursorOnIfWord';
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
@@ -53,7 +53,7 @@ export class FindStatementStart {
 
   public static find(editor: TextEditor, line: number, startChar: number, lineText: string, autoInvertStatementOnRight = true): Position | null {
     // i|f (dog)  or  |if (dog)
-    const cursorOnIfWordStartIndex = StatementTraversalCallbackUtil.traverse(IsCursorOnIfWord.getIndexIfTrue, editor, line, startChar);
+    const cursorOnIfWordStartIndex = StatementTraversalCallbackUtil.traverse(IsCursorOnStatementWord.getIndexIfTrue, editor, line, startChar);
     if (cursorOnIfWordStartIndex < 0) {
       // if| (dog)  or  if (dog) | if (dog) - gets the left one of the cursor
       // prettier-ignore
