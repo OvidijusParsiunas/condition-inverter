@@ -340,18 +340,6 @@ suite('Selected Text Suite', () => {
     {
       lines: [
         {
-          input: 'console.log(dog)  if (dog && cat || mouse) { console.log(2) }',
-          output: 'console.log(dog)  if (!dog || !cat && !mouse) { console.log(2) }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 1),
-        end: new vscode.Position(0, 1),
-      },
-    },
-    {
-      lines: [
-        {
           input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog || !cat && !mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
         },

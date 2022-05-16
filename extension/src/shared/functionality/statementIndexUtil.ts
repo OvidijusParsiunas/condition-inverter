@@ -1,11 +1,11 @@
+import { GetStringFromRange } from '../../invert/invertHighlightedText/shared/getStringAroundSelection';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { GetStringFromRange } from './getStringAroundSelection';
-import { RangeCreator } from '../../shared/rangeCreator';
+import { RangeCreator } from '../../invert/shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
-export class GetStatementIndex {
+export class StatementIndexUtil {
   private static getIndex(key: string, editor: TextEditor, lineNum: number, startChar: number, endChar: number): number {
     const text = GetStringFromRange.get(editor, lineNum, startChar, endChar, 0);
     const tokens = Tokenizer.tokenize(text);
@@ -20,11 +20,11 @@ export class GetStatementIndex {
     if (isToken) {
       if (index === 0) {
         // left
-        const result = GetStatementIndex.getIndex(token, editor, lineNum, startChar - token.length - 1, startChar + token.length);
+        const result = StatementIndexUtil.getIndex(token, editor, lineNum, startChar - token.length - 1, startChar + token.length);
         if (result > -1) return index;
       } else if (index === tokens.length - 1) {
         // right
-        const result = GetStatementIndex.getIndex(token, editor, lineNum, endChar - token.length, endChar + token.length + 1);
+        const result = StatementIndexUtil.getIndex(token, editor, lineNum, endChar - token.length, endChar + token.length + 1);
         if (result > -1) return index;
       } else {
         return index;
@@ -42,13 +42,13 @@ export class GetStatementIndex {
   ): number {
     if (traverseFromStart) {
       for (let i = 0; i < tokens.length; i += 1) {
-        const result = GetStatementIndex.getIndexIfValid(editor, tokens, lineNum, startChar, endChar, i, key);
+        const result = StatementIndexUtil.getIndexIfValid(editor, tokens, lineNum, startChar, endChar, i, key);
         if (result > -1) return result;
       }
       return -1;
     }
     for (let i = tokens.length - 1; i >= 0; i -= 1) {
-      const result = GetStatementIndex.getIndexIfValid(editor, tokens, lineNum, startChar, endChar, i, key);
+      const result = StatementIndexUtil.getIndexIfValid(editor, tokens, lineNum, startChar, endChar, i, key);
       if (result > -1) return result;
     }
     return -1;
@@ -59,7 +59,7 @@ export class GetStatementIndex {
     const lineRange = RangeCreator.create({ line, character: startChar }, { line, character: endChar });
     const lineText = editor.document.getText(lineRange);
     const tokens = Tokenizer.tokenize(lineText);
-    const statementIndex = GetStatementIndex.findViaTokensAndValidate(editor, tokens, line, startChar, endChar, traverseFromStart);
+    const statementIndex = StatementIndexUtil.findViaTokensAndValidate(editor, tokens, line, startChar, endChar, traverseFromStart);
     if (statementIndex > -1) {
       return tokens.slice(0, statementIndex).join('').length;
     }

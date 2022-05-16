@@ -1,5 +1,5 @@
 import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { GetStatementIndex } from '../shared/getStatementIndex';
+import { StatementIndexUtil } from '../../../shared/functionality/statementIndexUtil';
 import { TextEditor } from 'vscode';
 
 export class FindStatementAtSelectionEnd {
@@ -7,7 +7,7 @@ export class FindStatementAtSelectionEnd {
     const endOfLineChar = editor.document.lineAt(line).range.end.character;
     const endChar = end.line === line ? end.character : endOfLineChar;
     // WORK: needs to be expandable for elif, also tests for highlighted/selected scenarios
-    return GetStatementIndex.findViaRangeAndValidate(editor, line, startChar, endChar, false);
+    return StatementIndexUtil.findViaRangeAndValidate(editor, line, startChar, endChar, false);
   }
 
   private static searchForStatementInLine(editor: TextEditor, line: number, start: Position, end: Position): Position | null {

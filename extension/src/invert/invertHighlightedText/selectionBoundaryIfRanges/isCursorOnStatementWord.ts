@@ -1,7 +1,7 @@
-import { StatementTraversalCallbackUtil } from '../../../shared/functionality/statementTraversalCallbackUtil';
+import { STATEMENTS } from '../../../../../shared/out/inverter/src/shared/consts/statements';
+import { StatementIndexUtil } from '../../../shared/functionality/statementIndexUtil';
 import { TextTraversalUtil } from '../../../shared/functionality/textTraversalUtil';
 import { GetStringFromRange } from '../shared/getStringAroundSelection';
-import { GetStatementIndex } from '../shared/getStatementIndex';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
@@ -33,7 +33,7 @@ export class IsCursorOnStatementWord {
     // the reason why we need this is because a string can simply have a name with the if substring (naifme), hence to make sure
     // that an actual if statement is captured - we need to tokenize the string
     // prettier-ignore
-    const statementIndex = GetStatementIndex.findViaTokensAndValidate(editor, tokens, lineNum, cursorNumber, cursorNumber, true, statement);
+    const statementIndex = StatementIndexUtil.findViaTokensAndValidate(editor, tokens, lineNum, cursorNumber, cursorNumber, true, statement);
     if (statementIndex > -1) {
       return IsCursorOnStatementWord.getCursorPosition(statement, cursorNumber, stringAroundSelection, checkIsOnLeftOfStatement);
     }
@@ -43,6 +43,12 @@ export class IsCursorOnStatementWord {
   // gets the index of statement if cursor on left-of or on statement
   // the reason why this is not checking right-of statement is because we always traverse to the left
   public static getIndexIfTrue(editor: TextEditor, lineNum: number, cursorNumber: number, checkIsOnLeftOfStatement = true): number {
-    return StatementTraversalCallbackUtil.traverse(IsCursorOnStatementWord.getIndex, editor, lineNum, cursorNumber, checkIsOnLeftOfStatement);
+    // the reason why we can safely traverse all statements without prioritising the result index is because the length of text analyzed
+    // is the same as the statement length, meaning that only one token can ever be present within the analyzed range
+    for (let i = 0; i < STATEMENTS.length; i += 1) {
+      const ifIndex = IsCursorOnStatementWord.getIndex(STATEMENTS[i], editor, lineNum, cursorNumber, checkIsOnLeftOfStatement);
+      if (ifIndex > -1) return ifIndex;
+    }
+    return -1;
   }
 }

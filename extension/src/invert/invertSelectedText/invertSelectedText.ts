@@ -11,9 +11,9 @@ export class InvertSelectedText {
 
   private static getStatementRange(editor: TextEditor): Range | null {
     const lineNum = editor.selection.active.line;
-    const { text } = editor.document.lineAt(lineNum);
-    const start = FindStatementStart.find(editor, lineNum, editor.selection.active.character, text);
+    const start = FindStatementStart.find(editor, lineNum, editor.selection.active.character);
     if (!start) return start;
+    const { text } = editor.document.lineAt(lineNum);
     return FindStatementFullRange.findFromStartPosition(editor, lineNum, start, text);
   }
 
