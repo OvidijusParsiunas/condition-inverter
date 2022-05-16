@@ -22,6 +22,7 @@ export class FindStatementFullRange {
     return FindStatementFullRange.getIfCloseBracketPosition(editor, text, lineNum, charNumber + 1, openBrackets);
   }
 
+  // python if statements that do not have brackets can only span one line
   private static shouldContinueToAnalyse(textAboveSelectedLine: string, numOfOpenBrackets: number): boolean {
     // if there are open brackets from the text above or there are no brackets above to begin with
     return numOfOpenBrackets > 0 || textAboveSelectedLine.indexOf('(') === -1;
@@ -48,6 +49,19 @@ export class FindStatementFullRange {
     const shouldContinue = FindStatementFullRange.shouldContinueToAnalyse(textAboveSelectedLine, numOfOpenBrackets);
     if (!shouldContinue) return null;
     const charStartPosition = start.line === startLine ? start.character : 0;
+    if (numOfOpenBrackets === 0) {
+      const endOfLineChar = editor.document.lineAt(startLine).range.end.character;
+      const startLineToSelectedLineRange = RangeCreator.create(
+        { line: startLine, character: start.character },
+        { line: startLine, character: endOfLineChar },
+      );
+      const text2 = editor.document.getText(startLineToSelectedLineRange);
+      const result = text2.indexOf(':');
+      if (result > -1) {
+        const end = { line: startLine, character: result + start.character + 1 };
+        return RangeCreator.create(start, end);
+      }
+    }
     const end = FindStatementFullRange.getIfCloseBracketPosition(editor, text, startLine, charStartPosition, numOfOpenBrackets);
     end.character += 1;
     return RangeCreator.create(start, end);

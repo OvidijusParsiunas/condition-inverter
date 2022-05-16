@@ -35,10 +35,9 @@ export class AnalyzeStatement {
         end: TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index) - 1,
       };
     }
-    // WORK: need tests for selection and highlighted scenarios
     return {
       start: startSymbolIndex,
-      end: tokens.indexOf(':') - 1,
+      end: startSymbolIndex + tokens.slice(startSymbolIndex).indexOf(':') - 1,
     };
   }
 

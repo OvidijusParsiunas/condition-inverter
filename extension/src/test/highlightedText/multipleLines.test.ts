@@ -1509,5 +1509,105 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(2, 38),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (!dog) console.log('asdasd')`,
+        },
+        {
+          input: `while (dogif) console.log('hello') \n`,
+          output: `while (!dogif) console.log('hello') `,
+        },
+        {
+          input: `if cat or mouse: { console.log(2) }`,
+          output: 'if cat or mouse: { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (!dog) console.log('asdasd')`,
+        },
+        {
+          input: `while (dogif) console.log('hello') \n`,
+          output: `while (!dogif) console.log('hello') `,
+        },
+        {
+          input: `if cat or mouse: { console.log(2) }`,
+          output: 'if !cat and !mouse: { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(2, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (!dog) console.log('asdasd')`,
+        },
+        {
+          input: `if dogif: console.log('hello') \n`,
+          output: `if !dogif: console.log('hello') `,
+        },
+        {
+          input: `if cat or mouse: { console.log(2) }`,
+          output: 'if cat or mouse: { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(1, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (dog) console.log('asdasd')`,
+        },
+        {
+          input: `if dogif: console.log('hello') \n`,
+          output: `if !dogif: console.log('hello') `,
+        },
+        {
+          input: `if cat or mouse: { console.log(2) }`,
+          output: 'if !cat and !mouse: { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 5),
+        end: new vscode.Position(2, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (!dog) console.log('asdasd')`,
+        },
+        {
+          input: `if dogif: console.log('hello') \n`,
+          output: `if !dogif: console.log('hello') `,
+        },
+        {
+          input: `if cat or mouse: { console.log(2) }`,
+          output: 'if cat or mouse: { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(2, 0),
+      },
+    },
   ]);
 });

@@ -553,5 +553,137 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(0, 24),
       },
     },
+    {
+      lines: [
+        {
+          input: `while (dogif && cat) {} ifhello`,
+          output: `while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `while (dogif && cat) {} ifhello`,
+          output: `while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `while (dogif && cat) {} ifhello`,
+          output: `while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `while (dogif && cat) {} ifhello`,
+          output: `while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd') while (dogif && cat) {} ifhello`,
+          output: `if (dog) console.log('asdasd') while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd') while (dogif && cat) {} ifhello`,
+          output: `if (!dog) console.log('asdasd') while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('a') elif (fish) print('hello') while (dogif && cat) {} ifhello`,
+          output: `if (dog) console.log('a') elif (!fish) print('hello') while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 62),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasda') elif fish: print'hello' if dogif && cat: {}`,
+          output: `if (!dog) console.log('asdasda') elif !fish: print'hello' if dogif && cat: {}`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 36),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasda') elif fish: print'hello' if dogif && cat: {}`,
+          output: `if (!dog) console.log('asdasda') elif !fish: print'hello' if dogif && cat: {}`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasda') elif fish: print'hello' if dogif && cat: {}`,
+          output: `if (!dog) console.log('asdasda') elif !fish: print'hello' if dogif && cat: {}`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd') elif (fish): print('hello') while (dogif && cat) {} ifhello`,
+          output: `if (!dog) console.log('asdasd') elif (!fish): print('hello') while (!dogif || !cat) {} ifhello`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 69),
+      },
+    },
   ]);
 });

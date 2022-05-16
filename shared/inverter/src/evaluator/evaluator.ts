@@ -15,6 +15,7 @@ export class Evaluator {
       } else if (STATEMENT_JSON[tokens[index] as keyof typeof STATEMENT_JSON]) {
         index = AnalyzeStatement.setNewStatementState(tokens, index, evaluationState);
         const isEmpty = AnalyzeEmptyStatement.isEmpty(evaluationState);
+        // WORK - this should not stop the rest from being analyzed
         if (isEmpty) return [];
       }
     }

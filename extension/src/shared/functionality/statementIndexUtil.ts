@@ -54,7 +54,6 @@ export class StatementIndexUtil {
     return -1;
   }
 
-  // WORK - optimize
   public static findViaRangeAndValidate(editor: TextEditor, line: number, startChar: number, endChar: number, traverseFromStart: boolean): number {
     const lineRange = RangeCreator.create({ line, character: startChar }, { line, character: endChar });
     const lineText = editor.document.getText(lineRange);

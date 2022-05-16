@@ -26,7 +26,6 @@ export class IsCursorOnStatementWord {
     return -1;
   }
 
-  // WORK - optimize as string should not be tokenized multiple times
   private static getIndex(statement: string, editor: TextEditor, lineNum: number, cursorNumber: number, checkIsOnLeftOfStatement: boolean): number {
     const stringAroundSelection = GetStringFromRange.get(editor, lineNum, cursorNumber, cursorNumber, statement.length);
     const tokens = Tokenizer.tokenize(stringAroundSelection);

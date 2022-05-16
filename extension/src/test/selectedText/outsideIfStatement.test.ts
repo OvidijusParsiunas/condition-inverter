@@ -153,5 +153,27 @@ suite('Selected Text Suite', () => {
         end: new vscode.Position(0, 1),
       },
     },
+
+    {
+      lines: [
+        {
+          input: `if dog and cat or mouse: { console.log(2) }\n`,
+          output: 'if dog and cat or mouse: { console.log(2) }',
+        },
+
+        {
+          input: ` \n`,
+          output: ' ',
+        },
+        {
+          input: `while (mouse && cat) { console.log(2) }\n`,
+          output: 'while (mouse && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 1),
+        end: new vscode.Position(1, 1),
+      },
+    },
   ]);
 });

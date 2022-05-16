@@ -776,6 +776,46 @@ suite('Selected Text Suite', () => {
     {
       lines: [
         {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (dog) console.log('asdasd')`,
+        },
+        {
+          input: `while (dog) console.log('goodbye')\n`,
+          output: `while (!dog) console.log('goodbye')`,
+        },
+        {
+          input: `if (cat || mouse) { console.log(2) }`,
+          output: 'if (cat || mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog) console.log('asdasd')\n`,
+          output: `if (dog) console.log('asdasd')`,
+        },
+        {
+          input: `while (dog) console.log('goodbye')\n`,
+          output: `while (!dog) console.log('goodbye')`,
+        },
+        {
+          input: `if (cat || mouse) { console.log(2) }`,
+          output: 'if (cat || mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 20),
+        end: new vscode.Position(1, 20),
+      },
+    },
+    {
+      lines: [
+        {
           input: ` \n`,
           output: ' ',
         },
@@ -803,6 +843,38 @@ suite('Selected Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 1),
         end: new vscode.Position(0, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && \n`,
+          output: `if (!dog || `,
+        },
+        {
+          input: `cat): console.log('hello')`,
+          output: `!cat): console.log('hello')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog && \n`,
+          output: `if (!dog || `,
+        },
+        {
+          input: `cat): console.log('hello')`,
+          output: `!cat): console.log('hello')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
       },
     },
   ]);
