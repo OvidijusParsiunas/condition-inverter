@@ -54,7 +54,7 @@ export class AnalyzeTokens {
       case '%':
         return AnalyzeArithmeticAndAssignmentOperator.updateState(tokens, index, evaluationState);
       case 'function':
-        return AnalyzeFunction.updateState(tokens, index, evaluationState);
+        return AnalyzeFunction.updateStateForRegular(tokens, index, evaluationState);
       default: {
         // it is easier to check if the current token is part of a method invocation rather than checking
         // if the previous token is a method name using the AnalyzeBracket class

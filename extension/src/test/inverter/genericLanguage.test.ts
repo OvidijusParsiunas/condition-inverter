@@ -3,7 +3,6 @@ import * as assert from 'assert';
 
 // WORK - ternary operator inside an if statement
 // WORK - typescript annotations and assertions
-// WORK - funciton within an if statement
 // WORK - json within an if statement
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite('Generic Language Inversion Suite', () => {

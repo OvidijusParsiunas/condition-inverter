@@ -80,6 +80,90 @@ suite('Generic Language Nested Function Inversion Suite', () => {
       input: 'if (function myFunc<number>(param: number|string): void { console.log(2) }) { console.log(2) }',
       output: 'if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }',
     },
+    {
+      input: 'if (function() { if (hello) { console.log(2) } }) { console.log(2) }',
+      output: 'if (!(function() { if (hello) { console.log(2) } })) { console.log(2) }',
+    },
+    {
+      input: 'if (() => { console.log(2) }) { console.log(2) }',
+      output: 'if (!(() => { console.log(2) })) { console.log(2) }',
+    },
+    {
+      input: `if (({dog: 'cat'}) => { console.log(2) }) { console.log(2) }`,
+      output: `if (!(({dog: 'cat'}) => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if ((param1: number, param2: string) => { console.log(2) }) { console.log(2) }`,
+      output: `if (!((param1: number, param2: string) => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if ((param1: (param: { 'dog': true, 'cat': number, 'fish': 'fish'}) => number, param2: string) => { console.log(2) }) {}`,
+      output: `if (!((param1: (param: { 'dog': true, 'cat': number, 'fish': 'fish'}) => number, param2: string) => { console.log(2) })) {}`,
+    },
+    {
+      input: `if ((): void => { console.log(2) }) { console.log(2) }`,
+      output: `if (!((): void => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: 'if (() => { console.log(2) } + 2) { console.log(2) }',
+      output: 'if (!(() => { console.log(2) } + 2)) { console.log(2) }',
+    },
+    {
+      input: 'if (2 + () => { console.log(2) }) { console.log(2) }',
+      output: 'if (!(2 + () => { console.log(2) })) { console.log(2) }',
+    },
+    {
+      input: 'if (dog && () => { console.log(2) }) { console.log(2) }',
+      output: 'if (!dog || !(() => { console.log(2) })) { console.log(2) }',
+    },
+    {
+      input: 'if (() => { console.log(2) } && dog) { console.log(2) }',
+      output: 'if (!(() => { console.log(2) }) || !dog) { console.log(2) }',
+    },
+    {
+      input: 'if (!(() => { console.log(2) })) { console.log(2) }',
+      output: 'if (() => { console.log(2) }) { console.log(2) }',
+    },
+    {
+      input: 'if (() => ( console.log(2) )) { console.log(2) }',
+      output: 'if (!(() => ( console.log(2) ))) { console.log(2) }',
+    },
+    {
+      input: 'if (!(() => ( console.log(2) ))) { console.log(2) }',
+      output: 'if (() => ( console.log(2) )) { console.log(2) }',
+    },
+    {
+      input: 'if (() => ( console.log(2) )()) { console.log(2) }',
+      output: 'if (!(() => ( console.log(2) )())) { console.log(2) }',
+    },
+    {
+      input: 'if (!(() => ( console.log(2) )())) { console.log(2) }',
+      output: 'if (() => ( console.log(2) )()) { console.log(2) }',
+    },
+    {
+      input: 'if (() => ( console.log(2) )(this)) { console.log(2) }',
+      output: 'if (!(() => ( console.log(2) )(this))) { console.log(2) }',
+    },
+    {
+      input: 'if (!(() => ( console.log(2) )(this))) { console.log(2) }',
+      output: 'if (() => ( console.log(2) )(this)) { console.log(2) }',
+    },
+    {
+      input: 'if (() => console.log(2) + 2) { console.log(2) }',
+      output: 'if (!(() => console.log(2) + 2)) { console.log(2) }',
+    },
+    {
+      input: 'if (2 + () => console.log(2) + 2) { console.log(2) }',
+      output: 'if (!(2 + () => console.log(2) + 2)) { console.log(2) }',
+    },
+    {
+      input: 'if (dog && () => console.log(2) + 2) { console.log(2) }',
+      output: 'if (!dog || !(() => console.log(2) + 2)) { console.log(2) }',
+    },
+    {
+      input: `if ((function () { if ('hello') {} }) => console.log(2)) { console.log(2) }`,
+      output: `if (!((function () { if ('hello') {} }) => console.log(2))) { console.log(2) }`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);

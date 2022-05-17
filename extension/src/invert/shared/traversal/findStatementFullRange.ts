@@ -63,7 +63,6 @@ export class FindStatementFullRange {
   // prettier-ignore
   private static getStatementEndPosition(
       editor: TextEditor, selectedLine: number, statementStart: Position, numOfOpenBracketsAbove: number): Range {
-    // WORK: refactor
     const siblingNonSpaceToken = FindStatementFullRange.getSiblingNonSpaceCharacterIndex(editor, selectedLine, statementStart);
     if (siblingNonSpaceToken === '(') {
       return FindStatementFullRange.getFullRangeOfBracketedStatement(editor, selectedLine, statementStart, numOfOpenBracketsAbove);
