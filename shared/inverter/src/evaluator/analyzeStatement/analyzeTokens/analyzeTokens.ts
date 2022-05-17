@@ -1,5 +1,5 @@
+import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeSyntax/analyzeArithmeticAndAssignmentOperator';
 import { AnalyzeGreaterOrLessThanSign } from './analyzeSyntax/analyzeGreaterOrLessThanSign';
-import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSyntax';
 import { AnalyzeMethodInvocation } from './analyzeSyntax/analyzeMethodInvocation';
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
@@ -50,8 +50,8 @@ export class AnalyzeTokens {
       case '*':
       case '^':
       case '~':
-        AnalyzeBrackatableSyntax.updateState(evaluationState);
-        break;
+      case '%':
+        return AnalyzeArithmeticAndAssignmentOperator.updateState(tokens, index, evaluationState);
       default: {
         // it is easier to check if the current token is part of a method invocation rather than checking
         // if the previous token is a method name using the AnalyzeBracket class

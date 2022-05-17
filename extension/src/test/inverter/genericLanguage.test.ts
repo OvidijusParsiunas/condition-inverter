@@ -891,71 +891,66 @@ suite('Generic Language Inversion Suite', () => {
       input: 'if (!(--dog)) { console.log(2) }',
       output: 'if (--dog) { console.log(2) }',
     },
-    // WORK - JavaScript operators
-    // {
-    //   input: 'if (dog % cat) { console.log(2) }',
-    //   output: 'if (!(dog % cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog % cat)) { console.log(2) }',
-    //   output: 'if (dog % cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog %= cat) { console.log(2) }',
-    //   output: 'if (!(dog %= cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog %= cat)) { console.log(2) }',
-    //   output: 'if (dog %= cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog / cat) { console.log(2) }',
-    //   output: 'if (!(dog / cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog / cat)) { console.log(2) }',
-    //   output: 'if (dog / cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog += cat) { console.log(2) }',
-    //   output: 'if (!(dog += cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog += cat)) { console.log(2) }',
-    //   output: 'if (dog += cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog -= cat) { console.log(2) }',
-    //   output: 'if (!(dog -= cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog -= cat)) { console.log(2) }',
-    //   output: 'if (dog -= cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog *= cat) { console.log(2) }',
-    //   output: 'if (!(dog *= cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog *= cat)) { console.log(2) }',
-    //   output: 'if (dog *= cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog /= cat) { console.log(2) }',
-    //   output: 'if (!(dog /= cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog /= cat)) { console.log(2) }',
-    //   output: 'if (dog /= cat) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (dog %= cat) { console.log(2) }',
-    //   output: 'if (!(dog %= cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog %= cat)) { console.log(2) }',
-    //   output: 'if (dog %= cat) { console.log(2) }',
-    // },
+    {
+      input: 'if (dog / cat) { console.log(2) }',
+      output: 'if (!(dog / cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog / cat)) { console.log(2) }',
+      output: 'if (dog / cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog % cat) { console.log(2) }',
+      output: 'if (!(dog % cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (dog % cat % fish) { console.log(2) }',
+      output: 'if (!(dog % cat % fish)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog % cat % fish)) { console.log(2) }',
+      output: 'if (dog % cat % fish) { console.log(2) }',
+    },
+    {
+      input: 'if (dog %= cat) { console.log(2) }',
+      output: 'if (!(dog %= cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog %= cat)) { console.log(2) }',
+      output: 'if (dog %= cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog += cat) { console.log(2) }',
+      output: 'if (!(dog += cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog += cat)) { console.log(2) }',
+      output: 'if (dog += cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog -= cat) { console.log(2) }',
+      output: 'if (!(dog -= cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog -= cat)) { console.log(2) }',
+      output: 'if (dog -= cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog *= cat) { console.log(2) }',
+      output: 'if (!(dog *= cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog *= cat)) { console.log(2) }',
+      output: 'if (dog *= cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog /= cat) { console.log(2) }',
+      output: 'if (!(dog /= cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog /= cat)) { console.log(2) }',
+      output: 'if (dog /= cat) { console.log(2) }',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);
