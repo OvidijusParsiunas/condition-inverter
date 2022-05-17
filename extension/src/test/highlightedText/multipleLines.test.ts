@@ -1609,5 +1609,25 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(2, 0),
       },
     },
+    {
+      lines: [
+        {
+          input: `if () console.log('asdasd')\n`,
+          output: `if () console.log('asdasd')`,
+        },
+        {
+          input: `if () console.log('hello') \n`,
+          output: `if () console.log('hello') `,
+        },
+        {
+          input: `if cat or mouse: { console.log(2) }`,
+          output: 'if !cat and !mouse: { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(2, 2),
+      },
+    },
   ]);
 });

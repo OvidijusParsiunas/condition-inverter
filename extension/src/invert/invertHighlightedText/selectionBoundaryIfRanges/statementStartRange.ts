@@ -9,10 +9,9 @@ export class StatementStartRange {
 
   public static getStartSelectionStatementFullRange(editor: TextEditor): Range | null {
     const { line: startLine, character: startCharacter } = editor.selection.start;
-    const { text } = editor.document.lineAt(startLine);
     const start = FindStatementStart.find(editor, startLine, editor.selection.start.character, false);
     if (!start) return null;
-    const statementRange = FindStatementFullRange.findFromStartPosition(editor, startLine, start, text);
+    const statementRange = FindStatementFullRange.findFromStatementStart(editor, startLine, start);
     if (statementRange && StatementStartRange.isStatementAfterBeforeSelectionStart(statementRange, startLine, startCharacter)) {
       return statementRange;
     }

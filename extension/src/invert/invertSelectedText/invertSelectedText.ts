@@ -13,8 +13,7 @@ export class InvertSelectedText {
     const lineNum = editor.selection.active.line;
     const start = FindStatementStart.find(editor, lineNum, editor.selection.active.character);
     if (!start) return start;
-    const { text } = editor.document.lineAt(lineNum);
-    return FindStatementFullRange.findFromStartPosition(editor, lineNum, start, text);
+    return FindStatementFullRange.findFromStatementStart(editor, lineNum, start);
   }
 
   public static invert(editor: TextEditor): void {

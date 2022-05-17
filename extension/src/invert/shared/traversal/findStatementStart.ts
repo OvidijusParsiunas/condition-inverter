@@ -31,7 +31,6 @@ export class FindStatementStart {
     return null;
   }
 
-  // this is a pontial flaw as we should probably not be inverting an arbitrary statement in an upper line
   private static getStatementStartPositionInUpperLine(editor: TextEditor, line: number): Position | null {
     const upperLineNum = line - 1;
     if (upperLineNum < 0) {
@@ -45,6 +44,8 @@ export class FindStatementStart {
     return { line: upperLineNum, character: characterNum };
   }
 
+  // WORK - have a solution for this
+  // this is a pontial flaw as we should probably not be inverting an arbitrary statement in an upper line
   private static searchUpAndRight(editor: TextEditor, line: number, startChar: number, autoInvertStatementOnRight: boolean): Position | null {
     const startPosition = FindStatementStart.getStatementStartPositionInUpperLine(editor, line);
     if (autoInvertStatementOnRight && !startPosition) {

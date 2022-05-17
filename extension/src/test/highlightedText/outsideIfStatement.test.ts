@@ -64,17 +64,17 @@ suite('Highlighted Text Suite', () => {
           output: '&& cat',
         },
         {
-          input: `|| mouse)\n`,
-          output: '|| mouse)',
+          input: `|| mouse())\n`,
+          output: '|| mouse())',
         },
         {
-          input: `{ console.log(2) }`,
-          output: '{ console.log(2) }',
+          input: `{ console.log(2) } if hello: print`,
+          output: '{ console.log(2) } if !hello: print',
         },
       ],
       selection: {
         start: new vscode.Position(3, 1),
-        end: new vscode.Position(3, 10),
+        end: new vscode.Position(3, 25),
       },
     },
     {
@@ -405,5 +405,42 @@ suite('Highlighted Text Suite', () => {
         end: new vscode.Position(0, 48),
       },
     },
+    {
+      lines: [
+        {
+          input: `while (dogif) { }  if dog: print`,
+          output: `while (dogif) { }  if dog: print`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `while dogif: { }  if dog: print`,
+          output: `while dogif: { }  if dog: print`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    // WORK - only what is selected should be inverted
+    // {
+    //   lines: [
+    //     {
+    //       input: `while (dogif) { }  if dog: print`,
+    //       output: `while (dogif) { }  if dog: print`,
+    //     },
+    //   ],
+    //   selection: {
+    //     start: new vscode.Position(0, 16),
+    //     end: new vscode.Position(0, 19),
+    //   },
+    // },
   ]);
 });

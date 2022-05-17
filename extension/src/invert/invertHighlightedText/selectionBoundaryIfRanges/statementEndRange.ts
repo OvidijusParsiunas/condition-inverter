@@ -25,8 +25,7 @@ export class StatementEndRange {
     const startPosition = startStatementRange?.end || editor.selection.start;
     const endStatementPosition = StatementEndRange.getStatementEndPosition(editor, startPosition, editor.selection.end);
     if (endStatementPosition && !StatementEndRange.isEndStatementSameAsStart(endStatementPosition, startStatementRange)) {
-      const { text } = editor.document.lineAt(endStatementPosition.line);
-      return FindStatementFullRange.findFromStartPosition(editor, endStatementPosition.line, endStatementPosition, text);
+      return FindStatementFullRange.findFromStatementStart(editor, endStatementPosition.line, endStatementPosition);
     }
     return null;
   }
