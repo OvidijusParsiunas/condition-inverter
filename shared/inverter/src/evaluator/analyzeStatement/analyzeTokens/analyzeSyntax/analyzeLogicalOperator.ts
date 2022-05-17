@@ -34,7 +34,7 @@ export class AnalyzeLogicalOperator {
   }
 
   private static updateState(tokens: Tokens, currentIndex: number, nextIndexToAnalayze: number, evaluationState: EvaluationState): number {
-    const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, nextIndexToAnalayze);
+    const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, nextIndexToAnalayze);
     AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, currentIndex, nextNonSpaceCharIndex, evaluationState);
     // subtracting one due to the for loop automatically adding one
     return nextNonSpaceCharIndex - 1;

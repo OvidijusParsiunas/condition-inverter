@@ -5,7 +5,7 @@ import { AnalyzeEqualsSign } from './analyzeEqualsSign';
 
 export class AnalyzeExclamationMark {
   private static findLastExclamationMarkIndex(tokens: Tokens, index: number): number {
-    const nextNonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index + 1);
+    const nextNonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
     // a direct plus or minus after exclamation mark are regarded as part of the condition
     if (tokens[nextNonSpaceTokenIndex] === '!' || tokens[nextNonSpaceTokenIndex] === '+' || tokens[nextNonSpaceTokenIndex] === '-') {
       return AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, nextNonSpaceTokenIndex);
@@ -15,15 +15,15 @@ export class AnalyzeExclamationMark {
 
   private static getConditionEndIndex(tokens: Tokens, index: number): number {
     const lastExclamationMarkIndex = AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, index + 1);
-    const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, lastExclamationMarkIndex + 1);
+    const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, lastExclamationMarkIndex + 1);
     if (tokens[nextNonSpaceCharIndex] === '(') {
-      return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, lastExclamationMarkIndex);
+      return TraversalUtil.getIndexOfClosingBracket(tokens, lastExclamationMarkIndex);
     }
     return lastExclamationMarkIndex;
   }
 
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const nextNonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index + 1);
+    const nextNonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
     if (tokens[nextNonSpaceTokenIndex] === '!') {
       // called for - !!..., // !!!!!... // !!!+!-!... // !!!!(...
       // if there are multiple exclamation marks, wrap the condition inside brackets with an exclamation mark
@@ -33,7 +33,7 @@ export class AnalyzeExclamationMark {
       if (tokens[nextNonSpaceTokenIndex] === '(') {
         // called for - !(...
         evaluationState.shouldBracketsBeRemoved = true;
-        return TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index);
+        return TraversalUtil.getIndexOfClosingBracket(tokens, index);
       } else if (tokens[nextNonSpaceTokenIndex] === '=') {
         // called for - !=...
         return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);

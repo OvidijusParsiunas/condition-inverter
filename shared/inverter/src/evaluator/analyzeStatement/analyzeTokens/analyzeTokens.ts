@@ -7,6 +7,7 @@ import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
 import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { AnalyzeEqualsSign } from './analyzeSyntax/analyzeEqualsSign';
+import { AnalyzeFunction } from './analyzeSyntax/analyzeFunction';
 import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
 import { Tokens } from '../../../shared/types/tokens';
 
@@ -52,6 +53,8 @@ export class AnalyzeTokens {
       case '~':
       case '%':
         return AnalyzeArithmeticAndAssignmentOperator.updateState(tokens, index, evaluationState);
+      case 'function':
+        return AnalyzeFunction.updateState(tokens, index, evaluationState);
       default: {
         // it is easier to check if the current token is part of a method invocation rather than checking
         // if the previous token is a method name using the AnalyzeBracket class

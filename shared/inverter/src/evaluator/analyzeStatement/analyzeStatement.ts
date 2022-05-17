@@ -28,11 +28,11 @@ export class AnalyzeStatement {
   }
 
   private static getInnerIndexesOfStatement(tokens: Tokens, index: number): StartEndIndexes {
-    const startSymbolIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, index + 1);
+    const startSymbolIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
     if (tokens[startSymbolIndex] === '(') {
       return {
-        start: TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, startSymbolIndex + 1),
-        end: TraversalUtil.getIndexOfLastBracketOfStatement(tokens, index) - 1,
+        start: TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, startSymbolIndex + 1),
+        end: TraversalUtil.getIndexOfClosingBracket(tokens, index) - 1,
       };
     }
     return {

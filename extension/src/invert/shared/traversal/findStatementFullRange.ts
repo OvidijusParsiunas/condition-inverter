@@ -53,7 +53,7 @@ export class FindStatementFullRange {
     // prettier-ignore
     const statementStartToSelectionTokens = FindStatementFullRange.tokenizeDownToEndOfLine(
       editor, statementStart.line, statementStart.character, selectedLine);
-    const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(statementStartToSelectionTokens, 1, true);
+    const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(statementStartToSelectionTokens, 1, true);
     if (!statementStartToSelectionTokens[siblingTokenIndex]) {
       return FindStatementFullRange.getSiblingNonSpaceCharacterIndex(editor, selectedLine + 1, statementStart);
     }

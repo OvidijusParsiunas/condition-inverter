@@ -2,7 +2,9 @@ import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // WORK - ternary operator inside an if statement
+// WORK - typescript annotations and assertions
 // WORK - funciton within an if statement
+// WORK - json within an if statement
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite('Generic Language Inversion Suite', () => {
   [
@@ -950,6 +952,22 @@ suite('Generic Language Inversion Suite', () => {
     {
       input: 'if (!(dog /= cat)) { console.log(2) }',
       output: 'if (dog /= cat) { console.log(2) }',
+    },
+    {
+      input: 'if (dog /= cat + fish) { console.log(2) }',
+      output: 'if (!(dog /= cat + fish)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog /= cat + fish)) { console.log(2) }',
+      output: 'if (dog /= cat + fish) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog /= cat + fish)) { console.log(2) }',
+      output: 'if (dog /= cat + fish) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog /= cat + fish)) { console.log(2) }',
+      output: 'if (dog /= cat + fish) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

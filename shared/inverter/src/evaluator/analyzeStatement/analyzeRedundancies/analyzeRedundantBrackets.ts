@@ -28,13 +28,13 @@ export class AnalyzeRedundantBrackets {
       startTokenIndex < endTokenIndex &&
       tokens[startTokenIndex] === '(' &&
       tokens[endTokenIndex] === ')' &&
-      TraversalUtil.getIndexOfLastBracketOfStatement(tokens, startIndex - 1) === endTokenIndex
+      TraversalUtil.getIndexOfClosingBracket(tokens, startIndex - 1) === endTokenIndex
     );
   }
 
   public static getIndexesOfNestedStartAndEndBrackets(tokens: Tokens, startIndex: number, endIndex: number, layers = 0): Result {
-    const startTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, startIndex);
-    const endTokenIndex = TraversalUtil.getSiblingNonSpaceCharacterIndex(tokens, endIndex, false);
+    const startTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, startIndex);
+    const endTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, endIndex, false);
     if (!AnalyzeRedundantBrackets.isValidBracket(tokens, startIndex, startTokenIndex, endTokenIndex)) {
       return AnalyzeRedundantBrackets.constructResult(tokens, startTokenIndex, endTokenIndex, layers);
     }
