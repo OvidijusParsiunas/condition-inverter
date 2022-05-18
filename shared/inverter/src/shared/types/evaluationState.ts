@@ -35,4 +35,5 @@ export interface EvaluationState {
   comparisonOperatorFound: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;
+  lastRedundantOpenBracketIndex?: number;
 }

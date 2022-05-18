@@ -1,7 +1,8 @@
 import { UpdateStateForStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
-import { AnalyzeRedundantBrackets } from './analyzeRedundancies/analyzeRedundantBrackets';
+import { AnalyzeRedundantBrackets } from './redundancies/analyzeRedundantBrackets';
 import { EvaluationStateUtil } from '../evaluationState/evaluationStateUtil';
 import { TraversalUtil } from '../../shared/functionality/traversalUtil';
+import { CleanUpRedundancies } from './redundancies/cleanUpRedundancies';
 import { EvaluationState } from '../../shared/types/evaluationState';
 import { StartEndIndexes } from '../../shared/types/StartEndIndexes';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
@@ -16,6 +17,7 @@ export class AnalyzeStatement {
     );
     evaluationState.isCurrentlyInsideStatement = false;
     evaluationState.comparisonOperatorFound = false;
+    CleanUpRedundancies.removeAdditionOfBracketsFromState(evaluationState);
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 
@@ -44,6 +46,7 @@ export class AnalyzeStatement {
   private static setEvaluationStartAndEndIndexes(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     const { start, end } = AnalyzeStatement.getInnerIndexesOfStatement(tokens, index);
     const noRedundantBracketsIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
+    evaluationState.lastRedundantOpenBracketIndex = noRedundantBracketsIndexes.lastRedundantOpenBracketIndex;
     evaluationState.startOfCurrentStatementInsideIndex = noRedundantBracketsIndexes.start;
     evaluationState.currentStatementCloseBracketIndex = noRedundantBracketsIndexes.end + 1;
   }

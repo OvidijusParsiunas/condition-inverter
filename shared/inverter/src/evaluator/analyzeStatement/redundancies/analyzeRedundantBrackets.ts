@@ -2,19 +2,23 @@ import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { StartEndIndexes } from '../../../shared/types/StartEndIndexes';
 import { Tokens } from '../../../shared/types/tokens';
 
-type Result = { usePreviousTraversalResult?: true } & StartEndIndexes;
+type Result = { usePreviousTraversalResult?: true; lastRedundantOpenBracketIndex?: number } & StartEndIndexes;
 
 export class AnalyzeRedundantBrackets {
   private static isNestedUnaryOperator(tokens: Tokens, startTokenIndex: number, layers: number): boolean {
     return layers > 0 && (tokens[startTokenIndex] === '+' || tokens[startTokenIndex] === '-');
   }
 
-  private static createNewResult(startIndex: number, endIndex: number): Result {
-    return { start: startIndex, end: endIndex };
+  private static createNewResult(tokens: Tokens, startIndex: number, endIndex: number, lastBracketIndex: number, layers: number): Result {
+    const resultObject: Result = { start: startIndex, end: endIndex };
+    if (layers > 0) {
+      resultObject.lastRedundantOpenBracketIndex = TraversalUtil.findTokenIndex(tokens, lastBracketIndex, '(', false);
+    }
+    return resultObject;
   }
 
   private static constructResult(tokens: Tokens, startTokenIndex: number, endTokenIndex: number, layers: number): Result {
-    const result = AnalyzeRedundantBrackets.createNewResult(startTokenIndex, endTokenIndex);
+    const result = AnalyzeRedundantBrackets.createNewResult(tokens, startTokenIndex, endTokenIndex, startTokenIndex, layers);
     // statements can start with unary operators, in such instances we usually add a bracket by default, however if there
     // is one already - use it
     if (AnalyzeRedundantBrackets.isNestedUnaryOperator(tokens, startTokenIndex, layers)) {
@@ -39,6 +43,8 @@ export class AnalyzeRedundantBrackets {
       return AnalyzeRedundantBrackets.constructResult(tokens, startTokenIndex, endTokenIndex, layers);
     }
     const result = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, startTokenIndex + 1, endTokenIndex - 1, layers + 1);
-    return result.usePreviousTraversalResult ? AnalyzeRedundantBrackets.createNewResult(startTokenIndex, endTokenIndex) : result;
+    return result.usePreviousTraversalResult
+      ? AnalyzeRedundantBrackets.createNewResult(tokens, startTokenIndex, endTokenIndex, startTokenIndex, layers)
+      : result;
   }
 }

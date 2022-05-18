@@ -1,5 +1,6 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeSyntax/analyzeArithmeticAndAssignmentOperator';
 import { AnalyzeGreaterOrLessThanSign } from './analyzeSyntax/analyzeGreaterOrLessThanSign';
+import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSyntax';
 import { AnalyzeMethodInvocation } from './analyzeSyntax/analyzeMethodInvocation';
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
@@ -53,6 +54,9 @@ export class AnalyzeTokens {
       case '~':
       case '%':
         return AnalyzeArithmeticAndAssignmentOperator.updateState(tokens, index, evaluationState);
+      case 'as':
+        AnalyzeBrackatableSyntax.updateState(evaluationState);
+        break;
       case 'function':
         return AnalyzeFunction.updateStateForRegular(tokens, index, evaluationState);
       default: {

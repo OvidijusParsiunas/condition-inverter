@@ -2,8 +2,9 @@ import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from '../consts/errors';
 import { Token, Tokens } from '../types/tokens';
 
 export class TraversalUtil {
-  public static findNextTokenIndex(tokens: Tokens, startIndex: number, token: Token): number {
-    return startIndex + tokens.slice(startIndex).indexOf(token);
+  public static findTokenIndex(tokens: Tokens, startIndex: number, token: Token, traverseForwards = true): number {
+    if (traverseForwards) return startIndex + tokens.slice(startIndex).indexOf(token);
+    return tokens.slice(0, startIndex).lastIndexOf(token);
   }
 
   public static getSiblingNonSpaceTokenIndex(tokens: Tokens, index: number, traverseForwards = true): number {
