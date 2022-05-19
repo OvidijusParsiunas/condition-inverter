@@ -5,6 +5,7 @@ import { Tokens } from '../../shared/types/tokens';
 export class InvertIdentityOrMembershipOperator {
   private static readonly numberOfRemovableSpaces = 2;
 
+  // mostly used for python
   // dog is cat  or  dog is not cat
   public static invertIdentity(tokens: Tokens, tokenIndex: number, tokenIndexDelta: number): number {
     const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, tokenIndex + 1);
@@ -16,6 +17,7 @@ export class InvertIdentityOrMembershipOperator {
     return tokenIndexDelta + InsertNewSyntax.insert(tokens, tokenIndex + 1, ' ', 'not');
   }
 
+  // mostly used for python
   // dog in cat  or  dog not in cat
   public static invertMembership(tokens: Tokens, tokenIndex: number, tokenIndexDelta: number): number {
     const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, tokenIndex - 1, false);

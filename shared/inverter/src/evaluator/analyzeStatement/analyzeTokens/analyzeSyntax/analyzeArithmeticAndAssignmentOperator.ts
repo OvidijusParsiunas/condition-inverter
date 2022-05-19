@@ -14,4 +14,30 @@ export class AnalyzeArithmeticAndAssignmentOperator {
     }
     return index;
   }
+
+  public static updateShiftAssignmentState(index: number, evaluationState: EvaluationState): number {
+    AnalyzeBrackatableSyntax.updateState(evaluationState);
+    return index + 2;
+  }
+
+  public static updateUnsignedRightShiftAssignmentState(index: number, evaluationState: EvaluationState): number {
+    AnalyzeBrackatableSyntax.updateState(evaluationState);
+    return index + 3;
+  }
+
+  public static updateStateIfLogicalAssignment(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    const firstSymbol = tokens[index];
+    if (firstSymbol === '&' || firstSymbol === '|' || firstSymbol === '?') {
+      if (tokens[index + 1] === firstSymbol) {
+        if (tokens[index + 2] === '=') {
+          AnalyzeBrackatableSyntax.updateState(evaluationState);
+          return index + 2;
+        }
+      } else if (tokens[index + 1] === '=') {
+        AnalyzeBrackatableSyntax.updateState(evaluationState);
+        return index + 1;
+      }
+    }
+    return -1;
+  }
 }

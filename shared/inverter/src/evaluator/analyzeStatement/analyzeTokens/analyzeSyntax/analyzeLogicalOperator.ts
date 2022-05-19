@@ -1,3 +1,4 @@
+import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAssignmentOperator';
 import { EvaluationStateUtil } from '../../../evaluationState/evaluationStateUtil';
 import { UpdateStateForStandaloneStatements } from '../analyzeStandaloneStatement';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
@@ -41,6 +42,8 @@ export class AnalyzeLogicalOperator {
   }
 
   public static updateStateForSymbol(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    const andOrAssignmentResult = AnalyzeArithmeticAndAssignmentOperator.updateStateIfLogicalAssignment(tokens, index, evaluationState);
+    if (andOrAssignmentResult > -1) return andOrAssignmentResult;
     const nextToken = tokens[index + 1];
     if (nextToken === '&' || nextToken === '|') {
       return AnalyzeLogicalOperator.updateState(tokens, index, index + 2, evaluationState);
@@ -50,6 +53,7 @@ export class AnalyzeLogicalOperator {
     return index;
   }
 
+  // currently being used for python
   public static updateStateForKeyword(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     return AnalyzeLogicalOperator.updateState(tokens, index, index + 1, evaluationState);
   }

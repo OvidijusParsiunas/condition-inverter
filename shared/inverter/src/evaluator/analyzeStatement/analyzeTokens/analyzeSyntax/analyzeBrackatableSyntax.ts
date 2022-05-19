@@ -5,7 +5,7 @@ export class AnalyzeBrackatableSyntax {
     return evaluationState.areBracketsAlreadyPresent && evaluationState.numberOfBracketsOpen === 0;
   }
 
-  // used to update state for arithmetic, bitwise and assignment operators e.g:
+  // used to update state for arithmetic, bitwise, nullish coalescing and assignment operators e.g:
   // dog + cat &&
   // dog & cat &&
   // dog += cat &&
