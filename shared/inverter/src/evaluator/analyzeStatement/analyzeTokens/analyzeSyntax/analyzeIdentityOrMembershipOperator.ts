@@ -1,7 +1,7 @@
 import { EvaluationState } from '../../../../shared/types/evaluationState';
 
 export class AnalyzeIdentityOrMembershipOperator {
-  // mostly used for python
+  // mostly used for javascript/python
   // identity operators: dog is cat  or  dog is not cat
   // membership operators: dog in cat  or  dog not in cat
   public static updateState(index: number, evaluationState: EvaluationState): void {

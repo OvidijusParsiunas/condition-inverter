@@ -2,8 +2,6 @@ import { IfInverter } from 'shared/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // WORK - ternary operator inside an if statement
-// WORK - typescript annotations and assertions
-// WORK - make sure all assignment operators are covered - https://www.w3schools.com/js/js_assignment.asp
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 // WORK - Optional Chaining operator - ?.
 // WORK - new, using . to access properties
@@ -599,6 +597,66 @@ suite('Generic Inversion Suite', () => {
     {
       input: `if ({ dog }) { console.log(2) }`,
       output: 'if (!{ dog }) { console.log(2) }',
+    },
+    {
+      input: `if (dog.cat) { console.log(2) }`,
+      output: 'if (!dog.cat) { console.log(2) }',
+    },
+    {
+      input: `if (!dog.cat) { console.log(2) }`,
+      output: 'if (dog.cat) { console.log(2) }',
+    },
+    {
+      input: `if (dog.cat + 2) { console.log(2) }`,
+      output: 'if (!(dog.cat + 2)) { console.log(2) }',
+    },
+    {
+      input: `if (!(dog.cat + 2)) { console.log(2) }`,
+      output: 'if (dog.cat + 2) { console.log(2) }',
+    },
+    {
+      input: `if (dog.cat()) { console.log(2) }`,
+      output: 'if (!dog.cat()) { console.log(2) }',
+    },
+    {
+      input: `if (!dog.cat()) { console.log(2) }`,
+      output: 'if (dog.cat()) { console.log(2) }',
+    },
+    {
+      input: `if (dog.cat() + 2) { console.log(2) }`,
+      output: 'if (!(dog.cat() + 2)) { console.log(2) }',
+    },
+    {
+      input: `if (!(dog.cat() + 2)) { console.log(2) }`,
+      output: 'if (dog.cat() + 2) { console.log(2) }',
+    },
+    {
+      input: `if (dog?.cat) { console.log(2) }`,
+      output: 'if (!dog?.cat) { console.log(2) }',
+    },
+    {
+      input: `if (!dog?.cat) { console.log(2) }`,
+      output: 'if (dog?.cat) { console.log(2) }',
+    },
+    {
+      input: `if (dog?.cat?.fish()) { console.log(2) }`,
+      output: 'if (!dog?.cat?.fish()) { console.log(2) }',
+    },
+    {
+      input: `if (!dog?.cat?.fish()) { console.log(2) }`,
+      output: 'if (dog?.cat?.fish()) { console.log(2) }',
+    },
+    {
+      input: `if ((dog?.cat?.fish())) { console.log(2) }`,
+      output: 'if ((!dog?.cat?.fish())) { console.log(2) }',
+    },
+    {
+      input: `if ((!dog?.cat?.fish())) { console.log(2) }`,
+      output: 'if ((dog?.cat?.fish())) { console.log(2) }',
+    },
+    {
+      input: `if (!(dog?.cat?.fish())) { console.log(2) }`,
+      output: 'if (dog?.cat?.fish()) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

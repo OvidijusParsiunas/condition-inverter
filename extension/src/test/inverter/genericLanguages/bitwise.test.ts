@@ -44,15 +44,14 @@ suite('Assignments Inversion Suite', () => {
       input: 'if (!(dog & cat)) { console.log(2) }',
       output: 'if (dog & cat) { console.log(2) }',
     },
-    // WORK - make sure this works
-    // {
-    //   input: 'if (dog | cat) { console.log(2) }',
-    //   output: 'if (!(dog | cat)) { console.log(2) }',
-    // },
-    // {
-    //   input: 'if (!(dog | cat)) { console.log(2) }',
-    //   output: 'if (dog | cat) { console.log(2) }',
-    // },
+    {
+      input: 'if (dog | cat) { console.log(2) }',
+      output: 'if (!(dog | cat)) { console.log(2) }',
+    },
+    {
+      input: 'if (!(dog | cat)) { console.log(2) }',
+      output: 'if (dog | cat) { console.log(2) }',
+    },
     {
       input: 'if (~dog) { console.log(2) }',
       output: 'if (!(~dog)) { console.log(2) }',

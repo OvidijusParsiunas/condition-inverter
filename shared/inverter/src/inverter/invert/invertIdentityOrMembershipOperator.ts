@@ -17,7 +17,7 @@ export class InvertIdentityOrMembershipOperator {
     return tokenIndexDelta + InsertNewSyntax.insert(tokens, tokenIndex + 1, ' ', 'not');
   }
 
-  // mostly used for python
+  // mostly used for javascript/python
   // dog in cat  or  dog not in cat
   public static invertMembership(tokens: Tokens, tokenIndex: number, tokenIndexDelta: number): number {
     const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, tokenIndex - 1, false);
