@@ -1,4 +1,5 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeSyntax/analyzeArithmeticAndAssignmentOperator';
+import { AnalyzeIdentityOrMembershipOperator } from './analyzeSyntax/analyzeIdentityOrMembershipOperator';
 import { AnalyzeGreaterOrLessThanSign } from './analyzeSyntax/analyzeGreaterOrLessThanSign';
 import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSyntax';
 import { AnalyzeMethodInvocation } from './analyzeSyntax/analyzeMethodInvocation';
@@ -55,10 +56,17 @@ export class AnalyzeTokens {
       case '%':
         return AnalyzeArithmeticAndAssignmentOperator.updateState(tokens, index, evaluationState);
       case 'as':
+        // converting if (dog as { key: number }) to if (!dog as {key: name }) is fine, however the compiler will display the following error:
+        // Conversion of type 'boolean' to type '{ dog: number; }' may be a mistake
+        // hence we use the following to add brackets on either sides and convert to the following if (!(dog as {key: name }))
         AnalyzeBrackatableSyntax.updateState(evaluationState);
         break;
       case 'function':
         return AnalyzeFunction.updateStateForRegular(tokens, index, evaluationState);
+      case 'is':
+      case 'in':
+        AnalyzeIdentityOrMembershipOperator.updateState(index, evaluationState);
+        break;
       default: {
         // it is easier to check if the current token is part of a method invocation rather than checking
         // if the previous token is a method name using the AnalyzeBracket class

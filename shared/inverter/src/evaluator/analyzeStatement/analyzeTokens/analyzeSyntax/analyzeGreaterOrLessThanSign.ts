@@ -5,7 +5,7 @@ import { Tokens } from '../../../../shared/types/tokens';
 export class AnalyzeGreaterOrLessThanSign {
   private static updateStateForComparisonOperator(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const nextToken = tokens[index + 1];
-    evaluationState.comparisonOperatorFound = true;
+    evaluationState.markedForOperatorInversion = true;
     if (nextToken === '=') {
       evaluationState.syntaxToBeInverted.push({ start: index, greaterOrLessThanHasFollowUpEquals: true });
       return index + 1;

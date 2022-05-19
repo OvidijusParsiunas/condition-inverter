@@ -14,7 +14,6 @@ suite('TypeScript Invertion Suite', () => {
     { input: `if (!(dog as string)) { console.log('hi') }`, output: `if (dog as string) { console.log('hi') }` },
     { input: `if (dog as string) console.log('hi')`, output: `if (!(dog as string)) console.log('hi')` },
     { input: `if (dog as { dog: cat }) console.log('hi')`, output: `if (!(dog as { dog: cat })) console.log('hi')` },
-    // eslint-disable-next-line max-len
     {
       input: `if (dog as { dog: cat } && dog as string) console.log('hi')`,
       output: `if (!(dog as { dog: cat }) || !(dog as string)) console.log('hi')`,

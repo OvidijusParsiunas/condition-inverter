@@ -12,7 +12,7 @@ export class EvaluationStateUtil {
       isOperationWrappableInBrackets: false,
       invertBooleanLiteral: false,
       // should add brackets regardless if areBracketsAlreadyPresent is set to true or not
-      comparisonOperatorFound: false,
+      markedForOperatorInversion: false,
       areBracketsAlreadyPresent: false,
       numberOfBracketsOpen: 0,
     };

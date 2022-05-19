@@ -16,7 +16,7 @@ export class AnalyzeStatement {
       evaluationState,
     );
     evaluationState.isCurrentlyInsideStatement = false;
-    evaluationState.comparisonOperatorFound = false;
+    evaluationState.markedForOperatorInversion = false;
     CleanUpRedundancies.removeAdditionOfBracketsFromState(evaluationState);
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }

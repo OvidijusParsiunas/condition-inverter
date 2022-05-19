@@ -1,3 +1,4 @@
+import { InvertIdentityOrMembershipOperator } from './invert/invertIdentityOrMembershipOperator';
 import { InvertGreaterOrLessThanSign } from './invert/invertGreaterOrLessThanSign';
 import { InvertLogicalOperator } from './invert/invertLogicalOperator';
 import { SyntaxToBeInverted } from '../shared/types/evaluationState';
@@ -40,6 +41,12 @@ export class Inverter {
       case '0':
       case '1':
         tokenIndexDelta = InvertBooleanLiteral.invert(tokens, tokenIndex, syntaxToBeInvertedEntry, tokenIndexDelta);
+        break;
+      case 'is':
+        tokenIndexDelta = InvertIdentityOrMembershipOperator.invertIdentity(tokens, tokenIndex, tokenIndexDelta);
+        break;
+      case 'in':
+        tokenIndexDelta = InvertIdentityOrMembershipOperator.invertMembership(tokens, tokenIndex, tokenIndexDelta);
         break;
       default: {
         tokenIndexDelta += InsertNewSyntax.insert(tokens, tokenIndex, '!');

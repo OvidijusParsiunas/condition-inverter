@@ -10,6 +10,13 @@ import * as assert from 'assert';
 // WORK - ... rest operator
 // WORK - let re = /ab+c/i; // literal notation
 // const re = new RegExp('ab+c', 'i');
+
+// when the user highlights arbitrary conditions using the extension:
+// we can expand the selection to check if it is wihtin an if statement/while loop etc
+// the user may highlight a condition that is not inside any of these, then the strategy is to see if the highlighted text has conditions
+
+// when the user inserts arbitrary text into website - we need to execute the following strategy
+// if no if statements/while within text, proceed to look for conditions
 suite('Generic Inversion Suite', () => {
   [
     { input: '', output: '' },

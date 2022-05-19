@@ -32,7 +32,7 @@ export interface EvaluationState {
   // for conditions that include arithmetic operations or double bangs
   isOperationWrappableInBrackets: boolean;
   invertBooleanLiteral: boolean;
-  comparisonOperatorFound: boolean;
+  markedForOperatorInversion: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;
   lastRedundantOpenBracketIndex?: number;

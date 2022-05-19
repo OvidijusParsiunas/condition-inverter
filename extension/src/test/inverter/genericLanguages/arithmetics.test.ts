@@ -310,6 +310,10 @@ suite('Arithmetics Inversion Suite', () => {
       input: '  if   (  !(dog   -  cat)  &&   !mouse  ) { console.log(2) }  if   (  !(dog   -  cat)  &&   !mouse  ) { console.log(2) }  ',
       output: '  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  if   (  dog   -  cat  ||   mouse  ) { console.log(2) }  ',
     },
+    { input: 'if (dog + cat * fish) { console.log(2) }', output: 'if (!(dog + cat * fish)) { console.log(2) }' },
+    { input: 'if (!(dog + cat * fish)) { console.log(2) }', output: 'if (dog + cat * fish) { console.log(2) }' },
+    { input: 'if (dog === cat + 2) { console.log(2) }', output: 'if (dog !== cat + 2) { console.log(2) }' },
+    { input: 'if (dog !== cat + 2) { console.log(2) }', output: 'if (dog === cat + 2) { console.log(2) }' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);

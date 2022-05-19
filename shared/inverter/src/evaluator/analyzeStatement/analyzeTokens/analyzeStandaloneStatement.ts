@@ -38,7 +38,7 @@ export class UpdateStateForStandaloneStatements {
       UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
     } else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
       UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
-    } else if (!evaluationState.comparisonOperatorFound) {
+    } else if (!evaluationState.markedForOperatorInversion) {
       UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
     }
     if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {

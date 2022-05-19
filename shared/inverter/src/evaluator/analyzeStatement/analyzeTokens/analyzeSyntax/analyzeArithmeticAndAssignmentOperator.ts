@@ -8,7 +8,10 @@ export class AnalyzeArithmeticAndAssignmentOperator {
   }
 
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    AnalyzeBrackatableSyntax.updateState(evaluationState);
-    return AnalyzeArithmeticAndAssignmentOperator.getIndexForArithmenticAssignmentOperator(tokens, index);
+    if (!evaluationState.markedForOperatorInversion) {
+      AnalyzeBrackatableSyntax.updateState(evaluationState);
+      return AnalyzeArithmeticAndAssignmentOperator.getIndexForArithmenticAssignmentOperator(tokens, index);
+    }
+    return index;
   }
 }

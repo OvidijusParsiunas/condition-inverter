@@ -11,7 +11,7 @@ export class AnalyzeEqualsSign {
   }
 
   private static analyzeComparisonOperator(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    evaluationState.comparisonOperatorFound = true;
+    evaluationState.markedForOperatorInversion = true;
     evaluationState.syntaxToBeInverted.push({ start: index });
     // this is run for == and === but not = as it is invalid inside an if statement
     return AnalyzeEqualsSign.getNewIndex(tokens, index);
