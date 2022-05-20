@@ -41,7 +41,7 @@ export class UpdateStateForStandaloneStatements {
     } else if (!evaluationState.markedForOperatorInversion) {
       UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
     }
-    if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
+    if (!evaluationState.markedForOperatorInversion && evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
       UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
     }
   }

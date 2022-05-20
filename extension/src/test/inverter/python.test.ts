@@ -32,6 +32,8 @@ suite('Python Invertion Suite', () => {
     { input: 'if (dog is not cat and cat): print', output: 'if (dog is cat or !cat): print' },
     { input: 'if ((dog is cat and cat)): print', output: 'if ((dog is not cat or !cat)): print' },
     { input: 'if ((dog is not cat or !cat)): print', output: 'if ((dog is cat and cat)): print' },
+    { input: 'if dog in cat: print', output: 'if dog not in cat: print' },
+    { input: 'if dog not in cat: print', output: 'if dog in cat: print' },
     { input: 'if (dog in cat): print', output: 'if (dog not in cat): print' },
     { input: 'if (dog not in cat): print', output: 'if (dog in cat): print' },
     { input: 'if (dog not  in   cat): print', output: 'if (dog  in   cat): print' },

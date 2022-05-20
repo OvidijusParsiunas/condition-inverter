@@ -1,4 +1,5 @@
 import { EvaluationState } from '../../shared/types/evaluationState';
+import { LANGUAGE } from '../../shared/consts/languages';
 
 export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
@@ -15,6 +16,7 @@ export class EvaluationStateUtil {
       markedForOperatorInversion: false,
       areBracketsAlreadyPresent: false,
       numberOfBracketsOpen: 0,
+      language: LANGUAGE.unknown,
     };
   }
 

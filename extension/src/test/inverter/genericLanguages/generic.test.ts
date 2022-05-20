@@ -2,8 +2,6 @@ import { IfInverter } from 'shared/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // WORK - ternary operator inside an if statement
-// the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-// WORK - Optional Chaining operator - ?.
 // WORK - new, using . to access properties
 // WORK - ... rest operator
 // WORK - let re = /ab+c/i; // literal notation
@@ -15,6 +13,7 @@ import * as assert from 'assert';
 
 // when the user inserts arbitrary text into website - we need to execute the following strategy
 // if no if statements/while within text, proceed to look for conditions
+// the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite('Generic Inversion Suite', () => {
   [
     { input: '', output: '' },
@@ -631,32 +630,8 @@ suite('Generic Inversion Suite', () => {
       output: 'if (dog.cat() + 2) { console.log(2) }',
     },
     {
-      input: `if (dog?.cat) { console.log(2) }`,
-      output: 'if (!dog?.cat) { console.log(2) }',
-    },
-    {
-      input: `if (!dog?.cat) { console.log(2) }`,
-      output: 'if (dog?.cat) { console.log(2) }',
-    },
-    {
-      input: `if (dog?.cat?.fish()) { console.log(2) }`,
-      output: 'if (!dog?.cat?.fish()) { console.log(2) }',
-    },
-    {
-      input: `if (!dog?.cat?.fish()) { console.log(2) }`,
-      output: 'if (dog?.cat?.fish()) { console.log(2) }',
-    },
-    {
-      input: `if ((dog?.cat?.fish())) { console.log(2) }`,
-      output: 'if ((!dog?.cat?.fish())) { console.log(2) }',
-    },
-    {
-      input: `if ((!dog?.cat?.fish())) { console.log(2) }`,
-      output: 'if ((dog?.cat?.fish())) { console.log(2) }',
-    },
-    {
-      input: `if (!(dog?.cat?.fish())) { console.log(2) }`,
-      output: 'if (dog?.cat?.fish()) { console.log(2) }',
+      input: `if (dog === [1,2,3,4]) { console.log(2) }`,
+      output: 'if (dog !== [1,2,3,4]) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

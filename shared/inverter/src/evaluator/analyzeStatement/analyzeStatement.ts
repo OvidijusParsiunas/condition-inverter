@@ -6,6 +6,7 @@ import { CleanUpRedundancies } from './redundancies/cleanUpRedundancies';
 import { EvaluationState } from '../../shared/types/evaluationState';
 import { StartEndIndexes } from '../../shared/types/StartEndIndexes';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';
+import { LANGUAGE } from '../../shared/consts/languages';
 import { Tokens } from '../../shared/types/tokens';
 
 export class AnalyzeStatement {
@@ -37,10 +38,24 @@ export class AnalyzeStatement {
         end: TraversalUtil.getIndexOfClosingBracket(tokens, index) - 1,
       };
     }
+    // WORK - this will not work for GO as it does not end with a double dot
     return {
       start: startSymbolIndex,
       end: startSymbolIndex + tokens.slice(startSymbolIndex).indexOf(':') - 1,
     };
+  }
+
+  private static identifyLanguage(tokens: Tokens, evaluationState: EvaluationState): void {
+    const closeStatementSyntax = tokens[evaluationState.currentStatementCloseBracketIndex];
+    if (closeStatementSyntax === ':') {
+      evaluationState.language = LANGUAGE.python;
+    } else if (closeStatementSyntax === ')') {
+      const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, evaluationState.currentStatementCloseBracketIndex + 1);
+      const siblingToken = tokens[siblingTokenIndex];
+      if (siblingToken === ':') {
+        evaluationState.language = LANGUAGE.python;
+      }
+    }
   }
 
   private static setEvaluationStartAndEndIndexes(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
@@ -53,6 +68,7 @@ export class AnalyzeStatement {
 
   public static setNewStatementState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     AnalyzeStatement.setEvaluationStartAndEndIndexes(tokens, index, evaluationState);
+    if (evaluationState.language === LANGUAGE.unknown) AnalyzeStatement.identifyLanguage(tokens, evaluationState);
     evaluationState.isCurrentlyInsideStatement = true;
     return evaluationState.startOfCurrentStatementInsideIndex - 1;
   }

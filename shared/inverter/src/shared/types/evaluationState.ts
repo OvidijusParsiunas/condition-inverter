@@ -1,4 +1,5 @@
 import { StartEndIndexes } from './StartEndIndexes';
+import { LANGUAGE } from '../consts/languages';
 
 interface Generic {
   start: number;
@@ -32,8 +33,10 @@ export interface EvaluationState {
   // for conditions that include arithmetic operations or double bangs
   isOperationWrappableInBrackets: boolean;
   invertBooleanLiteral: boolean;
+  // this means that there is no entity to syntaxToBeInverted required to be added and the Inverter class code is going to take care of the inversion
   markedForOperatorInversion: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;
   lastRedundantOpenBracketIndex?: number;
+  language: LANGUAGE;
 }

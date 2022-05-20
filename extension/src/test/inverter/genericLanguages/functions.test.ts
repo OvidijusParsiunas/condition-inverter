@@ -2,6 +2,7 @@ import { IfInverter } from '../../../../../shared/out/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
+// WORK - function params with no brackets
 suite('Generic Language Nested Function Inversion Suite', () => {
   [
     {

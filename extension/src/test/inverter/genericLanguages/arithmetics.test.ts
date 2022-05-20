@@ -319,6 +319,30 @@ suite('Arithmetics Inversion Suite', () => {
     { input: 'if (!(dog ** cat + cat)) { console.log(2) }', output: 'if (dog ** cat + cat) { console.log(2) }' },
     { input: 'if (dog ** cat && cat) { console.log(2) }', output: 'if (!(dog ** cat) || !cat) { console.log(2) }' },
     { input: 'if (!(dog ** cat) || !cat) { console.log(2) }', output: 'if (dog ** cat && cat) { console.log(2) }' },
+    {
+      input: `if (dog + cat === true) { console.log(2) }`,
+      output: `if (dog + cat !== true) { console.log(2) }`,
+    },
+    {
+      input: `if (dog + cat === true) { console.log(2) }`,
+      output: `if (dog + cat !== true) { console.log(2) }`,
+    },
+    {
+      input: `if ((dog + cat === true)) { console.log(2) }`,
+      output: `if ((dog + cat !== true)) { console.log(2) }`,
+    },
+    {
+      input: `if (dog + cat === true && dog + cat === true) { console.log(2) }`,
+      output: `if (dog + cat !== true || dog + cat !== true) { console.log(2) }`,
+    },
+    {
+      input: `if (dog + cat === dog + cat && dog + cat === dog + cat) { console.log(2) }`,
+      output: `if (dog + cat !== dog + cat || dog + cat !== dog + cat) { console.log(2) }`,
+    },
+    {
+      input: `if (dog + cat && cat) { console.log(2) }`,
+      output: `if (!(dog + cat) || !cat) { console.log(2) }`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);

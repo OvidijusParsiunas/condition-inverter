@@ -56,17 +56,18 @@ export class AnalyzeTokens {
       case '~':
       case '%':
         return AnalyzeArithmeticAndAssignmentOperator.updateState(tokens, index, evaluationState);
+      // converting if (dog as { key: number }) to if (!dog as {key: name }) is fine, however the compiler will display the following error:
+      // Conversion of type 'boolean' to type '{ dog: number; }' may be a mistake
+      // hence we use the following to add brackets on either sides and convert to the following if (!(dog as {key: name }))
       case 'as':
-        // converting if (dog as { key: number }) to if (!dog as {key: name }) is fine, however the compiler will display the following error:
-        // Conversion of type 'boolean' to type '{ dog: number; }' may be a mistake
-        // hence we use the following to add brackets on either sides and convert to the following if (!(dog as {key: name }))
+      case 'instanceof':
         AnalyzeBrackatableSyntax.updateState(evaluationState);
         break;
       case 'function':
         return AnalyzeFunction.updateStateForRegular(tokens, index, evaluationState);
       case 'is':
       case 'in':
-        AnalyzeIdentityOrMembershipOperator.updateState(index, evaluationState);
+        AnalyzeIdentityOrMembershipOperator.updateState(tokens, index, evaluationState);
         break;
       case '?':
         return AnalyzeNullishOperator.updateState(tokens, index, evaluationState);
