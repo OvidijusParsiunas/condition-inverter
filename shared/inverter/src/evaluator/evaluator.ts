@@ -1,4 +1,4 @@
-import { AnalyzeEmptyStatement } from './analyzeStatement/redundancies/analyzeEmptyStatement';
+import { AnalyzeEmptyStatement } from './analyzeStatement/analyzeStatementDetails/redundancies/analyzeEmptyStatement';
 import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { AnalyzeStatement } from './analyzeStatement/analyzeStatement';
 import { SyntaxToBeInverted } from '../shared/types/evaluationState';

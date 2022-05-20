@@ -1,4 +1,4 @@
-import { EvaluationState, InsertNewBrackets } from '../../../shared/types/evaluationState';
+import { EvaluationState, InsertNewBrackets } from '../../../../shared/types/evaluationState';
 
 export class CleanUpRedundancies {
   private static canRedundantBracketsBeReused(evaluationState: EvaluationState): boolean {
