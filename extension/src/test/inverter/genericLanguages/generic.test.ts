@@ -1,8 +1,6 @@
 import { IfInverter } from 'shared/inverter/src/ifInverter';
 import * as assert from 'assert';
 
-// WORK - ternary operator inside an if statement
-
 // when the user highlights arbitrary conditions using the extension:
 // we can expand the selection to check if it is wihtin an if statement/while loop etc
 // the user may highlight a condition that is not inside any of these, then the strategy is to see if the highlighted text has conditions
@@ -656,6 +654,50 @@ suite('Generic Inversion Suite', () => {
     {
       input: `if ({ name } = cat === true) { console.log(2) }`,
       output: 'if ({ name } = cat !== true) { console.log(2) }',
+    },
+    {
+      input: `if (dog ? cat : fish) { console.log(2) }`,
+      output: 'if (!dog ? cat : fish) { console.log(2) }',
+    },
+    {
+      input: `if (dog && cat ? cat : fish) { console.log(2) }`,
+      output: 'if (!dog || !cat ? cat : fish) { console.log(2) }',
+    },
+    {
+      input: `if (hello && dog && cat ? cat : fish) { console.log(2) }`,
+      output: 'if (!hello || !dog || !cat ? cat : fish) { console.log(2) }',
+    },
+    {
+      input: `if (dog ? cat() : fish()) { console.log(2) }`,
+      output: 'if (!dog ? cat() : fish()) { console.log(2) }',
+    },
+    {
+      input: `if (dog ? cat(cat === fish) : fish()) { console.log(2) }`,
+      output: 'if (!dog ? cat(cat === fish) : fish()) { console.log(2) }',
+    },
+    {
+      input: `if (cat && (dog ? cat : fish)) { console.log(2) }`,
+      output: 'if (!cat || !(dog ? cat : fish)) { console.log(2) }',
+    },
+    {
+      input: `if (dog ? cat ? fish : fish : cat ? fish : fish) { console.log(2) }`,
+      output: 'if (!dog ? cat ? fish : fish : cat ? fish : fish) { console.log(2) }',
+    },
+    {
+      input: `if (dog ? cat ? fish : dog() ? cat() : cat() : cat ? fish : fish) { console.log(2) }`,
+      output: 'if (!dog ? cat ? fish : dog() ? cat() : cat() : cat ? fish : fish) { console.log(2) }',
+    },
+    {
+      input: `if (dog ? cat ? fish : (dog() ? cat() : cat()) : cat ? dog(true) ? cat(false) : cat(false) : fish) { console.log(2) }`,
+      output: 'if (!dog ? cat ? fish : (dog() ? cat() : cat()) : cat ? dog(true) ? cat(false) : cat(false) : fish) { console.log(2) }',
+    },
+    {
+      input: `if ((dog ? cat : fish)) { console.log(2) }`,
+      output: 'if ((!dog ? cat : fish)) { console.log(2) }',
+    },
+    {
+      input: `if ((!dog ? cat : fish)) { console.log(2) }`,
+      output: 'if ((dog ? cat : fish)) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {
