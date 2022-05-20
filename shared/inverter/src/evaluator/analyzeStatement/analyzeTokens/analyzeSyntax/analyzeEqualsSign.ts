@@ -1,4 +1,5 @@
 import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { Tokens } from '../../../../shared/types/tokens';
 import { AnalyzeFunction } from './analyzeFunction';
 
@@ -18,8 +19,13 @@ export class AnalyzeEqualsSign {
   }
 
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    if (tokens[index + 1] === '>') {
+    const nextToken = tokens[index + 1];
+    if (nextToken === '>') {
       return AnalyzeFunction.updateStateForArrow(tokens, index + 1, evaluationState);
+    } else if (nextToken === ' ') {
+      // for destructuring e.g. if ({ dog } = cat)
+      AnalyzeBrackatableSyntax.updateState(evaluationState);
+      return index;
     }
     return AnalyzeEqualsSign.analyzeComparisonOperator(tokens, index, evaluationState);
   }

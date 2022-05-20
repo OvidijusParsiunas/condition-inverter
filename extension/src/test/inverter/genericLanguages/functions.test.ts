@@ -2,7 +2,6 @@ import { IfInverter } from '../../../../../shared/out/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-// WORK - function params with no brackets
 suite('Generic Language Nested Function Inversion Suite', () => {
   [
     {
@@ -164,6 +163,90 @@ suite('Generic Language Nested Function Inversion Suite', () => {
     {
       input: `if ((function () { if ('hello') {} }) => console.log(2)) { console.log(2) }`,
       output: `if (!((function () { if ('hello') {} }) => console.log(2))) { console.log(2) }`,
+    },
+    {
+      input: `if (async() => { console.log(2) }) { console.log(2) }`,
+      output: `if (!(async() => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if (!(async() => { console.log(2) })) { console.log(2) }`,
+      output: `if (async() => { console.log(2) }) { console.log(2) }`,
+    },
+    {
+      input: `if (async function() => { console.log(2) }) { console.log(2) }`,
+      output: `if (!(async function() => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if (async(): void => { console.log(2) }) { console.log(2) }`,
+      output: `if (!(async(): void => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if (!(async(): void => { console.log(2) })) { console.log(2) }`,
+      output: `if (async(): void => { console.log(2) }) { console.log(2) }`,
+    },
+    {
+      input: `if (name: void => { console.log(2) }) { console.log(2) }`,
+      output: `if (!(name: void => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if (!(name: void => { console.log(2) })) { console.log(2) }`,
+      output: `if (name: void => { console.log(2) }) { console.log(2) }`,
+    },
+    {
+      input: `if (name => { console.log(2) }) { console.log(2) }`,
+      output: `if (!(name => { console.log(2) })) { console.log(2) }`,
+    },
+    {
+      input: `if (!(name => { console.log(2) })) { console.log(2) }`,
+      output: `if (name => { console.log(2) }) { console.log(2) }`,
+    },
+    {
+      input: `if (async () => new Promise((resolve) => resolve(true))) console.log('called');`,
+      output: `if (!(async () => new Promise((resolve) => resolve(true)))) console.log('called');`,
+    },
+    {
+      input: `if (async () => new Promise((resolve) => resolve(true)) && cat) console.log('called');`,
+      output: `if (!(async () => new Promise((resolve) => resolve(true))) || !cat) console.log('called');`,
+    },
+    {
+      input: `if (async () => new Promise((resolve) => resolve(true)) === cat) console.log('called');`,
+      output: `if (async () => new Promise((resolve) => resolve(true)) !== cat) console.log('called');`,
+    },
+    {
+      input: `if (function*() { yield 'a'; yield* func1(); }) { console.log(2) }`,
+      output: `if (!(function*() { yield 'a'; yield* func1(); })) { console.log(2) }`,
+    },
+    {
+      input: 'if ((function() { console.log(2) })()) { console.log(2) }',
+      output: 'if (!(function() { console.log(2) })()) { console.log(2) }',
+    },
+    {
+      input: 'if (((function() { console.log(2) })())) { console.log(2) }',
+      output: 'if ((!(function() { console.log(2) })())) { console.log(2) }',
+    },
+    {
+      input: `if (new dog.cat()) { console.log(2) }`,
+      output: 'if (!new dog.cat()) { console.log(2) }',
+    },
+    {
+      input: `if (!new dog.cat()) { console.log(2) }`,
+      output: 'if (new dog.cat()) { console.log(2) }',
+    },
+    {
+      input: `if (new dog.cat(true)) { console.log(2) }`,
+      output: 'if (!new dog.cat(true)) { console.log(2) }',
+    },
+    {
+      input: `if (!new dog.cat(true)) { console.log(2) }`,
+      output: 'if (new dog.cat(true)) { console.log(2) }',
+    },
+    {
+      input: `if (new dog()) { console.log(2) }`,
+      output: 'if (!new dog()) { console.log(2) }',
+    },
+    {
+      input: `if (!new dog()) { console.log(2) }`,
+      output: 'if (new dog()) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

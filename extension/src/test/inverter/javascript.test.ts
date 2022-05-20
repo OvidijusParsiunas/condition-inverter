@@ -128,6 +128,26 @@ suite('JavaScript Invertion Suite', () => {
       input: `if ((!dog.fish['cat']() || !2)) { console.log(2) }`,
       output: `if ((dog.fish['cat']() && 2)) { console.log(2) }`,
     },
+    {
+      input: `if (dog.match(/yes.*day/)) { console.log(2) }`,
+      output: 'if (!dog.match(/yes.*day/)) { console.log(2) }',
+    },
+    {
+      input: `if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }`,
+      output: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+    },
+    {
+      input: `if (/[^.]+/.exec(url)[0].substr(7) + 2) { console.log(2) }`,
+      output: 'if (!(/[^.]+/.exec(url)[0].substr(7) + 2)) { console.log(2) }',
+    },
+    {
+      input: `if (/[^.]+/.exec(url)[0].substr(7) === 2) { console.log(2) }`,
+      output: 'if (/[^.]+/.exec(url)[0].substr(7) !== 2) { console.log(2) }',
+    },
+    {
+      input: `if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }`,
+      output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);

@@ -2,10 +2,6 @@ import { IfInverter } from 'shared/inverter/src/ifInverter';
 import * as assert from 'assert';
 
 // WORK - ternary operator inside an if statement
-// WORK - new, using . to access properties
-// WORK - ... rest operator
-// WORK - let re = /ab+c/i; // literal notation
-// const re = new RegExp('ab+c', 'i');
 
 // when the user highlights arbitrary conditions using the extension:
 // we can expand the selection to check if it is wihtin an if statement/while loop etc
@@ -632,6 +628,34 @@ suite('Generic Inversion Suite', () => {
     {
       input: `if (dog === [1,2,3,4]) { console.log(2) }`,
       output: 'if (dog !== [1,2,3,4]) { console.log(2) }',
+    },
+    {
+      input: `if ([1,2,3,4] !== dog) { console.log(2) }`,
+      output: 'if ([1,2,3,4] === dog) { console.log(2) }',
+    },
+    {
+      input: `if (cat(...[1,2,3,4])) { console.log(2) }`,
+      output: 'if (!cat(...[1,2,3,4])) { console.log(2) }',
+    },
+    {
+      input: `if (!cat(...[1,2,3,4])) { console.log(2) }`,
+      output: 'if (cat(...[1,2,3,4])) { console.log(2) }',
+    },
+    {
+      input: `if ({ name } = cat) { console.log(2) }`,
+      output: 'if (!({ name } = cat)) { console.log(2) }',
+    },
+    {
+      input: `if (!({ name } = cat)) { console.log(2) }`,
+      output: 'if ({ name } = cat) { console.log(2) }',
+    },
+    {
+      input: `if ({ name } = cat && cat) { console.log(2) }`,
+      output: 'if (!({ name } = cat) || !cat) { console.log(2) }',
+    },
+    {
+      input: `if ({ name } = cat === true) { console.log(2) }`,
+      output: 'if ({ name } = cat !== true) { console.log(2) }',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {
