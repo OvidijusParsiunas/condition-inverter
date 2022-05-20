@@ -34,15 +34,17 @@ export class UpdateStateForStandaloneStatements {
 
   // a look back to see if previous syntax defines a standalone statement
   public static markStandaloneStatementsForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-    if (evaluationState.shouldBracketsBeRemoved) {
-      UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
-    } else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
-      UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
-    } else if (!evaluationState.markedForOperatorInversion) {
-      UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
-    }
-    if (!evaluationState.markedForOperatorInversion && evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
-      UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
+    if (!evaluationState.markedForOperatorInversion) {
+      if (evaluationState.shouldBracketsBeRemoved) {
+        UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
+      } else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
+        UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
+      } else {
+        UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
+      }
+      if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
+        UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
+      }
     }
   }
 }

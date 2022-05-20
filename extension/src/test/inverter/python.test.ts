@@ -5,6 +5,7 @@ import * as assert from 'assert';
 suite('Python Invertion Suite', () => {
   [
     { input: 'if dog < cat: print', output: 'if dog >= cat: print' },
+    { input: 'if(dog > cat): print', output: 'if(dog <= cat): print' },
     { input: 'if dog < cat: print(10 + 5)', output: 'if dog >= cat: print(10 + 5)' },
     { input: 'if (dog < cat): print', output: 'if (dog >= cat): print' },
     { input: 'if ((((dog < cat)))): print', output: 'if ((((dog >= cat)))): print' },
@@ -43,6 +44,19 @@ suite('Python Invertion Suite', () => {
     { input: 'if (dog   not in cat): print', output: 'if (dog   in cat): print' },
     { input: 'if dog === cat + 2: print', output: 'if dog !== cat + 2: print' },
     { input: 'if dog !== cat + 2: print', output: 'if dog === cat + 2: print' },
+    { input: 'if not(dog > cat): print', output: 'if (dog > cat): print' },
+    { input: 'if not (dog > cat): print', output: 'if (dog > cat): print' },
+    { input: 'if (dog > cat): print', output: 'if (dog <= cat): print' },
+    { input: 'if isinstance(dog): print', output: 'if !isinstance(dog): print' },
+    { input: 'if isinstance(dog) == 2: print', output: 'if isinstance(dog) != 2: print' },
+    { input: 'if (isinstance(dog)): print', output: 'if (!isinstance(dog)): print' },
+    { input: 'if True: print', output: 'if False: print' },
+    { input: 'if False: print', output: 'if True: print' },
+    { input: 'if True + True: print', output: 'if !(True + True): print' },
+    { input: 'if True > False: print', output: 'if True <= False: print' },
+    { input: 'if True == False: print', output: 'if True != False: print' },
+    { input: 'if not(True): print', output: 'if (True): print' },
+    { input: 'if (True): print', output: 'if (False): print' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);

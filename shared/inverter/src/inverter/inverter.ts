@@ -33,11 +33,16 @@ export class Inverter {
       case 'or':
         InvertLogicalOperator.invertKeyword(tokens, tokenIndex);
         break;
+      case 'not':
+        tokenIndexDelta = InvertLogicalOperator.removeNot(tokens, tokenIndex, tokenIndexDelta);
+        break;
       case '!':
         tokenIndexDelta = InvertNegatedSyntax.invert(tokens, tokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);
         break;
-      case 'true':
       case 'false':
+      case 'true':
+      case 'False':
+      case 'True':
       case '0':
       case '1':
         tokenIndexDelta = InvertBooleanLiteral.invert(tokens, tokenIndex, syntaxToBeInvertedEntry, tokenIndexDelta);

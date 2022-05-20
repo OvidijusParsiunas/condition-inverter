@@ -39,6 +39,8 @@ export class AnalyzeTokens {
         return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);
       case 'false':
       case 'true':
+      case 'False':
+      case 'True':
         AnalyzeBooleanLiteral.updateStateForBoolean(evaluationState);
         break;
       case '0':

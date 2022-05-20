@@ -699,6 +699,26 @@ suite('Generic Inversion Suite', () => {
       input: `if ((!dog ? cat : fish)) { console.log(2) }`,
       output: 'if ((dog ? cat : fish)) { console.log(2) }',
     },
+    {
+      input: `if (1 > 2) { console.log(2) }`,
+      output: 'if (1 <= 2) { console.log(2) }',
+    },
+    {
+      input: `if (true > false) { console.log(2) }`,
+      output: 'if (true <= false) { console.log(2) }',
+    },
+    {
+      input: `if (1 <= 2) { console.log(2) }`,
+      output: 'if (1 > 2) { console.log(2) }',
+    },
+    {
+      input: `if (true <= false) { console.log(2) }`,
+      output: 'if (true > false) { console.log(2) }',
+    },
+    {
+      input: `if (true > false && true) { console.log(2) }`,
+      output: 'if (true <= false || false) { console.log(2) }',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = IfInverter.invert(testProps.input);
