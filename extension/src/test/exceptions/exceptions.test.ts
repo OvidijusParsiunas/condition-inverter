@@ -1,4 +1,4 @@
-import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
+import { Inverter } from '../../../../shared/out/inverter/src/inverter';
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
 import { TextEditorObj } from '../../shared/types/tests/tests';
 import { TestUtil } from '../util/testUtil';
@@ -81,7 +81,7 @@ suite('Exceptions Suite', () => {
   [{ input: 'if (mouse && cat { console.log(2) }', output: 'if (!mouse || !cat { console.log(2) }' }].forEach((testProps) => {
     test('Exception thrown by the inverter library when input is invalid', (done) => {
       try {
-        IfInverter.invert(testProps.input);
+        Inverter.invert(testProps.input);
       } catch (message) {
         done();
       }

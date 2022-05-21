@@ -1,4 +1,4 @@
-import { IfInverter } from 'shared/inverter/src/ifInverter';
+import { Inverter } from 'shared/inverter/src/inverter';
 import './invertButton.css';
 
 interface Props {
@@ -12,7 +12,7 @@ export default function InvertButton(props: Props) {
 
   const invert = () => {
     try {
-      const inversionResult = IfInverter.invert(input);
+      const inversionResult = Inverter.invert(input);
       inversionCallback(inversionResult);
     } catch (error) {
       errorHandlerCallback((error as Error).message);

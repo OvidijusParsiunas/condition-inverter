@@ -1,12 +1,12 @@
+import { TokenInverter } from './inverter/tokenInverter';
 import { Tokenizer } from '../../tokenizer/tokenizer';
 import { Evaluator } from './evaluator/evaluator';
-import { Inverter } from './inverter/inverter';
 
-export class IfInverter {
+export class Inverter {
   public static invert(inputString: string): string {
     const tokens = Tokenizer.tokenize(inputString);
     const syntaxToBeInverted = Evaluator.evaluate(tokens);
-    Inverter.invertStatements(tokens, syntaxToBeInverted);
+    TokenInverter.invert(tokens, syntaxToBeInverted);
     return tokens.join('');
   }
 }

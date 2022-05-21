@@ -1,12 +1,12 @@
 import { FindStatementFullRange } from '../shared/traversal/findStatementFullRange';
-import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
 import { FindStatementStart } from '../shared/traversal/findStatementStart';
+import { Inverter } from '../../../../shared/out/inverter/src/inverter';
 import { Range, TextEditor } from 'vscode';
 
 export class InvertSelectedText {
   private static getInvertedText(editor: TextEditor, statementRange: Range): string {
     const statementText = editor.document.getText(statementRange);
-    return IfInverter.invert(statementText);
+    return Inverter.invert(statementText);
   }
 
   private static getStatementRange(editor: TextEditor): Range | null {

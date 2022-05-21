@@ -2,14 +2,14 @@ import { StatementTraversalCallbackUtil } from '../../shared/functionality/state
 import { Position } from '../../shared/types/invertHighlightedText/invertHighlightedText';
 import { StatementStartRange } from './selectionBoundaryIfRanges/statementStartRange';
 import { StatementEndRange } from './selectionBoundaryIfRanges/statementEndRange';
-import { IfInverter } from '../../../../shared/out/inverter/src/ifInverter';
+import { Inverter } from '../../../../shared/out/inverter/src/inverter';
 import { Range, TextEditor, Position as VSCodePosition } from 'vscode';
 import { RangeCreator } from '../shared/rangeCreator';
 
 export class InvertHighlightedText {
   private static getInvertedText(editor: TextEditor, statementRange: Range): string {
     const statementText = editor.document.getText(statementRange);
-    return IfInverter.invert(statementText);
+    return Inverter.invert(statementText);
   }
 
   private static doesStartStatementEndLaterThanSelectionEnd(startStatementEnd: Position, endSelectionPosition: Position): boolean {

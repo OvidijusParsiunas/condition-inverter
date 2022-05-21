@@ -8,8 +8,8 @@ import { InsertNewSyntax } from './insert/insertNewSyntax';
 import { InsertBrackets } from './insert/insertBrackets';
 import { Tokens } from '../shared/types/tokens';
 
-export class Inverter {
-  private static invert(
+export class TokenInverter {
+  private static invertSyntax(
     tokens: Tokens,
     tokenIndex: number,
     tokenIndexDelta: number,
@@ -60,14 +60,14 @@ export class Inverter {
     return tokenIndexDelta;
   }
 
-  public static invertStatements(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
+  public static invert(tokens: Tokens, syntaxToBeInverted: SyntaxToBeInverted[]): void {
     let tokenIndexDelta = 0;
     syntaxToBeInverted.forEach((syntaxToBeInvertedEntry, entryIndex) => {
       const relativeTokenIndex = syntaxToBeInvertedEntry.start + tokenIndexDelta;
       if (InsertBrackets.isInsertNewBrackets(syntaxToBeInvertedEntry)) {
         tokenIndexDelta = InsertBrackets.insert(tokens, relativeTokenIndex, syntaxToBeInvertedEntry.end, tokenIndexDelta);
       } else {
-        tokenIndexDelta = Inverter.invert(tokens, relativeTokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);
+        tokenIndexDelta = TokenInverter.invertSyntax(tokens, relativeTokenIndex, tokenIndexDelta, syntaxToBeInverted, entryIndex);
       }
     });
   }
