@@ -15,7 +15,7 @@ export class AnalyzeLogicalOperator {
   ): void {
     UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(tokens, index, evaluationState);
     evaluationState.syntaxToBeInverted.push({ start: index });
-    evaluationState.startOfCurrentStatementInsideIndex = nextNonSpaceCharIndex;
+    evaluationState.startOfCurrentStatementIndex = nextNonSpaceCharIndex;
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 

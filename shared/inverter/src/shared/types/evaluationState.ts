@@ -26,8 +26,8 @@ export type SyntaxToBeInverted = Generic | InsertNewBrackets | InvertBooleanLite
 
 export interface EvaluationState {
   isCurrentlyInsideStatement: boolean;
-  startOfCurrentStatementInsideIndex: number;
-  currentStatementCloseBracketIndex: number;
+  startOfCurrentStatementIndex: number;
+  currentStatementEndIndex: number;
   syntaxToBeInverted: SyntaxToBeInverted[];
   shouldBracketsBeRemoved: boolean;
   // for conditions that include arithmetic operations or double bangs

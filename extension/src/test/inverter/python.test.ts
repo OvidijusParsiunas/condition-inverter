@@ -59,6 +59,14 @@ suite('Python Invertion Suite', () => {
     { input: 'if True == False: print', output: 'if True != False: print' },
     { input: 'if not(True): print', output: 'if (True): print' },
     { input: 'if (True): print', output: 'if (False): print' },
+    { input: `while True: print(dog)`, output: 'while False: print(dog)' },
+    { input: `for dog in cat: print(dog)`, output: 'for dog in cat: print(dog)' },
+    { input: `for (dog in cat): print(dog)`, output: 'for (dog in cat): print(dog)' },
+    { input: `for dog in range(6): print(dog)`, output: 'for dog in range(6): print(dog)' },
+    { input: `for (dog in range(6)): print(dog)`, output: 'for (dog in range(6)): print(dog)' },
+    { input: `for dog in range(2, 6, 8): print(dog)`, output: 'for dog in range(2, 6, 8): print(dog)' },
+    { input: `for dog in [2, 6, 8]: print(dog)`, output: 'for dog in [2, 6, 8]: print(dog)' },
+    { input: `for dog in range(len(dog)): print(dog)`, output: 'for dog in range(len(dog)): print(dog)' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

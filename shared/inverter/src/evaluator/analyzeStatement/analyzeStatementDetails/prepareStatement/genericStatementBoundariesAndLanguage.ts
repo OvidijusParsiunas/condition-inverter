@@ -1,11 +1,11 @@
-import { AnalyzeRedundantBrackets } from './redundancies/analyzeRedundantBrackets';
-import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../shared/types/evaluationState';
-import { StartEndIndexes } from '../../../shared/types/StartEndIndexes';
-import { LANGUAGE } from '../../../shared/consts/languages';
-import { Tokens } from '../../../shared/types/tokens';
+import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
+import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { StartEndIndexes } from '../../../../shared/types/StartEndIndexes';
+import { LANGUAGE } from '../../../../shared/consts/languages';
+import { Tokens } from '../../../../shared/types/tokens';
 
-export class AnalyzeStatementBoundariesAndLanguage {
+export class GenericStatementBoundariesAndLanguage {
   // If the no symbols approach causes issues for golang when if statement initialization is used e.g. if num := 9; num > 0 add the following code
   // private static getGoStatementIndexes(startSymbolIndex: number, tokensFromIfStart: Tokens): StartEndIndexes {
   //   return {
@@ -37,13 +37,13 @@ export class AnalyzeStatementBoundariesAndLanguage {
     const tokensFromStartSymbol = tokens.slice(startSymbolIndex);
     const colonIndex = tokensFromStartSymbol.indexOf(':');
     if (colonIndex > -1 && tokensFromStartSymbol[colonIndex + 1] !== '=') {
-      return AnalyzeStatementBoundariesAndLanguage.getStatementWithColonEndIndexesAndSetLanguage(startSymbolIndex, colonIndex, evaluationState);
+      return GenericStatementBoundariesAndLanguage.getStatementWithColonEndIndexesAndSetLanguage(startSymbolIndex, colonIndex, evaluationState);
     }
     // If the no symbols approach causes issues for golang when if statement initialization is used e.g. if num := 9; num > 0 add the following code
     // if (colonIndex > -1) {
     //   return AnalyzeStatementUtil.getGoStatementIndexes(startSymbolIndex, tokensFromStartSymbol);
     // }
-    return AnalyzeStatementBoundariesAndLanguage.getStatementWithNoSymbolsIndexes(startSymbolIndex, tokensFromStartSymbol);
+    return GenericStatementBoundariesAndLanguage.getStatementWithNoSymbolsIndexes(startSymbolIndex, tokensFromStartSymbol);
   }
 
   // prettier-ignore
@@ -61,22 +61,22 @@ export class AnalyzeStatementBoundariesAndLanguage {
   }
 
   // prettier-ignore
-  public static getInnerIndexesOfStatementAndSetLanguage(
+  private static getInnerIndexesOfStatementAndSetLanguage(
       tokens: Tokens, analysisStartIndex: number, evaluationState: EvaluationState): StartEndIndexes {
     const startSymbolIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, analysisStartIndex + 1);
     if (tokens[startSymbolIndex] === '(') {
       // prettier-ignore
-      return AnalyzeStatementBoundariesAndLanguage.getBrackatableStatementIndexesAndSetLanguage(
+      return GenericStatementBoundariesAndLanguage.getBrackatableStatementIndexesAndSetLanguage(
         tokens, analysisStartIndex, startSymbolIndex, evaluationState);
     }
-    return AnalyzeStatementBoundariesAndLanguage.getNoBracketsStatementIndexesAndSetLanguage(tokens, startSymbolIndex, evaluationState);
+    return GenericStatementBoundariesAndLanguage.getNoBracketsStatementIndexesAndSetLanguage(tokens, startSymbolIndex, evaluationState);
   }
 
-  public static setStatementBoundaryIndexesAndLanguage(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-    const { start, end } = AnalyzeStatementBoundariesAndLanguage.getInnerIndexesOfStatementAndSetLanguage(tokens, index, evaluationState);
+  public static set(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
+    const { start, end } = GenericStatementBoundariesAndLanguage.getInnerIndexesOfStatementAndSetLanguage(tokens, index, evaluationState);
     const noRedundantBracketsIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
     evaluationState.lastRedundantOpenBracketIndex = noRedundantBracketsIndexes.lastRedundantOpenBracketIndex;
-    evaluationState.startOfCurrentStatementInsideIndex = noRedundantBracketsIndexes.start;
-    evaluationState.currentStatementCloseBracketIndex = noRedundantBracketsIndexes.end + 1;
+    evaluationState.startOfCurrentStatementIndex = noRedundantBracketsIndexes.start;
+    evaluationState.currentStatementEndIndex = noRedundantBracketsIndexes.end + 1;
   }
 }

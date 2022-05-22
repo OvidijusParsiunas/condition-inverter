@@ -7,24 +7,24 @@ export class UpdateStateForStandaloneStatements {
     const endIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
-      start: evaluationState.startOfCurrentStatementInsideIndex,
+      start: evaluationState.startOfCurrentStatementIndex,
       end: endIndex,
     });
   }
 
   private static markForVariableInversion(evaluationState: EvaluationState): void {
-    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentStatementInsideIndex });
+    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentStatementIndex });
   }
 
   private static markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
-      start: evaluationState.startOfCurrentStatementInsideIndex,
+      start: evaluationState.startOfCurrentStatementIndex,
       invertBooleanLiteral: evaluationState.invertBooleanLiteral,
     });
   }
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
-    const { startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
+    const { startOfCurrentStatementIndex: startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
     const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, startOfCurrentStatementInsideIndex - 1);
     syntaxToBeInverted.push({
       start: startOfCurrentStatementInsideIndex,

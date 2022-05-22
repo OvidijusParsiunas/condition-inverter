@@ -14,6 +14,12 @@ suite('GoLang Invertion Suite', () => {
       input: `if num := 9; num < 0 && cat { fmt.Println(num, "is negative") }`,
       output: `if num := 9; num >= 0 || !cat { fmt.Println(num, "is negative") }`,
     },
+    { input: `for i := 1; i < 5; i++ { fmt.Println("hi") }`, output: `for i := 1; i >= 5; i++ { fmt.Println("hi") }` },
+    { input: `for i < 5 { fmt.Println("hi") }`, output: `for i >= 5 { fmt.Println("hi") }` },
+    { input: `for { fmt.Println("hi") }`, output: `for { fmt.Println("hi") }` },
+    { input: `for i, s := range strings { fmt.Println("hi") }`, output: `for i, s := range strings { fmt.Println("hi") }` },
+    { input: `for input.Scan() { fmt.Println("hi") }`, output: `for !input.Scan() { fmt.Println("hi") }` },
+    { input: `if ('hello') { fmt.Println("hi") }`, output: `if (!'hello') { fmt.Println("hi") }` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

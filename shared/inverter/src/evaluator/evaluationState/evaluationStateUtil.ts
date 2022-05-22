@@ -5,8 +5,8 @@ export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
     return {
       isCurrentlyInsideStatement: false,
-      startOfCurrentStatementInsideIndex: 0,
-      currentStatementCloseBracketIndex: 0,
+      startOfCurrentStatementIndex: 0,
+      currentStatementEndIndex: 0,
       syntaxToBeInverted: [],
       shouldBracketsBeRemoved: false,
       // usually involves arithmentic operations or double bangs
