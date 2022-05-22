@@ -5,6 +5,7 @@ import * as assert from 'assert';
 suite('Python Invertion Suite', () => {
   [
     { input: 'if dog < cat: print', output: 'if dog >= cat: print' },
+    { input: 'if dog < cat:print', output: 'if dog >= cat:print' },
     { input: 'if(dog > cat): print', output: 'if(dog <= cat): print' },
     { input: 'if dog < cat: print(10 + 5)', output: 'if dog >= cat: print(10 + 5)' },
     { input: 'if (dog < cat): print', output: 'if (dog >= cat): print' },
@@ -61,6 +62,7 @@ suite('Python Invertion Suite', () => {
     { input: 'if (True): print', output: 'if (False): print' },
     { input: `while True: print(dog)`, output: 'while False: print(dog)' },
     { input: `for dog in cat: print(dog)`, output: 'for dog in cat: print(dog)' },
+    { input: `for dog in cat:print(dog)`, output: 'for dog in cat:print(dog)' },
     { input: `for (dog in cat): print(dog)`, output: 'for (dog in cat): print(dog)' },
     { input: `for dog in range(6): print(dog)`, output: 'for dog in range(6): print(dog)' },
     { input: `for (dog in range(6)): print(dog)`, output: 'for (dog in range(6)): print(dog)' },

@@ -720,6 +720,11 @@ suite('Generic Inversion Suite', () => {
       output: 'if (true <= false || false) { console.log(2) }',
     },
     { input: 'for (let i = 0; i < dog; i += 1) { console.log(2) }', output: 'for (let i = 0; i >= dog; i += 1) { console.log(2) }' },
+    { input: 'for (let i = 0;i < dog;i += 1) { console.log(2) }', output: 'for (let i = 0;i >= dog;i += 1) { console.log(2) }' },
+    {
+      input: 'for  ( let  i  =  0 ;  i  <  dog ;  i  +=  1 )  { console.log(2) }',
+      output: 'for  ( let  i  =  0 ;  i  >=  dog ;  i  +=  1 )  { console.log(2) }',
+    },
     { input: 'for (let i = 0; ((dog)); i += 1) { console.log(2) }', output: 'for (let i = 0; ((!dog)); i += 1) { console.log(2) }' },
     { input: 'for (; i < dog; i += 1) { console.log(2) }', output: 'for (; i >= dog; i += 1) { console.log(2) }' },
     { input: 'for (dog in cat) { console.log(2) }', output: 'for (dog in cat) { console.log(2) }' },
