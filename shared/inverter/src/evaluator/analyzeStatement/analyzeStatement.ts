@@ -1,7 +1,7 @@
-import { SetStateForGenericStatement } from './analyzeStatementDetails/prepareStatement/setStateForGenericStatement';
-import { SetStateForLoopStatement } from './analyzeStatementDetails/prepareStatement/setStateForLoopStatement';
-import { CleanUpRedundancies } from './analyzeStatementDetails/redundancies/cleanUpRedundancies';
+import { SetStateForGenericStatement } from './prepareStatement/setState/setStateForGenericStatement';
+import { SetStateForLoopStatement } from './prepareStatement/setState/setStateForLoopStatement';
 import { UpdateStateForStandaloneStatements } from './analyzeTokens/analyzeStandaloneStatement';
+import { CleanUpRedundancies } from './prepareStatement/redundancies/cleanUpRedundancies';
 import { EvaluationStateUtil } from '../evaluationState/evaluationStateUtil';
 import { EvaluationState } from '../../shared/types/evaluationState';
 import { AnalyzeTokens } from './analyzeTokens/analyzeTokens';

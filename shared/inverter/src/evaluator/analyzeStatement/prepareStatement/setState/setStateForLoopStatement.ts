@@ -1,5 +1,5 @@
-import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
 import { TokenOccurrences } from '../../../../shared/functionality/tokenOccurrences';
+import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { SetEvaluationState } from './shared/setEvaluationState';
