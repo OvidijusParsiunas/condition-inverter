@@ -5,7 +5,7 @@ export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
     return {
       isCurrentlyInsideStatement: false,
-      startOfCurrentStatementIndex: 0,
+      currentStatementStartIndex: 0,
       currentStatementEndIndex: 0,
       syntaxToBeInverted: [],
       shouldBracketsBeRemoved: false,

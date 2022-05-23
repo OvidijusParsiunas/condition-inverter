@@ -17,7 +17,7 @@ export class AnalyzeStatement {
   }
 
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    if (evaluationState.currentStatementEndIndex > index) {
+    if (evaluationState.currentStatementEndIndex >= index) {
       return AnalyzeTokens.updateState(tokens, index, evaluationState);
     }
     AnalyzeStatement.finishEvaluatingStatement(tokens, evaluationState);

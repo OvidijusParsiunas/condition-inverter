@@ -640,6 +640,10 @@ suite('Generic Inversion Suite', () => {
       output: 'if (cat(...[1,2,3,4])) { console.log(2) }',
     },
     {
+      input: `if (+true) { console.log(2) }`,
+      output: 'if (!(+true)) { console.log(2) }',
+    },
+    {
       input: `if ({ name } = cat) { console.log(2) }`,
       output: 'if (!({ name } = cat)) { console.log(2) }',
     },
@@ -730,6 +734,7 @@ suite('Generic Inversion Suite', () => {
     { input: 'for (dog in cat) { console.log(2) }', output: 'for (dog in cat) { console.log(2) }' },
     { input: 'for (const dog in cat) { console.log(2) }', output: 'for (const dog in cat) { console.log(2) }' },
     { input: 'for (dog of cat) { console.log(2) }', output: 'for (dog of cat) { console.log(2) }' },
+    { input: `for (let i = 0; (); i += 1) console.log('hi')`, output: `for (let i = 0; (); i += 1) console.log('hi')` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

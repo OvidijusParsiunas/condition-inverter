@@ -3,28 +3,27 @@ import { EvaluationState } from '../../../shared/types/evaluationState';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class UpdateStateForStandaloneStatements {
-  private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
-    const endIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
+  private static markForBracketAddition(endIndex: number, evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
-      start: evaluationState.startOfCurrentStatementIndex,
+      start: evaluationState.currentStatementStartIndex,
       end: endIndex,
     });
   }
 
   private static markForVariableInversion(evaluationState: EvaluationState): void {
-    evaluationState.syntaxToBeInverted.push({ start: evaluationState.startOfCurrentStatementIndex });
+    evaluationState.syntaxToBeInverted.push({ start: evaluationState.currentStatementStartIndex });
   }
 
   private static markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
-      start: evaluationState.startOfCurrentStatementIndex,
+      start: evaluationState.currentStatementStartIndex,
       invertBooleanLiteral: evaluationState.invertBooleanLiteral,
     });
   }
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
-    const { startOfCurrentStatementIndex: startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
+    const { currentStatementStartIndex: startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
     const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, startOfCurrentStatementInsideIndex - 1);
     syntaxToBeInverted.push({
       start: startOfCurrentStatementInsideIndex,
@@ -33,7 +32,7 @@ export class UpdateStateForStandaloneStatements {
   }
 
   // a look back to see if previous syntax defines a standalone statement
-  public static markStandaloneStatementsForInversion(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
+  public static markStandaloneStatementsForInversion(tokens: Tokens, endIndex: number, evaluationState: EvaluationState): void {
     if (!evaluationState.markedForOperatorInversion) {
       if (evaluationState.shouldBracketsBeRemoved) {
         UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
@@ -43,7 +42,7 @@ export class UpdateStateForStandaloneStatements {
         UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
       }
       if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
-        UpdateStateForStandaloneStatements.markForBracketAddition(tokens, index, evaluationState);
+        UpdateStateForStandaloneStatements.markForBracketAddition(endIndex, evaluationState);
       }
     }
   }

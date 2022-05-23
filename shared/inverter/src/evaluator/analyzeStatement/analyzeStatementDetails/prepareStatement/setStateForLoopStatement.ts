@@ -1,27 +1,20 @@
-import { AnalyzeRedundantBrackets, RedundantBracketsAnalysisResult } from '../redundancies/analyzeRedundantBrackets';
+import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
 import { TokenOccurrences } from '../../../../shared/functionality/tokenOccurrences';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { SetEvaluationState } from './shared/setEvaluationState';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class SetStateForLoopStatement {
-  private static setEvaluationState(statementBoundaryIndexes: RedundantBracketsAnalysisResult, evaluationState: EvaluationState): void {
-    evaluationState.lastRedundantOpenBracketIndex = statementBoundaryIndexes.lastRedundantOpenBracketIndex;
-    evaluationState.startOfCurrentStatementIndex = statementBoundaryIndexes.start;
-    evaluationState.currentStatementEndIndex = statementBoundaryIndexes.end;
-    evaluationState.isCurrentlyInsideStatement = true;
-  }
-
   private static isConditionInValid(statementTokens: Tokens, start: number, end: number): boolean {
     const nextTokenAfterStart = TraversalUtil.getSiblingNonSpaceTokenIndex(statementTokens, start + 1);
     return nextTokenAfterStart >= end;
   }
 
   private static setEvaluationStateIfValid(tokens: Tokens, start: number, end: number, evaluationState: EvaluationState): number {
-    const statementBoundaryIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start + 1, end - 1);
+    const statementBoundaryIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
     if (SetStateForLoopStatement.isConditionInValid(tokens, start, end)) return end;
-    SetStateForLoopStatement.setEvaluationState(statementBoundaryIndexes, evaluationState);
-    return start;
+    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState);
   }
 
   private static setBoundariesForMiddleOfIfStatement(tokens: Tokens, startIndex: number, endIndex: number, evaluationState: EvaluationState): number {
