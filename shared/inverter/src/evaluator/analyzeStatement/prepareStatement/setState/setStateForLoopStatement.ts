@@ -3,6 +3,7 @@ import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBracke
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { SetEvaluationState } from './shared/setEvaluationState';
+import { LANGUAGE } from '../../../../shared/consts/languages';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class SetStateForLoopStatement {
@@ -29,6 +30,7 @@ export class SetStateForLoopStatement {
   }
 
   private static setStateForGolang(tokens: Tokens, startIndex: number, indexOfCurlyBracket: number, evaluationState: EvaluationState): number {
+    evaluationState.language = LANGUAGE.golang;
     const newIndex = SetStateForLoopStatement.setBoundariesForMiddleOfIfStatement(tokens, startIndex, indexOfCurlyBracket, evaluationState);
     if (newIndex > -1) return newIndex;
     const rangeIndex = tokens.indexOf('range');
@@ -55,7 +57,8 @@ export class SetStateForLoopStatement {
     if (indexOfCurlyBracket > -1) {
       return SetStateForLoopStatement.setStateForGolang(tokens, startIndex, indexOfCurlyBracket, evaluationState);
     }
-    // python does not need for state to be set
+    evaluationState.language = LANGUAGE.python;
+    // python for loops do not contain conditions index is moved to end of syntax
     return tokens.indexOf(':');
   }
 }
