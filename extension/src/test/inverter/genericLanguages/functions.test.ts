@@ -117,6 +117,18 @@ suite('Generic Language Nested Function Inversion Suite', () => {
       output: 'if (!dog || !(() => { console.log(2) })) { console.log(2) }',
     },
     {
+      input: 'if (() => { let fish = dog && cat }) { console.log(2) }',
+      output: 'if (!(() => { let fish = dog && cat })) { console.log(2) }',
+    },
+    {
+      input: 'if ((() => { let fish = dog && cat })) { console.log(2) }',
+      output: 'if (!(() => { let fish = dog && cat })) { console.log(2) }',
+    },
+    {
+      input: 'if (dog && () => { console.log(2) }) { console.log(2) }',
+      output: 'if (!dog || !(() => { console.log(2) })) { console.log(2) }',
+    },
+    {
       input: 'if (() => { console.log(2) } && dog) { console.log(2) }',
       output: 'if (!(() => { console.log(2) }) || !dog) { console.log(2) }',
     },

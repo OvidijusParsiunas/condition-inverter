@@ -14,7 +14,7 @@ export class AnalyzeFunction {
 
   public static updateStateForArrow(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     AnalyzeBrackatableSyntax.updateState(evaluationState);
-    const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index);
+    const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
     if (tokens[nextTokenIndex] === '{') {
       return TraversalUtil.getIndexOfClosingBrace(tokens, nextTokenIndex, 1);
     } else if (tokens[nextTokenIndex] === '(') {
