@@ -14,7 +14,7 @@ export class FindStatementAtSelectionEnd {
     const startChar = start.line === line ? start.character : 0;
     const relativeStatementIndexToSelection = FindStatementAtSelectionEnd.searchFromSelectionStart(editor, line, startChar, end);
     if (relativeStatementIndexToSelection > -1) {
-      return { line: line, character: relativeStatementIndexToSelection + startChar };
+      return { line, character: relativeStatementIndexToSelection + startChar };
     }
     return null;
   }

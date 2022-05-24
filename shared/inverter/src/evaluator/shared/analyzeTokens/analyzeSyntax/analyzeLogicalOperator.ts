@@ -1,9 +1,9 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAssignmentOperator';
-import { UpdateStateForStandaloneStatements } from '../analyzeStandaloneStatement';
 import { EvaluationStateUtil } from '../../evaluationState/evaluationStateUtil';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
+import { MarkValueForInversion } from '../markValueForInversion';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeLogicalOperator {
@@ -14,7 +14,7 @@ export class AnalyzeLogicalOperator {
     evaluationState: EvaluationState,
   ): void {
     const endIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
-    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(tokens, endIndex, evaluationState);
+    MarkValueForInversion.mark(tokens, endIndex, evaluationState);
     evaluationState.syntaxToBeInverted.push({ start: currentIndex });
     evaluationState.currentStatementStartIndex = nextNonSpaceCharIndex;
     EvaluationStateUtil.refreshBooleanState(evaluationState);

@@ -2,7 +2,7 @@ import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { Tokens } from '../../../shared/types/tokens';
 
-export class UpdateStateForStandaloneStatements {
+export class MarkValueForInversion {
   private static markForBracketAddition(endIndex: number, evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
@@ -31,19 +31,17 @@ export class UpdateStateForStandaloneStatements {
     });
   }
 
-  // WORK - refactor this as it is not used just for stabdalobe statement
-  // a look back to see if previous syntax defines a standalone statement
-  public static markStandaloneStatementsForInversion(tokens: Tokens, endIndex: number, evaluationState: EvaluationState): void {
+  public static mark(tokens: Tokens, endIndex: number, evaluationState: EvaluationState): void {
     if (!evaluationState.markedForOperatorInversion) {
       if (evaluationState.shouldBracketsBeRemoved) {
-        UpdateStateForStandaloneStatements.markForNegatedBracketRemoval(tokens, evaluationState);
+        MarkValueForInversion.markForNegatedBracketRemoval(tokens, evaluationState);
       } else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
-        UpdateStateForStandaloneStatements.markForBooleanLiteralInversion(evaluationState);
+        MarkValueForInversion.markForBooleanLiteralInversion(evaluationState);
       } else {
-        UpdateStateForStandaloneStatements.markForVariableInversion(evaluationState);
+        MarkValueForInversion.markForVariableInversion(evaluationState);
       }
       if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
-        UpdateStateForStandaloneStatements.markForBracketAddition(endIndex, evaluationState);
+        MarkValueForInversion.markForBracketAddition(endIndex, evaluationState);
       }
     }
   }

@@ -36,7 +36,7 @@ export interface EvaluationState {
   // for conditions that include arithmetic operations or double bangs
   isOperationWrappableInBrackets: boolean;
   invertBooleanLiteral: boolean;
-  // this means that there is no entity to syntaxToBeInverted required to be added and the Inverter class code is going to take care of the inversion
+  // this means that the variable has already been marked for inversion so there is no need to adda another syntaxToBeInverted entry for it
   markedForOperatorInversion: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;

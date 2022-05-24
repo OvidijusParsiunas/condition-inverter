@@ -1,5 +1,5 @@
 import { CleanUpRedundancies } from '../analyzeConditionInsideStatement/evaluateAndPrepareUtils/redundancies/cleanUpRedundancies';
-import { UpdateStateForStandaloneStatements } from '../../shared/analyzeTokens/analyzeStandaloneStatement';
+import { MarkValueForInversion } from '../../shared/analyzeTokens/markValueForInversion';
 import { EvaluationStateUtil } from '../../shared/evaluationState/evaluationStateUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { AnalyzeToken } from '../../shared/analyzeTokens/analyzeToken';
@@ -7,11 +7,7 @@ import { Token, Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeOutsideStatement {
   private static finishEvaluatingStatement(tokens: Tokens, evaluationState: EvaluationState): void {
-    UpdateStateForStandaloneStatements.markStandaloneStatementsForInversion(
-      tokens,
-      evaluationState.currentStatementEndIndex || tokens.length - 1,
-      evaluationState,
-    );
+    MarkValueForInversion.mark(tokens, evaluationState.currentStatementEndIndex || tokens.length - 1, evaluationState);
     evaluationState.isCurrentlyEvaluatingConditions = false;
     evaluationState.markedForOperatorInversion = false;
     CleanUpRedundancies.removeAdditionOfBracketsFromState(evaluationState);
