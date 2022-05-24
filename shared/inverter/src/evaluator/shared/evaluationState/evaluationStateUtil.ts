@@ -1,11 +1,9 @@
-import { AnalyzeConditionOutsideStatement } from '../../conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { LANGUAGE } from '../../../shared/consts/languages';
 
 export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
     return {
-      conditionAnalyzer: new AnalyzeConditionOutsideStatement(),
       isCurrentlyEvaluatingConditions: false,
       currentStatementStartIndex: 0,
       currentStatementEndIndex: 0,

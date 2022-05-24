@@ -1,4 +1,3 @@
-import { ConditionAnalyzer } from './conditionAnalyzer';
 import { StartEndIndexes } from './StartEndIndexes';
 import { LANGUAGE } from '../consts/languages';
 
@@ -26,8 +25,6 @@ export interface GreaterOrLessThanHasFollowUpEquals extends Generic {
 export type SyntaxToBeInverted = Generic | InsertNewBrackets | InvertBooleanLiteral | RemoveNegationBrackets | GreaterOrLessThanHasFollowUpEquals;
 
 export interface EvaluationState {
-  // WORK - to be removed
-  conditionAnalyzer: ConditionAnalyzer;
   isCurrentlyEvaluatingConditions: boolean;
   currentStatementStartIndex: number;
   currentStatementEndIndex: number;
