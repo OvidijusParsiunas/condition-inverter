@@ -12,16 +12,16 @@ export class EvaluateAndPrepareOutsideStatement {
     if (previousToken === '=' || previousToken === ';' || previousToken === ',') return index;
     if (previousToken === '(') {
       const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, previousIndex, 1);
-      evaluationState.currentStatementEndIndex = closeBracketIndex - 1;
+      evaluationState.conditionSequenceEndIndex = closeBracketIndex - 1;
       return index;
     }
     return EvaluateAndPrepareOutsideStatement.getStartTokenIndex(tokens, previousIndex, evaluationState);
   }
 
   public static init(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    evaluationState.currentStatementEndIndex = tokens.length - 1;
-    evaluationState.currentStatementStartIndex = EvaluateAndPrepareOutsideStatement.getStartTokenIndex(tokens, index, evaluationState);
-    evaluationState.isCurrentlyEvaluatingConditions = true;
-    return evaluationState.currentStatementStartIndex;
+    evaluationState.conditionSequenceEndIndex = tokens.length - 1;
+    evaluationState.currentConditionStartIndex = EvaluateAndPrepareOutsideStatement.getStartTokenIndex(tokens, index, evaluationState);
+    evaluationState.isEvaluatingConditions = true;
+    return evaluationState.currentConditionStartIndex;
   }
 }

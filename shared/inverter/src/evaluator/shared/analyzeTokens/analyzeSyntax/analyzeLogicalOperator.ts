@@ -16,7 +16,7 @@ export class AnalyzeLogicalOperator {
     const endIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
     MarkValueForInversion.mark(tokens, endIndex, evaluationState);
     evaluationState.syntaxToBeInverted.push({ start: currentIndex });
-    evaluationState.currentStatementStartIndex = nextNonSpaceCharIndex;
+    evaluationState.currentConditionStartIndex = nextNonSpaceCharIndex;
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
 

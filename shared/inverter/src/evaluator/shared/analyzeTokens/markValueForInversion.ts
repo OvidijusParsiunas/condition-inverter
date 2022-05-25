@@ -6,24 +6,24 @@ export class MarkValueForInversion {
   private static markForBracketAddition(endIndex: number, evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
-      start: evaluationState.currentStatementStartIndex,
+      start: evaluationState.currentConditionStartIndex,
       end: endIndex,
     });
   }
 
   private static markForVariableInversion(evaluationState: EvaluationState): void {
-    evaluationState.syntaxToBeInverted.push({ start: evaluationState.currentStatementStartIndex });
+    evaluationState.syntaxToBeInverted.push({ start: evaluationState.currentConditionStartIndex });
   }
 
   private static markForBooleanLiteralInversion(evaluationState: EvaluationState): void {
     evaluationState.syntaxToBeInverted.push({
-      start: evaluationState.currentStatementStartIndex,
+      start: evaluationState.currentConditionStartIndex,
       invertBooleanLiteral: evaluationState.invertBooleanLiteral,
     });
   }
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
-    const { currentStatementStartIndex: startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
+    const { currentConditionStartIndex: startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
     const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, startOfCurrentStatementInsideIndex - 1);
     syntaxToBeInverted.push({
       start: startOfCurrentStatementInsideIndex,

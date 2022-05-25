@@ -25,9 +25,9 @@ export interface GreaterOrLessThanHasFollowUpEquals extends Generic {
 export type SyntaxToBeInverted = Generic | InsertNewBrackets | InvertBooleanLiteral | RemoveNegationBrackets | GreaterOrLessThanHasFollowUpEquals;
 
 export interface EvaluationState {
-  isCurrentlyEvaluatingConditions: boolean;
-  currentStatementStartIndex: number;
-  currentStatementEndIndex: number;
+  isEvaluatingConditions: boolean;
+  currentConditionStartIndex: number;
+  conditionSequenceEndIndex: number;
   syntaxToBeInverted: SyntaxToBeInverted[];
   shouldBracketsBeRemoved: boolean;
   // for conditions that include arithmetic operations or double bangs

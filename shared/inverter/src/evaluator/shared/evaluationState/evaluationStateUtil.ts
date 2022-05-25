@@ -4,9 +4,9 @@ import { LANGUAGE } from '../../../shared/consts/languages';
 export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {
     return {
-      isCurrentlyEvaluatingConditions: false,
-      currentStatementStartIndex: 0,
-      currentStatementEndIndex: 0,
+      isEvaluatingConditions: false,
+      currentConditionStartIndex: -1,
+      conditionSequenceEndIndex: -1,
       syntaxToBeInverted: [],
       shouldBracketsBeRemoved: false,
       // usually involves arithmentic operations or double bangs

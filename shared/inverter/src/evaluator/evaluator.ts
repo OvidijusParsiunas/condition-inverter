@@ -18,7 +18,7 @@ export class Evaluator {
 
   public static evaluate(tokens: Tokens): SyntaxToBeInverted[] {
     const evaluationState = EvaluationStateUtil.generateNewState();
-    evaluationState.currentStatementEndIndex = tokens.length - 1;
+    evaluationState.conditionSequenceEndIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
       index = Evaluator.invertConditionsUsingAnalyzer(tokens, index, evaluationState);
     }

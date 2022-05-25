@@ -5,9 +5,9 @@ import { EvaluationState } from '../../../../../../shared/types/evaluationState'
 export class SetEvaluationState {
   public static set(statementBoundaryIndexes: BracketsAnalysisResult, evaluationState: EvaluationState): number {
     evaluationState.lastRedundantOpenBracketIndex = statementBoundaryIndexes.lastRedundantOpenBracketIndex;
-    evaluationState.currentStatementStartIndex = statementBoundaryIndexes.start + 1;
-    evaluationState.currentStatementEndIndex = statementBoundaryIndexes.end - 1;
-    evaluationState.isCurrentlyEvaluatingConditions = !AnalyzeEmptyStatement.isEmpty(evaluationState);
-    return evaluationState.currentStatementStartIndex - 1;
+    evaluationState.currentConditionStartIndex = statementBoundaryIndexes.start + 1;
+    evaluationState.conditionSequenceEndIndex = statementBoundaryIndexes.end - 1;
+    evaluationState.isEvaluatingConditions = !AnalyzeEmptyStatement.isEmpty(evaluationState);
+    return evaluationState.currentConditionStartIndex - 1;
   }
 }

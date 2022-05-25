@@ -61,14 +61,10 @@ export class SetStateForGenericStatement {
     };
   }
 
-  // prettier-ignore
-  private static getIndexesOfStatementAndSetLanguage(
-      tokens: Tokens, analysisStartIndex: number, evaluationState: EvaluationState): StartEndIndexes {
+  private static getIndexesOfStatementAndSetLanguage(tokens: Tokens, analysisStartIndex: number, evaluationState: EvaluationState): StartEndIndexes {
     const startSymbolIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, analysisStartIndex + 1);
     if (tokens[startSymbolIndex] === '(') {
-      // prettier-ignore
-      return SetStateForGenericStatement.getBrackatableStatementIndexesAndSetLanguage(
-        tokens, analysisStartIndex, startSymbolIndex, evaluationState);
+      return SetStateForGenericStatement.getBrackatableStatementIndexesAndSetLanguage(tokens, analysisStartIndex, startSymbolIndex, evaluationState);
     }
     return SetStateForGenericStatement.getNoBracketsStatementIndexesAndSetLanguage(tokens, startSymbolIndex, evaluationState);
   }
