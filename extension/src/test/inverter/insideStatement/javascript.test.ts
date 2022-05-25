@@ -49,6 +49,10 @@ suite('JavaScript Invertion Suite', () => {
       output: `if ((dog?.['cat']?.fish())) { console.log(2) }`,
     },
     {
+      input: `if ((!dog?.['cat']?.fish?.())) { console.log(2) }`,
+      output: `if ((dog?.['cat']?.fish?.())) { console.log(2) }`,
+    },
+    {
       input: `if (dog in cat) { console.log(2) }`,
       output: `if (!(dog in cat)) { console.log(2) }`,
     },

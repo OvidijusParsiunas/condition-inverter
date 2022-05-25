@@ -704,6 +704,76 @@ suite('Generic Inversion Suite', () => {
       output: 'if ((dog ? cat : fish)) { console.log(2) }',
     },
     {
+      input: `if (mouse \n? mouse : cat)`,
+      output: 'if (!mouse \n? mouse : cat)',
+    },
+    {
+      input: `if (mouse ? mouse && cat : mouse && cat)`,
+      output: 'if (!mouse ? mouse && cat : mouse && cat)',
+    },
+    {
+      input: `if ((mouse ? mouse && cat : (mouse && cat)) && cat)`,
+      output: 'if (!(mouse ? mouse && cat : (mouse && cat)) || !cat)',
+    },
+    {
+      input: `if ((mouse ? mouse && cat : (mouse && cat)) && cat)`,
+      output: 'if (!(mouse ? mouse && cat : (mouse && cat)) || !cat)',
+    },
+    {
+      input: `if (((mouse ? mouse && cat : (mouse && cat))) && cat)`,
+      output: 'if (!((mouse ? mouse && cat : (mouse && cat))) || !cat)',
+    },
+    {
+      input: `if ((mouse ? mouse && cat : ((mouse && cat))) && cat)`,
+      output: 'if (!(mouse ? mouse && cat : ((mouse && cat))) || !cat)',
+    },
+    {
+      input: `if (dog && (mouse ? mouse && cat : (mouse && cat)) && cat)`,
+      output: 'if (!dog || !(mouse ? mouse && cat : (mouse && cat)) || !cat)',
+    },
+    {
+      input: `if (dog && (mouse ? mouse && cat : ((mouse && cat))) && cat)`,
+      output: 'if (!dog || !(mouse ? mouse && cat : ((mouse && cat))) || !cat)',
+    },
+    {
+      input: `if (dog && ((mouse ? mouse && cat : (mouse && cat))) && cat)`,
+      output: 'if (!dog || !((mouse ? mouse && cat : (mouse && cat))) || !cat)',
+    },
+    {
+      input: `if (dog &&   (  (  mouse ? mouse && cat : (  mouse && cat)  )  )   && cat)`,
+      output: 'if (!dog ||   !(  (  mouse ? mouse && cat : (  mouse && cat)  )  )   || !cat)',
+    },
+    {
+      input: `if (mouse && cat ? mouse || cat : cat) { console.log(2) }`,
+      output: 'if (!mouse || !cat ? mouse || cat : cat) { console.log(2) }',
+    },
+    {
+      input: `if (mouse && cat ? mouse || cat : () => { if (cat || dog) { console.log('hello'); } }) { console.log(2) }`,
+      output: `if (!mouse || !cat ? mouse || cat : () => { if (cat || dog) { console.log('hello'); } }) { console.log(2) }`,
+    },
+    {
+      input: `if (mouse && cat ? mouse || cat : (): void => { if (cat || dog) { console.log('hello'); } }) { console.log(2) }`,
+      output: `if (!mouse || !cat ? mouse || cat : (): void => { if (cat || dog) { console.log('hello'); } }) { console.log(2) }`,
+    },
+    {
+      input: `if (mouse && cat ? (): void => { if (cat || dog) { console.log('hello'); } } || cat : cat) { console.log(2) }`,
+      output: `if (!mouse || !cat ? (): void => { if (cat || dog) { console.log('hello'); } } || cat : cat) { console.log(2) }`,
+    },
+    {
+      input: `if ((mouse && cat ? (): void => { if (cat || dog) { } } || cat : (): void => { if (cat || dog) { } })) { console.log(2) }`,
+      output: `if ((!mouse || !cat ? (): void => { if (cat || dog) { } } || cat : (): void => { if (cat || dog) { } })) { console.log(2) }`,
+    },
+    {
+      input: `if (dog && mouse && cat ? (): void => { if (cat || dog) { } } || cat : (): void => { if (cat || dog) { } }) { console.log(2) }`,
+      output: `if (!dog || !mouse || !cat ? (): void => { if (cat || dog) { } } || cat : (): void => { if (cat || dog) { } }) { console.log(2) }`,
+    },
+    {
+      // eslint-disable-next-line max-len
+      input: `if (dog && (mouse && cat ? (): void => { if (cat || dog) { } } || cat : (): void => { if (cat || dog) { } }) && cat) { console.log(2) }`,
+      // eslint-disable-next-line max-len
+      output: `if (!dog || !(mouse && cat ? (): void => { if (cat || dog) { } } || cat : (): void => { if (cat || dog) { } }) || !cat) { console.log(2) }`,
+    },
+    {
       input: `if (1 > 2) { console.log(2) }`,
       output: 'if (1 <= 2) { console.log(2) }',
     },

@@ -5,9 +5,9 @@ import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSynt
 import { AnalyzeMethodInvocation } from './analyzeSyntax/analyzeMethodInvocation';
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
-import { AnalyzeNullishOperator } from './analyzeSyntax/analyzeNullishOperator';
 import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
 import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
+import { AnalyzeQuestionMark } from './analyzeSyntax/analyzeQuestionMark';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { AnalyzeEqualsSign } from './analyzeSyntax/analyzeEqualsSign';
 import { AnalyzeFunction } from './analyzeSyntax/analyzeFunction';
@@ -72,7 +72,7 @@ export class AnalyzeToken {
         AnalyzeIdentityOrMembershipOperator.updateState(tokens, index, evaluationState);
         break;
       case '?':
-        return AnalyzeNullishOperator.updateState(tokens, index, evaluationState);
+        return AnalyzeQuestionMark.updateState(tokens, index, evaluationState);
       default: {
         // it is easier to check if the current token is part of a method invocation rather than checking
         // if the previous token is a method name using the AnalyzeBracket class

@@ -3,6 +3,7 @@ import { EvaluationState } from '../../../shared/types/evaluationState';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class EvaluateAndPrepareOutsideStatement {
+  // tracks back until a token before the condition start is found
   private static getStartTokenIndex(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     if (index === 0) {
       return index;

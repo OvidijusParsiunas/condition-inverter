@@ -1,21 +1,16 @@
-import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from 'shared/inverter/src/shared/consts/errors';
-
 export class ErrorHandler {
   public static displayMessageOnConsole(message: string): void {
     /* eslint-disable no-console */
     console.error(message);
   }
 
+  // the displaySnackbar callback has been kept in-case it is needed in the future
   public static errorHandlerCallback(
     message: string,
     displaySnackbar: (isDisplayed: boolean) => void,
     displaySyntaxError: (isDisplayed: boolean) => void,
   ): void {
     ErrorHandler.displayMessageOnConsole(message);
-    if (message !== INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL) {
-      displaySnackbar(true);
-    } else {
-      displaySyntaxError(true);
-    }
+    displaySyntaxError(true);
   }
 }

@@ -15,7 +15,7 @@ export class AnalyzeInsideStatement {
   }
 
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    if (evaluationState.conditionSequenceEndIndex >= index) {
+    if (index <= evaluationState.conditionSequenceEndIndex) {
       return AnalyzeToken.updateState(tokens, index, evaluationState);
     }
     AnalyzeInsideStatement.finishEvaluatingStatement(tokens, evaluationState);

@@ -1,4 +1,4 @@
-import { INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL } from '../consts/errors';
+import { FirstFoundToken } from '../types/firstFoundToken';
 import { Token, Tokens } from '../types/tokens';
 
 export class TraversalUtil {
@@ -7,8 +7,18 @@ export class TraversalUtil {
     return tokens.slice(0, startIndex).lastIndexOf(token);
   }
 
+  public static findFirstTokenFromSelection(tokens: Tokens, startIndex: number, tokensToSearchFor: Tokens): FirstFoundToken {
+    const tokensToSearchForJSON = new Map(tokensToSearchFor.map((obj) => [obj as string, true]));
+    for (let i = startIndex; i < tokens.length; i += 1) {
+      if (tokensToSearchForJSON[tokens[i] as keyof typeof tokensToSearchForJSON]) {
+        return { token: tokens[i], index: i };
+      }
+    }
+    return { token: null, index: tokens.length - 1 };
+  }
+
   public static getSiblingNonSpaceTokenIndex(tokens: Tokens, index: number, traverseForwards = true): number {
-    if (tokens[index] !== ' ' && tokens[index] !== `\n` && tokens[index] !== `\r`) {
+    if (tokens[index] !== ' ' && tokens[index] !== '\n' && tokens[index] !== '\r') {
       return index;
     }
     const newIndex = traverseForwards ? index + 1 : index - 1;
@@ -24,7 +34,7 @@ export class TraversalUtil {
 
   private static getIndexOfClosingSyntaxToken(tokens: Tokens, index: number, openSyntax: string, closeSyntax: string, openBrackets: number): number {
     if (index > tokens.length - 1) {
-      throw new Error(INDEX_OUT_OF_BOUNDS_DURING_TRAVERSAL);
+      return tokens.length - 1;
     }
     if (tokens[index + 1] === openSyntax) {
       return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index + 1, openSyntax, closeSyntax, openBrackets + 1);
@@ -44,5 +54,9 @@ export class TraversalUtil {
 
   public static getIndexOfClosingBrace(tokens: Tokens, index: number, openBrackets = 0): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '{', '}', openBrackets);
+  }
+
+  public static getIndexOfCurrentTernaryColon(tokens: Tokens, index: number, openBrackets = 0): number {
+    return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '?', ':', openBrackets);
   }
 }
