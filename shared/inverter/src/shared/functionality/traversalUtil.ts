@@ -8,7 +8,7 @@ export class TraversalUtil {
   }
 
   public static findFirstTokenFromSelection(tokens: Tokens, startIndex: number, tokensToSearchFor: Tokens): FirstFoundToken {
-    const tokensToSearchForJSON = new Map(tokensToSearchFor.map((obj) => [obj as string, true]));
+    const tokensToSearchForJSON = Object.fromEntries(new Map(tokensToSearchFor.map((obj) => [obj as string, true])));
     for (let i = startIndex; i < tokens.length; i += 1) {
       if (tokensToSearchForJSON[tokens[i] as keyof typeof tokensToSearchForJSON]) {
         return { token: tokens[i], index: i };
