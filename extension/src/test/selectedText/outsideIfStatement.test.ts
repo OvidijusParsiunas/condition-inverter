@@ -3,6 +3,7 @@ import { TextEditorObj } from '../../shared/types/tests/tests';
 import { TestUtil } from '../util/testUtil';
 import * as vscode from 'vscode';
 
+// WORK - refactore the name for this
 suite('Selected Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 

@@ -1,4 +1,5 @@
 import { FirstFoundToken } from '../types/firstFoundToken';
+import { TokensJSON } from '../types/tokensJSON';
 import { Token, Tokens } from '../types/tokens';
 
 export class TraversalUtil {
@@ -7,10 +8,9 @@ export class TraversalUtil {
     return tokens.slice(0, startIndex).lastIndexOf(token);
   }
 
-  public static findFirstTokenFromSelection(tokens: Tokens, startIndex: number, tokensToSearchFor: Tokens): FirstFoundToken {
-    const tokensToSearchForJSON = Object.fromEntries(new Map(tokensToSearchFor.map((obj) => [obj as string, true])));
+  public static findFirstTokenFromSelection(tokens: Tokens, startIndex: number, tokensToSearchFor: TokensJSON): FirstFoundToken {
     for (let i = startIndex; i < tokens.length; i += 1) {
-      if (tokensToSearchForJSON[tokens[i] as keyof typeof tokensToSearchForJSON]) {
+      if (tokensToSearchFor[tokens[i] as keyof typeof tokensToSearchFor]) {
         return { token: tokens[i], index: i };
       }
     }
@@ -34,7 +34,7 @@ export class TraversalUtil {
 
   private static getIndexOfClosingSyntaxToken(tokens: Tokens, index: number, openSyntax: string, closeSyntax: string, openBrackets: number): number {
     if (index > tokens.length - 1) {
-      return tokens.length - 1;
+      return -1;
     }
     if (tokens[index + 1] === openSyntax) {
       return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index + 1, openSyntax, closeSyntax, openBrackets + 1);

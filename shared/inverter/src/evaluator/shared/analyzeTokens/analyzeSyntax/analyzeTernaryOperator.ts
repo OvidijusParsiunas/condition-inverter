@@ -1,53 +1,45 @@
+import { jstsReservedTerminatingWords } from '../../../../shared/consts/jstsReservedTerminatingWords';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { FirstFoundToken } from '../../../../shared/types/firstFoundToken';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeTernaryOperator {
-  private static readonly ternaryOperatorEndingTokens = [';', '\n', '\r'];
-
-  private static findColonExpressionEndingIndex(colonExpressionTokens: Tokens, colonIndex: number): FirstFoundToken {
-    return TraversalUtil.findFirstTokenFromSelection(colonExpressionTokens, colonIndex + 1, AnalyzeTernaryOperator.ternaryOperatorEndingTokens);
-  }
-
-  // the end of colon expression here is determined by the ternaryOperatorEndingTokens symbols. JavaScript can end it without ';'
-  // and can have an expression past the colon that can freely span multiple lines - making it difficult to identify when does it end.
-  // In order not to have to check if a token is a reserver JavaScript keyword, the colon end is determined by ternaryOperatorEndingTokens
-  // prettier-ignore
-  private static getColonEndViaSpecificTokenIndex(
-      colonExpressionTokens: Tokens, colonIndex: number, questionMarkIndex: number, evaluationState: EvaluationState): number {
-    const colonEndToken = AnalyzeTernaryOperator.findColonExpressionEndingIndex(colonExpressionTokens, colonIndex);
+  private static getColonEndViaTerminatingToken(tokens: Tokens, colonIndex: number): number {
+    const colonEndToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex + 1, jstsReservedTerminatingWords);
     if (colonEndToken.token !== null) {
-      return colonEndToken.index + questionMarkIndex;
+      return colonEndToken.index - 1;
     }
-    return evaluationState.conditionSequenceEndIndex;
+    return -1;
   }
 
-  private static getColonEndViaCloseBracketIndex(colonExpressionTokens: Tokens, questionMarkIndex: number): number {
-    const closingBracketIndex = TraversalUtil.getIndexOfClosingBracket(colonExpressionTokens, 0, 1);
-    // WORK - not sure if this is needed
-    // const colonEndToken = AnalyzeQuestionMark.findColonExpressionEndingIndex(colonExpressionTokens, colonIndex);
-    // if (colonEndToken.firstToken !== null) {
-    //   return (colonEndToken.index < closingBracketIndex ? colonEndToken.index : closingBracketIndex) + questionMarkIndex;
-    // }
-    // - 1 in order for analysis to pick it up and numberOfBracketsOpen -= 1 to action
-    return closingBracketIndex + questionMarkIndex - 1;
+  private static movePastColonExpression(tokens: Tokens, colonIndex: number): number {
+    // line below attempts to find ending bracket by pretending to alrady have one open
+    // this is important for conditions outside of statement analysis as they start with
+    // 0 brackets marked as open even though the first element is an open bracket
+    // this additionally allows invertion to happen inside the brackets e.g.:
+    // (mouse ? dog : cat) -> (!mouse ? dog : cat)
+    const closingBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, colonIndex, 1);
+    if (closingBracketIndex > -1) return closingBracketIndex - 1;
+    // not checking whether terminatingTokenIndex comes before closingBracketIndex because is closingBracketIndex
+    // is present - then it will definitely be the closing index of the ternary operator as I have yet to find
+    // a syntax case where it is not
+    const terminatingTokenIndex = AnalyzeTernaryOperator.getColonEndViaTerminatingToken(tokens, colonIndex);
+    if (terminatingTokenIndex > -1) return terminatingTokenIndex;
+    // get the token before the last one - mostly used for partial highlight outside of statement
+    return tokens.length - 2;
   }
 
-  private static movePastColonExpression(tokens: Tokens, questionMarkIndex: number, colonIndex: number, evaluationState: EvaluationState): number {
-    const colonExpressionTokens = tokens.slice(questionMarkIndex, evaluationState.conditionSequenceEndIndex);
-    // WORK - check if this is valid for outside statement condition
-    if (evaluationState.numberOfBracketsOpen > 0) {
-      return AnalyzeTernaryOperator.getColonEndViaCloseBracketIndex(colonExpressionTokens, questionMarkIndex);
-    }
-    return AnalyzeTernaryOperator.getColonEndViaSpecificTokenIndex(colonExpressionTokens, colonIndex, questionMarkIndex, evaluationState);
-  }
-
-  public static movePastTernaryOperator(tokens: Tokens, questionMarkIndex: number, evaluationState: EvaluationState): number {
-    const colonIndex = TraversalUtil.getIndexOfCurrentTernaryColon(tokens, questionMarkIndex, 1);
+  // currently there is a flaw where the first expression before the column that is a nested typescript function
+  // which contains a return type such as : void, will have its colon identified and regarded as a ternary colon
+  // which means that the analysis can end earlier if the function also contains a jstsReservedTerminatingWords
+  // word, and anything after it will get analyzed and inverted as part of normal analysis. E.g.
+  // if (mouse && cat ? (): void => { if (cat || dog) { console.log('hello'); } } || cat : cat) { console.log(2) }
+  // will invert || cat
+  public static movePastTernaryOperator(tokens: Tokens, postQuestionMarkIndex: number): number {
+    const colonIndex = TraversalUtil.getIndexOfCurrentTernaryColon(tokens, postQuestionMarkIndex, 1);
     if (colonIndex > -1) {
-      return AnalyzeTernaryOperator.movePastColonExpression(tokens, questionMarkIndex, colonIndex, evaluationState);
+      return AnalyzeTernaryOperator.movePastColonExpression(tokens, colonIndex);
     }
-    return tokens.length;
+    // get the token before the last one - mostly used for partial highlight outside of statement
+    return tokens.length - 2;
   }
 }

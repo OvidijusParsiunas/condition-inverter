@@ -1,0 +1,26 @@
+import { TokensJSON } from '../types/tokensJSON';
+
+export const jstsReservedTerminatingWords: TokensJSON = {
+  [';']: true,
+  const: true,
+  let: true,
+  var: true,
+  for: true,
+  if: true,
+  else: true,
+  while: true,
+  switch: true,
+  class: true,
+  try: true,
+  throws: true,
+  case: true,
+  break: true,
+  delete: true,
+  private: true,
+  public: true,
+  protected: true,
+  continue: true,
+  do: true,
+  interface: true,
+  async: true,
+};

@@ -1,13 +1,13 @@
-import { AnalyzerStartTokens } from '../../../shared/types/analyzerStartTokens';
 import { EvaluateAndPrepareOutsideStatement } from './evaluateAndPrepare';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { ConditionAnalyzerUtil } from '../shared/conditionAnalyzerUtil';
+import { TokensJSON } from '../../../shared/types/tokensJSON';
 import { AnalyzeOutsideStatement } from './analyzeToken';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
   // WORK: need to do < >
-  private static readonly analyzerStartTokens: AnalyzerStartTokens = { ['&']: true, ['|']: true };
+  private static readonly analyzerStartTokens: TokensJSON = { ['&']: true, ['|']: true, ['?']: true };
 
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
     return ConditionAnalyzerUtil.shouldAnalysisStart(tokens, index, AnalyzeConditionOutsideStatement.analyzerStartTokens);

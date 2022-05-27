@@ -10,17 +10,11 @@ export class EvaluateAndPrepareOutsideStatement {
     }
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
     const previousToken = tokens[previousIndex];
-    if (previousToken === '=' || previousToken === ';' || previousToken === ',') return index;
-    if (previousToken === '(') {
-      const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, previousIndex, 1);
-      evaluationState.conditionSequenceEndIndex = closeBracketIndex - 1;
-      return index;
-    }
+    if (previousToken === '=' || previousToken === ';' || previousToken === ',' || previousToken === '(') return index;
     return EvaluateAndPrepareOutsideStatement.getStartTokenIndex(tokens, previousIndex, evaluationState);
   }
 
   public static init(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    evaluationState.conditionSequenceEndIndex = tokens.length - 1;
     evaluationState.currentConditionStartIndex = EvaluateAndPrepareOutsideStatement.getStartTokenIndex(tokens, index, evaluationState);
     evaluationState.isEvaluatingConditions = true;
     return evaluationState.currentConditionStartIndex;
