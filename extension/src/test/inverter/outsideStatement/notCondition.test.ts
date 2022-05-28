@@ -5,8 +5,11 @@ import * as assert from 'assert';
 suite('Outside Statement No Condition Suite', () => {
   [
     { input: 'mouse & cat', output: 'mouse & cat' },
+    { input: 'mouse &&= cat', output: 'mouse &&= cat' },
+    { input: 'mouse ||= cat', output: 'mouse ||= cat' },
     { input: 'mouse | cat', output: 'mouse | cat' },
     { input: 'mouse ?? cat', output: 'mouse ?? cat' },
+    { input: 'mouse ??= cat', output: 'mouse ??= cat' },
     { input: 'mouse?.cat', output: 'mouse?.cat' },
   ].forEach((testProps) => {
     test(testProps.input, () => {

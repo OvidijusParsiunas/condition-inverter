@@ -14,23 +14,21 @@ export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
     AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
   ];
 
-  private static isLogicalOperatorToken(currentToken: string, nextToken: string): boolean {
+  private static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
     return (
-      AnalyzeConditionOutsideStatement.logicalOperatorStartTokens[currentToken] &&
-      AnalyzeConditionOutsideStatement.logicalOperatorStartTokens[nextToken]
+      AnalyzeConditionOutsideStatement.logicalOperatorStartTokens[tokens[currentIndex] as string] &&
+      AnalyzeConditionOutsideStatement.logicalOperatorStartTokens[tokens[currentIndex + 1] as string] &&
+      tokens[currentIndex + 2] !== '='
     );
   }
 
-  private static isTernaryOperatorToken(currentToken: string, nextToken: string, previousToken: string): boolean {
-    return currentToken === '?' && nextToken !== '?' && previousToken !== '?' && nextToken !== '.';
+  private static isTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    return tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?';
   }
 
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
-    const token = tokens[index] as string;
-    const nextToken = tokens[index + 1] as string;
-    const previousToken = tokens[index - 1] as string;
     for (let i = 0; i < AnalyzeConditionOutsideStatement.isConditionStartFuncs.length; i += 1) {
-      const isStart = AnalyzeConditionOutsideStatement.isConditionStartFuncs[i](token, nextToken, previousToken);
+      const isStart = AnalyzeConditionOutsideStatement.isConditionStartFuncs[i](tokens, index);
       if (isStart) return true;
     }
     return false;
