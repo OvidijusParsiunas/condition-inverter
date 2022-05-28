@@ -6,12 +6,13 @@ import { AnalyzeOutsideStatement } from './analyzeToken';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
-  // WORK: need to do < >
   private static readonly logicalOperatorStartTokens: TokensJSON = { ['&']: true, ['|']: true };
+  private static readonly lessThanOrGreterThanOperatorTokens: TokensJSON = { ['<']: true, ['>']: true };
 
   private static readonly isConditionStartFuncs = [
     AnalyzeConditionOutsideStatement.isLogicalOperatorToken,
     AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
+    AnalyzeConditionOutsideStatement.isLessThanOrGreaterThanOperatorToken,
   ];
 
   private static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
@@ -24,6 +25,14 @@ export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
 
   private static isTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
     return tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?';
+  }
+
+  private static isLessThanOrGreaterThanOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    return (
+      AnalyzeConditionOutsideStatement.lessThanOrGreterThanOperatorTokens[tokens[currentIndex] as string] &&
+      !AnalyzeConditionOutsideStatement.lessThanOrGreterThanOperatorTokens[tokens[currentIndex - 1] as string] &&
+      !AnalyzeConditionOutsideStatement.lessThanOrGreterThanOperatorTokens[tokens[currentIndex + 1] as string]
+    );
   }
 
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
