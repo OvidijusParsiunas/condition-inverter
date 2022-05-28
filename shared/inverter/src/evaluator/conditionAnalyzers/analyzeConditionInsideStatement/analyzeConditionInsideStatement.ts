@@ -6,10 +6,10 @@ import { AnalyzeInsideStatement } from './analyzeToken';
 import { Tokens } from '../../../shared/types/tokens';
 
 export default class AnalyzeConditionInsideStatement extends ConditionAnalyzerUtil {
-  private static readonly analyzerStartTokens: TokensJSON = { if: true, elif: true, while: true, for: true };
+  private static readonly statementStartTokens: TokensJSON = { if: true, elif: true, while: true, for: true };
 
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
-    return ConditionAnalyzerUtil.shouldAnalysisStart(tokens, index, AnalyzeConditionInsideStatement.analyzerStartTokens);
+    return Boolean(AnalyzeConditionInsideStatement.statementStartTokens[tokens[index] as string]);
   }
 
   public static traverseTokensAndUpdateEvaluationState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

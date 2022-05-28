@@ -1,5 +1,4 @@
 import { EvaluationState } from '../../../shared/types/evaluationState';
-import { TokensJSON } from '../../../shared/types/tokensJSON';
 import { Tokens } from '../../../shared/types/tokens';
 
 interface PreparationAndAnalysisFuncs {
@@ -8,13 +7,6 @@ interface PreparationAndAnalysisFuncs {
 }
 
 export class ConditionAnalyzerUtil {
-  public static shouldAnalysisStart(tokens: Tokens, index: number, startTokens: TokensJSON): boolean {
-    if (startTokens[tokens[index] as keyof typeof startTokens]) {
-      return true;
-    }
-    return false;
-  }
-
   // prettier-ignore
   public static traverseTokensAndUpdateEvaluationState(
       tokens: Tokens, index: number, evaluationState: EvaluationState, preparationAndAnalysisFuncs: PreparationAndAnalysisFuncs): number {
