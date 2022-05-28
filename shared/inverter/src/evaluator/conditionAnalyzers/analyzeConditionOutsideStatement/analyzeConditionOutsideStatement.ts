@@ -7,12 +7,14 @@ import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
   private static readonly logicalOperatorStartTokens: TokensJSON = { ['&']: true, ['|']: true };
-  private static readonly lessThanOrGreterThanOperatorTokens: TokensJSON = { ['<']: true, ['>']: true };
+  private static readonly pythonLogicalOperatorTokens: TokensJSON = { ['and']: true, ['or']: true };
+  private static readonly lessOrGreaterThanOperatorTokens: TokensJSON = { ['<']: true, ['>']: true };
 
   private static readonly isConditionStartFuncs = [
     AnalyzeConditionOutsideStatement.isLogicalOperatorToken,
     AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
-    AnalyzeConditionOutsideStatement.isLessThanOrGreaterThanOperatorToken,
+    AnalyzeConditionOutsideStatement.isLessOrGreaterThanOperatorToken,
+    AnalyzeConditionOutsideStatement.isPythonLogicalOperatorToken,
   ];
 
   private static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
@@ -23,15 +25,19 @@ export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
     );
   }
 
+  private static isPythonLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    return AnalyzeConditionOutsideStatement.pythonLogicalOperatorTokens[tokens[currentIndex] as string];
+  }
+
   private static isTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
     return tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?';
   }
 
-  private static isLessThanOrGreaterThanOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+  private static isLessOrGreaterThanOperatorToken(tokens: Tokens, currentIndex: number): boolean {
     return (
-      AnalyzeConditionOutsideStatement.lessThanOrGreterThanOperatorTokens[tokens[currentIndex] as string] &&
-      !AnalyzeConditionOutsideStatement.lessThanOrGreterThanOperatorTokens[tokens[currentIndex - 1] as string] &&
-      !AnalyzeConditionOutsideStatement.lessThanOrGreterThanOperatorTokens[tokens[currentIndex + 1] as string]
+      AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex] as string] &&
+      !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex - 1] as string] &&
+      !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex + 1] as string]
     );
   }
 
