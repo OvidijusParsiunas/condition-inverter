@@ -147,6 +147,22 @@ suite('Outside Statement Inversion Suite', () => {
       input: `!dog or !cat`,
       output: 'dog and cat',
     },
+    {
+      input: `dog == cat`,
+      output: 'dog != cat',
+    },
+    {
+      input: `dog != cat`,
+      output: 'dog == cat',
+    },
+    {
+      input: `dog === cat`,
+      output: 'dog !== cat',
+    },
+    {
+      input: `dog !== cat`,
+      output: 'dog === cat',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

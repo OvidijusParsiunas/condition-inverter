@@ -15,6 +15,7 @@ export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
     AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
     AnalyzeConditionOutsideStatement.isLessOrGreaterThanOperatorToken,
     AnalyzeConditionOutsideStatement.isPythonLogicalOperatorToken,
+    AnalyzeConditionOutsideStatement.isEqualityOperatorToken,
   ];
 
   private static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
@@ -41,6 +42,16 @@ export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
     );
   }
 
+  private static isEqualityOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    return tokens[currentIndex] === '=' && (tokens[currentIndex + 1] === '=' || tokens[currentIndex - 1] === '!');
+  }
+
+  // not inverting if expression starts with ! or not because that is regarded as a statement and not a condition
+  // e.g:
+  // const dog = !cat
+  // or
+  // const dog = not(cat)
+  // not set to invert
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
     for (let i = 0; i < AnalyzeConditionOutsideStatement.isConditionStartFuncs.length; i += 1) {
       const isStart = AnalyzeConditionOutsideStatement.isConditionStartFuncs[i](tokens, index);
