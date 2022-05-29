@@ -795,6 +795,13 @@ suite('Generic Inversion Suite', () => {
     { input: 'for (const dog in cat) { console.log(2) }', output: 'for (const dog in cat) { console.log(2) }' },
     { input: 'for (dog of cat) { console.log(2) }', output: 'for (dog of cat) { console.log(2) }' },
     { input: `for (let i = 0; (); i += 1) console.log('hi')`, output: `for (let i = 0; (); i += 1) console.log('hi')` },
+    { input: `if (`, output: `if (` },
+    { input: `if (dog`, output: `if (!dog` },
+    { input: `if dog`, output: `if !dog` },
+    { input: `if(dog`, output: `if(!dog` },
+    { input: `for dog`, output: `for !dog` },
+    { input: `if (dog &&`, output: `if (!dog ||` },
+    { input: `if (dog && cat`, output: `if (!dog || !cat` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

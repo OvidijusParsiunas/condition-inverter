@@ -11,6 +11,8 @@ import * as assert from 'assert';
 // hence any further nested brackets for outside condition inversion are no longer inverted and above is the only case ever allowed
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
+// WORK - when user has highlighted a statement, make sure that left of (same line) is not a start of a statement, this would help identify if
+// highlighted text should be inverted as we are not inverting python's 'is' operator to 'not is' as 'is' is a typescript type predicate
 suite('Outside Statement Inversion Suite', () => {
   [
     { input: 'mouse && cat', output: '!mouse || !cat' },
@@ -162,6 +164,10 @@ suite('Outside Statement Inversion Suite', () => {
     {
       input: `dog !== cat`,
       output: 'dog === cat',
+    },
+    {
+      input: `(dog == cat)`,
+      output: '(dog != cat)',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

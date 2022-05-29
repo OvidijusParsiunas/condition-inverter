@@ -17,6 +17,7 @@ suite('Outside Statement No Condition Suite', () => {
     { input: 'mouse >>= cat', output: 'mouse >>= cat' },
     { input: 'mouse >>> cat', output: 'mouse >>> cat' },
     { input: 'mouse >>>= cat', output: 'mouse >>>= cat' },
+    { input: 'function(dog) is animal', output: 'function(dog) is animal' },
     { input: 'mouse = cat', output: 'mouse = cat' },
   ].forEach((testProps) => {
     test(testProps.input, () => {

@@ -15,7 +15,7 @@ export class SetStateForLoopStatement {
   private static setEvaluationStateIfValid(tokens: Tokens, start: number, end: number, evaluationState: EvaluationState): number {
     const statementBoundaryIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
     if (SetStateForLoopStatement.isConditionInValid(tokens, start, end)) return end;
-    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState);
+    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState, tokens);
   }
 
   private static setBoundariesForMiddleOfIfStatement(tokens: Tokens, startIndex: number, endIndex: number, evaluationState: EvaluationState): number {
@@ -53,12 +53,21 @@ export class SetStateForLoopStatement {
     if (startToken === '(') {
       return SetStateForLoopStatement.setStateForBrackatable(tokens, startIndex, evaluationState);
     }
-    const indexOfCurlyBracket = tokens.indexOf('{');
-    if (indexOfCurlyBracket > -1) {
-      return SetStateForLoopStatement.setStateForGolang(tokens, startIndex, indexOfCurlyBracket, evaluationState);
+    const openCurlyBraceIndex = tokens.indexOf('{');
+    if (openCurlyBraceIndex > -1) {
+      return SetStateForLoopStatement.setStateForGolang(tokens, startIndex, openCurlyBraceIndex, evaluationState);
     }
-    evaluationState.language = LANGUAGE.python;
-    // python for loops do not contain conditions index is moved to end of syntax
-    return tokens.indexOf(':');
+    const colonIndex = tokens.indexOf(':');
+    if (colonIndex > -1) {
+      // python for loops do not contain conditions, hence the index is moved to end of syntax
+      evaluationState.language = LANGUAGE.python;
+      return tokens.length;
+    }
+    // setting end to -1 in order to identify that there is no end, which SetEvaluationState.set will react
+    // to appropriately and set evaluationState accordingly
+    // IMPORTANT to note that this will result in an inconsistency where python for loops are not inverted when fully highlighed by
+    // the user (highliught end with a :) but if the colon is not there, the following will set the condition to be evaluated
+    // WORK - attempt to find the colon when highlighting using the extension
+    return SetEvaluationState.set({ start: startIndex - 1, end: -1 }, evaluationState, tokens);
   }
 }

@@ -16,9 +16,13 @@ export class SetStateForGenericStatement {
   // }
 
   private static getStatementWithNoSymbolsIndexes(startSymbolIndex: number, tokensFromStartSymbol: Tokens): StartEndIndexes {
+    const openCurlyBraceIndex = tokensFromStartSymbol.indexOf('{');
     return {
       start: startSymbolIndex - 1,
-      end: startSymbolIndex + tokensFromStartSymbol.indexOf('{'),
+      // if there is no open curly brace, then the user has likely partially highlighted the if statement - if dog
+      // we can set end to -1 in order to identify that there is no end, which SetEvaluationState.set will react
+      // to appropriately and set evaluationState accordingly
+      end: openCurlyBraceIndex === -1 ? -1 : startSymbolIndex + openCurlyBraceIndex,
     };
   }
 
@@ -72,6 +76,6 @@ export class SetStateForGenericStatement {
   public static set(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const { start, end } = SetStateForGenericStatement.getIndexesOfStatementAndSetLanguage(tokens, index, evaluationState);
     const statementBoundaryIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
-    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState);
+    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState, tokens);
   }
 }
