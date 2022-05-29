@@ -12,7 +12,7 @@ export class AnalyzeQuestionMark {
       AnalyzeBrackatableSyntax.updateState(evaluationState);
       return index + 1;
     } else if (nextToken !== '.') {
-      return AnalyzeTernaryOperator.movePastTernaryOperator(tokens, nextTokenIndex);
+      return AnalyzeTernaryOperator.movePastTernaryOperator(tokens, nextTokenIndex, evaluationState);
     }
     return -1;
   }
