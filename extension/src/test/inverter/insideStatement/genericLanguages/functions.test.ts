@@ -81,6 +81,34 @@ suite('Generic Language Nested Function Inversion Suite', () => {
       output: 'if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }',
     },
     {
+      input: 'if (myFunc<number>(param)) { console.log(2) }',
+      output: 'if (!myFunc<number>(param)) { console.log(2) }',
+    },
+    {
+      input: 'if (myFunc<number>(param) && dog) { console.log(2) }',
+      output: 'if (!myFunc<number>(param) || !dog) { console.log(2) }',
+    },
+    {
+      input: 'if (!myFunc<number>(param) || !dog) { console.log(2) }',
+      output: 'if (myFunc<number>(param) && dog) { console.log(2) }',
+    },
+    {
+      input: 'if ((myFunc<number>(param))) { console.log(2) }',
+      output: 'if ((!myFunc<number>(param))) { console.log(2) }',
+    },
+    {
+      input: 'if ((myFunc<number>(param)) && cat) { console.log(2) }',
+      output: 'if (!(myFunc<number>(param)) || !cat) { console.log(2) }',
+    },
+    {
+      input: 'if (cat < dog && myFunc<number>(param)) { console.log(2) }',
+      output: 'if (cat >= dog || !myFunc<number>(param)) { console.log(2) }',
+    },
+    {
+      input: 'if (cat >= dog || !myFunc<number>(param)) { console.log(2) }',
+      output: 'if (cat < dog && myFunc<number>(param)) { console.log(2) }',
+    },
+    {
       input: 'if (function() { if (hello) { console.log(2) } }) { console.log(2) }',
       output: 'if (!(function() { if (hello) { console.log(2) } })) { console.log(2) }',
     },
