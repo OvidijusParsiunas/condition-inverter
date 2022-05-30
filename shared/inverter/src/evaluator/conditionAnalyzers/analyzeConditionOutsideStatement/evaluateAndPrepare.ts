@@ -50,8 +50,6 @@ export class EvaluateAndPrepareOutsideStatement {
     const start = EvaluateAndPrepareOutsideStatement.getStart(tokens, index, evaluationState);
     evaluationState.currentConditionStartIndex = start.index;
     evaluationState.isEvaluatingConditions = true;
-    // start.index + 1 is used to start analysis after the start token such as (= or ;), however the analysis needs to begin before ( if it is !( in
-    // order to recognise and invert the negated bracket, hence start.index is used
-    return start.isNegatedBracket ? start.index : start.index + 1;
+    return start.index;
   }
 }

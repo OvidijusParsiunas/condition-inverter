@@ -237,6 +237,10 @@ suite('Outside Statement Inversion Suite', () => {
       input: ` !((dog + cat)) || !cat`,
       output: ' (dog + cat) && cat',
     },
+    {
+      input: `true && false`,
+      output: 'false || true',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
