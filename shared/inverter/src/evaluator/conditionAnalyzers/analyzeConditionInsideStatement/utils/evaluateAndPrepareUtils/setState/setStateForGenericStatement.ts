@@ -1,10 +1,10 @@
+import { TraversalUtil } from '../../../../../../shared/functionality/traversalUtil';
 import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
-import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../../../shared/types/evaluationState';
-import { StartEndIndexes } from '../../../../../shared/types/StartEndIndexes';
-import { LANGUAGE } from '../../../../../shared/consts/languages';
+import { EvaluationState } from '../../../../../../shared/types/evaluationState';
+import { StartEndIndexes } from '../../../../../../shared/types/StartEndIndexes';
+import { LANGUAGE } from '../../../../../../shared/consts/languages';
 import { SetEvaluationState } from './shared/setEvaluationState';
-import { Tokens } from '../../../../../shared/types/tokens';
+import { Tokens } from '../../../../../../shared/types/tokens';
 
 export class SetStateForGenericStatement {
   // If the no symbols approach causes issues for golang when if statement initialization is used e.g. if num := 9; num > 0 add the following code

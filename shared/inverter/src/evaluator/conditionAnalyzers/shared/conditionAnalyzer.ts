@@ -6,7 +6,7 @@ interface PreparationAndAnalysisFuncs {
   readonly analyzeToken: (tokens: Tokens, index: number, evaluationState: EvaluationState) => number;
 }
 
-export class ConditionAnalyzerUtil {
+export class ConditionAnalyzer {
   // prettier-ignore
   public static traverseTokensAndUpdateEvaluationState(
       tokens: Tokens, index: number, evaluationState: EvaluationState, preparationAndAnalysisFuncs: PreparationAndAnalysisFuncs): number {

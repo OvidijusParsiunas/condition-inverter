@@ -1,7 +1,7 @@
 import { BracketsAnalysisResult } from '../../redundancies/analyzeRedundantBrackets';
+import { EvaluationState } from '../../../../../../../shared/types/evaluationState';
 import { AnalyzeEmptyStatement } from '../../redundancies/analyzeEmptyStatement';
-import { EvaluationState } from '../../../../../../shared/types/evaluationState';
-import { Tokens } from '../../../../../../shared/types/tokens';
+import { Tokens } from '../../../../../../../shared/types/tokens';
 
 export class SetEvaluationState {
   // prettier-ignore

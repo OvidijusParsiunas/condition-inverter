@@ -1,11 +1,11 @@
-import { EvaluateAndPrepareOutsideStatement } from './evaluateAndPrepare';
+import { EvaluateAndPrepareOutsideStatement } from './utils/evaluateAndPrepare';
 import { EvaluationState } from '../../../shared/types/evaluationState';
-import { ConditionAnalyzerUtil } from '../shared/conditionAnalyzerUtil';
+import { ConditionAnalyzer } from '../shared/conditionAnalyzer';
+import { AnalyzeOutsideStatement } from './utils/analyzeToken';
 import { TokensJSON } from '../../../shared/types/tokensJSON';
-import { AnalyzeOutsideStatement } from './analyzeToken';
 import { Tokens } from '../../../shared/types/tokens';
 
-export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
+export class AnalyzeConditionOutsideStatement {
   private static readonly logicalOperatorStartTokens: TokensJSON = { ['&']: true, ['|']: true };
   private static readonly pythonLogicalOperatorTokens: TokensJSON = { ['and']: true, ['or']: true };
   private static readonly lessOrGreaterThanOperatorTokens: TokensJSON = { ['<']: true, ['>']: true };
@@ -61,7 +61,7 @@ export class AnalyzeConditionOutsideStatement extends ConditionAnalyzerUtil {
   }
 
   public static traverseTokensAndUpdateEvaluationState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    return ConditionAnalyzerUtil.traverseTokensAndUpdateEvaluationState(tokens, index, evaluationState, {
+    return ConditionAnalyzer.traverseTokensAndUpdateEvaluationState(tokens, index, evaluationState, {
       evaluateAndPrepareState: EvaluateAndPrepareOutsideStatement.init,
       analyzeToken: AnalyzeOutsideStatement.analyze,
     });

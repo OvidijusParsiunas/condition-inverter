@@ -1,6 +1,6 @@
-import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../shared/types/evaluationState';
-import { Tokens } from '../../../shared/types/tokens';
+import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { Tokens } from '../../../../shared/types/tokens';
 
 interface Start {
   index: number;

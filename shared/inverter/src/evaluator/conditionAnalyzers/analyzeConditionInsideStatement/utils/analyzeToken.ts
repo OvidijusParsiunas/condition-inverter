@@ -1,9 +1,9 @@
-import { CleanUpRedundancies } from './evaluateAndPrepareUtils/redundancies/cleanUpRedundancies';
-import { MarkValueForInversion } from '../../shared/analyzeTokens/markValueForInversion';
-import { EvaluationStateUtil } from '../../shared/evaluationState/evaluationStateUtil';
-import { EvaluationState } from '../../../shared/types/evaluationState';
-import { AnalyzeToken } from '../../shared/analyzeTokens/analyzeToken';
-import { Tokens } from '../../../shared/types/tokens';
+import { MarkValueForInversion } from '../../../shared/analyzeTokens/markValueForInversion';
+import { EvaluationStateUtil } from '../../../shared/evaluationState/evaluationStateUtil';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { AnalyzeToken } from '../../../shared/analyzeTokens/analyzeToken';
+import { CleanUpRedundancies } from '../../shared/cleanUpRedundancies';
+import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeInsideStatement {
   private static finishEvaluatingStatement(tokens: Tokens, evaluationState: EvaluationState): void {

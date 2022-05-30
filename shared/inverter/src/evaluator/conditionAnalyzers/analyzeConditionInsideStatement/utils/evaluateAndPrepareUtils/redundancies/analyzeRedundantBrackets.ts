@@ -1,6 +1,6 @@
-import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
-import { StartEndIndexes } from '../../../../../shared/types/StartEndIndexes';
-import { Tokens } from '../../../../../shared/types/tokens';
+import { TraversalUtil } from '../../../../../../shared/functionality/traversalUtil';
+import { StartEndIndexes } from '../../../../../../shared/types/StartEndIndexes';
+import { Tokens } from '../../../../../../shared/types/tokens';
 
 export type BracketsAnalysisResult = { usePreviousTraversalResult?: true; lastRedundantOpenBracketIndex?: number } & StartEndIndexes;
 

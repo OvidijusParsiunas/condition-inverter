@@ -1,10 +1,10 @@
-import { TokenOccurrences } from '../../../../../shared/functionality/tokenOccurrences';
+import { TokenOccurrences } from '../../../../../../shared/functionality/tokenOccurrences';
+import { TraversalUtil } from '../../../../../../shared/functionality/traversalUtil';
 import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
-import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../../../shared/types/evaluationState';
-import { LANGUAGE } from '../../../../../shared/consts/languages';
+import { EvaluationState } from '../../../../../../shared/types/evaluationState';
+import { LANGUAGE } from '../../../../../../shared/consts/languages';
 import { SetEvaluationState } from './shared/setEvaluationState';
-import { Tokens } from '../../../../../shared/types/tokens';
+import { Tokens } from '../../../../../../shared/types/tokens';
 
 export class SetStateForLoopStatement {
   private static isConditionInValid(statementTokens: Tokens, start: number, end: number): boolean {
