@@ -16,6 +16,14 @@ import * as assert from 'assert';
 suite('Outside Statement Inversion Suite', () => {
   [
     { input: 'mouse && cat', output: '!mouse || !cat' },
+    {
+      input: ` cat || !cat`,
+      output: ' !cat && cat',
+    },
+    {
+      input: `  cat   ||   !cat  `,
+      output: '  !cat   &&   cat  ',
+    },
     { input: 'const result = (dog && cat) && mouse + cat', output: 'const result = (!dog || !cat) || !(mouse + cat)' },
     { input: '!mouse || !cat', output: 'mouse && cat' },
     { input: '(mouse && cat) || fish + 2', output: '(!mouse || !cat) && !(fish + 2)' },
@@ -168,6 +176,66 @@ suite('Outside Statement Inversion Suite', () => {
     {
       input: `(dog == cat)`,
       output: '(dog != cat)',
+    },
+    {
+      input: `const animal = (dog == cat)`,
+      output: 'const animal = (dog != cat)',
+    },
+    {
+      input: `dog + cat || !cat`,
+      output: '!(dog + cat) && cat',
+    },
+    {
+      input: `!(dog + cat) && cat`,
+      output: 'dog + cat || !cat',
+    },
+    {
+      input: ` dog + cat || !cat`,
+      output: ' !(dog + cat) && cat',
+    },
+    {
+      input: ` !(dog + cat) && cat`,
+      output: ' dog + cat || !cat',
+    },
+    {
+      input: `!!(dog + cat) && cat`,
+      output: '!(!!(dog + cat)) || !cat',
+    },
+    {
+      input: `!(!!(dog + cat)) || !cat`,
+      output: '!!(dog + cat) && cat',
+    },
+    {
+      input: `!((!!(dog + cat))) || !cat`,
+      output: '(!!(dog + cat)) && cat',
+    },
+    {
+      input: `!(  (  !  !  (dog + cat))) || !cat`,
+      output: '  (  !  !  (dog + cat)) && cat',
+    },
+    {
+      input: `!((dog + cat)) || !cat`,
+      output: '(dog + cat) && cat',
+    },
+    {
+      input: ` !!(dog + cat) && cat`,
+      output: ' !(!!(dog + cat)) || !cat',
+    },
+    {
+      input: ` !(!!(dog + cat)) || !cat`,
+      output: ' !!(dog + cat) && cat',
+    },
+    {
+      input: ` !((!!(dog + cat))) || !cat`,
+      output: ' (!!(dog + cat)) && cat',
+    },
+    {
+      input: ` !(  (  !  !  (dog + cat))) || !cat`,
+      output: '   (  !  !  (dog + cat)) && cat',
+    },
+    {
+      input: ` !((dog + cat)) || !cat`,
+      output: ' (dog + cat) && cat',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

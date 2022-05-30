@@ -23,6 +23,6 @@ export class SetEvaluationState {
     evaluationState.lastRedundantOpenBracketIndex = statementBoundaryIndexes.lastRedundantOpenBracketIndex;
     evaluationState.currentConditionStartIndex = statementBoundaryIndexes.start + 1;
     SetEvaluationState.setEndAndIsEvaluatingState(statementBoundaryIndexes, evaluationState, tokens);
-    return evaluationState.currentConditionStartIndex - 1;
+    return evaluationState.currentConditionStartIndex;
   }
 }

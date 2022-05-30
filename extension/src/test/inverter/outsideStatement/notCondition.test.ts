@@ -19,6 +19,7 @@ suite('Outside Statement No Condition Suite', () => {
     { input: 'mouse >>>= cat', output: 'mouse >>>= cat' },
     { input: 'function(dog) is animal', output: 'function(dog) is animal' },
     { input: 'mouse = cat', output: 'mouse = cat' },
+    { input: 'mouse &', output: 'mouse &' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

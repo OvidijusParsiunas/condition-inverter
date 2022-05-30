@@ -24,6 +24,10 @@ suite('Partial Outside Statement Inversion Suite', () => {
       input: `(mouse ? mouse : cat))`,
       output: '(!mouse ? mouse : cat))',
     },
+    {
+      input: `dog + cat)) && cat`,
+      output: '!(dog + cat))) || !cat',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

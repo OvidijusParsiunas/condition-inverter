@@ -11,7 +11,7 @@ export class ConditionAnalyzerUtil {
   public static traverseTokensAndUpdateEvaluationState(
       tokens: Tokens, index: number, evaluationState: EvaluationState, preparationAndAnalysisFuncs: PreparationAndAnalysisFuncs): number {
     const startIndex = preparationAndAnalysisFuncs.evaluateAndPrepareState(tokens, index, evaluationState);
-    for (let i = startIndex + 1; i < tokens.length; i += 1) {
+    for (let i = startIndex; i < tokens.length; i += 1) {
       if (!evaluationState.isEvaluatingConditions) return i;
       i = preparationAndAnalysisFuncs.analyzeToken(tokens, i, evaluationState);
     }
