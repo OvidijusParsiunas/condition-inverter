@@ -1,7 +1,7 @@
-import { jstsReservedTerminatingWords } from '../../../../shared/consts/jstsReservedTerminatingWords';
-import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { Tokens } from '../../../../shared/types/tokens';
+import { jstsReservedTerminatingWords } from '../../../../../shared/consts/jstsReservedTerminatingWords';
+import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeTernaryOperator {
   private static getColonEndViaTerminatingToken(tokens: Tokens, colonIndex: number): number {

@@ -1,8 +1,8 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAssignmentOperator';
-import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
+import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBitwiseShiftOperator } from './analyzeBitwiseShiftOperator';
-import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { Tokens } from '../../../../shared/types/tokens';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeGreaterOrLessThanSign {
   private static isTypeScriptGenericVariableStart(tokens: Tokens, index: number): number {

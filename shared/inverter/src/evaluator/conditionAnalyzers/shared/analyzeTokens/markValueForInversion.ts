@@ -1,6 +1,6 @@
-import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../shared/types/evaluationState';
-import { Tokens } from '../../../shared/types/tokens';
+import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { Tokens } from '../../../../shared/types/tokens';
 
 export class MarkValueForInversion {
   private static markForBracketAddition(endIndex: number, evaluationState: EvaluationState): void {

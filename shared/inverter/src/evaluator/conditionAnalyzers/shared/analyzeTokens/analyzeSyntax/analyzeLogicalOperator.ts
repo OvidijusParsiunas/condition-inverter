@@ -1,10 +1,10 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAssignmentOperator';
-import { EvaluationStateUtil } from '../../evaluationState/evaluationStateUtil';
-import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { EvaluationStateUtil } from '../../../../evaluationState/evaluationStateUtil';
+import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { MarkValueForInversion } from '../markValueForInversion';
-import { Tokens } from '../../../../shared/types/tokens';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeLogicalOperator {
   private static updateStateForStandaloneStatements(

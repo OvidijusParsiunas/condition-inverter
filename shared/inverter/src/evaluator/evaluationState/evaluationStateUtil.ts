@@ -1,5 +1,5 @@
-import { EvaluationState } from '../../../shared/types/evaluationState';
-import { LANGUAGE } from '../../../shared/consts/languages';
+import { EvaluationState } from '../../shared/types/evaluationState';
+import { LANGUAGE } from '../../shared/consts/languages';
 
 export class EvaluationStateUtil {
   public static generateNewState(): EvaluationState {

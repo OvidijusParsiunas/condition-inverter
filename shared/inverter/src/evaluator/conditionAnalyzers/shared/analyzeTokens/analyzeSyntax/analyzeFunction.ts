@@ -1,7 +1,7 @@
-import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
-import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
-import { Tokens } from '../../../../shared/types/tokens';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeFunction {
   public static updateStateForRegular(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

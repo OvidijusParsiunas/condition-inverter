@@ -1,7 +1,7 @@
-import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
-import { LANGUAGE } from '../../../../shared/consts/languages';
-import { Tokens } from '../../../../shared/types/tokens';
+import { LANGUAGE } from '../../../../../shared/consts/languages';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeIdentityOrMembershipOperator {
   // mostly used for javascript/python

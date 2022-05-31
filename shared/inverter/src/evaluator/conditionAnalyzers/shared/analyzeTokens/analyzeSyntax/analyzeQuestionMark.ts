@@ -1,8 +1,8 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAssignmentOperator';
-import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { AnalyzeTernaryOperator } from './analyzeTernaryOperator';
-import { Tokens } from '../../../../shared/types/tokens';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeQuestionMark {
   private static updateStateForNullishCoalescingOrTernaryOperator(tokens: Tokens, nextTokenIndex: number, evaluationState: EvaluationState): number {

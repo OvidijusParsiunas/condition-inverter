@@ -1,7 +1,7 @@
 import { AnalyzeConditionOutsideStatement } from './conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
 import AnalyzeConditionInsideStatement from './conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { EvaluationState, SyntaxToBeInverted } from '../shared/types/evaluationState';
-import { EvaluationStateUtil } from './shared/evaluationState/evaluationStateUtil';
+import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { Tokens } from '../shared/types/tokens';
 
 export class Evaluator {

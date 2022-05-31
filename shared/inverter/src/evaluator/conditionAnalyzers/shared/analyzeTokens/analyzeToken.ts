@@ -5,14 +5,14 @@ import { AnalyzeBrackatableSyntax } from './analyzeSyntax/analyzeBrackatableSynt
 import { AnalyzeMethodInvocation } from './analyzeSyntax/analyzeMethodInvocation';
 import { AnalyzeExclamationMark } from './analyzeSyntax/analyzeExclamationMark';
 import { AnalyzeLogicalOperator } from './analyzeSyntax/analyzeLogicalOperator';
+import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { AnalyzeBooleanLiteral } from './analyzeSyntax/analyzeBooleanLiteral';
-import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
+import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { AnalyzeQuestionMark } from './analyzeSyntax/analyzeQuestionMark';
-import { EvaluationState } from '../../../shared/types/evaluationState';
 import { AnalyzeEqualsSign } from './analyzeSyntax/analyzeEqualsSign';
 import { AnalyzeFunction } from './analyzeSyntax/analyzeFunction';
 import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
-import { Tokens } from '../../../shared/types/tokens';
+import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeToken {
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

@@ -1,5 +1,5 @@
-import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
-import { Tokens } from '../../../../shared/types/tokens';
+import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeMethodInvocation {
   public static updateState(tokens: Tokens, index: number): number {

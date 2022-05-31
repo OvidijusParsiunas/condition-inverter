@@ -1,6 +1,6 @@
-import { EvaluationState } from '../../../../shared/types/evaluationState';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
-import { Tokens } from '../../../../shared/types/tokens';
+import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeBitwiseShiftOperator {
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

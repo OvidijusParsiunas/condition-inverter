@@ -1,8 +1,8 @@
-import { MarkValueForInversion } from '../../../shared/analyzeTokens/markValueForInversion';
-import { EvaluationStateUtil } from '../../../shared/evaluationState/evaluationStateUtil';
+import { MarkValueForInversion } from '../../shared/analyzeTokens/markValueForInversion';
+import { CleanUpRedundancies } from '../../shared/redundancies/cleanUpRedundancies';
+import { EvaluationStateUtil } from '../../../evaluationState/evaluationStateUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { AnalyzeToken } from '../../../shared/analyzeTokens/analyzeToken';
-import { CleanUpRedundancies } from '../../shared/cleanUpRedundancies';
+import { AnalyzeToken } from '../../shared/analyzeTokens/analyzeToken';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeInsideStatement {

@@ -1,5 +1,5 @@
-import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { Token, Tokens } from '../../../../shared/types/tokens';
+import { EvaluationState } from '../../../../../shared/types/evaluationState';
+import { Token, Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeBooleanLiteral {
   public static updateStateForBoolean(evaluationState: EvaluationState): void {
