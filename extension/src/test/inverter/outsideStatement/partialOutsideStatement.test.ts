@@ -5,6 +5,70 @@ import * as assert from 'assert';
 suite('Partial Outside Statement Inversion Suite', () => {
   [
     {
+      input: ` && cat`,
+      output: ' || !cat',
+    },
+    {
+      input: `and cat`,
+      output: 'or !cat',
+    },
+    {
+      input: `or cat`,
+      output: 'and !cat',
+    },
+    {
+      input: `cat and`,
+      output: '!cat or',
+    },
+    {
+      input: `cat or`,
+      output: '!cat and',
+    },
+    {
+      input: `cat and (`,
+      output: '!cat or !(',
+    },
+    {
+      input: `& cat || mouse)`,
+      output: '& !cat && !mouse)',
+    },
+    {
+      input: ` & cat || mouse)`,
+      output: ' & !cat && !mouse)',
+    },
+    {
+      input: `& cat) || mouse)`,
+      output: '& !cat) && !mouse)',
+    },
+    {
+      input: `& cat`,
+      output: '& cat',
+    },
+    {
+      input: `cat &`,
+      output: 'cat &',
+    },
+    {
+      input: `cat) &`,
+      output: 'cat) &',
+    },
+    {
+      input: `dog && cat &`,
+      output: '!dog || !cat &',
+    },
+    {
+      input: `dog && cat & `,
+      output: '!dog || !cat & ',
+    },
+    {
+      input: `dog && cat) &`,
+      output: '!dog || !cat) &',
+    },
+    {
+      input: `dog && cat) & `,
+      output: '!dog || !cat) & ',
+    },
+    {
       input: `mouse ?`,
       output: '!mouse ?',
     },

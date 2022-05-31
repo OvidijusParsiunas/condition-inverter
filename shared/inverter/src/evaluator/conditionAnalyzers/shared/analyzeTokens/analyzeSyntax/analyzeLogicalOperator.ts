@@ -7,7 +7,20 @@ import { MarkValueForInversion } from '../markValueForInversion';
 import { Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeLogicalOperator {
-  private static updateStateForStandaloneStatements(
+  private static updateStateForBitwiseOperators(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
+    // if a binary operator is at the start of a condition, then instead of inverting it proceed to the next token e.g:
+    // & mouse && cat should be inverted to & !mouse || !cat
+    if (index === evaluationState.currentConditionStartIndex) {
+      evaluationState.currentConditionStartIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
+      // if a binary operator is at the end of a condition, then instead of inverting it proceed to the end e.g:
+      // mouse && cat & should be inverted to & !mouse || !cat &
+    } else if (index !== tokens.length - 1) {
+      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
+      if (nextTokenIndex !== tokens.length) AnalyzeBrackatableSyntax.updateState(evaluationState);
+    }
+  }
+
+  private static updateStateForStandaloneExpressions(
     tokens: Tokens,
     currentIndex: number,
     nextNonSpaceCharIndex: number,
@@ -15,7 +28,9 @@ export class AnalyzeLogicalOperator {
   ): void {
     const endIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
     MarkValueForInversion.mark(tokens, endIndex, evaluationState);
-    evaluationState.syntaxToBeInverted.push({ start: currentIndex });
+    // if logical operator at the start of condition, no need to add more syntax to be inverted as it has already been added in above
+    // && cat will be inverted to || !cat
+    if (evaluationState.currentConditionStartIndex !== currentIndex) evaluationState.syntaxToBeInverted.push({ start: currentIndex });
     evaluationState.currentConditionStartIndex = nextNonSpaceCharIndex;
     EvaluationStateUtil.refreshBooleanState(evaluationState);
   }
@@ -27,7 +42,7 @@ export class AnalyzeLogicalOperator {
     evaluationState: EvaluationState,
   ): void {
     if (evaluationState.numberOfBracketsOpen === 0) {
-      AnalyzeLogicalOperator.updateStateForStandaloneStatements(tokens, currentIndex, nextNonSpaceIndex, evaluationState);
+      AnalyzeLogicalOperator.updateStateForStandaloneExpressions(tokens, currentIndex, nextNonSpaceIndex, evaluationState);
     } else if (evaluationState.markedForOperatorInversion) {
       // instead of inverting the comparison operator, the brackets are inverted
       evaluationState.syntaxToBeInverted.pop();
@@ -50,7 +65,7 @@ export class AnalyzeLogicalOperator {
       return AnalyzeLogicalOperator.updateState(tokens, index, index + 2, evaluationState);
     }
     // if & or | is by itself then it is regarded as a bitwise operator
-    AnalyzeBrackatableSyntax.updateState(evaluationState);
+    AnalyzeLogicalOperator.updateStateForBitwiseOperators(tokens, index, evaluationState);
     return index;
   }
 

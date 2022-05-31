@@ -12,7 +12,9 @@ export class AnalyzeOutsideStatement {
   // are analysed outside statement this variable is only ever used for identifying an end of a bracket that was used at the start of a
   // condition and the condition can span beyond the bracket - hence it is not a stopping factor: const result = (dog && cat) && mouse
   private static finishEvaluatingStatement(tokens: Tokens, evaluationState: EvaluationState, index: number): void {
-    MarkValueForInversion.mark(tokens, index, evaluationState);
+    // if the currentConditionStartIndex is set to higher than the tokens length, do not mark for inversion as it has been marked previously e.g:
+    // dog and - would have already been marked for inversion which will result to - dog or
+    if (evaluationState.currentConditionStartIndex < tokens.length) MarkValueForInversion.mark(tokens, index, evaluationState);
     evaluationState.isEvaluatingConditions = false;
     evaluationState.markedForOperatorInversion = false;
     CleanUpRedundancies.removeAdditionOfBracketsFromState(evaluationState);
