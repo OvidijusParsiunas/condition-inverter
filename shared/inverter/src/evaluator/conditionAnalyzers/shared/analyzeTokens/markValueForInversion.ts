@@ -32,7 +32,9 @@ export class MarkValueForInversion {
   }
 
   public static mark(tokens: Tokens, endIndex: number, evaluationState: EvaluationState): void {
-    if (!evaluationState.markedForOperatorInversion) {
+    // if the currentConditionStartIndex is set to higher than the tokens length, do not mark for inversion as it has been marked previously e.g:
+    // dog and - would have already been marked for inversion which will result to - dog or
+    if (!evaluationState.markedForOperatorInversion && evaluationState.currentConditionStartIndex < tokens.length) {
       if (evaluationState.shouldBracketsBeRemoved) {
         MarkValueForInversion.markForNegatedBracketRemoval(tokens, evaluationState);
       } else if (evaluationState.invertBooleanLiteral && !evaluationState.isOperationWrappableInBrackets) {
