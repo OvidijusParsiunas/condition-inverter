@@ -4,6 +4,17 @@ import { Tokens } from '../../../../../shared/types/tokens';
 import { AnalyzeEqualsSign } from './analyzeEqualsSign';
 
 export class AnalyzeExclamationMark {
+  private static updateStateForExclamationWithBracket(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    // -1 can be returned for partial conditions where tokens end without a close bracket, in such scenarios move to the last token e.g:
+    // dog && cat && !( - will be inverted to - dog && cat && ( without the bracket removal as there is no token for the close bracket
+    const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, index);
+    if (closeBracketIndex > -1) {
+      evaluationState.shouldBracketsBeRemoved = true;
+      return closeBracketIndex;
+    }
+    return tokens.length - 2;
+  }
+
   private static findLastExclamationMarkIndex(tokens: Tokens, index: number): number {
     const nextNonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
     // a direct plus or minus after exclamation mark are regarded as part of the condition
@@ -32,9 +43,9 @@ export class AnalyzeExclamationMark {
     } else if (evaluationState.numberOfBracketsOpen === 0) {
       if (tokens[nextNonSpaceTokenIndex] === '(') {
         // called for - !(...
-        evaluationState.shouldBracketsBeRemoved = true;
-        return TraversalUtil.getIndexOfClosingBracket(tokens, index);
-      } else if (tokens[nextNonSpaceTokenIndex] === '=') {
+        return AnalyzeExclamationMark.updateStateForExclamationWithBracket(tokens, index, evaluationState);
+      }
+      if (tokens[nextNonSpaceTokenIndex] === '=') {
         // called for - !=...
         return AnalyzeEqualsSign.updateState(tokens, index, evaluationState);
       }

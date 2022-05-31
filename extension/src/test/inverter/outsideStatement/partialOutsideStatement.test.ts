@@ -29,6 +29,26 @@ suite('Partial Outside Statement Inversion Suite', () => {
       output: '!cat or !(',
     },
     {
+      input: `cat or !(`,
+      output: '!cat and (',
+    },
+    {
+      input: `cat and ( `,
+      output: '!cat or !( ',
+    },
+    {
+      input: `cat or !( `,
+      output: '!cat and ( ',
+    },
+    {
+      input: `cat and (dog && mouse`,
+      output: '!cat or !(dog && mouse',
+    },
+    {
+      input: `cat or !(dog && mouse`,
+      output: '!cat and (dog && mouse',
+    },
+    {
       input: `& cat || mouse)`,
       output: '& !cat && !mouse)',
     },
