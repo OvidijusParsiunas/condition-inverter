@@ -1,9 +1,9 @@
 tasks:
-* Purchase domain
-* Get the ci-cd to deploy correctly
 * Publish extension
 * Get a logo for the app
 * Update all of the readmes
+
+get it to work for *ngIf and v-if
 
 extension:
 
