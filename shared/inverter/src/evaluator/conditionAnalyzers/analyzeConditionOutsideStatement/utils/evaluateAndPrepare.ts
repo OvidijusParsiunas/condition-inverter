@@ -2,12 +2,18 @@ import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { Tokens } from '../../../../shared/types/tokens';
 
-interface Start {
-  index: number;
-  isNegatedBracket?: boolean;
-}
-
 export class EvaluateAndPrepareOutsideStatement {
+  private static getStartIndexForEquals(tokens: Tokens, equalsIndex: number, traversalIndex: number, evaluationState: EvaluationState): number {
+    if (tokens[equalsIndex + 1] === '>') {
+      const openBracketIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, '(', false);
+      const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, openBracketIndex, 1);
+      if (closeBracketIndex > -1 && closeBracketIndex < equalsIndex) {
+        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, openBracketIndex, evaluationState);
+      }
+    }
+    return traversalIndex;
+  }
+
   private static getLastExclamationMark(tokens: Tokens, index: number): number {
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index, false);
     if (tokens[previousIndex] === '!') {
@@ -23,33 +29,43 @@ export class EvaluateAndPrepareOutsideStatement {
   }
 
   // indexAfterFirstBracket in the context of backward traversal
-  private static getStartTokenForOpenBracket(tokens: Tokens, openBracketIndex: number, indexAfterFirstBracket: number): Start {
+  private static getStartIndexForOpenBracket(tokens: Tokens, openBracketIndex: number, indexAfterFirstBracket: number): number {
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, openBracketIndex - 1, false);
     if (tokens[previousIndex] === '!') {
-      const result = EvaluateAndPrepareOutsideStatement.getLastExclamationMark(tokens, previousIndex);
-      return { index: result, isNegatedBracket: true };
+      return EvaluateAndPrepareOutsideStatement.getLastExclamationMark(tokens, previousIndex);
     }
     if (tokens[previousIndex] === '(') {
-      return EvaluateAndPrepareOutsideStatement.getStartTokenForOpenBracket(tokens, previousIndex, indexAfterFirstBracket);
+      return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, indexAfterFirstBracket);
     }
-    return { index: indexAfterFirstBracket };
+    return indexAfterFirstBracket;
+  }
+
+  private static getStartIndexAfterSymbol(tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState): number {
+    switch (tokens[previousIndex]) {
+      case ';':
+      case ',':
+        return traversalIndex;
+      case '=':
+        return EvaluateAndPrepareOutsideStatement.getStartIndexForEquals(tokens, previousIndex, traversalIndex, evaluationState);
+      case '(':
+        return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, traversalIndex);
+      default:
+        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState);
+    }
   }
 
   // tracks back until a token before the condition start is found
-  private static getStart(tokens: Tokens, index: number, evaluationState: EvaluationState): Start {
-    if (index === 0) return { index: 0 };
+  private static getStartIndex(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    if (index === 0) return 0;
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
-    if (previousIndex === -1) return { index: index };
-    const previousToken = tokens[previousIndex];
-    if (previousToken === '=' || previousToken === ';' || previousToken === ',') return { index: index };
-    if (previousToken === '(') return EvaluateAndPrepareOutsideStatement.getStartTokenForOpenBracket(tokens, previousIndex, index);
-    return EvaluateAndPrepareOutsideStatement.getStart(tokens, previousIndex, evaluationState);
+    if (previousIndex === -1) return index;
+    return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, previousIndex, index, evaluationState);
   }
 
   public static init(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const start = EvaluateAndPrepareOutsideStatement.getStart(tokens, index, evaluationState);
-    evaluationState.currentConditionStartIndex = start.index;
+    const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, index, evaluationState);
+    evaluationState.currentConditionStartIndex = startIndex;
     evaluationState.isEvaluatingConditions = true;
-    return start.index;
+    return startIndex;
   }
 }

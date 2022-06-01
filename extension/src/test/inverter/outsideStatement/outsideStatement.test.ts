@@ -241,6 +241,26 @@ suite('Outside Statement Inversion Suite', () => {
       input: `true && false`,
       output: 'false || true',
     },
+    {
+      input: 'dog && () => { console.log(2) }',
+      output: '!dog || !(() => { console.log(2) })',
+    },
+    {
+      input: `dog && (): void => { if (dog) { console.log('hello') }}`,
+      output: `!dog || !((): void => { if (dog) { console.log('hello') }})`,
+    },
+    {
+      input: `(): void => { if (dog) { console.log('hello') }} && dog`,
+      output: `!((): void => { if (dog) { console.log('hello') }}) || !dog`,
+    },
+    {
+      input: `(dog && cat`,
+      output: '(!dog || !cat',
+    },
+    {
+      input: `((dog && cat`,
+      output: '((!dog || !cat',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
