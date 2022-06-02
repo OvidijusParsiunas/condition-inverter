@@ -7,6 +7,12 @@ import { SetEvaluationState } from './shared/setEvaluationState';
 import { Tokens } from '../../../../../../shared/types/tokens';
 
 export class SetStateForGenericStatement {
+  private static setNoCloseBracketForStatement(start: number, evaluationState: EvaluationState): number {
+    // setting evaluationState.conditionSequenceEndIndex to -1 in order to identify that there is no close bracket at end of condition
+    evaluationState.conditionSequenceEndIndex = -1;
+    return start + 1;
+  }
+
   // If the no symbols approach causes issues for golang when if statement initialization is used e.g. if num := 9; num > 0 add the following code
   // private static getGoStatementIndexes(startSymbolIndex: number, tokensFromIfStart: Tokens): StartEndIndexes {
   //   return {
@@ -75,7 +81,8 @@ export class SetStateForGenericStatement {
 
   public static set(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const { start, end } = SetStateForGenericStatement.getIndexesOfStatementAndSetLanguage(tokens, index, evaluationState);
+    if (end === -1) return SetStateForGenericStatement.setNoCloseBracketForStatement(start, evaluationState);
     const statementBoundaryIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
-    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState, tokens);
+    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState);
   }
 }

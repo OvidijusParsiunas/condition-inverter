@@ -1,4 +1,6 @@
+import { AnalyzeOutsideStatement } from '../analyzeConditionOutsideStatement/utils/analyzeToken';
 import { EvaluateAndPrepareInsideStatement } from './utils/evaluateAndPrepare';
+import { NoCloseSymbolInStatement } from './utils/noCloseSymbolInStatement';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { ConditionAnalyzer } from '../shared/conditionAnalyzer';
 import { TokensJSON } from '../../../shared/types/tokensJSON';
@@ -13,9 +15,16 @@ export default class AnalyzeConditionInsideStatement {
   }
 
   public static traverseTokensAndUpdateEvaluationState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    return ConditionAnalyzer.traverseTokensAndUpdateEvaluationState(tokens, index, evaluationState, {
-      evaluateAndPrepareState: EvaluateAndPrepareInsideStatement.init,
-      analyzeToken: AnalyzeInsideStatement.analyze,
-    });
+    let startIndex = EvaluateAndPrepareInsideStatement.getStartIndexAndUpdateState(tokens, index, evaluationState);
+    if (startIndex >= tokens.length) return startIndex;
+    let analyzeToken = AnalyzeInsideStatement.analyze;
+    // if conditionSequenceEndIndex is -1, it means the statement condition ends without a close symbol e.g:
+    // no close bracket for ones that start with a close bracket and no end semicolon for for loop, hence
+    // outside statement analysis will be handling the preparation and traversal of the tokens
+    if (evaluationState.conditionSequenceEndIndex === -1) {
+      startIndex = NoCloseSymbolInStatement.getStartIndexAndUpdateStateForOutsideStatementAnalysis(tokens, evaluationState, startIndex);
+      analyzeToken = AnalyzeOutsideStatement.analyze;
+    }
+    return ConditionAnalyzer.traverseTokensAndUpdateEvaluationState(tokens, startIndex, evaluationState, analyzeToken);
   }
 }

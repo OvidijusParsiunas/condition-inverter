@@ -256,6 +256,18 @@ suite('Generic Language Nested Function Inversion Suite', () => {
       input: `if (!new dog()) { console.log(2) }`,
       output: 'if (new dog()) { console.log(2) }',
     },
+    {
+      input: `if (!dog || !((): void => { if (dog) { console.log('hello') }})`,
+      output: `if (dog && (): void => { if (dog) { console.log('hello') }}`,
+    },
+    {
+      input: `if (dog && (): void => { if (dog) { console.log('hello') }})`,
+      output: `if (!dog || !((): void => { if (dog) { console.log('hello') }}))`,
+    },
+    {
+      input: `if ((): void => { if (dog) { console.log('hello') }} && dog)`,
+      output: `if (!((): void => { if (dog) { console.log('hello') }}) || !dog)`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

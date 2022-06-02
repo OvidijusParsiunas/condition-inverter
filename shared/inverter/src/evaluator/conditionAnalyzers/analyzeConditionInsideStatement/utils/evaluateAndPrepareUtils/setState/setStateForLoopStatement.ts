@@ -7,6 +7,15 @@ import { SetEvaluationState } from './shared/setEvaluationState';
 import { Tokens } from '../../../../../../shared/types/tokens';
 
 export class SetStateForLoopStatement {
+  private static setNoCloseBracketForStatement(startIndex: number, evaluationState: EvaluationState): number {
+    // setting evaluationState.conditionSequenceEndIndex to -1 in order to identify that there is no semicolon to end condition
+    // IMPORTANT there is an inconsistency where python for loops are not inverted when fully highlighed by the user (highlight
+    // end with a :) but if the colon is not there, the condition to be evaluated
+    // WORK - attempt to find the colon when highlighting using the extension
+    evaluationState.conditionSequenceEndIndex = -1;
+    return startIndex - 1;
+  }
+
   private static isConditionInValid(statementTokens: Tokens, start: number, end: number): boolean {
     const nextTokenAfterStart = TraversalUtil.getSiblingNonSpaceTokenIndex(statementTokens, start + 1);
     return nextTokenAfterStart >= end;
@@ -15,7 +24,7 @@ export class SetStateForLoopStatement {
   private static setEvaluationStateIfValid(tokens: Tokens, start: number, end: number, evaluationState: EvaluationState): number {
     const statementBoundaryIndexes = AnalyzeRedundantBrackets.getIndexesOfNestedStartAndEndBrackets(tokens, start, end);
     if (SetStateForLoopStatement.isConditionInValid(tokens, start, end)) return end;
-    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState, tokens);
+    return SetEvaluationState.set(statementBoundaryIndexes, evaluationState);
   }
 
   private static setBoundariesForMiddleOfIfStatement(tokens: Tokens, startIndex: number, endIndex: number, evaluationState: EvaluationState): number {
@@ -63,11 +72,6 @@ export class SetStateForLoopStatement {
       evaluationState.language = LANGUAGE.python;
       return tokens.length;
     }
-    // setting end to -1 in order to identify that there is no end, which SetEvaluationState.set will react
-    // to appropriately and set evaluationState accordingly
-    // IMPORTANT to note that this will result in an inconsistency where python for loops are not inverted when fully highlighed by
-    // the user (highliught end with a :) but if the colon is not there, the following will set the condition to be evaluated
-    // WORK - attempt to find the colon when highlighting using the extension
-    return SetEvaluationState.set({ start: startIndex - 1, end: -1 }, evaluationState, tokens);
+    return SetStateForLoopStatement.setNoCloseBracketForStatement(startIndex, evaluationState);
   }
 }

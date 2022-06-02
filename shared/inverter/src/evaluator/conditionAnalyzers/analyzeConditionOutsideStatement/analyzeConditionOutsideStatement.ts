@@ -61,9 +61,7 @@ export class AnalyzeConditionOutsideStatement {
   }
 
   public static traverseTokensAndUpdateEvaluationState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    return ConditionAnalyzer.traverseTokensAndUpdateEvaluationState(tokens, index, evaluationState, {
-      evaluateAndPrepareState: EvaluateAndPrepareOutsideStatement.init,
-      analyzeToken: AnalyzeOutsideStatement.analyze,
-    });
+    const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndexAndUpdateState(tokens, index, evaluationState);
+    return ConditionAnalyzer.traverseTokensAndUpdateEvaluationState(tokens, startIndex, evaluationState, AnalyzeOutsideStatement.analyze);
   }
 }

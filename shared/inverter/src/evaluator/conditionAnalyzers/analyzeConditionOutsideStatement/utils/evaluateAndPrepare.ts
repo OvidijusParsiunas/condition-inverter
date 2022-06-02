@@ -62,7 +62,7 @@ export class EvaluateAndPrepareOutsideStatement {
     return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, previousIndex, index, evaluationState);
   }
 
-  public static init(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  public static getStartIndexAndUpdateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, index, evaluationState);
     evaluationState.currentConditionStartIndex = startIndex;
     evaluationState.isEvaluatingConditions = true;

@@ -5,8 +5,11 @@ import * as assert from 'assert';
 suite('Partial Inside Statement Inversion Suite', () => {
   [
     { input: `if (`, output: `if (` },
+    { input: `if  (  `, output: `if  (  ` },
     { input: `if (dog`, output: `if (!dog` },
     { input: `if (true`, output: `if (false` },
+    { input: `if ((true`, output: `if ((false` },
+    { input: `if ((true)`, output: `if ((false)` },
     { input: `if dog`, output: `if !dog` },
     { input: `if(dog`, output: `if(!dog` },
     { input: `for dog`, output: `for !dog` },
@@ -19,6 +22,18 @@ suite('Partial Inside Statement Inversion Suite', () => {
     { input: `if (cat && (): void => { }`, output: `if (!cat || !((): void => { })` },
     { input: `if (cat && dog ?`, output: `if (!cat || !dog ?` },
     { input: `if cat && dog`, output: `if !cat || !dog` },
+    { input: `if ((dog && cat`, output: 'if ((!dog || !cat' },
+    { input: `if (((dog && cat`, output: 'if (((!dog || !cat' },
+    {
+      input: `if (dog && (): void => { if (dog) { console.log('hello') }}`,
+      output: `if (!dog || !((): void => { if (dog) { console.log('hello') }})`,
+    },
+    {
+      input: `if ((): void => { if (dog) { console.log('hello') }} && dog`,
+      output: `if (!((): void => { if (dog) { console.log('hello') }}) || !dog`,
+    },
+    { input: `for (let i = 0; ((dog && cat`, output: 'for (let i = 0; ((!dog || !cat' },
+    { input: `for (let i = 0; ((dog && cat)`, output: 'for (let i = 0; ((!dog || !cat)' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
