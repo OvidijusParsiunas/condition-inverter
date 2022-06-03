@@ -26,6 +26,9 @@ suite('Outside Statement No Condition Suite', () => {
     { input: ' = ', output: ' = ' },
     { input: 'const cats = 1', output: 'const cats = 1' },
     { input: 'const cats = (', output: 'const cats = (' },
+    { input: `& cat`, output: '& cat' },
+    { input: `cat &`, output: 'cat &' },
+    { input: `cat) &`, output: 'cat) &' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

@@ -61,18 +61,6 @@ suite('Partial Outside Statement Inversion Suite', () => {
       output: '& !cat) && !mouse)',
     },
     {
-      input: `& cat`,
-      output: '& cat',
-    },
-    {
-      input: `cat &`,
-      output: 'cat &',
-    },
-    {
-      input: `cat) &`,
-      output: 'cat) &',
-    },
-    {
       input: `dog && cat &`,
       output: '!dog || !cat &',
     },
@@ -111,6 +99,18 @@ suite('Partial Outside Statement Inversion Suite', () => {
     {
       input: `dog + cat)) && cat`,
       output: '!(dog + cat))) || !cat',
+    },
+    {
+      input: `dog &&`,
+      output: '!dog ||',
+    },
+    {
+      input: `(dog && cat`,
+      output: '(!dog || !cat',
+    },
+    {
+      input: `((dog && cat`,
+      output: '((!dog || !cat',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {
