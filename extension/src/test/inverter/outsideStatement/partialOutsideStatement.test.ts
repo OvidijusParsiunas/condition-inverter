@@ -5,6 +5,14 @@ import * as assert from 'assert';
 suite('Partial Outside Statement Inversion Suite', () => {
   [
     {
+      input: `&&`,
+      output: '||',
+    },
+    {
+      input: ` && `,
+      output: ' || ',
+    },
+    {
       input: ` && cat`,
       output: ' || !cat',
     },
