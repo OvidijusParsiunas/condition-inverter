@@ -8,13 +8,28 @@ export class TraversalUtil {
     return tokens.slice(0, startIndex).lastIndexOf(token);
   }
 
-  public static findFirstTokenFromSelection(tokens: Tokens, startIndex: number, tokensToSearchFor: TokensJSON): FirstFoundToken {
-    for (let i = startIndex; i < tokens.length; i += 1) {
-      if (tokensToSearchFor[tokens[i] as keyof typeof tokensToSearchFor]) {
-        return { token: tokens[i], index: i };
+  private static generateResultIfTokenFound(tokens: Tokens, targetTokens: TokensJSON, index: number): FirstFoundToken | null {
+    if (targetTokens[tokens[index] as keyof typeof targetTokens]) {
+      return { token: tokens[index], index };
+    }
+    return null;
+  }
+
+  // prettier-ignore
+  public static findFirstTokenFromSelection(
+      tokens: Tokens, startIndex: number, targetTokens: TokensJSON, traverseForwards = true): FirstFoundToken | null {
+    if (traverseForwards) {
+      for (let i = startIndex; i < tokens.length; i += 1) {
+        const result = TraversalUtil.generateResultIfTokenFound(tokens, targetTokens, i);
+        if (result) return result;
+      }
+    } else {
+      for (let i = tokens.length - 1; i >= 0; i -= 1) {
+        const result = TraversalUtil.generateResultIfTokenFound(tokens, targetTokens, i);
+        if (result) return result;
       }
     }
-    return { token: null, index: tokens.length - 1 };
+    return null;
   }
 
   public static getSiblingNonSpaceTokenIndex(tokens: Tokens, index: number, traverseForwards = true): number {

@@ -6,9 +6,7 @@ import { Tokens } from '../../../../../shared/types/tokens';
 export class AnalyzeTernaryOperator {
   private static getColonEndViaTerminatingToken(tokens: Tokens, colonIndex: number): number {
     const colonEndToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex + 1, jstsReservedTerminatingWords);
-    if (colonEndToken.token !== null) {
-      return colonEndToken.index - 1;
-    }
+    if (colonEndToken) return colonEndToken.index - 1;
     return -1;
   }
 
