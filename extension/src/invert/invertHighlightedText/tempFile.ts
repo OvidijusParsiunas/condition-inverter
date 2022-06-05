@@ -13,8 +13,6 @@ import {
 import AnalyzeConditionInsideStatement
 from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 
-type UpwardTraversalResult = { start: Position; actualStart?: Position };
-
 export class TempFile {
   private static traverseUpwards(editor: TextEditor, line: number): Position | null {
     if (line === -1) return null;
@@ -198,11 +196,10 @@ export class TempFile {
       ),
     );
     const end = TempFile.getIndexOfToken(endLine, editor.selection.end.character, false);
-    // WORK - run this only when there are no starters within the highlighted text
     // WORK - check if upon checking an if/for statement that has brackets, that selection is not after bracket end
 
     // return length of logical operator (if logical operator) so we can mock it out and not include
-    const result: { rangeToInvert: Range; statementLength?: number } = {
+    let result: { rangeToInvert: Range; statementLength?: number } = {
       rangeToInvert: RangeCreator.create(actualStartPosition, {
         line: editor.selection.end.line,
         character: end,
@@ -211,13 +208,16 @@ export class TempFile {
     const isStatementStartable = TempFile.canInversionStart(result.rangeToInvert, editor);
     if (!isStatementStartable) {
       const outsideStatementStartPosition = TempFile.traverseLeftAndUpwards(editor, editor.selection.start.line, startChar);
-      result.rangeToInvert = RangeCreator.create(outsideStatementStartPosition?.position || actualStartPosition, {
-        line: editor.selection.end.line,
-        character: end,
-      });
-      if (outsideStatementStartPosition) result.statementLength = outsideStatementStartPosition.statementLength;
+      if (outsideStatementStartPosition) {
+        result = {
+          rangeToInvert: RangeCreator.create(outsideStatementStartPosition.position, {
+            line: editor.selection.end.line,
+            character: end,
+          }),
+          statementLength: outsideStatementStartPosition.statementLength,
+        };
+      }
     }
-
     return result;
   }
 }
