@@ -5,6 +5,22 @@ import * as assert from 'assert';
 suite('Partial Outside Statement Inversion Suite', () => {
   [
     {
+      input: `and`,
+      output: 'or',
+    },
+    {
+      input: `or`,
+      output: 'and',
+    },
+    {
+      input: ` and `,
+      output: ' or ',
+    },
+    {
+      input: ` or `,
+      output: ' and ',
+    },
+    {
       input: `&&`,
       output: '||',
     },
@@ -119,6 +135,46 @@ suite('Partial Outside Statement Inversion Suite', () => {
     {
       input: `((dog && cat`,
       output: '((!dog || !cat',
+    },
+    {
+      input: `== dog`,
+      output: '!= dog',
+    },
+    {
+      input: `dog ==`,
+      output: 'dog !=',
+    },
+    {
+      input: `==`,
+      output: '!=',
+    },
+    {
+      input: `===`,
+      output: '!==',
+    },
+    {
+      input: `!=`,
+      output: '==',
+    },
+    {
+      input: `!==`,
+      output: '===',
+    },
+    {
+      input: `<`,
+      output: '>=',
+    },
+    {
+      input: `>`,
+      output: '<=',
+    },
+    {
+      input: `>=`,
+      output: '<',
+    },
+    {
+      input: `<=`,
+      output: '>',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {
