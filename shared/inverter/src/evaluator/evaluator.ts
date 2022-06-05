@@ -5,7 +5,7 @@ import { EvaluationStateUtil } from './evaluationState/evaluationStateUtil';
 import { Tokens } from '../shared/types/tokens';
 
 export class Evaluator {
-  private static readonly conditionAnalyzers = [AnalyzeConditionOutsideStatement, AnalyzeConditionInsideStatement];
+  public static readonly conditionAnalyzers = [AnalyzeConditionOutsideStatement, AnalyzeConditionInsideStatement];
 
   private static invertConditionsUsingAnalyzer(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     for (let i = 0; i < Evaluator.conditionAnalyzers.length; i += 1) {
