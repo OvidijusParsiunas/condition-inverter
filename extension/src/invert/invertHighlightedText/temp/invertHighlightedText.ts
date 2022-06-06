@@ -1,35 +1,49 @@
-import { HighlightedConditionRange } from './conditionRange/highlightedConditionRange';
+import { ConditionRange, HighlightedConditionRange } from './conditionRange/highlightedConditionRange';
 import { RangeCreator } from '../../shared/rangeCreator';
 import { Inverter } from 'shared/inverter/src/inverter';
-import { TextEditor, Range } from 'vscode';
+import { TextEditor } from 'vscode';
 
 export class InvertHighlightedTextNew {
-  private static getInvertedText(editor: TextEditor, statementRange: { rangeToInvert: Range; statementLength?: number }): string {
-    const statementText = editor.document.getText(statementRange.rangeToInvert);
+  private static getInvertedText(editor: TextEditor, conditionRange: ConditionRange): string {
+    const statementText = editor.document.getText(conditionRange.invertionRange);
     return Inverter.invert(statementText);
+  }
+
+  private static processInvertedText(invertedText: string, paddingText: string): string {
+    return invertedText.substring(paddingText.length, invertedText.length);
+  }
+
+  private static getPaddedConditionText(paddingText: string, statementLength: number, conditionText: string): string {
+    return `${paddingText}${conditionText.substring(statementLength, conditionText.length)}`;
+  }
+
+  private static getPaddingText(statementLength: number): string {
+    return statementLength - 2 > -1 ? `${' '.repeat(statementLength - 2)}if ` : 'if ';
+  }
+
+  private static invertWithPadding(conditionRange: Required<ConditionRange>, conditionText: string): string {
+    const paddingText = InvertHighlightedTextNew.getPaddingText(conditionRange.statementLength);
+    const newConditionText = InvertHighlightedTextNew.getPaddedConditionText(paddingText, conditionRange.statementLength, conditionText);
+    const invertedText = Inverter.invert(newConditionText);
+    conditionRange.invertionRange = RangeCreator.create(
+      {
+        line: conditionRange.invertionRange.start.line,
+        character: conditionRange.invertionRange.start.character + conditionRange.statementLength,
+      },
+      conditionRange.invertionRange.end,
+    );
+    return InvertHighlightedTextNew.processInvertedText(invertedText, paddingText);
   }
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
-      const statementsRange = HighlightedConditionRange.get(editor);
-      let invertedText = '';
-      if (statementsRange.statementLength !== undefined) {
-        let statementText = editor.document.getText(statementsRange.rangeToInvert);
-        const paddingStatement = statementsRange.statementLength - 2 > -1 ? `${' '.repeat(statementsRange.statementLength - 2)}if ` : 'if ';
-        statementText = `${paddingStatement}${statementText.substring(statementsRange.statementLength, statementText.length)}`;
-        invertedText = Inverter.invert(statementText);
-        invertedText = invertedText.substring(paddingStatement.length, invertedText.length);
-        statementsRange.rangeToInvert = RangeCreator.create(
-          {
-            line: statementsRange.rangeToInvert.start.line,
-            character: statementsRange.rangeToInvert.start.character + statementsRange.statementLength,
-          },
-          statementsRange.rangeToInvert.end,
-        );
-      } else {
-        invertedText = InvertHighlightedTextNew.getInvertedText(editor, statementsRange);
-      }
-      selectedText.replace(statementsRange.rangeToInvert, invertedText);
+      const conditionRange = HighlightedConditionRange.get(editor);
+      const conditionText = editor.document.getText(conditionRange.invertionRange);
+      const invertedText =
+        conditionRange.statementLength !== undefined
+          ? InvertHighlightedTextNew.invertWithPadding(conditionRange as Required<ConditionRange>, conditionText)
+          : InvertHighlightedTextNew.getInvertedText(editor, conditionRange);
+      selectedText.replace(conditionRange.invertionRange, invertedText);
     });
   }
 }

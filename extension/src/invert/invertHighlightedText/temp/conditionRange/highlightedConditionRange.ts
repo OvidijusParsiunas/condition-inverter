@@ -5,7 +5,7 @@ import { RangeCreator } from '../../../shared/rangeCreator';
 import { TextEditor, Range } from 'vscode';
 
 export interface ConditionRange {
-  rangeToInvert: Range;
+  invertionRange: Range;
   statementLength?: number;
 }
 
@@ -14,7 +14,7 @@ export class HighlightedConditionRange {
     const conditionIndicatorPosition = ConditionIndicatorBeforeStart.search(editor, currentRange.start.character);
     if (conditionIndicatorPosition) {
       return {
-        rangeToInvert: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
+        invertionRange: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
         statementLength: conditionIndicatorPosition.statementLength,
       };
     }
@@ -30,10 +30,10 @@ export class HighlightedConditionRange {
   // same process for above when nothing inside highlighted text
   // WORK - _ that is next to the string should be regarded as part of it
   public static get(editor: TextEditor): ConditionRange {
-    const conditionRange: ConditionRange = { rangeToInvert: FullWordRange.extract(editor) };
-    const canInversionStart = CanInversionStart.verifyUsingAnalyzers(conditionRange.rangeToInvert, editor);
+    const conditionRange: ConditionRange = { invertionRange: FullWordRange.extract(editor) };
+    const canInversionStart = CanInversionStart.verifyUsingAnalyzers(conditionRange.invertionRange, editor);
     if (!canInversionStart) {
-      const rangeBeyondHighlight = HighlightedConditionRange.findConditionStartRangeBeyondHiglight(editor, conditionRange.rangeToInvert);
+      const rangeBeyondHighlight = HighlightedConditionRange.findConditionStartRangeBeyondHiglight(editor, conditionRange.invertionRange);
       if (rangeBeyondHighlight) return rangeBeyondHighlight;
       // WORK - return null so that no inversion takes place
     }
