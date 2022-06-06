@@ -1,9 +1,9 @@
-import { Position } from '../../../../../shared/types/invertHighlightedText/invertHighlightedText';
+import { Position } from '../../../../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { RangeCreator } from '../../../../shared/rangeCreator';
+import { RangeCreator } from '../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 

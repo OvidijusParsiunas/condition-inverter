@@ -1,5 +1,5 @@
-import { Position } from '../../../../../shared/types/invertHighlightedText/invertHighlightedText';
-import { RangeCreator } from '../../../../shared/rangeCreator';
+import { Position } from '../../../../../../shared/types/invertHighlightedText/invertHighlightedText';
+import { RangeCreator } from '../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { Range, TextEditor } from 'vscode';
 

@@ -1,22 +1,17 @@
-import { ConditionIndicatorBeforeStart } from './analysisOutsideHighlight/conditionIndicatorBeforeStart';
-import { CanInversionStart } from './analysisInsideHighlight/canInversionStart';
-import { FullWordRange } from './analysisInsideHighlight/fullWordRange';
+import { ConditionIndicatorBeforeStart } from './outsideHighlight/analysis/conditionIndicatorBeforeStart';
+import { ConditionDetails } from '../../../../shared/types/invertHighlightedText/conditionDetails';
+import { CanInversionStart } from './insideHighlight/analysis/canInversionStart';
+import { FullWordRange } from './insideHighlight/analysis/fullWordRange';
 import { RangeCreator } from '../../../shared/rangeCreator';
 import { TextEditor, Range } from 'vscode';
 
-// WORK - refactor
-export interface ConditionRange {
-  invertionRange: Range;
-  initStatementLength?: number;
-}
-
 export class HighlightedConditionRange {
-  private static findConditionStartRangeBeyondHiglight(editor: TextEditor, currentRange: Range): ConditionRange | null {
+  private static findConditionStartRangeBeyondHiglight(editor: TextEditor, currentRange: Range): ConditionDetails | null {
     const conditionIndicatorPosition = ConditionIndicatorBeforeStart.search(editor, currentRange.start.character);
     if (conditionIndicatorPosition) {
       return {
-        invertionRange: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
-        initStatementLength: conditionIndicatorPosition.statementLength,
+        range: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
+        replacableOperatorLength: conditionIndicatorPosition.statementLength,
       };
     }
     return null;
@@ -30,14 +25,14 @@ export class HighlightedConditionRange {
   // highlight rules
   // same process for above when nothing inside highlighted text
   // WORK - _ that is next to the string should be regarded as part of it
-  public static get(editor: TextEditor): ConditionRange {
-    const conditionRange: ConditionRange = { invertionRange: FullWordRange.extract(editor) };
-    const canInversionStart = CanInversionStart.verifyUsingAnalyzers(conditionRange.invertionRange, editor);
+  public static get(editor: TextEditor): ConditionDetails {
+    const conditionDetails: ConditionDetails = { range: FullWordRange.extract(editor) };
+    const canInversionStart = CanInversionStart.verifyUsingAnalyzers(conditionDetails.range, editor);
     if (!canInversionStart) {
-      const rangeBeyondHighlight = HighlightedConditionRange.findConditionStartRangeBeyondHiglight(editor, conditionRange.invertionRange);
+      const rangeBeyondHighlight = HighlightedConditionRange.findConditionStartRangeBeyondHiglight(editor, conditionDetails.range);
       if (rangeBeyondHighlight) return rangeBeyondHighlight;
       // WORK - return null so that no inversion takes place
     }
-    return conditionRange;
+    return conditionDetails;
   }
 }
