@@ -4,9 +4,10 @@ import { FullWordRange } from './analysisInsideHighlight/fullWordRange';
 import { RangeCreator } from '../../../shared/rangeCreator';
 import { TextEditor, Range } from 'vscode';
 
+// WORK - refactor
 export interface ConditionRange {
   invertionRange: Range;
-  statementLength?: number;
+  initStatementLength?: number;
 }
 
 export class HighlightedConditionRange {
@@ -15,7 +16,7 @@ export class HighlightedConditionRange {
     if (conditionIndicatorPosition) {
       return {
         invertionRange: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
-        statementLength: conditionIndicatorPosition.statementLength,
+        initStatementLength: conditionIndicatorPosition.statementLength,
       };
     }
     return null;
