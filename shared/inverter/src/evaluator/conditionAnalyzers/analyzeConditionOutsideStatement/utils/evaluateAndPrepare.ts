@@ -1,6 +1,7 @@
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
+import { IsTokenWord } from '../../../../shared/functionality/isTokenWord';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { Token, Tokens } from '../../../../shared/types/tokens';
+import { Tokens } from '../../../../shared/types/tokens';
 
 interface TraversalState {
   closeBracketNum: number;
@@ -18,8 +19,8 @@ export class EvaluateAndPrepareOutsideStatement {
     return traversalIndex;
   }
 
-  private static isFunctionInvocation(tokens: Tokens, openBracketIndex: number): boolean {
-    return Boolean((tokens[openBracketIndex - 1] as string)?.match(/(\w+)/g));
+  private static isFunctionInvocation(tokens: Tokens, previousIndex: number): boolean {
+    return IsTokenWord.check(tokens[previousIndex]);
   }
 
   private static getLastExclamationMark(tokens: Tokens, index: number): number {
@@ -48,7 +49,7 @@ export class EvaluateAndPrepareOutsideStatement {
       return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(
         tokens, previousIndex, indexAfterBracket, evaluationState, traversalState);
     }
-    if (EvaluateAndPrepareOutsideStatement.isFunctionInvocation(tokens, openBracketIndex)) {
+    if (EvaluateAndPrepareOutsideStatement.isFunctionInvocation(tokens, previousIndex)) {
       return previousIndex;
     }
     return indexAfterBracket;

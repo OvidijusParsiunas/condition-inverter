@@ -1,13 +1,18 @@
 import { Position } from '../../../../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
+import { IsTokenWord } from 'shared/inverter/src/shared/functionality/isTokenWord';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
-import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { RangeCreator } from '../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
 type Result = { position: Position; statementLength: number } | null;
+
+interface TraversalState {
+  wasPreviousTokenOpenBracket: boolean;
+}
 
 export class ConditionIndicatorBeforeStart {
   private static readonly skippableTokens = { [' ']: true, ['\n']: true, ['\r']: true, ['(']: true, ['!']: true, not: true, typeof: true };
@@ -78,30 +83,56 @@ export class ConditionIndicatorBeforeStart {
     return ConditionIndicatorBeforeStart.findStatementStartOnLine(line, lineTokens, tokenIndex);
   }
 
+  private static isFunctionInvocation(token: Token): boolean {
+    return IsTokenWord.check(token);
+  }
+
+  private static isSkipFunctionInvocationToken(token: Token, wasPreviousTokenOpenBracket: boolean): boolean {
+    return wasPreviousTokenOpenBracket && ConditionIndicatorBeforeStart.isFunctionInvocation(token);
+  }
+
+  private static shouldTokenBeSkipped(token: Token, wasPreviousTokenOpenBracket: boolean): boolean {
+    return (
+      !ConditionIndicatorBeforeStart.skippableTokens[token as keyof typeof ConditionIndicatorBeforeStart.skippableTokens] &&
+      !ConditionIndicatorBeforeStart.isSkipFunctionInvocationToken(token, wasPreviousTokenOpenBracket)
+    );
+  }
+
   private static getLineTokens(editor: TextEditor, line: number, endChar: number): Tokens {
     const stringBeforeSelectionStart = editor.document.getText(RangeCreator.create({ line: line, character: 0 }, { line: line, character: endChar }));
     return Tokenizer.tokenize(stringBeforeSelectionStart);
   }
 
-  private static traverseLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): Result {
+  private static traverseLeftAndUpwards(editor: TextEditor, line: number, traversalState: TraversalState, endChar?: number): Result {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = ConditionIndicatorBeforeStart.getLineTokens(editor, line, endChar);
     let currentStringIndex = endChar;
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
       const token = lineTokens[i];
       currentStringIndex -= (token as string).length;
-      if (!ConditionIndicatorBeforeStart.skippableTokens[token as keyof typeof ConditionIndicatorBeforeStart.skippableTokens]) {
+      if (ConditionIndicatorBeforeStart.shouldTokenBeSkipped(token, traversalState.wasPreviousTokenOpenBracket)) {
         return ConditionIndicatorBeforeStart.findConditionIndicatorOnLine(line, lineTokens, i, currentStringIndex);
       }
+      traversalState.wasPreviousTokenOpenBracket = token === '(';
     }
-    return ConditionIndicatorBeforeStart.traverseLeftAndUpwards(editor, line - 1);
+    return ConditionIndicatorBeforeStart.traverseLeftAndUpwards(editor, line - 1, traversalState);
+  }
+
+  private static setWasPreviousTokenOpenBracketInTraversalState(editor: TextEditor, traversalState: TraversalState): void {
+    const startPosition = editor.selection.start;
+    const charAfterStartPosition = editor.document.getText(
+      RangeCreator.create(startPosition, { line: startPosition.line, character: startPosition.character + 1 }),
+    );
+    traversalState.wasPreviousTokenOpenBracket = charAfterStartPosition === '(';
   }
 
   // WORK - test for when searching upwards and nothing found
   // WORK - use AnalyzeConditionOutsideStatement for downwards analysis
   // selectionStartChar can vary depending on selection position of a word as it will be at the start if on word
   public static search(editor: TextEditor, selectionStartChar: number): Result {
-    return ConditionIndicatorBeforeStart.traverseLeftAndUpwards(editor, editor.selection.start.line, selectionStartChar);
+    const traversalState: TraversalState = { wasPreviousTokenOpenBracket: false };
+    ConditionIndicatorBeforeStart.setWasPreviousTokenOpenBracketInTraversalState(editor, traversalState);
+    return ConditionIndicatorBeforeStart.traverseLeftAndUpwards(editor, editor.selection.start.line, traversalState, selectionStartChar);
   }
 }
 
