@@ -11,7 +11,7 @@ export class HighlightedConditionRange {
     if (conditionIndicatorPosition) {
       return {
         range: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
-        replacableOperatorLength: conditionIndicatorPosition.statementLength,
+        replaceableOperatorLength: conditionIndicatorPosition.statementLength,
       };
     }
     return null;
@@ -25,13 +25,11 @@ export class HighlightedConditionRange {
   // highlight rules
   // same process for above when nothing inside highlighted text
   // WORK - _ that is next to the string should be regarded as part of it
-  public static get(editor: TextEditor): ConditionDetails {
+  public static get(editor: TextEditor): ConditionDetails | null {
     const conditionDetails: ConditionDetails = { range: FullWordRange.extract(editor) };
     const canInversionStart = CanInversionStart.verifyUsingAnalyzers(conditionDetails.range, editor);
     if (!canInversionStart) {
-      const rangeBeyondHighlight = HighlightedConditionRange.findConditionStartRangeBeyondHiglight(editor, conditionDetails.range);
-      if (rangeBeyondHighlight) return rangeBeyondHighlight;
-      // WORK - return null so that no inversion takes place
+      return HighlightedConditionRange.findConditionStartRangeBeyondHiglight(editor, conditionDetails.range);
     }
     return conditionDetails;
   }

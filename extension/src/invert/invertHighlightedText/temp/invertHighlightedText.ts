@@ -6,12 +6,13 @@ import { TextEditor } from 'vscode';
 
 export class InvertHighlightedTextNew {
   private static isOutsideHighlightDetails(conditionDetails: ConditionDetails): conditionDetails is OutsideHighlightDetails {
-    return Boolean((conditionDetails as OutsideHighlightDetails).replacableOperatorLength);
+    return Boolean((conditionDetails as OutsideHighlightDetails).replaceableOperatorLength);
   }
 
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
       const conditionDetails = HighlightedConditionRange.get(editor);
+      if (!conditionDetails) return;
       const conditionText = editor.document.getText(conditionDetails.range);
       if (InvertHighlightedTextNew.isOutsideHighlightDetails(conditionDetails)) {
         InvertConditionTextViaPadding.invertAndReplaceText(conditionDetails, conditionText, selectedText);

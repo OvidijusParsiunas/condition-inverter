@@ -13,8 +13,8 @@ export class InvertConditionTextViaPadding {
     return RangeCreator.create(
       {
         line: conditionDetails.range.start.line,
-        // need to use + conditionDetails.replacableOperatorLength because we are always using if and we could be working with &&, while etc.
-        character: conditionDetails.range.start.character + conditionDetails.replacableOperatorLength,
+        // need to use + conditionDetails.replaceableOperatorLength because we are always using if and we could be working with &&, while etc.
+        character: conditionDetails.range.start.character + conditionDetails.replaceableOperatorLength,
       },
       conditionDetails.range.end,
     );
@@ -47,15 +47,15 @@ export class InvertConditionTextViaPadding {
     return `${paddingText} `;
   }
 
-  private static invertWithPaddingAndUpdateRange(replacableOperatorLength: number, conditionText: string): string {
-    const paddingText = InvertConditionTextViaPadding.getPaddingText(replacableOperatorLength);
-    const paddedConditionText = InvertConditionTextViaPadding.getPaddedConditionText(paddingText, replacableOperatorLength, conditionText);
+  private static invertWithPaddingAndUpdateRange(replaceableOperatorLength: number, conditionText: string): string {
+    const paddingText = InvertConditionTextViaPadding.getPaddingText(replaceableOperatorLength);
+    const paddedConditionText = InvertConditionTextViaPadding.getPaddedConditionText(paddingText, replaceableOperatorLength, conditionText);
     const invertedText = Inverter.invert(paddedConditionText);
     return InvertConditionTextViaPadding.processInvertedText(invertedText, paddingText);
   }
 
   public static invertAndReplaceText(conditionDetails: OutsideHighlightDetails, conditionText: string, selectedText: TextEditorEdit): void {
-    const invertedText = InvertConditionTextViaPadding.invertWithPaddingAndUpdateRange(conditionDetails.replacableOperatorLength, conditionText);
+    const invertedText = InvertConditionTextViaPadding.invertWithPaddingAndUpdateRange(conditionDetails.replaceableOperatorLength, conditionText);
     const invertionRangeWithPadding = InvertConditionTextViaPadding.generateRange(conditionDetails);
     selectedText.replace(invertionRangeWithPadding, invertedText);
   }
