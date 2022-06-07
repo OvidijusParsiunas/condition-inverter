@@ -1,6 +1,10 @@
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
-import { Tokens } from '../../../../shared/types/tokens';
+import { Token, Tokens } from '../../../../shared/types/tokens';
+
+interface TraversalState {
+  closeBracketNum: number;
+}
 
 export class EvaluateAndPrepareOutsideStatement {
   private static getStartIndexForEquals(tokens: Tokens, equalsIndex: number, traversalIndex: number, evaluationState: EvaluationState): number {
@@ -12,6 +16,10 @@ export class EvaluateAndPrepareOutsideStatement {
       }
     }
     return traversalIndex;
+  }
+
+  private static isFunctionInvocation(tokens: Tokens, openBracketIndex: number): boolean {
+    return Boolean((tokens[openBracketIndex - 1] as string)?.match(/(\w+)/g));
   }
 
   private static getLastExclamationMark(tokens: Tokens, index: number): number {
@@ -28,19 +36,38 @@ export class EvaluateAndPrepareOutsideStatement {
     return index + 1;
   }
 
-  // indexAfterFirstBracket in the context of backward traversal
-  private static getStartIndexForOpenBracket(tokens: Tokens, openBracketIndex: number, indexAfterFirstBracket: number): number {
+  // prettier-ignore
+  private static getIndexAroundOpenBracket(
+      tokens: Tokens, openBracketIndex: number, indexAfterBracket: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, openBracketIndex - 1, false);
     if (tokens[previousIndex] === '!') {
       return EvaluateAndPrepareOutsideStatement.getLastExclamationMark(tokens, previousIndex);
     }
     if (tokens[previousIndex] === '(') {
-      return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, indexAfterFirstBracket);
+      // prettier-ignore
+      return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(
+        tokens, previousIndex, indexAfterBracket, evaluationState, traversalState);
     }
-    return indexAfterFirstBracket;
+    if (EvaluateAndPrepareOutsideStatement.isFunctionInvocation(tokens, openBracketIndex)) {
+      return previousIndex;
+    }
+    return indexAfterBracket;
   }
 
-  private static getStartIndexAfterSymbol(tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState): number {
+  // indexAfterFirstBracket in the context of backward traversal
+  // prettier-ignore
+  private static getStartIndexForOpenBracket(
+      tokens: Tokens, openBracketIndex: number, indexAfterBracket: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+    if (traversalState.closeBracketNum > 0) {
+      traversalState.closeBracketNum -= 1;
+      return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, openBracketIndex, evaluationState, traversalState);
+    }
+    return EvaluateAndPrepareOutsideStatement.getIndexAroundOpenBracket(tokens, openBracketIndex, indexAfterBracket, evaluationState, traversalState);
+  }
+
+  // prettier-ignore
+  private static getStartIndexAfterSymbol(
+      tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     switch (tokens[previousIndex]) {
       case ';':
       case ',':
@@ -48,18 +75,22 @@ export class EvaluateAndPrepareOutsideStatement {
       case '=':
         return EvaluateAndPrepareOutsideStatement.getStartIndexForEquals(tokens, previousIndex, traversalIndex, evaluationState);
       case '(':
-        return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, traversalIndex);
+        return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+      case ')':
+        traversalState.closeBracketNum += 1;
       default:
-        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState);
+        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
     }
   }
 
   // tracks back until a token before the condition start is found
-  private static getStartIndex(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+  // prettier-ignore
+  private static getStartIndex(
+      tokens: Tokens, index: number, evaluationState: EvaluationState, traversalState: TraversalState = { closeBracketNum: 0 }): number {
     if (index === 0) return 0;
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
     if (previousIndex === -1) return index;
-    return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, previousIndex, index, evaluationState);
+    return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, previousIndex, index, evaluationState, traversalState);
   }
 
   public static getStartIndexAndUpdateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

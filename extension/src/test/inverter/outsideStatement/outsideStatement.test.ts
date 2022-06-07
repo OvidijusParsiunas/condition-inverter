@@ -48,7 +48,7 @@ suite('Outside Statement Inversion Suite', () => {
     },
     { input: 'as;mouse && cat;', output: 'as;!mouse || !cat;' },
     { input: 'as,mouse && cat,', output: 'as,!mouse || !cat,' },
-    { input: 'name(mouse && cat)', output: 'name(!mouse || !cat)' },
+    { input: 'name(mouse && cat)', output: '!name(mouse && cat)' },
     { input: '((mouse && cat))', output: '((!mouse || !cat))' },
     { input: 'const result = ((mouse && cat))', output: 'const result = ((!mouse || !cat))' },
     {

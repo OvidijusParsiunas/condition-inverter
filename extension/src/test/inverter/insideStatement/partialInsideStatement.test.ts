@@ -6,10 +6,11 @@ suite('Partial Inside Statement Inversion Suite', () => {
   [
     { input: `if (`, output: `if (` },
     { input: `if  (  `, output: `if  (  ` },
+    { input: `if ((())`, output: 'if (!(())' },
     { input: `if (dog`, output: `if (!dog` },
     { input: `if (true`, output: `if (false` },
     { input: `if ((true`, output: `if ((false` },
-    { input: `if ((true)`, output: `if ((false)` },
+    { input: `if ((true)`, output: `if (!(true)` },
     { input: `if dog`, output: `if !dog` },
     { input: `if(dog`, output: `if(!dog` },
     { input: `for dog`, output: `for !dog` },
@@ -34,6 +35,12 @@ suite('Partial Inside Statement Inversion Suite', () => {
     },
     { input: `for (let i = 0; ((dog && cat`, output: 'for (let i = 0; ((!dog || !cat' },
     { input: `for (let i = 0; ((dog && cat)`, output: 'for (let i = 0; ((!dog || !cat)' },
+    { input: `if (myFunc()`, output: 'if (!myFunc()' },
+    { input: `if (myFunc(())`, output: 'if (!myFunc(())' },
+    { input: `if (myFunc((())`, output: 'if (!myFunc((())' },
+    { input: `if (myFunc(())`, output: 'if (!myFunc(())' },
+    { input: `if (myFunc(true)`, output: 'if (!myFunc(true)' },
+    { input: `if (myFunc(true`, output: 'if (!myFunc(true' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

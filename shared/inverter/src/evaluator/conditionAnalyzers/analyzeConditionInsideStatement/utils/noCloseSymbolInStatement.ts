@@ -8,7 +8,8 @@ export class NoCloseSymbolInStatement {
     for (let i = 0; i < insideStatementTokens.length; i += 1) {
       if (AnalyzeConditionOutsideStatement.shouldAnalysisStart(insideStatementTokens, i)) return i;
     }
-    return insideStatementTokens.length - 1;
+    // reason why full length is returned is because EvaluateAndPrepareOutsideStatement.getStartIndexAndUpdateState uses a - 1 on it
+    return insideStatementTokens.length;
   }
 
   private static getStartIndexAndUpdateState(insideStatementTokens: Tokens, evaluationState: EvaluationState): number {
