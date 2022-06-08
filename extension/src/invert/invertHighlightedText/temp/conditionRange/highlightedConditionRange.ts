@@ -10,7 +10,7 @@ export class HighlightedConditionRange {
     const conditionIndicatorPosition = ConditionIndicatorBeforeStart.search(editor, currentRange.start.character);
     if (conditionIndicatorPosition) {
       return {
-        range: RangeCreator.create(conditionIndicatorPosition.position, editor.selection.end),
+        range: RangeCreator.create(conditionIndicatorPosition.position, currentRange.end),
         replaceableOperatorLength: conditionIndicatorPosition.statementLength,
       };
     }
