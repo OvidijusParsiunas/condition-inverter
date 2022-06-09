@@ -36,10 +36,10 @@ export class InvertConditionTextViaPadding {
     }`;
   }
 
-  private static getPaddingText(statementLength: number): string {
+  private static getPaddingText(replaceableOperatorLength: number): string {
     const paddingText =
-      statementLength - InvertConditionTextViaPadding.paddingConditionStarterText.length > -1
-        ? InvertConditionTextViaPadding.getPaddingTextWithWhitespacePrefix(statementLength)
+      replaceableOperatorLength - InvertConditionTextViaPadding.paddingConditionStarterText.length > -1
+        ? InvertConditionTextViaPadding.getPaddingTextWithWhitespacePrefix(replaceableOperatorLength)
         : InvertConditionTextViaPadding.paddingConditionStarterText;
     // the reason why there is a space after paddingText is because when paddingConditionStarterText is a word, it can merge into another word
     // hence there needs to be a separation between them, e.g:

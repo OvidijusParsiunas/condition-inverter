@@ -19,7 +19,7 @@ export class ConditionIndicatorBeforeStart {
     return tokens.slice(0, index).join('').length;
   }
 
-  private static isConditionStart(tokens: Tokens, index: number): boolean {
+  private static isConditionStart(index: number, tokens: Tokens): boolean {
     const token = tokens[index] as keyof typeof ConditionIndicatorBeforeStart.conditionStartIndicators;
     switch (token) {
       case '&':
@@ -46,7 +46,7 @@ export class ConditionIndicatorBeforeStart {
     const tokens = lineTokens.slice(0, tokenIndex);
     const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, ConditionIndicatorBeforeStart.conditionStartIndicators as TokensJSON, false);
     if (result) {
-      if (ConditionIndicatorBeforeStart.isConditionStart(allTokens, result.index)) {
+      if (ConditionIndicatorBeforeStart.isConditionStart(result.index, allTokens)) {
         return {
           position: { line, character: ConditionIndicatorBeforeStart.getTokenIndexAsString(lineTokens, result.index) },
           statementLength: (result.token as string).length,

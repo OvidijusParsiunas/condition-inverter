@@ -1,3 +1,4 @@
+import { ExpandIfCursorInMiddleOfConditionOperator } from './expandIfCursorInMiddleOfConditionOperator';
 import { Position } from '../../../../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { RangeCreator } from '../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
@@ -12,10 +13,12 @@ export class FullWordRange {
       currentStringIndex += token.length;
       if (isStart) {
         if (currentStringIndex > selectionChar) {
-          return currentStringIndex - token.length;
+          const expansion = ExpandIfCursorInMiddleOfConditionOperator.getExpansionIfBeforeStart(tokens, i);
+          return currentStringIndex - token.length - expansion;
         }
       } else if (currentStringIndex >= selectionChar) {
-        return currentStringIndex;
+        const expansion = ExpandIfCursorInMiddleOfConditionOperator.getExpansionIfAfterEnd(tokens, i);
+        return currentStringIndex + expansion;
       }
     }
     return -1;
