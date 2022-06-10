@@ -11,10 +11,11 @@ export class ExpandIfCursorInMiddleOfConditionOperator {
     return ExpandIfCursorInMiddleOfConditionOperator.isEqualsComparisonOperatorBeforeStart(tokens, index - 1, length + 1);
   }
 
-  private static isGreaterOrLessThanComparisonOperator(nextToken: Token): number {
-    return '=' === nextToken ? (nextToken as string).length : 0;
+  private static isGreaterOrLessThanComparisonOperator(currentToken: Token, nextToken: Token): number {
+    return currentToken === nextToken || '=' === nextToken ? (nextToken as string).length : 0;
   }
 
+  // WORK - &&= should not work
   private static isLogicalOperator(currentToken: Token, nextToken: Token): number {
     return currentToken === nextToken ? (nextToken as string).length : 0;
   }
@@ -27,7 +28,7 @@ export class ExpandIfCursorInMiddleOfConditionOperator {
         return ExpandIfCursorInMiddleOfConditionOperator.isLogicalOperator(tokens[index], tokens[index - 1]);
       case '<':
       case '>':
-        return ExpandIfCursorInMiddleOfConditionOperator.isGreaterOrLessThanComparisonOperator(tokens[index - 1]);
+        return ExpandIfCursorInMiddleOfConditionOperator.isGreaterOrLessThanComparisonOperator(tokens[index], tokens[index - 1]);
       case '=':
         return ExpandIfCursorInMiddleOfConditionOperator.isEqualsComparisonOperatorBeforeStart(tokens, index - 1, 0);
       default:
@@ -43,7 +44,7 @@ export class ExpandIfCursorInMiddleOfConditionOperator {
         return ExpandIfCursorInMiddleOfConditionOperator.isLogicalOperator(tokens[index], tokens[index + 1]);
       case '<':
       case '>':
-        return ExpandIfCursorInMiddleOfConditionOperator.isGreaterOrLessThanComparisonOperator(tokens[index + 1]);
+        return ExpandIfCursorInMiddleOfConditionOperator.isGreaterOrLessThanComparisonOperator(tokens[index], tokens[index + 1]);
       case '=':
       case '!':
         return ExpandIfCursorInMiddleOfConditionOperator.isEqualsComparisonOperatorAfterEnd(tokens, index + 1, 0);
