@@ -1,7 +1,7 @@
 import { TraversalUtil } from '../../../../../shared/out/inverter/src/shared/functionality/traversalUtil';
-import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { Token, Tokens } from '../../../../../shared/out/inverter/src/shared/types/tokens';
 import { Tokenizer } from '../../../../../shared/out/tokenizer/tokenizer';
+import { Position } from '../../../shared/types/position';
 import { RangeCreator } from '../rangeCreator';
 import { Range, TextEditor } from 'vscode';
 

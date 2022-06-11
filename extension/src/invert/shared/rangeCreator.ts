@@ -1,5 +1,5 @@
-import { Position } from '../../shared/types/invertHighlightedText/invertHighlightedText';
 import { Position as VSCodePosition, Range } from 'vscode';
+import { Position } from '../../shared/types/position';
 
 export class RangeCreator {
   public static create(start: Position, end: Position): Range {

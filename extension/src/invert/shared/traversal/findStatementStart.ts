@@ -1,9 +1,9 @@
 import { IsCursorOnStatementWord } from '../../invertHighlightedText/selectionBoundaryIfRanges/isCursorOnStatementWord';
 import { GetStringFromRange } from '../../invertHighlightedText/shared/getStringAroundSelection';
 import { STATEMENT_JSON } from '../../../../../shared/out/inverter/src/shared/consts/statements';
-import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { StatementIndexUtil } from '../../../shared/functionality/statementIndexUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { Position } from '../../../shared/types/position';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 

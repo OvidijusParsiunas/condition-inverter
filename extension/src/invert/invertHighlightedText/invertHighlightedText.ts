@@ -1,9 +1,9 @@
 import { StatementTraversalCallbackUtil } from '../../shared/functionality/statementTraversalCallbackUtil';
-import { Position } from '../../shared/types/invertHighlightedText/invertHighlightedText';
 import { StatementStartRange } from './selectionBoundaryIfRanges/statementStartRange';
 import { StatementEndRange } from './selectionBoundaryIfRanges/statementEndRange';
 import { Inverter } from '../../../../shared/out/inverter/src/inverter';
 import { Range, TextEditor, Position as VSCodePosition } from 'vscode';
+import { Position } from '../../shared/types/position';
 import { RangeCreator } from '../shared/rangeCreator';
 
 export class InvertHighlightedText {

@@ -1,5 +1,5 @@
-import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { StatementIndexUtil } from '../../../shared/functionality/statementIndexUtil';
+import { Position } from '../../../shared/types/position';
 import { TextEditor } from 'vscode';
 
 export class FindStatementAtSelectionEnd {

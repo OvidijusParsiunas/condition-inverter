@@ -1,4 +1,4 @@
-import { IOLineTestProps, TestProps, TextEditorObj } from '../../shared/types/tests/tests';
+import { IOLineTestProps, TestProps, TextEditorObj } from '../../shared/types/tests';
 import * as assert from 'assert';
 import * as vscode from 'vscode';
 

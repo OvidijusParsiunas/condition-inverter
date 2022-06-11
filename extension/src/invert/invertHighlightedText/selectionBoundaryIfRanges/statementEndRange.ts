@@ -1,7 +1,7 @@
-import { Position } from '../../../shared/types/invertHighlightedText/invertHighlightedText';
 import { FindStatementAtSelectionEnd } from '../traversal/findStatementAtSelectionEnd';
 import { FindStatementFullRange } from '../../shared/traversal/findStatementFullRange';
 import { IsCursorOnStatementWord } from './isCursorOnStatementWord';
+import { Position } from '../../../shared/types/position';
 import { Range, TextEditor } from 'vscode';
 
 export class StatementEndRange {
