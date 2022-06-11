@@ -32,7 +32,7 @@ export class AnalyzeOutsideStatement {
     const terminatingWordIndex = AnalyzeOutsideStatement.attemptToFinishViaTerminatingWord(tokens, index, evaluationState);
     if (terminatingWordIndex > -1) return terminatingWordIndex;
     const nextIndex = AnalyzeToken.updateState(tokens, index, evaluationState);
-    if (tokens.length - 1 === nextIndex) AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, nextIndex);
+    if (tokens.length - 1 <= nextIndex) AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, nextIndex);
     return nextIndex;
   }
 }

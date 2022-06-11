@@ -42,6 +42,10 @@ suite('Partial Inside Statement Inversion Suite', () => {
     { input: `if (myFunc(true)`, output: 'if (!myFunc(true)' },
     { input: `if (myFunc(true`, output: 'if (!myFunc(true' },
     { input: `if (typeof (true`, output: 'if (!typeof (true' },
+    { input: 'if (dog <<', output: 'if (!(dog <<)' },
+    { input: 'if (dog >>', output: 'if (!(dog >>)' },
+    { input: 'if (dog +', output: 'if (!(dog +)' },
+    { input: 'if (dog -', output: 'if (!(dog -)' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
