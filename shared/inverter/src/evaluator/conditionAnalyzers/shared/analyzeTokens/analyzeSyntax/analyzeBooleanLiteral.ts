@@ -11,7 +11,7 @@ export class AnalyzeBooleanLiteral {
   }
 
   private static findNumberEndIndex(tokens: Tokens, index: number): number {
-    if (AnalyzeBooleanLiteral.doesTokenEndNumber(tokens[index])) {
+    if (AnalyzeBooleanLiteral.doesTokenEndNumber(tokens[index]) || index >= tokens.length - 1) {
       return index;
     }
     return AnalyzeBooleanLiteral.findNumberEndIndex(tokens, index + 1);

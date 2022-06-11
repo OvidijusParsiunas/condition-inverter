@@ -13,19 +13,6 @@ suite.only('Highlighted Function Call Suite', () => {
   mocha.after(() => TestUtil.executCloseEditorCommand());
 
   TestUtil.runInversionTests(textEditorObj, 'Single Line', [
-    // WORK
-    // {
-    //   lines: [
-    //     {
-    //       input: `typeof dog && myFunc()`,
-    //       output: `!typeof dog || !myFunc()`,
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 7),
-    //     end: new vscode.Position(0, 18),
-    //   },
-    // },
     {
       lines: [
         {

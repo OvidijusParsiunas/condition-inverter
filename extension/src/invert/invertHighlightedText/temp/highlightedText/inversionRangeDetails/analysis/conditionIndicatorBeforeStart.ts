@@ -12,7 +12,7 @@ import { TextEditor } from 'vscode';
 type Result = { position: Position; replaceableStartOperatorLength: number };
 
 export class ConditionIndicatorBeforeStart {
-  private static searchLineFromIndex(line: number, lineTokens: Tokens, tokenIndex: number, allTokens: Tokens): Result | null {
+  private static searchLineFromIndex(line: number, lineTokens: Tokens, tokenIndex: number, allTokens: Tokens): Result {
     const tokens = lineTokens.slice(0, tokenIndex);
     const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, LineTraversalTokenUtils.conditionIndicators as TokensJSON, false);
     if (result) {
@@ -24,11 +24,11 @@ export class ConditionIndicatorBeforeStart {
       }
       return ConditionIndicatorBeforeStart.searchLineFromIndex(line, tokens, result.index, allTokens);
     }
-    return null;
+    return { position: { line, character: 0 }, replaceableStartOperatorLength: 0 };
   }
 
   // WORK - this would thow error if no line above
-  private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): Result | null {
+  private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): Result {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTraversalTokenUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {

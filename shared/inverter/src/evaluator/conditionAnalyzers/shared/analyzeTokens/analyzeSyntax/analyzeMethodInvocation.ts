@@ -5,7 +5,8 @@ export class AnalyzeMethodInvocation {
   public static updateState(tokens: Tokens, index: number): number {
     const nextToken = tokens[index + 1];
     if (nextToken === '(') {
-      return TraversalUtil.getIndexOfClosingBracket(tokens, index);
+      const indexOfClosingBracket = TraversalUtil.getIndexOfClosingBracket(tokens, index);
+      return indexOfClosingBracket > -1 ? indexOfClosingBracket : tokens.length - 1;
     }
     return index;
   }

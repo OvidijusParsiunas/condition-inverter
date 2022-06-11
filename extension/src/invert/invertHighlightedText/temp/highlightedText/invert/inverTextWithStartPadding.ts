@@ -54,7 +54,7 @@ export class InvertTextWithStartPadding {
     return InvertTextWithStartPadding.processInvertedText(invertedText, paddingText);
   }
 
-  public static invertAndReplaceText(inversionRangeDetails: InversionRangeDetails, textToInvert: string, selectedText: TextEditorEdit): void {
+  public static invertAndReplace(inversionRangeDetails: InversionRangeDetails, textToInvert: string, selectedText: TextEditorEdit): void {
     const invertedText = InvertTextWithStartPadding.invertPaddAndUpdateRange(inversionRangeDetails.replacableStartOperatorLength, textToInvert);
     const invertionRangeWithPadding = InvertTextWithStartPadding.generateRange(inversionRangeDetails);
     selectedText.replace(invertionRangeWithPadding, invertedText);

@@ -11,7 +11,7 @@ export class InvertHighlightedTextNew {
       if (!inversionRangeDetails) return;
       const textToInvert = editor.document.getText(inversionRangeDetails.range);
       if (inversionRangeDetails.replacableStartOperatorLength > 0) {
-        InvertTextWithStartPadding.invertAndReplaceText(inversionRangeDetails, textToInvert, selectedText);
+        InvertTextWithStartPadding.invertAndReplace(inversionRangeDetails, textToInvert, selectedText);
       } else {
         InvertText.invertAndReplace(inversionRangeDetails.range, textToInvert, selectedText);
       }
