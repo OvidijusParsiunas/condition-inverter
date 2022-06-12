@@ -2,35 +2,45 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
+import { EndPositionDetails, StartPositionDetails } from '../../../../../../shared/types/inversionRangeDetails';
 import { ConditionIndicatorValidator } from './shared/conditionIndicatorValidator';
+import { ConditionIndicatorPresence } from './shared/conditionIndicatorPresence';
 import { LineTraversalTokenUtils } from './shared/lineTraversalTokenUtils';
 import { Position } from '../../../../../../shared/types/position';
+import { RangeCreator } from '../../../../../shared/rangeCreator';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { TextEditor } from 'vscode';
 
 export class ConditionIndicatorAfterEnd {
-  private static searchLineFromIndex(lineTokens: Tokens, line: number, startChar: number, index: number): Position {
+  // prettier-ignore
+  private static searchLineFromIndex(
+      conditionIndicatorPresent: boolean, lineTokens: Tokens, line: number, startChar: number, index: number): EndPositionDetails {
     for (let i = index; i < lineTokens.length; i += 1) {
       const shouldAnalysisStart = AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, i);
       if (shouldAnalysisStart) {
-        return { line, character: startChar + LineTraversalTokenUtils.getTokenStringIndex(lineTokens, i) };
+        return {
+          position: { line, character: startChar + LineTraversalTokenUtils.getTokenStringIndex(lineTokens, i) },
+          endOperatorPaddingRequired: !conditionIndicatorPresent,
+        };
       }
     }
-    return { line, character: startChar + LineTraversalTokenUtils.getTokenStringIndex(lineTokens, lineTokens.length - 1) };
+    return { position: { line, character: startChar + LineTraversalTokenUtils.getTokenStringIndex(lineTokens, lineTokens.length - 1) } };
   }
 
-  private static searchRightAndDownwards(editor: TextEditor, line: number, startChar?: number): Position | null {
+  // prettier-ignore
+  private static searchRightAndDownwards(
+      editor: TextEditor, conditionIndicatorPresent: boolean, line: number, startChar?: number): EndPositionDetails | null {
     startChar ??= 0;
     const lineTokens = LineTraversalTokenUtils.getLineTokensAfterCharNumber(editor, line, startChar);
     for (let i = 0; i < lineTokens.length; i += 1) {
       if (!LineTraversalTokenUtils.isSpaceToken(lineTokens[i])) {
-        return ConditionIndicatorAfterEnd.searchLineFromIndex(lineTokens, line, startChar, i);
+        return ConditionIndicatorAfterEnd.searchLineFromIndex(conditionIndicatorPresent, lineTokens, line, startChar, i);
       }
     }
     if (editor.document.lineCount - 1 < line + 1) {
       return null;
     }
-    return ConditionIndicatorAfterEnd.searchRightAndDownwards(editor, line + 1);
+    return ConditionIndicatorAfterEnd.searchRightAndDownwards(editor, conditionIndicatorPresent, line + 1);
   }
 
   // WORK - this would thow error if no line above
@@ -45,11 +55,23 @@ export class ConditionIndicatorAfterEnd {
     return ConditionIndicatorAfterEnd.isEndOnOrAfterConditionIndicator(editor, line - 1);
   }
 
-  public static getEndPosition(editor: TextEditor, highlightEnd: Position): Position {
-    if (!ConditionIndicatorAfterEnd.isEndOnOrAfterConditionIndicator(editor, highlightEnd.line, highlightEnd.character)) {
-      const conditionIndicatorPosition = ConditionIndicatorAfterEnd.searchRightAndDownwards(editor, highlightEnd.line, highlightEnd.character);
-      if (conditionIndicatorPosition) return conditionIndicatorPosition;
+  private static isConditionIndicatorPresent(editor: TextEditor, highlightEnd: Position, startPositionDetails: StartPositionDetails): boolean {
+    if (startPositionDetails.replaceableStartOperatorLength === 0) {
+      return ConditionIndicatorPresence.isInRange(editor, RangeCreator.create(startPositionDetails.position, highlightEnd));
     }
-    return highlightEnd;
+    return true;
+  }
+
+  public static getEndPositionDetails(editor: TextEditor, highlightEnd: Position, startPositionDetails: StartPositionDetails): EndPositionDetails {
+    if (!ConditionIndicatorAfterEnd.isEndOnOrAfterConditionIndicator(editor, highlightEnd.line, highlightEnd.character)) {
+      const endPositionDetails = ConditionIndicatorAfterEnd.searchRightAndDownwards(
+        editor,
+        ConditionIndicatorAfterEnd.isConditionIndicatorPresent(editor, highlightEnd, startPositionDetails),
+        highlightEnd.line,
+        highlightEnd.character,
+      );
+      if (endPositionDetails) return endPositionDetails;
+    }
+    return { position: highlightEnd };
   }
 }

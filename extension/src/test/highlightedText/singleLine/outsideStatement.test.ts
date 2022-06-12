@@ -37,18 +37,18 @@ suite.only('Highlighted Outside Statement Suite', () => {
         end: new vscode.Position(0, 18),
       },
     },
-    // {
-    //   lines: [
-    //     {
-    //       input: `const dog = cat && dog`,
-    //       output: `const dog = !cat && dog`,
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 12),
-    //     end: new vscode.Position(0, 15),
-    //   },
-    // },
+    {
+      lines: [
+        {
+          input: `const dog = cat && dog`,
+          output: `const dog = !cat && dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 15),
+      },
+    },
     {
       lines: [
         {

@@ -1,5 +1,5 @@
-import { InversionRangeDetails } from '../../../../../shared/types/inversionRangeDetails';
-import { RangeCreator } from '../../../../shared/rangeCreator';
+import { InversionRangeDetails } from '../../../../../../shared/types/inversionRangeDetails';
+import { RangeCreator } from '../../../../../shared/rangeCreator';
 import { Inverter } from 'shared/inverter/src/inverter';
 import { Range, TextEditorEdit } from 'vscode';
 
@@ -13,7 +13,7 @@ export class InvertTextWithStartPadding {
     return RangeCreator.create(
       {
         line: inversionRangeDetails.range.start.line,
-        // need to use + inversionRangeDetails.replacableStartOperatorLength because we are always using if and we could be working with while etc.
+        // need to use + inversionRangeDetails.replacableStartOperatorLength because we are always using if and we could be working with < etc.
         character: inversionRangeDetails.range.start.character + inversionRangeDetails.replacableStartOperatorLength,
       },
       inversionRangeDetails.range.end,

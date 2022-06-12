@@ -1,3 +1,4 @@
+import { StartPositionDetails } from '../../../../../../shared/types/inversionRangeDetails';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from './shared/conditionIndicatorValidator';
 import { LineTraversalTokenUtils } from './shared/lineTraversalTokenUtils';
@@ -6,13 +7,8 @@ import { Position } from '../../../../../../shared/types/position';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { TextEditor } from 'vscode';
 
-// this is used to temporarily replace a condition operator indicator that was not highlighted but needs to act in order to cause an inversion,
-// most and foremost this is used to build a consistent length conditional statement padding string to add and remove after inversion as
-// instances like conversion of > results in longer length xonsirion insicator of <=
-type Result = { position: Position; replaceableStartOperatorLength: number };
-
 export class ConditionIndicatorBeforeStart {
-  private static searchLineFromIndex(line: number, lineTokens: Tokens, tokenIndex: number, allTokens: Tokens): Result {
+  private static searchLineFromIndex(line: number, lineTokens: Tokens, tokenIndex: number, allTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, tokenIndex);
     const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, LineTraversalTokenUtils.conditionIndicators as TokensJSON, false);
     if (result) {
@@ -28,7 +24,7 @@ export class ConditionIndicatorBeforeStart {
   }
 
   // WORK - this would thow error if no line above
-  private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): Result {
+  private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): StartPositionDetails {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTraversalTokenUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
@@ -54,7 +50,7 @@ export class ConditionIndicatorBeforeStart {
     return ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, line + 1);
   }
 
-  public static getStartPositionDetails(editor: TextEditor, highlightStart: Position): Result {
+  public static getStartPositionDetails(editor: TextEditor, highlightStart: Position): StartPositionDetails {
     if (!ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, highlightStart.line, highlightStart.character)) {
       const conditionIndicatorPosition = ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
       if (conditionIndicatorPosition) return conditionIndicatorPosition;

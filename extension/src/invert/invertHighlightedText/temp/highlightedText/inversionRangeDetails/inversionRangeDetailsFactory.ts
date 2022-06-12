@@ -14,10 +14,11 @@ export class InversionRangeDetailsFactory {
   public static create(editor: TextEditor): InversionRangeDetails {
     const fullWordRange = FullWordRange.extract(editor);
     const startPositionDetails = ConditionIndicatorBeforeStart.getStartPositionDetails(editor, fullWordRange.start);
-    const endPosition = ConditionIndicatorAfterEnd.getEndPosition(editor, fullWordRange.end);
+    const endPositionDetails = ConditionIndicatorAfterEnd.getEndPositionDetails(editor, fullWordRange.end, startPositionDetails);
     return {
-      range: RangeCreator.create(startPositionDetails.position, endPosition),
+      range: RangeCreator.create(startPositionDetails.position, endPositionDetails.position),
       replacableStartOperatorLength: startPositionDetails.replaceableStartOperatorLength,
+      endOperatorPaddingRequired: Boolean(endPositionDetails.endOperatorPaddingRequired),
     };
   }
 }

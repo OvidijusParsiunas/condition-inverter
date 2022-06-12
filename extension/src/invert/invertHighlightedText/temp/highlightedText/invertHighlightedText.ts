@@ -1,5 +1,5 @@
 import { InversionRangeDetailsFactory } from './inversionRangeDetails/inversionRangeDetailsFactory';
-import { InvertTextWithStartPadding } from './invert/inverTextWithStartPadding';
+import { InvertTextWithPadding } from './invert/invertTextWithPadding/invertTextWithPadding';
 import { InvertText } from './invert/invertText';
 import { TextEditor } from 'vscode';
 
@@ -10,8 +10,8 @@ export class InvertHighlightedTextNew {
       const inversionRangeDetails = InversionRangeDetailsFactory.create(editor);
       if (!inversionRangeDetails) return;
       const textToInvert = editor.document.getText(inversionRangeDetails.range);
-      if (inversionRangeDetails.replacableStartOperatorLength > 0) {
-        InvertTextWithStartPadding.invertAndReplace(inversionRangeDetails, textToInvert, selectedText);
+      if (inversionRangeDetails.replacableStartOperatorLength > 0 || inversionRangeDetails.endOperatorPaddingRequired) {
+        InvertTextWithPadding.invertAndReplace(inversionRangeDetails, textToInvert, selectedText);
       } else {
         InvertText.invertAndReplace(inversionRangeDetails.range, textToInvert, selectedText);
       }
