@@ -4,11 +4,11 @@ import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
-export class LineTraversalTokenUtils {
+export class LineTokenTraversalUtils {
   private static readonly spaceTokens = { [' ']: true, ['\n']: true, ['\r']: true };
 
   public static isSpaceToken(token: Token): boolean {
-    return LineTraversalTokenUtils.spaceTokens[token as keyof typeof LineTraversalTokenUtils.spaceTokens];
+    return LineTokenTraversalUtils.spaceTokens[token as keyof typeof LineTokenTraversalUtils.spaceTokens];
   }
 
   // prettier-ignore
@@ -28,6 +28,13 @@ export class LineTraversalTokenUtils {
 
   public static getLineTokensBeforeCharNumber(editor: TextEditor, line: number, charNumber: number): Tokens {
     const stringBeforeCharNumber = editor.document.getText(RangeCreator.create({ line, character: 0 }, { line, character: charNumber }));
+    return Tokenizer.tokenize(stringBeforeCharNumber);
+  }
+
+  public static getFullLineTokens(editor: TextEditor, line: number): Tokens {
+    const stringBeforeCharNumber = editor.document.getText(
+      RangeCreator.create({ line, character: 0 }, { line, character: editor.document.lineAt(line).range.end.character }),
+    );
     return Tokenizer.tokenize(stringBeforeCharNumber);
   }
 }

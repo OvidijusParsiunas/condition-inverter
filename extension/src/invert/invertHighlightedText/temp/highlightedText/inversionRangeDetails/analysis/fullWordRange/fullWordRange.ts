@@ -1,44 +1,54 @@
-import { ExpandIfCursorInMiddleOfConditionOperator } from './expandIfCursorInMiddleOfConditionOperator';
+import { ExpandIfCursorOnPotentialConditionOperator } from './expandIfCursorOnPotentialConditionOperator';
 import { Position } from '../../../../../../../shared/types/position';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { Range, TextEditor } from 'vscode';
 
 export class FullWordRange {
-  private static getIndexOfWordOrSymbolOnSelection(line: string, selectionChar: number, isStart: boolean): number {
-    const tokens = Tokenizer.tokenize(line);
+  // this is used as part of an optimisation approach to reduce the amount of tokenization and token traversal to determine if cursor
+  // is on a potential condition operator
+  private static readonly conditionDelta = 20;
+
+  private static getIndexOfWordOrSymbolOnSelection(lineString: string, selectionChar: number, isStart: boolean): number {
+    const tokens = Tokenizer.tokenize(lineString);
     let currentStringIndex = 0;
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i] as string;
       currentStringIndex += token.length;
       if (isStart) {
         if (currentStringIndex > selectionChar) {
-          const expansion = ExpandIfCursorInMiddleOfConditionOperator.getExpansionIfBeforeStart(tokens, i);
+          const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i);
           return currentStringIndex - token.length - expansion;
         }
       } else if (currentStringIndex >= selectionChar) {
-        const expansion = ExpandIfCursorInMiddleOfConditionOperator.getExpansionIfAfterEnd(tokens, i);
+        const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfAfterEnd(tokens, i);
         return currentStringIndex + expansion;
       }
     }
-    return -1;
+    return selectionChar;
   }
 
-  private static getLineStartToCharSelectionText(editor: TextEditor, line: number): string {
+  private static getLineStartToCharSelectionText(editor: TextEditor, selection: Position, startCharNumber: number): string {
     return editor.document.getText(
-      RangeCreator.create({ line, character: 0 }, { line, character: editor.document.lineAt(line).range.end.character }),
+      RangeCreator.create(
+        { line: selection.line, character: startCharNumber },
+        {
+          line: selection.line,
+          character: Math.min(selection.character + FullWordRange.conditionDelta, editor.document.lineAt(selection.line).range.end.character),
+        },
+      ),
     );
   }
 
-  private static getPositionOfWordOrSymbol(editor: TextEditor, currentPosition: Position, isStart = true): Position {
-    const selectionLine = FullWordRange.getLineStartToCharSelectionText(editor, currentPosition.line);
-    const selectionChar = FullWordRange.getIndexOfWordOrSymbolOnSelection(selectionLine, currentPosition.character, isStart);
-    return { line: currentPosition.line, character: selectionChar };
+  private static getPositionOfWordOrSymbol(editor: TextEditor, position: Position, isStart: boolean): Position {
+    const startCharNumber = Math.max(position.character - FullWordRange.conditionDelta, 0);
+    const lineString = FullWordRange.getLineStartToCharSelectionText(editor, position, startCharNumber);
+    const newCharNumber = FullWordRange.getIndexOfWordOrSymbolOnSelection(lineString, position.character, isStart);
+    return { line: position.line, character: startCharNumber + newCharNumber };
   }
 
   public static extract(editor: TextEditor): Range {
-    // WORK - check if upon checking an if/for statement that has brackets, that selection is not after bracket end
-    const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start);
+    const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start, true);
     // IF false, check if end
     // check ternary operator too
     const endSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.end, false);
