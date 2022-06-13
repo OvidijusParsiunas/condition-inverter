@@ -2,9 +2,9 @@ import { LineTokenTraversalUtils } from './lineTokenTraversalUtils';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class ConditionIndicatorValidator {
-  private static isLogicalOperator(tokens: Tokens, index: number, searchRightWards: boolean): boolean {
+  private static isLogicalOperator(tokens: Tokens, index: number, checkRightWards: boolean): boolean {
     const currentToken = tokens[index];
-    const delta = searchRightWards ? 1 : -1;
+    const delta = checkRightWards ? 1 : -1;
     const siblingToken = tokens[index + delta];
     if (currentToken === siblingToken) {
       const rightMostSymbolIndex = Math.max(index, index + delta);
@@ -24,30 +24,31 @@ export class ConditionIndicatorValidator {
     return false;
   }
 
+  private static isGreaterThanOrLessThanOperator(tokens: Tokens, index: number): boolean {
+    return tokens[index] !== tokens[index - 1] && tokens[index] !== tokens[index + 1];
+  }
+
+  private static readonly isTokenPartOfConditionIndicator: {
+    [key in keyof typeof LineTokenTraversalUtils.conditionIndicators]: (tokens: Tokens, index: number, checkRightWards: boolean) => boolean;
+  } = {
+    ['&']: ConditionIndicatorValidator.isLogicalOperator,
+    ['|']: ConditionIndicatorValidator.isLogicalOperator,
+    ['<']: ConditionIndicatorValidator.isGreaterThanOrLessThanOperator,
+    ['>']: ConditionIndicatorValidator.isGreaterThanOrLessThanOperator,
+    ['=']: ConditionIndicatorValidator.isEqualityOperator,
+    ['and']: (): boolean => true,
+    ['or']: (): boolean => true,
+    ['if']: (): boolean => true,
+    ['elif']: (): boolean => true,
+    ['for']: (): boolean => true,
+    ['while']: (): boolean => true,
+  };
+
   // this only needs to be concerned about identifying if a token is at the start of a condition indicator as other ambiguities have been
   // eliminated by the ExpandIfCursorOnPotentialConditionOperator, hence index will not be in a middle of a potential indicator e.g:
   // >>|>=
-  // WORK - make json for symbol start and a separate one for keyword
   public static isTokenIndexPartOfConditionIndicator(tokens: Tokens, index: number, checkRightWards = true): boolean {
     const currentToken = tokens[index] as keyof typeof LineTokenTraversalUtils.conditionIndicators;
-    switch (currentToken) {
-      case '&':
-      case '|':
-        return ConditionIndicatorValidator.isLogicalOperator(tokens, index, checkRightWards);
-      case '<':
-      case '>':
-        return currentToken !== tokens[index - 1] && currentToken !== tokens[index + 1];
-      case '=':
-        return ConditionIndicatorValidator.isEqualityOperator(tokens, index);
-      case 'and':
-      case 'or':
-      case 'if':
-      case 'elif':
-      case 'for':
-      case 'while':
-        return true;
-      default:
-        return false;
-    }
+    return ConditionIndicatorValidator.isTokenPartOfConditionIndicator[currentToken]?.(tokens, index, checkRightWards);
   }
 }
