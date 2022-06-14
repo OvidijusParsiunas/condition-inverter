@@ -8,8 +8,10 @@ export interface InversionRangeDetails {
   // inversion as instance like the conversion of > results in longer length condition indicator of <=
   replacableStartOperatorLength: number;
   // this is used when there is no condition indicator in the highlighted and stretched (start) text. Contrary to the above, it does not need to
-  // replace a condition that was not in highlighted text, but instead one is added to the end to invoke an inversion and removed afterwards
-  endOperatorPaddingRequired: boolean;
+  // replace a condition that was not in highlighted text, but instead one is added to the end to invoke an inversion and removed afterwards,
+  // however the actual operator can vary between && and ? because ? does not invert the expression before a colon:
+  // e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
+  endOperatorPadding: string;
 }
 
 export interface StartPositionDetails {
@@ -19,5 +21,5 @@ export interface StartPositionDetails {
 
 export interface EndPositionDetails {
   position: Position;
-  endOperatorPaddingRequired?: boolean;
+  endOperatorPadding?: string;
 }

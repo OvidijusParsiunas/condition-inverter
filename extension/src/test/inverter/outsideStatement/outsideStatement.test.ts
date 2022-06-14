@@ -59,6 +59,10 @@ suite('Outside Statement Inversion Suite', () => {
       input: `mouse ? mouse : cat`,
       output: '!mouse ? mouse : cat',
     },
+    {
+      input: `(mouse) ? mouse : cat`,
+      output: '!(mouse) ? mouse : cat',
+    },
     { input: 'mouse && cat ? mouse : cat', output: '!mouse || !cat ? mouse : cat' },
     { input: 'mouse && cat ? mouse || cat : cat', output: '!mouse || !cat ? mouse || cat : cat' },
     {
@@ -83,7 +87,7 @@ suite('Outside Statement Inversion Suite', () => {
     },
     {
       input: `const hello = (dog + mouse ? mouse : cat) && cat`,
-      output: 'const hello = (!(dog + mouse ? mouse : cat)) || !cat',
+      output: 'const hello = (!(dog + mouse) ? mouse : cat) || !cat',
     },
     {
       input: `const hello = (dog + mouse && cat ? mouse : cat) && cat`,
@@ -100,6 +104,22 @@ suite('Outside Statement Inversion Suite', () => {
     {
       input: `mouse ? mouse :cat && dog const dog = dog && cat`,
       output: '!mouse ? mouse :cat && dog const dog = !dog || !cat',
+    },
+    {
+      input: `cat + dog ? fish : dog`,
+      output: '!(cat + dog) ? fish : dog',
+    },
+    {
+      input: `(cat + dog) ? fish : dog`,
+      output: '!(cat + dog) ? fish : dog',
+    },
+    {
+      input: `!(cat + dog) ? fish : dog`,
+      output: 'cat + dog ? fish : dog',
+    },
+    {
+      input: `(cat + dog ? fish : dog) && cat`,
+      output: '(!(cat + dog) ? fish : dog) || !cat',
     },
     {
       input: `mouse\n?\nmouse\n:cat && dog\nconst dog = dog && cat`,

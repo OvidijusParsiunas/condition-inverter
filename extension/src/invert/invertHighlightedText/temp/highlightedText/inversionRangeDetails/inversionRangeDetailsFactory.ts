@@ -1,6 +1,6 @@
+import { ConditionIndicatorBeforeStart } from './analysis/expandSelection/conditionIndicatorBeforeStart';
+import { ConditionIndicatorAfterEnd } from './analysis/expandSelection/conditionIndicatorAfterEnd';
 import { InversionRangeDetails } from '../../../../../shared/types/inversionRangeDetails';
-import { ConditionIndicatorBeforeStart } from './analysis/conditionIndicatorBeforeStart';
-import { ConditionIndicatorAfterEnd } from './analysis/conditionIndicatorAfterEnd';
 import { FullWordRange } from './analysis/fullWordRange/fullWordRange';
 import { RangeCreator } from '../../../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
@@ -18,7 +18,7 @@ export class InversionRangeDetailsFactory {
     return {
       range: RangeCreator.create(startPositionDetails.position, endPositionDetails.position),
       replacableStartOperatorLength: startPositionDetails.replaceableStartOperatorLength,
-      endOperatorPaddingRequired: Boolean(endPositionDetails.endOperatorPaddingRequired),
+      endOperatorPadding: endPositionDetails.endOperatorPadding || '',
     };
   }
 }

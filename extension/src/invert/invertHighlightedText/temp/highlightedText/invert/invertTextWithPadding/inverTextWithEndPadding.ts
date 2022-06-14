@@ -3,14 +3,15 @@ import { Inverter } from 'shared/inverter/src/inverter';
 import { TextEditorEdit } from 'vscode';
 
 export class InvertTextWithEndPadding {
-  private static invertPaddingAtEndAndUpdate(textToInvert: string): string {
-    const paddedText = `${textToInvert} &&`;
+  private static invertPaddingAtEndAndUpdate(textToInvert: string, endOperatorPadding: string): string {
+    const paddedText = `${textToInvert} ${endOperatorPadding}`;
     const invertedText = Inverter.invert(paddedText);
-    return invertedText.substring(0, invertedText.length - 3);
+    // + 1 for the prefix space
+    return invertedText.substring(0, invertedText.length - (endOperatorPadding.length + 1));
   }
 
   public static invertAndReplace(inversionRangeDetails: InversionRangeDetails, textToInvert: string, selectedText: TextEditorEdit): void {
-    const newPaddingText = InvertTextWithEndPadding.invertPaddingAtEndAndUpdate(textToInvert);
-    selectedText.replace(inversionRangeDetails.range, newPaddingText);
+    const invertedText = InvertTextWithEndPadding.invertPaddingAtEndAndUpdate(textToInvert, inversionRangeDetails.endOperatorPadding);
+    selectedText.replace(inversionRangeDetails.range, invertedText);
   }
 }

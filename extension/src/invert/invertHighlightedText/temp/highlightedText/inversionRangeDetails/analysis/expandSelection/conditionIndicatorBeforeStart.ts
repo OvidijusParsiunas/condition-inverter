@@ -1,9 +1,10 @@
-import { StartPositionDetails } from '../../../../../../shared/types/inversionRangeDetails';
+import { StartPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
-import { ConditionIndicatorValidator } from './shared/conditionIndicatorValidator';
-import { LineTokenTraversalUtils } from './shared/lineTokenTraversalUtils';
+import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
+import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { SPACE_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
-import { Position } from '../../../../../../shared/types/position';
+import { Position } from '../../../../../../../shared/types/position';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { TextEditor } from 'vscode';
 
@@ -15,7 +16,9 @@ export class ConditionIndicatorBeforeStart {
       if (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, result.index, false)) {
         return {
           position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(lineTokens, result.index) },
-          replaceableStartOperatorLength: (result.token as string).length,
+          // if there is a ternary operator before the start, there is no need to replace it with
+          // a condition operator to trigger an invertion on the first ternary expression
+          replaceableStartOperatorLength: result.token === '?' ? 0 : (result.token as string).length,
         };
       }
       return ConditionIndicatorBeforeStart.searchLineFromIndex(line, tokens, result.index, fullLineTokens);
@@ -26,9 +29,10 @@ export class ConditionIndicatorBeforeStart {
   // WORK - this would thow error if no line above
   private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): StartPositionDetails {
     endChar ??= editor.document.lineAt(line).range.end.character;
+    if (endChar === 0 && line === 0) return { position: { line: 0, character: 0 }, replaceableStartOperatorLength: 0 };
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
-      if (!LineTokenTraversalUtils.isSpaceToken(lineTokens[i])) {
+      if (!SPACE_JSON[lineTokens[i] as string]) {
         const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
         return ConditionIndicatorBeforeStart.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens);
       }
@@ -41,8 +45,12 @@ export class ConditionIndicatorBeforeStart {
     endChar ??= 0;
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, endChar);
     for (let i = 0; i < lineTokens.length; i += 1) {
-      if (!LineTokenTraversalUtils.isSpaceToken(lineTokens[i])) {
-        return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, i);
+      if (!SPACE_JSON[lineTokens[i] as string]) {
+        // this is used to help evaluating more detailed operators like a ternary operator which needs to make sure there is a space before it
+        // as otherwise the logic is set to not recognise it as a ternary operator as it is better to skip it (or in this case not traverse
+        // backwards past over it). Additionally we can trust endChar to not be in the middle of a word due to previous analysis at FullWordRange
+        const tokensBeforeChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+        return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(tokensBeforeChar.concat(lineTokens), i + tokensBeforeChar.length);
       }
     }
     if (editor.document.lineCount - 1 < line + 1) {
@@ -53,8 +61,7 @@ export class ConditionIndicatorBeforeStart {
 
   public static getStartPositionDetails(editor: TextEditor, highlightStart: Position): StartPositionDetails {
     if (!ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, highlightStart.line, highlightStart.character)) {
-      const conditionIndicatorPosition = ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
-      if (conditionIndicatorPosition) return conditionIndicatorPosition;
+      return ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }
     return { position: highlightStart, replaceableStartOperatorLength: 0 };
   }

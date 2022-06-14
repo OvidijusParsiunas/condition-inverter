@@ -1,3 +1,7 @@
+// prettier-ignore
+import {
+  AnalyzeConditionOutsideStatement
+} from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
 import { LineTokenTraversalUtils } from './lineTokenTraversalUtils';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
@@ -36,6 +40,7 @@ export class ConditionIndicatorValidator {
     ['<']: ConditionIndicatorValidator.isGreaterThanOrLessThanOperator,
     ['>']: ConditionIndicatorValidator.isGreaterThanOrLessThanOperator,
     ['=']: ConditionIndicatorValidator.isEqualityOperator,
+    ['?']: AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
     ['and']: (): boolean => true,
     ['or']: (): boolean => true,
     ['if']: (): boolean => true,

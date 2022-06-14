@@ -1,4 +1,5 @@
 import { FirstFoundToken } from '../types/firstFoundToken';
+import { SPACE_JSON } from '../consts/specialTokens';
 import { TokensJSON } from '../types/tokensJSON';
 import { Token, Tokens } from '../types/tokens';
 
@@ -33,7 +34,7 @@ export class TraversalUtil {
   }
 
   public static getSiblingNonSpaceTokenIndex(tokens: Tokens, index: number, traverseForwards = true): number {
-    if (tokens[index] !== ' ' && tokens[index] !== '\n' && tokens[index] !== '\r') {
+    if (!SPACE_JSON[tokens[index] as string]) {
       return index;
     }
     const newIndex = traverseForwards ? index + 1 : index - 1;

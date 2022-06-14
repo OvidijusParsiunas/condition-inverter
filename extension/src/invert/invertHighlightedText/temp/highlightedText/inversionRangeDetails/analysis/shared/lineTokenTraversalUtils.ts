@@ -1,19 +1,13 @@
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
-import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
+import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
 export class LineTokenTraversalUtils {
-  private static readonly spaceTokens = { [' ']: true, ['\n']: true, ['\r']: true };
-
-  public static isSpaceToken(token: Token): boolean {
-    return LineTokenTraversalUtils.spaceTokens[token as keyof typeof LineTokenTraversalUtils.spaceTokens];
-  }
-
   // prettier-ignore
   public static readonly conditionIndicators = {
-    ['&']: true, ['|']: true, ['and']: true, ['or']: true, ['<']: true, ['>']: true, ['=']: true, ...STATEMENT_JSON };
+    ['&']: true, ['|']: true, ['and']: true, ['or']: true, ['<']: true, ['>']: true, ['=']: true, ['?']: true, ...STATEMENT_JSON };
 
   public static getTokenStringIndex(tokens: Tokens, index: number): number {
     return tokens.slice(0, index).join('').length;

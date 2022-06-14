@@ -51,10 +51,10 @@ export class AnalyzeLogicalOperator {
   }
 
   private static updateState(tokens: Tokens, currentIndex: number, nextIndexToAnalayze: number, evaluationState: EvaluationState): number {
-    const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, nextIndexToAnalayze);
-    AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, currentIndex, nextNonSpaceCharIndex, evaluationState);
+    const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, nextIndexToAnalayze);
+    AnalyzeLogicalOperator.updateStateForStatementsBeforeOperator(tokens, currentIndex, nextNonSpaceIndex, evaluationState);
     // subtracting one due to the for loop automatically adding one
-    return nextNonSpaceCharIndex - 1;
+    return nextNonSpaceIndex - 1;
   }
 
   public static updateStateForSymbol(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

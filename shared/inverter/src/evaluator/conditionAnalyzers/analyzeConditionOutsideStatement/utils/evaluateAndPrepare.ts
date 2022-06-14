@@ -5,15 +5,18 @@ import { Tokens } from '../../../../shared/types/tokens';
 
 interface TraversalState {
   closeBracketNum: number;
+  startedOnternaryOperator: boolean;
 }
 
 export class EvaluateAndPrepareOutsideStatement {
-  private static getStartIndexForEquals(tokens: Tokens, equalsIndex: number, traversalIndex: number, evaluationState: EvaluationState): number {
+  // prettier-ignore
+  private static getStartIndexForEquals(
+      tokens: Tokens, equalsIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     if (tokens[equalsIndex + 1] === '>') {
       const openBracketIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, '(', false);
       const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, openBracketIndex, 1);
       if (closeBracketIndex > -1 && closeBracketIndex < equalsIndex) {
-        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, openBracketIndex, evaluationState);
+        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, openBracketIndex, evaluationState, traversalState);
       }
     }
     return traversalIndex;
@@ -66,6 +69,27 @@ export class EvaluateAndPrepareOutsideStatement {
     return EvaluateAndPrepareOutsideStatement.getIndexAroundOpenBracket(tokens, openBracketIndex, indexAfterBracket, evaluationState, traversalState);
   }
 
+  // this is used for a scenarion where a ternary operator with no conditions in front of it has passed and the expression contains another one,
+  // e.g: ? dog : fish ? cat ? dog  -  should result in ? dog : !fish ? cat ? dog
+  // prettier-ignore
+  private static getIndexIfColonBeforeTernaryOperator(
+    tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState
+  ): number {
+    if (traversalState.startedOnternaryOperator) return traversalIndex;
+    return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
+  }
+
+  // this is used for a scenarion where a ternary operator with no conditions in front of it has passed and the second one should be inverted instead,
+  // e.g: ? fish ? dog : cat  -  should result in ? !fish ? dog : cat
+  // prettier-ignore
+  private static getIndexIfOutsideTernaryOperator(
+      tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+    if (tokens[previousIndex - 1] !== '?' && tokens[traversalIndex + 1] !== '?' && tokens[traversalIndex + 1] !== '.') {
+      return traversalIndex;
+    }
+    return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
+  }
+
   // prettier-ignore
   private static getStartIndexAfterSymbol(
       tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
@@ -74,9 +98,15 @@ export class EvaluateAndPrepareOutsideStatement {
       case ',':
         return traversalIndex;
       case '=':
-        return EvaluateAndPrepareOutsideStatement.getStartIndexForEquals(tokens, previousIndex, traversalIndex, evaluationState);
+        return EvaluateAndPrepareOutsideStatement.getStartIndexForEquals(tokens, previousIndex, traversalIndex, evaluationState, traversalState);
       case '(':
         return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+      case '?':
+        return EvaluateAndPrepareOutsideStatement.getIndexIfOutsideTernaryOperator(
+            tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+      case ':':
+        return EvaluateAndPrepareOutsideStatement.getIndexIfColonBeforeTernaryOperator(
+          tokens, previousIndex, traversalIndex, evaluationState, traversalState);
       case ')':
         traversalState.closeBracketNum += 1;
       default:
@@ -87,7 +117,7 @@ export class EvaluateAndPrepareOutsideStatement {
   // tracks back until a token before the condition start is found
   // prettier-ignore
   private static getStartIndex(
-      tokens: Tokens, index: number, evaluationState: EvaluationState, traversalState: TraversalState = { closeBracketNum: 0 }): number {
+      tokens: Tokens, index: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     if (index === 0) return 0;
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
     if (previousIndex === -1) return index;
@@ -95,7 +125,8 @@ export class EvaluateAndPrepareOutsideStatement {
   }
 
   public static getStartIndexAndUpdateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, index, evaluationState);
+    const initialTraversalState = { closeBracketNum: 0, startedOnternaryOperator: tokens[index] === '?' };
+    const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, index, evaluationState, initialTraversalState);
     evaluationState.currentConditionStartIndex = startIndex;
     evaluationState.isEvaluatingConditions = true;
     return startIndex;

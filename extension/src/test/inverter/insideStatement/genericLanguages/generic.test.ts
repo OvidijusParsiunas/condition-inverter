@@ -764,6 +764,10 @@ suite('Generic Inversion Suite', () => {
       output: `if (!mouse || !cat ? mouse || cat : (): void => { if (cat || dog) { console.log('hello'); } }) { console.log(2) }`,
     },
     {
+      input: `if ((dog) ? cat : fish) { console.log(2) }`,
+      output: 'if (!(dog) ? cat : fish) { console.log(2) }',
+    },
+    {
       input: `if (1 > 2) { console.log(2) }`,
       output: 'if (1 <= 2) { console.log(2) }',
     },

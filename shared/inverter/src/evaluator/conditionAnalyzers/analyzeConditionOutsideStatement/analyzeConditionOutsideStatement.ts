@@ -1,4 +1,5 @@
 import { EvaluateAndPrepareOutsideStatement } from './utils/evaluateAndPrepare';
+import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { ConditionAnalyzer } from '../shared/conditionAnalyzer';
 import { AnalyzeOutsideStatement } from './utils/analyzeToken';
@@ -30,8 +31,13 @@ export class AnalyzeConditionOutsideStatement {
     return AnalyzeConditionOutsideStatement.pythonLogicalOperatorTokens[tokens[currentIndex] as string];
   }
 
-  private static isTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
-    return tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?';
+  public static isTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    if (tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?') {
+      // do not proceed to invert if there is no logic before the ternary operator
+      const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
+      return siblingTokenIndex > -1;
+    }
+    return false;
   }
 
   private static isLessOrGreaterThanOperatorToken(tokens: Tokens, currentIndex: number): boolean {

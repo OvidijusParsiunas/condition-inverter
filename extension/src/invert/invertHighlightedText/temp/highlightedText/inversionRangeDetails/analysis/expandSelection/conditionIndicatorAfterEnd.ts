@@ -2,29 +2,35 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
-import { EndPositionDetails, StartPositionDetails } from '../../../../../../shared/types/inversionRangeDetails';
-import { ConditionIndicatorValidator } from './shared/conditionIndicatorValidator';
-import { ConditionIndicatorPresence } from './shared/conditionIndicatorPresence';
-import { LineTokenTraversalUtils } from './shared/lineTokenTraversalUtils';
-import { Position } from '../../../../../../shared/types/position';
-import { RangeCreator } from '../../../../../shared/rangeCreator';
-import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { EndPositionDetails, StartPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
+import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
+import { ConditionIndicatorPresence } from '../shared/conditionIndicatorPresence';
+import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { SPACE_JSON } from 'shared/inverter/src/shared/consts/statements';
+import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { Position } from '../../../../../../../shared/types/position';
+import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class ConditionIndicatorAfterEnd {
+  private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
+    if (conditionIndicatorPresent) return '';
+    // need to use ? as it does not cause invertion of expression before a colon: e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
+    return conditionIndicatorToken === '?' ? '?' : '&&';
+  }
   // prettier-ignore
   private static searchLineFromIndex(
       conditionIndicatorPresent: boolean, lineTokens: Tokens, line: number, startChar: number, index: number): EndPositionDetails {
     for (let i = index; i < lineTokens.length; i += 1) {
       const shouldAnalysisStart = AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, i);
       if (shouldAnalysisStart) {
-        return {
+      return {
           position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
-          endOperatorPaddingRequired: !conditionIndicatorPresent,
+          endOperatorPadding: ConditionIndicatorAfterEnd.generateEndOperatorPadding(conditionIndicatorPresent, lineTokens[i]),
         };
       }
     }
-    return { position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, lineTokens.length - 1) } };
+    return { position: { line, character: startChar + lineTokens.join('').length } };
   }
 
   // prettier-ignore
@@ -33,7 +39,7 @@ export class ConditionIndicatorAfterEnd {
     startChar ??= 0;
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
     for (let i = 0; i < lineTokens.length; i += 1) {
-      if (!LineTokenTraversalUtils.isSpaceToken(lineTokens[i])) {
+      if (!SPACE_JSON[lineTokens[i] as string]) {
         return ConditionIndicatorAfterEnd.searchLineFromIndex(conditionIndicatorPresent, lineTokens, line, startChar, i);
       }
     }
@@ -55,7 +61,7 @@ export class ConditionIndicatorAfterEnd {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
-      if (!LineTokenTraversalUtils.isSpaceToken(lineTokens[i])) {
+      if (!SPACE_JSON[lineTokens[i] as string]) {
         return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, i, false);
       }
     }
