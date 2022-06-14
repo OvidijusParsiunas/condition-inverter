@@ -281,6 +281,78 @@ suite.only('Highlighted Ternary Operator Suite', () => {
     {
       lines: [
         {
+          input: `dog ? cat + dog ? fish : dog : dog`,
+          output: `dog ? !(cat + dog) ? fish : dog : dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dog ? cat + dog ? fish : dog : dog`,
+          output: `dog ? !(cat + dog) ? fish : dog : dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dog ? cat + dog ? fish : dog : dog`,
+          output: `dog ? !(cat + dog) ? fish : dog : dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dog ? cat + dog ? fish : dog : dog ? fish : dog`,
+          output: `dog ? !(cat + dog) ? fish : dog : dog ? fish : dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dog ? cat + dog ? fish : dog : dog ? fish : dog`,
+          output: `dog ? !(cat + dog) ? fish : dog : dog ? fish : dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dog ? cat + dog ? fish : dog : dog ? fish : dog`,
+          output: `dog ? !(cat + dog) ? fish : dog : dog ? fish : dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
           input: `dog ? dog : cat + dog ? fish : dog`,
           output: `dog ? dog : !(cat + dog) ? fish : dog`,
         },

@@ -2,6 +2,11 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 // this class gets expansion delta even for non-condition symbol collections - e.g. >>>
 export class ExpandIfCursorOnPotentialConditionOperator {
+  private static getQuestionMarkExpansionForEnd(tokens: Tokens, index: number, length = 0): number {
+    if (tokens[index] !== '?' && tokens[index] !== '=') return length;
+    return ExpandIfCursorOnPotentialConditionOperator.getQuestionMarkExpansionForEnd(tokens, index - 1, length + 1);
+  }
+
   private static getComparisonOperatorExtensionForEnd(tokens: Tokens, index: number, length = 0): number {
     if (tokens[index] === '=') return ExpandIfCursorOnPotentialConditionOperator.getComparisonOperatorExtensionForEnd(tokens, index + 1, length + 1);
     return length;
@@ -77,6 +82,8 @@ export class ExpandIfCursorOnPotentialConditionOperator {
       case '=':
       case '!':
         return ExpandIfCursorOnPotentialConditionOperator.getComparisonOperatorExtensionForEnd(tokens, index + 1);
+      case '?':
+        return ExpandIfCursorOnPotentialConditionOperator.getQuestionMarkExpansionForEnd(tokens, index);
       default:
         return 0;
     }

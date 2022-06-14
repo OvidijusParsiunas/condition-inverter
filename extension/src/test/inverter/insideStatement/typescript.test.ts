@@ -2,7 +2,7 @@ import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
 import * as assert from 'assert';
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-suite('TypeScript Invertion Suite', () => {
+suite.only('TypeScript Invertion Suite', () => {
   [
     { input: `if ((dog as string)) console.log('hi')`, output: `if (!(dog as string)) console.log('hi')` },
     { input: `if ((dog as string) && (dog as string)) console.log('hi')`, output: `if (!(dog as string) || !(dog as string)) console.log('hi')` },

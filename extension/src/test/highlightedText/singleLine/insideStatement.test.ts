@@ -553,5 +553,29 @@ suite.only('Highlighted Inside Statement Suite', () => {
         end: new vscode.Position(0, 9),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog ?? cat)',
+          output: 'if (!(dog ?? cat))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog ??= cat)',
+          output: 'if (!(dog ??= cat))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 9),
+      },
+    },
   ]);
 });

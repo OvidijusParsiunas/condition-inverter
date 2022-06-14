@@ -2,7 +2,7 @@ import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
 import * as assert from 'assert';
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-suite('GoLang Invertion Suite', () => {
+suite.only('GoLang Invertion Suite', () => {
   [
     { input: `if 7%2 == 0 { fmt.Println("hi") }`, output: `if 7%2 != 0 { fmt.Println("hi") }` },
     { input: `if 7%2 == 0{ fmt.Println("hi") }`, output: `if 7%2 != 0{ fmt.Println("hi") }` },

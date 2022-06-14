@@ -2,7 +2,7 @@ import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
 import * as assert from 'assert';
 
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-suite('Python Invertion Suite', () => {
+suite.only('Python Invertion Suite', () => {
   [
     { input: 'if dog < cat: print', output: 'if dog >= cat: print' },
     { input: 'if dog < cat:print', output: 'if dog >= cat:print' },
