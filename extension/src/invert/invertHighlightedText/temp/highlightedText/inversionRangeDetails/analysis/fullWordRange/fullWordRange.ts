@@ -43,7 +43,7 @@ export class FullWordRange {
   private static getPositionOfWordOrSymbol(editor: TextEditor, position: Position, isStart: boolean): Position {
     const startCharNumber = Math.max(position.character - FullWordRange.conditionDelta, 0);
     const lineString = FullWordRange.getLineStartToCharSelectionText(editor, position, startCharNumber);
-    const newCharNumber = FullWordRange.getIndexOfWordOrSymbolOnSelection(lineString, position.character, isStart);
+    const newCharNumber = FullWordRange.getIndexOfWordOrSymbolOnSelection(lineString, position.character - startCharNumber, isStart);
     return { line: position.line, character: startCharNumber + newCharNumber };
   }
 

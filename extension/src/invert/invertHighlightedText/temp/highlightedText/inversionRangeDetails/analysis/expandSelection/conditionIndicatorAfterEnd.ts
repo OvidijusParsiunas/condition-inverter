@@ -24,7 +24,7 @@ export class ConditionIndicatorAfterEnd {
     for (let i = index; i < lineTokens.length; i += 1) {
       const shouldAnalysisStart = AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, i);
       if (shouldAnalysisStart) {
-      return {
+        return {
           position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
           endOperatorPadding: ConditionIndicatorAfterEnd.generateEndOperatorPadding(conditionIndicatorPresent, lineTokens[i]),
         };

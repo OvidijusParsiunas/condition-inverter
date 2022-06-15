@@ -73,5 +73,17 @@ suite.only('Highlighted Full Statement Suite', () => {
         end: new vscode.Position(0, 30),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) } if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (!dog || !cat && !mouse) { console.log(2) } if (!dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 87),
+      },
+    },
   ]);
 });

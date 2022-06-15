@@ -181,7 +181,6 @@ suite.only('Highlighted Ternary Operator Suite', () => {
         end: new vscode.Position(0, 23),
       },
     },
-
     {
       lines: [
         {

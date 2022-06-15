@@ -1,3 +1,4 @@
+import { jstsReservedTerminatingWords } from '../../../../shared/consts/jstsReservedTerminatingWords';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
 import { IsTokenWord } from '../../../../shared/functionality/isTokenWord';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
@@ -52,7 +53,8 @@ export class EvaluateAndPrepareOutsideStatement {
       return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(
         tokens, previousIndex, indexAfterBracket, evaluationState, traversalState);
     }
-    if (EvaluateAndPrepareOutsideStatement.isFunctionInvocation(tokens, previousIndex)) {
+    if (EvaluateAndPrepareOutsideStatement.isFunctionInvocation(tokens, previousIndex)
+        && !jstsReservedTerminatingWords[tokens[previousIndex] as keyof typeof jstsReservedTerminatingWords]) {
       return previousIndex;
     }
     return indexAfterBracket;

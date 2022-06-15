@@ -23,7 +23,7 @@ export class AnalyzeOutsideStatement {
     if (jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) {
       const resut = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
       AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, resut);
-      return index;
+      return index - 1;
     }
     return -1;
   }

@@ -46,6 +46,15 @@ suite.only('Partial Inside Statement Inversion Suite', () => {
     { input: 'if (dog >>', output: 'if (!(dog >>)' },
     { input: 'if (dog +', output: 'if (!(dog +)' },
     { input: 'if (dog -', output: 'if (!(dog -)' },
+    { input: '&& cat) { console.log(2) } if (dog', output: '|| !cat) { console.log(2) } if (!dog' },
+    { input: '&& cat) { console.log(2) } if (dog &&', output: '|| !cat) { console.log(2) } if (!dog ||' },
+    { input: '&& cat) { console.log(2) } if (dog <', output: '|| !cat) { console.log(2) } if (dog >=' },
+    { input: '&& cat) { console.log(2) } throw (dog &&', output: '|| !cat) { console.log(2) } throw (!dog ||' },
+    { input: 'throw (dog &&', output: 'throw (!dog ||' },
+    { input: '&& cat) { console.log(2) } ; (dog &&', output: '|| !cat) { console.log(2) } ; (!dog ||' },
+    { input: '&& cat) { console.log(2) } while (dog &&', output: '|| !cat) { console.log(2) } while (!dog ||' },
+    { input: '&& cat) { console.log(2) } function', output: '|| !cat) { console.log(2) } function' },
+    { input: 'isNaN(width) || isNaN(height)) { console.log(2) }', output: '!isNaN(width) && !isNaN(height)) { console.log(2) }' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

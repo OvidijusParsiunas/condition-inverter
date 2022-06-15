@@ -12,6 +12,7 @@ export const jstsReservedTerminatingWords: TokensJSON = {
   switch: true,
   class: true,
   try: true,
+  throw: true,
   throws: true,
   case: true,
   break: true,
@@ -23,4 +24,5 @@ export const jstsReservedTerminatingWords: TokensJSON = {
   do: true,
   interface: true,
   async: true,
+  function: true,
 };
