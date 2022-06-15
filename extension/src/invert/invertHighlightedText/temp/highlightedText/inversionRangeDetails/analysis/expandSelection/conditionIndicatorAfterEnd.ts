@@ -2,6 +2,10 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
+// prettier-ignore
+import {
+  AnalyzeConditionInsideStatement
+} from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { EndPositionDetails, StartPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { ConditionIndicatorPresence } from '../shared/conditionIndicatorPresence';
@@ -13,6 +17,13 @@ import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class ConditionIndicatorAfterEnd {
+  private static isConditionIndicator(lineTokens: Tokens, index: number): boolean {
+    return (
+      AnalyzeConditionInsideStatement.shouldAnalysisStart(lineTokens, index) ||
+      AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index)
+    );
+  }
+
   private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
     if (conditionIndicatorPresent) return '';
     // need to use ? as it does not cause invertion of expression before a colon: e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
@@ -20,10 +31,9 @@ export class ConditionIndicatorAfterEnd {
   }
   // prettier-ignore
   private static searchLineFromIndex(
-      conditionIndicatorPresent: boolean, lineTokens: Tokens, line: number, startChar: number, index: number): EndPositionDetails {
-    for (let i = index; i < lineTokens.length; i += 1) {
-      const shouldAnalysisStart = AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, i);
-      if (shouldAnalysisStart) {
+      conditionIndicatorPresent: boolean, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
+    for (let i = startIndex; i < lineTokens.length; i += 1) {
+      if (ConditionIndicatorAfterEnd.isConditionIndicator(lineTokens, i)) {
         return {
           position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
           endOperatorPadding: ConditionIndicatorAfterEnd.generateEndOperatorPadding(conditionIndicatorPresent, lineTokens[i]),

@@ -481,5 +481,65 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(0, 45),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (!dog || !cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } elif (dog && cat) { console.log(2) }',
+          output: 'if (!dog || !cat) { console.log(2) } elif (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } for (dog && cat) { console.log(2) }',
+          output: 'if (!dog || !cat) { console.log(2) } for (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } while (dog && cat) { console.log(2) }',
+          output: 'if (!dog || !cat) { console.log(2) } while (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) } if (!dog || !cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 35),
+        end: new vscode.Position(0, 70),
+      },
+    },
   ]);
 });

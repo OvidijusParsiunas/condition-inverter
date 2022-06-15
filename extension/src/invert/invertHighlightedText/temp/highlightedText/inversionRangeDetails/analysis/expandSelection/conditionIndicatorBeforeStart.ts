@@ -9,8 +9,8 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { TextEditor } from 'vscode';
 
 export class ConditionIndicatorBeforeStart {
-  private static searchLineFromIndex(line: number, lineTokens: Tokens, tokenIndex: number, fullLineTokens: Tokens): StartPositionDetails {
-    const tokens = lineTokens.slice(0, tokenIndex);
+  private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
+    const tokens = lineTokens.slice(0, endIndex);
     const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, LineTokenTraversalUtils.conditionIndicators as TokensJSON, false);
     if (result) {
       if (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, result.index, false)) {

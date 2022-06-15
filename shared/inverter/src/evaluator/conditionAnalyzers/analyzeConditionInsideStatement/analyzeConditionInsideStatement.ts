@@ -7,7 +7,7 @@ import { TokensJSON } from '../../../shared/types/tokensJSON';
 import { AnalyzeInsideStatement } from './utils/analyzeToken';
 import { Tokens } from '../../../shared/types/tokens';
 
-export default class AnalyzeConditionInsideStatement {
+export class AnalyzeConditionInsideStatement {
   private static readonly statementStartTokens: TokensJSON = { if: true, elif: true, while: true, for: true };
 
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {

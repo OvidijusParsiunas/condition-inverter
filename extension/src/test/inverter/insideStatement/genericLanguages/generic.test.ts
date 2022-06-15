@@ -799,6 +799,7 @@ suite.only('Generic Inversion Suite', () => {
     { input: 'for (const dog in cat) { console.log(2) }', output: 'for (const dog in cat) { console.log(2) }' },
     { input: 'for (dog of cat) { console.log(2) }', output: 'for (dog of cat) { console.log(2) }' },
     { input: `for (let i = 0; (); i += 1) console.log('hi')`, output: `for (let i = 0; (); i += 1) console.log('hi')` },
+    { input: 'isNaN(width) || isNaN(height)) { console.log(2) }', output: '!isNaN(width) && !isNaN(height)) { console.log(2) }' },
     { input: 'throw (dog && cat)', output: 'throw (!dog || !cat)' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
