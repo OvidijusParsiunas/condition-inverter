@@ -193,6 +193,7 @@ suite.only('Partial Outside Statement Inversion Suite', () => {
       output: '>',
     },
     { input: 'i >= 0; i -= 1)', output: 'i < 0; i -= 1)' },
+    { input: 'i >= 0; i -= 1) ', output: 'i < 0; i -= 1) ' },
     { input: 'i >= 0; i -= 1', output: 'i < 0; i -= 1' },
     { input: 'i && 0 + cat; i -= 1', output: '!i || !(0 + cat); i -= 1' },
     { input: '&& myFunc(', output: '|| !myFunc(' },

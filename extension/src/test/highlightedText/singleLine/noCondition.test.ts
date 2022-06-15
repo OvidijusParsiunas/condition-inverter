@@ -578,6 +578,330 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 10),
       },
     },
+    {
+      lines: [
+        {
+          input: '    if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: '    if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }    ',
+          output: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }    ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 71),
+        end: new vscode.Position(0, 73),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 30),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 34),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 55),
+        end: new vscode.Position(0, 62),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) } if (dog && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const hello = dog && cat; if (dog && cat) { console.log(2); }',
+          output: 'const hello = dog && cat; if (dog && cat) { console.log(2); }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const hello = dog && cat;     if (dog && cat) { console.log(2); }',
+          output: 'const hello = dog && cat;     if (dog && cat) { console.log(2); }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const hello = dog && cat; if (dog && cat) { console.log(2); }',
+          output: 'const hello = dog && cat; if (dog && cat) { console.log(2); }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const hello = dog && cat; if (dog && cat) { console.log(2); }',
+          output: 'const hello = dog && cat; if (dog && cat) { console.log(2); }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i >= 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < !2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < !2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 29),
+      },
+    },
     // {
     //   lines: [
     //     {

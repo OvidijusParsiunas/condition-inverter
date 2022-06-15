@@ -10,7 +10,7 @@ export class InvertHighlightedTextNew {
       const inversionRangeDetails = InversionRangeDetailsFactory.create(editor);
       if (!inversionRangeDetails) return;
       const textToInvert = editor.document.getText(inversionRangeDetails.range);
-      if (inversionRangeDetails.replacableStartOperatorLength > 0 || inversionRangeDetails.endOperatorPadding.length > 0) {
+      if (inversionRangeDetails.startOperatorPadding.length > 0 || inversionRangeDetails.endOperatorPadding.length > 0) {
         InvertTextWithPadding.invertAndReplace(inversionRangeDetails, textToInvert, selectedText);
       } else {
         InvertText.invertAndReplace(inversionRangeDetails.range, textToInvert, selectedText);

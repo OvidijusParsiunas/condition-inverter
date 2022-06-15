@@ -28,9 +28,24 @@ export class AnalyzeOutsideStatement {
     return -1;
   }
 
+  // this is used to add brackets when analysis start with no open brackets and the code analysed has encountered something that needs brackets
+  // and there is a bracket directly after it:
+  // e.g. dog + cat) console.log(dog) should invert to !(dog + cat)) console.log(dog) not !(dog + cat) console.log(dog))
+  private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
+    if (evaluationState.isOperationWrappableInBrackets && evaluationState.numberOfBracketsOpen === 0) {
+      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
+      if (nextTokenIndex < tokens.length) {
+        MarkValueForInversion.mark(tokens, index, evaluationState);
+        evaluationState.markedForOperatorInversion = true;
+        evaluationState.isOperationWrappableInBrackets = false;
+      }
+    }
+  }
+
   public static analyze(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const terminatingWordIndex = AnalyzeOutsideStatement.attemptToFinishViaTerminatingWord(tokens, index, evaluationState);
     if (terminatingWordIndex > -1) return terminatingWordIndex;
+    if (tokens[index] === ')') AnalyzeOutsideStatement.markForBracketAddition(tokens, index, evaluationState);
     const nextIndex = AnalyzeToken.updateState(tokens, index, evaluationState);
     if (tokens.length - 1 <= nextIndex) AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, nextIndex);
     return nextIndex;

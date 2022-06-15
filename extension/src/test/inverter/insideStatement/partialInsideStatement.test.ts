@@ -46,6 +46,8 @@ suite.only('Partial Inside Statement Inversion Suite', () => {
     { input: 'if (dog >>', output: 'if (!(dog >>)' },
     { input: 'if (dog +', output: 'if (!(dog +)' },
     { input: 'if (dog -', output: 'if (!(dog -)' },
+    { input: '&& cat + mouse) { console.log(2) }', output: '|| !(cat + mouse)) { console.log(2) }' },
+    { input: '&& cat + mouse) && dog + cat) { console.log(2) }', output: '|| !(cat + mouse)) || !(dog + cat)) { console.log(2) }' },
     { input: '&& cat) { console.log(2) } if (dog', output: '|| !cat) { console.log(2) } if (!dog' },
     { input: '&& cat) { console.log(2) } if (dog &&', output: '|| !cat) { console.log(2) } if (!dog ||' },
     { input: '&& cat) { console.log(2) } if (dog <', output: '|| !cat) { console.log(2) } if (dog >=' },

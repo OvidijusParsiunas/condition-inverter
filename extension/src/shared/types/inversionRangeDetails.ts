@@ -4,19 +4,17 @@ import { Range } from 'vscode';
 export interface InversionRangeDetails {
   range: Range;
   // this is used to temporarily replace a condition operator indicator that was not in the highlight but needs to be there in order to cause
-  // an inversion, most and foremost this is used to build a consistent length conditional statement padding string to add and remove after
-  // inversion as instance like the conversion of > results in longer length condition indicator of <=
-  replacableStartOperatorLength: number;
+  // an inversion, if the condition indicator is = or &, it gets accordingly padded to be 'if'
+  startOperatorPadding: string;
   // this is used when there is no condition indicator in the highlighted and stretched (start) text. Contrary to the above, it does not need to
-  // replace a condition that was not in highlighted text, but instead one is added to the end to invoke an inversion and removed afterwards,
-  // however the actual operator can vary between && and ? because ? does not invert the expression before a colon:
-  // e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
+  // replace part of a condition indicator, but instead needs to be identified in order for inverter to know what to invert, e.g:
+  // ? does not invert the expression before a colon: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
   endOperatorPadding: string;
 }
 
 export interface StartPositionDetails {
   position: Position;
-  replaceableStartOperatorLength: number;
+  startOperatorPadding?: string;
 }
 
 export interface EndPositionDetails {

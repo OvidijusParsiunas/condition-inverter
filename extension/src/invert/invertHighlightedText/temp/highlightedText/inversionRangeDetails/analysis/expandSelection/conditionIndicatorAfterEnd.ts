@@ -7,10 +7,10 @@ import {
   AnalyzeConditionInsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { EndPositionDetails, StartPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
+import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { ConditionIndicatorPresence } from '../shared/conditionIndicatorPresence';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
-import { SPACE_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Position } from '../../../../../../../shared/types/position';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
@@ -26,6 +26,8 @@ export class ConditionIndicatorAfterEnd {
 
   private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
     if (conditionIndicatorPresent) return '';
+    // if an indicator is a statement initiator, keep it in original form
+    if (STATEMENT_JSON[conditionIndicatorToken as keyof typeof STATEMENT_JSON]) return conditionIndicatorToken as string;
     // need to use ? as it does not cause invertion of expression before a colon: e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
     return conditionIndicatorToken === '?' ? '?' : '&&';
   }
@@ -60,7 +62,7 @@ export class ConditionIndicatorAfterEnd {
   }
 
   private static isConditionIndicatorPresent(editor: TextEditor, highlightEnd: Position, startPositionDetails: StartPositionDetails): boolean {
-    if (startPositionDetails.replaceableStartOperatorLength === 0) {
+    if (!startPositionDetails.startOperatorPadding) {
       return ConditionIndicatorPresence.isInRange(editor, RangeCreator.create(startPositionDetails.position, highlightEnd));
     }
     return true;

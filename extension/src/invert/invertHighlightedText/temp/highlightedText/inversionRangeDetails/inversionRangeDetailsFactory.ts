@@ -17,7 +17,7 @@ export class InversionRangeDetailsFactory {
     const endPositionDetails = ConditionIndicatorAfterEnd.getEndPositionDetails(editor, fullWordRange.end, startPositionDetails);
     return {
       range: RangeCreator.create(startPositionDetails.position, endPositionDetails.position),
-      replacableStartOperatorLength: startPositionDetails.replaceableStartOperatorLength,
+      startOperatorPadding: startPositionDetails.startOperatorPadding || '',
       endOperatorPadding: endPositionDetails.endOperatorPadding || '',
     };
   }
