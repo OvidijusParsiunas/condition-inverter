@@ -10,7 +10,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { TextEditor } from 'vscode';
 
 export class ConditionIndicatorBeforeStart {
-  private static readonly stopSymbols = { [')']: true, [';']: true } as TokensJSON;
+  private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
 
   private static generateNewStartPositionDetails(line: number, lineTokens: Tokens, { index, token }: FirstFoundToken): StartPositionDetails {
     const startPositionDetails: StartPositionDetails = {

@@ -4,6 +4,8 @@ import * as assert from 'assert';
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite.only('Partial Inside Statement Inversion Suite', () => {
   [
+    { input: `if`, output: `if` },
+    { input: `if `, output: `if ` },
     { input: `if (`, output: `if (` },
     { input: `if  (  `, output: `if  (  ` },
     { input: `if ((())`, output: 'if (!(())' },
@@ -13,6 +15,8 @@ suite.only('Partial Inside Statement Inversion Suite', () => {
     { input: `if ((true)`, output: `if (!(true)` },
     { input: `if dog`, output: `if !dog` },
     { input: `if(dog`, output: `if(!dog` },
+    { input: `for`, output: `for` },
+    { input: `for `, output: `for ` },
     { input: `for dog`, output: `for !dog` },
     { input: `if (dog &&`, output: `if (!dog ||` },
     { input: `if (dog && cat`, output: `if (!dog || !cat` },
@@ -46,6 +50,8 @@ suite.only('Partial Inside Statement Inversion Suite', () => {
     { input: 'if (dog >>', output: 'if (!(dog >>)' },
     { input: 'if (dog +', output: 'if (!(dog +)' },
     { input: 'if (dog -', output: 'if (!(dog -)' },
+    { input: 'if num := 9', output: 'if num := 9' },
+    { input: 'if num := 9;', output: 'if num := 9;' },
     { input: '&& cat + mouse) { console.log(2) }', output: '|| !(cat + mouse)) { console.log(2) }' },
     { input: '&& cat + mouse) && dog + cat) { console.log(2) }', output: '|| !(cat + mouse)) || !(dog + cat)) { console.log(2) }' },
     { input: '&& cat) { console.log(2) } if (dog', output: '|| !cat) { console.log(2) } if (!dog' },

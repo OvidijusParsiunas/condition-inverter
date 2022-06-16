@@ -19,6 +19,11 @@ export class EvaluateAndPrepareOutsideStatement {
       if (closeBracketIndex > -1 && closeBracketIndex < equalsIndex) {
         return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, openBracketIndex, evaluationState, traversalState);
       }
+    } else if (tokens[equalsIndex - 1] === ':') {
+      // this is used to prevent := from being inverted when there is no ;
+      // e.g: if num := 9
+      const semicolonIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, ';');
+      return semicolonIndex === -1 ? tokens.length : semicolonIndex;
     }
     return traversalIndex;
   }

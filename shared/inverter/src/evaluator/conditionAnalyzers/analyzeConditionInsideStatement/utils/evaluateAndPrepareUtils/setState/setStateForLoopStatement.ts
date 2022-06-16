@@ -13,7 +13,7 @@ export class SetStateForLoopStatement {
     // end with a :) but if the colon is not there, the condition to be evaluated
     // WORK - attempt to find the colon when highlighting using the extension
     evaluationState.conditionSequenceEndIndex = -1;
-    return startIndex - 1;
+    return startIndex;
   }
 
   private static isConditionInValid(statementTokens: Tokens, start: number, end: number): boolean {

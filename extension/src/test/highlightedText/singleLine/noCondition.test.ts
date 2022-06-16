@@ -786,42 +786,6 @@ suite.only('Highlighted No Condition Text Suite', () => {
       lines: [
         {
           input: 'for (let i = 0; i < 2; i += 1) {}',
-          output: 'for (let i = 0; i >= 2; i += 1) {}',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 18),
-        end: new vscode.Position(0, 29),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'for (let i = 0; i < 2; i += 1) {}',
-          output: 'for (let i = 0; i < !2; i += 1) {}',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 19),
-        end: new vscode.Position(0, 29),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'for (let i = 0; i < 2; i += 1) {}',
-          output: 'for (let i = 0; i < !2; i += 1) {}',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 20),
-        end: new vscode.Position(0, 29),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'for (let i = 0; i < 2; i += 1) {}',
           output: 'for (let i = 0; i < 2; i += 1) {}',
         },
       ],
@@ -902,6 +866,443 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 29),
       },
     },
+    {
+      lines: [
+        {
+          input: 'while True: print(dog)',
+          output: 'while True: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in cat: print(dog)',
+          output: 'for dog in cat: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in [2, 6, 8]: print(dog)',
+          output: 'for dog in [2, 6, 8]: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in [2, 6, 8]: print(dog)',
+          output: 'for dog in [2, 6, 8]: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in [2, 6, 8]: print(dog)',
+          output: 'for dog in [2, 6, 8]: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in [2, 6, 8]: print(dog)',
+          output: 'for dog in [2, 6, 8]: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in [2, 6, 8]: print(dog)',
+          output: 'for dog in [2, 6, 8]: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for dog in [2, 6, 8]: print(dog)',
+          output: 'for dog in [2, 6, 8]: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for { fmt.Println("hi") }',
+          output: 'for { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for { fmt.Println("hi") }',
+          output: 'for { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for { fmt.Println("hi") }',
+          output: 'for { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for { fmt.Println("hi") }',
+          output: 'for { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for i, s := range strings { fmt.Println("hi") }',
+          output: 'for i, s := range strings { fmt.Println("hi") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < dog; i += 1) { console.log(2) }',
+          output: 'for (let i = 0; i < dog; i += 1) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    // for i < 5`, output: `for i >= 5
+    // {
+    //   input: `if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }`,
+    //   output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+    // },
+    // {
+    //   input: 'if (function myFunc<number>(param: number|string): void { console.log(2) }) { console.log(2) }',
+    //   output: 'if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }',
+    // },
+    // {
+    //   input: `for (int dog: cat) { System.out.println(dog); }`,
+    //   output: `for (int dog: cat) { System.out.println(dog); }`,
+    // },
+    // {
+    //   input: `for (;;) { System.out.println(dog); }`,
+    //   output: `for (;;) { System.out.println(dog); }`,
+    // },
+    // {
+    //   lines: [
+    //     {
+    //       input: 'if (dog not  in   cat): print',
+    //       output: 'if (dog not  in   cat): print',
+    //     },
+    //   ],
+    //   selection: {
+    //     start: new vscode.Position(0, 0),
+    //     end: new vscode.Position(0, 29),
+    //   },
+    // },
+    // {
+    //   lines: [
+    //     {
+    //       input: 'if (dog not  in   cat): print',
+    //       output: 'if (dog not  in   cat): print',
+    //     },
+    //   ],
+    //   selection: {
+    //     start: new vscode.Position(0, 12),
+    //     end: new vscode.Position(0, 16),
+    //   },
+    // },
     // {
     //   lines: [
     //     {

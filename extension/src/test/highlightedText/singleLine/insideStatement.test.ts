@@ -601,5 +601,89 @@ suite.only('Highlighted Inside Statement Suite', () => {
         end: new vscode.Position(0, 9),
       },
     },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i >= 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < !2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < !2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'while True: print(dog)',
+          output: 'while False: print(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num >= 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 56),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num >= 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
+          output: 'if num := 9; num >= 0 { fmt.Println(num, "is negative") }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 20),
+      },
+    },
   ]);
 });

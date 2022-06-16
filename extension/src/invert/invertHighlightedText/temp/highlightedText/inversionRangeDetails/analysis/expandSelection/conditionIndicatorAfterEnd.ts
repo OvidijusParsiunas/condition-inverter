@@ -20,7 +20,8 @@ export class ConditionIndicatorAfterEnd {
   private static isConditionIndicator(lineTokens: Tokens, index: number): boolean {
     return (
       AnalyzeConditionInsideStatement.shouldAnalysisStart(lineTokens, index) ||
-      AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index)
+      AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index) ||
+      lineTokens[index] === ';'
     );
   }
 

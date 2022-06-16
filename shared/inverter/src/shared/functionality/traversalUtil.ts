@@ -5,7 +5,7 @@ import { Token, Tokens } from '../types/tokens';
 
 export class TraversalUtil {
   public static findTokenIndex(tokens: Tokens, startIndex: number, token: Token, traverseForwards = true): number {
-    if (traverseForwards) return startIndex + tokens.slice(startIndex).indexOf(token);
+    if (traverseForwards) return tokens.indexOf(token, startIndex);
     return tokens.slice(0, startIndex).lastIndexOf(token);
   }
 
