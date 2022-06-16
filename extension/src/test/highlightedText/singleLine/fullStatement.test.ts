@@ -85,5 +85,29 @@ suite.only('Highlighted Full Statement Suite', () => {
         end: new vscode.Position(0, 87),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (function myFunc<number>(param: number|string): void { console.log(2) }) { console.log(2) }`,
+          output: `if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 94),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog not  in   cat): print',
+          output: 'if (dog  in   cat): print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 29),
+      },
+    },
   ]);
 });

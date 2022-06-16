@@ -1417,5 +1417,17 @@ suite.only('Highlighted Inside Statement Suite', () => {
         end: new vscode.Position(0, 5),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (function myFunc<number>(param: number|string): void { console.log(2) }) { console.log(2) }`,
+          output: `if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 74),
+      },
+    },
   ]);
 });

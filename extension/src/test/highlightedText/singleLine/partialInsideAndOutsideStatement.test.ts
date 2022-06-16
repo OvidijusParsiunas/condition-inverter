@@ -541,5 +541,17 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(0, 70),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog not  in   cat): print',
+          output: 'if (dog  in   cat): print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 16),
+      },
+    },
   ]);
 });

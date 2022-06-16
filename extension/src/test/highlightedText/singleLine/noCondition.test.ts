@@ -1249,42 +1249,198 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 11),
       },
     },
-    // {
-    //   input: 'if (function myFunc<number>(param: number|string): void { console.log(2) }) { console.log(2) }',
-    //   output: 'if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }',
-    // },
-    // {
-    //   input: `for (int dog: cat) { System.out.println(dog); }`,
-    //   output: `for (int dog: cat) { System.out.println(dog); }`,
-    // },
-    // {
-    //   input: `for (;;) { System.out.println(dog); }`,
-    //   output: `for (;;) { System.out.println(dog); }`,
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'if (dog not  in   cat): print',
-    //       output: 'if (dog not  in   cat): print',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 0),
-    //     end: new vscode.Position(0, 29),
-    //   },
-    // },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'if (dog not  in   cat): print',
-    //       output: 'if (dog not  in   cat): print',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 12),
-    //     end: new vscode.Position(0, 16),
-    //   },
-    // },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (int dog: cat) { System.out.println(dog); }`,
+          output: `for (int dog: cat) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `for (;;) { System.out.println(dog); }`,
+          output: `for (;;) { System.out.println(dog); }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 37),
+      },
+    },
     // {
     //   lines: [
     //     {

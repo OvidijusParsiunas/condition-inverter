@@ -17,6 +17,14 @@ import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class ConditionIndicatorAfterEnd {
+  private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
+    if (conditionIndicatorPresent || conditionIndicatorToken === ';') return '';
+    // if an indicator is a statement initiator, keep it in original form
+    if (STATEMENT_JSON[conditionIndicatorToken as keyof typeof STATEMENT_JSON]) return conditionIndicatorToken as string;
+    // need to use ? as it does not cause invertion of expression before a colon: e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
+    return conditionIndicatorToken === '?' ? '?' : '&&';
+  }
+
   private static isConditionIndicator(lineTokens: Tokens, index: number): boolean {
     return (
       AnalyzeConditionInsideStatement.shouldAnalysisStart(lineTokens, index) ||
@@ -25,13 +33,6 @@ export class ConditionIndicatorAfterEnd {
     );
   }
 
-  private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
-    if (conditionIndicatorPresent) return '';
-    // if an indicator is a statement initiator, keep it in original form
-    if (STATEMENT_JSON[conditionIndicatorToken as keyof typeof STATEMENT_JSON]) return conditionIndicatorToken as string;
-    // need to use ? as it does not cause invertion of expression before a colon: e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
-    return conditionIndicatorToken === '?' ? '?' : '&&';
-  }
   // prettier-ignore
   private static searchLineFromIndex(
       conditionIndicatorPresent: boolean, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
