@@ -493,7 +493,6 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 10),
       },
     },
-
     {
       lines: [
         {
@@ -1250,23 +1249,6 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 11),
       },
     },
-    {
-      lines: [
-        {
-          input: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
-          output: 'if num := 9; num < 0 { fmt.Println(num, "is negative") }',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 24),
-        end: new vscode.Position(0, 32),
-      },
-    },
-    // for i < 5`, output: `for i >= 5
-    // {
-    //   input: `if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }`,
-    //   output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
-    // },
     // {
     //   input: 'if (function myFunc<number>(param: number|string): void { console.log(2) }) { console.log(2) }',
     //   output: 'if (!(function myFunc<number>(param: number|string): void { console.log(2) })) { console.log(2) }',

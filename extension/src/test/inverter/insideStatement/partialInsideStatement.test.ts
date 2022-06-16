@@ -62,6 +62,9 @@ suite.only('Partial Inside Statement Inversion Suite', () => {
     { input: '&& cat) { console.log(2) } ; (dog &&', output: '|| !cat) { console.log(2) } ; (!dog ||' },
     { input: '&& cat) { console.log(2) } while (dog &&', output: '|| !cat) { console.log(2) } while (!dog ||' },
     { input: '&& cat) { console.log(2) } function', output: '|| !cat) { console.log(2) } function' },
+    { input: 'if (cat().prop', output: 'if (!cat().prop' },
+    { input: 'if (cat()[prop]', output: 'if (!cat()[prop]' },
+    { input: `if (cat()['prop']`, output: `if (!cat()['prop']` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

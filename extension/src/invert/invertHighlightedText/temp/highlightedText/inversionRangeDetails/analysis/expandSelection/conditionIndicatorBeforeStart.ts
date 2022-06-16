@@ -12,6 +12,15 @@ import { TextEditor } from 'vscode';
 export class ConditionIndicatorBeforeStart {
   private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
 
+  // this is mostly used for property access -  e.g. if (name().hello)  or  if (name()['hello'])
+  private static isPermittedIfCloseBracket(fullLineTokens: Tokens, index: number): boolean {
+    if (fullLineTokens[index] === ')') {
+      const nextIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index + 1);
+      return fullLineTokens[nextIndex] !== '.' && fullLineTokens[nextIndex] !== '[';
+    }
+    return true;
+  }
+
   private static generateNewStartPositionDetails(line: number, lineTokens: Tokens, { index, token }: FirstFoundToken): StartPositionDetails {
     const startPositionDetails: StartPositionDetails = {
       position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(lineTokens, index) },
@@ -25,15 +34,20 @@ export class ConditionIndicatorBeforeStart {
     return startPositionDetails;
   }
 
+  private static isValidToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
+    return (
+      ConditionIndicatorBeforeStart.isPermittedIfCloseBracket(fullLineTokens, index) &&
+      (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
+        ConditionIndicatorBeforeStart.stopSymbols[token as keyof typeof ConditionIndicatorBeforeStart.stopSymbols])
+    );
+  }
+
   private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
     const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ConditionIndicatorBeforeStart.stopSymbols } as TokensJSON;
     const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
     if (result) {
-      if (
-        ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, result.index, false) ||
-        ConditionIndicatorBeforeStart.stopSymbols[result.token as keyof typeof ConditionIndicatorBeforeStart.stopSymbols]
-      ) {
+      if (ConditionIndicatorBeforeStart.isValidToken(fullLineTokens, result)) {
         return ConditionIndicatorBeforeStart.generateNewStartPositionDetails(line, lineTokens, result);
       }
       return ConditionIndicatorBeforeStart.searchLineFromIndex(line, tokens, result.index, fullLineTokens);
