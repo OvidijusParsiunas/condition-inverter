@@ -9,9 +9,6 @@ import { Tokens } from '../../../../../../shared/types/tokens';
 export class SetStateForLoopStatement {
   private static setNoCloseBracketForStatement(startIndex: number, evaluationState: EvaluationState): number {
     // setting evaluationState.conditionSequenceEndIndex to -1 in order to identify that there is no semicolon to end condition
-    // IMPORTANT there is an inconsistency where python for loops are not inverted when fully highlighed by the user (highlight
-    // end with a :) but if the colon is not there, the condition to be evaluated
-    // WORK - attempt to find the colon when highlighting using the extension
     evaluationState.conditionSequenceEndIndex = -1;
     return startIndex;
   }

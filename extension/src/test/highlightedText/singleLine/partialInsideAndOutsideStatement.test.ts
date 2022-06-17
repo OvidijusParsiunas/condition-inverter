@@ -649,5 +649,29 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(0, 16),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dogif && cat) { console.log(2) }',
+          output: 'if (!dogif && cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dogif && cat) { console.log(2) }',
+          output: 'if (!dogif || !cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 16),
+      },
+    },
   ]);
 });
