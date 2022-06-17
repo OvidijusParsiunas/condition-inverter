@@ -193,5 +193,45 @@ suite.only('Highlighted Full Statement Suite', () => {
         end: new vscode.Position(26, 1),
       },
     },
+    {
+      lines: [
+        {
+          input: 'for\n',
+          output: 'for',
+        },
+        {
+          input: '(\n',
+          output: '(',
+        },
+        {
+          input: 'let i = 0\n',
+          output: 'let i = 0',
+        },
+        {
+          input: ';\n',
+          output: ';',
+        },
+        {
+          input: 'i < 2\n',
+          output: 'i >= 2',
+        },
+        {
+          input: ';\n',
+          output: ';',
+        },
+        {
+          input: 'i += 1\n',
+          output: 'i += 1',
+        },
+        {
+          input: ')\n',
+          output: ')',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(7, 1),
+      },
+    },
   ]);
 });

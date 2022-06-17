@@ -15,7 +15,7 @@ export class FullWordRange {
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i] as string;
       currentStringIndex += token.length;
-      if (isStart) {
+      if (isStart || i === 0) {
         if (currentStringIndex > selectionChar) {
           const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i);
           return currentStringIndex - token.length - expansion;
