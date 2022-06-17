@@ -1,6 +1,6 @@
 import { InversionRangeDetails } from '../../../../../../shared/types/inversionRangeDetails';
-import { InvertTextWithStartPadding } from './inverTextWithStartPadding';
-import { InvertTextWithEndPadding } from './inverTextWithEndPadding';
+import { InvertTextWithStartPadding } from './invertTextWithStartPadding';
+import { InvertTextWithEndPadding } from './invertTextWithEndPadding';
 import { TextEditorEdit } from 'vscode';
 
 export class InvertTextWithPadding {

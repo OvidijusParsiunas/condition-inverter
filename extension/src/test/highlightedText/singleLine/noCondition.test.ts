@@ -1441,6 +1441,30 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 37),
       },
     },
+    {
+      lines: [
+        {
+          input: '    ',
+          output: '    ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '    ',
+          output: '    ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 3),
+      },
+    },
     // {
     //   lines: [
     //     {

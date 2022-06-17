@@ -55,7 +55,6 @@ export class ConditionIndicatorBeforeStart {
     return { position: { line, character: 0 } };
   }
 
-  // WORK - this would thow error if no line above
   private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): StartPositionDetails {
     endChar ??= editor.document.lineAt(line).range.end.character;
     if (endChar === 0 && line === 0) return { position: { line: 0, character: 0 } };
@@ -66,10 +65,10 @@ export class ConditionIndicatorBeforeStart {
         return ConditionIndicatorBeforeStart.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens);
       }
     }
+    if (line - 1 < 0) return { position: { line, character: 0 } };
     return ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, line - 1);
   }
 
-  // WORK - this would thow error if no line above
   private static isStartOnOrAfterConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= 0;
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, endChar);
@@ -82,9 +81,7 @@ export class ConditionIndicatorBeforeStart {
         return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(tokensBeforeChar.concat(lineTokens), i + tokensBeforeChar.length);
       }
     }
-    if (editor.document.lineCount - 1 < line + 1) {
-      return false;
-    }
+    if (editor.document.lineCount - 1 < line + 1) return false;
     return ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, line + 1);
   }
 

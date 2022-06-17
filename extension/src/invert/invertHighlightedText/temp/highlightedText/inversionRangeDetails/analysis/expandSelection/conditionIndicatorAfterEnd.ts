@@ -57,9 +57,7 @@ export class ConditionIndicatorAfterEnd {
         return ConditionIndicatorAfterEnd.searchLineFromIndex(conditionIndicatorPresent, lineTokens, line, startChar, i);
       }
     }
-    if (editor.document.lineCount - 1 < line + 1) {
-      return null;
-    }
+    if (editor.document.lineCount - 1 < line + 1) return null;
     return ConditionIndicatorAfterEnd.searchRightAndDownwards(editor, conditionIndicatorPresent, line + 1);
   }
 
@@ -70,7 +68,6 @@ export class ConditionIndicatorAfterEnd {
     return true;
   }
 
-  // WORK - this would thow error if no line above
   private static isEndOnOrAfterConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
@@ -79,6 +76,7 @@ export class ConditionIndicatorAfterEnd {
         return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, i, false);
       }
     }
+    if (line - 1 < 0) return false;
     return ConditionIndicatorAfterEnd.isEndOnOrAfterConditionIndicator(editor, line - 1);
   }
 

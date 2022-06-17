@@ -10,7 +10,6 @@ export class InversionRangeDetailsFactory {
   // WORK - use AnalyzeConditionOutsideStatement for downwards analysis
   // selectionStartChar can vary depending on selection position on a word as it will be its start if on word
   // WORK - _ that is next to the string should be regarded as part of it
-  // WORK need to return null if no conditions
   public static create(editor: TextEditor): InversionRangeDetails {
     const fullWordRange = FullWordRange.extract(editor);
     const startPositionDetails = ConditionIndicatorBeforeStart.getStartPositionDetails(editor, fullWordRange.start);

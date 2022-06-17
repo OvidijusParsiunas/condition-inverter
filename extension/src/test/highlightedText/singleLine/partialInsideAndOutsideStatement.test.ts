@@ -553,5 +553,101 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(0, 16),
       },
     },
+    {
+      lines: [
+        {
+          input: '&& dog && cat || mouse) { console.log(2) }',
+          output: '|| !dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'fish && dog && cat || mouse) { console.log(2) }',
+          output: '!fish || !dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '&& dog && cat || mouse) { console.log(2) }',
+          output: '|| !dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'fish && dog && cat || mouse) { console.log(2) }',
+          output: 'fish || !dog || !cat && !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (fish && dog && cat || mouse',
+          output: 'if (!fish || !dog || !cat && !mouse',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 31),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (fish && dog &&',
+          output: 'if (!fish || !dog ||',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'fish && dog && cat || mouse',
+          output: '!fish || !dog || !cat && !mouse',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '&& dog && cat ||',
+          output: '|| !dog || !cat &&',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 16),
+      },
+    },
   ]);
 });
