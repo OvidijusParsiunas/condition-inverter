@@ -269,8 +269,8 @@ suite.only('Highlighted No Condition Text Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(2, 6),
-        end: new vscode.Position(3, 1),
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(2, 1),
       },
     },
     {
@@ -289,8 +289,8 @@ suite.only('Highlighted No Condition Text Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(3, 0),
-        end: new vscode.Position(3, 1),
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 1),
       },
     },
     {

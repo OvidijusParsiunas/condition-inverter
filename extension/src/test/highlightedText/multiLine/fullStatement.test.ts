@@ -513,5 +513,49 @@ suite.only('Highlighted Full Statement Suite', () => {
         end: new vscode.Position(1, 17),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }\n',
+          output: 'if (dog && !cat && !mouse) { console.log(2) }',
+        },
+        {
+          input: 'for (let i = 0; i < 10; i += 1) {}\n',
+          output: 'for (let i = 0; i >= 10; i += 1) {}',
+        },
+        {
+          input: 'const fish = dog & cat\n',
+          output: 'const fish = dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(1, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;\n',
+          output: 'for (let i = 0;',
+        },
+        {
+          input: 'i < 10;\n',
+          output: 'i >= 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(3, 2),
+      },
+    },
   ]);
 });
