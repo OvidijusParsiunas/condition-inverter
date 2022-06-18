@@ -114,6 +114,8 @@ export class EvaluateAndPrepareOutsideStatement {
       case ':':
         return EvaluateAndPrepareOutsideStatement.getIndexIfColonBeforeTernaryOperator(
           tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+      case '}': 
+          return traversalIndex;
       case ')':
         traversalState.closeBracketNum += 1;
       default:

@@ -50,7 +50,7 @@ export class SetStateForLoopStatement {
   private static setStateForBrackatable(tokens: Tokens, openBracketIndex: number, evaluationState: EvaluationState): number {
     const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, openBracketIndex, 1) + 1;
     const newIndex = SetStateForLoopStatement.setBoundariesForMiddleOfIfStatement(tokens, openBracketIndex, closeBracketIndex, evaluationState);
-    return newIndex > -1 ? newIndex : closeBracketIndex;
+    return newIndex > -1 ? newIndex : openBracketIndex;
   }
 
   public static set(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
