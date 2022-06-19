@@ -169,5 +169,45 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(1, 7),
       },
     },
+    {
+      lines: [
+        {
+          input: `!cat\n`,
+          output: `cat`,
+        },
+        {
+          input: `&&\n`,
+          output: `&&`,
+        },
+        {
+          input: `dog\n`,
+          output: `dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `cat\n`,
+          output: `cat`,
+        },
+        {
+          input: `&&\n`,
+          output: `&&`,
+        },
+        {
+          input: `dog\n`,
+          output: `!dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 2),
+        end: new vscode.Position(2, 0),
+      },
+    },
   ]);
 });

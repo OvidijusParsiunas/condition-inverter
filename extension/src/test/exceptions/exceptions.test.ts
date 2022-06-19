@@ -13,7 +13,7 @@ suite('Exceptions Suite', () => {
   mocha.after(() => TestUtil.executCloseEditorCommand());
 
   // not testing for console.log outputs as cannot listen to them in extension
-  // tets here are only validing if an error has not been thrown
+  // tests here are only validing if an error has not been thrown
   TestUtil.runInversionTests(textEditorObj, 'No exception thrown by vscode extension', [
     {
       lines: [
