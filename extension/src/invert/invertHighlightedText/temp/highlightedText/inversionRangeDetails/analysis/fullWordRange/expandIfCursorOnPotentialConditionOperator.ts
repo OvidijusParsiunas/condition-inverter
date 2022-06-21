@@ -1,70 +1,23 @@
+import { LogicalOrAssignmentOperatorExpansion } from './operatorExpansion/logicalOrAssignmentOperatorExpansion';
+import { GreaterOrLessThanOperatorExpansion } from './operatorExpansion/greaterOrLessThanOperatorExpansion';
+import { QuestionMarkOperatorExpansion } from './operatorExpansion/questionMarkOperatorExpansion';
+import { ComparisonOperatorExpansion } from './operatorExpansion/comparisonOperatorExpansion';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
-// this class gets expansion delta even for non-condition symbol collections - e.g. >>>
+// gets expansion delta even for non-conditional symbol collections - e.g. >>>
+// token symbol is always before the cursoror - |&&
 export class ExpandIfCursorOnPotentialConditionOperator {
-  private static getQuestionMarkExpansionForEnd(tokens: Tokens, index: number, length = 0): number {
-    if (tokens[index] !== '?' && tokens[index] !== '=') return length;
-    return ExpandIfCursorOnPotentialConditionOperator.getQuestionMarkExpansionForEnd(tokens, index - 1, length + 1);
-  }
-
-  private static getComparisonOperatorExtensionForEnd(tokens: Tokens, index: number, length = 0): number {
-    if (tokens[index] === '=') return ExpandIfCursorOnPotentialConditionOperator.getComparisonOperatorExtensionForEnd(tokens, index + 1, length + 1);
-    return length;
-  }
-
-  private static getComparisonOperatorExtensionForStart(tokens: Tokens, index: number, length = 0): number {
-    if (tokens[index] !== '!' && tokens[index] !== '=' && tokens[index] !== '<' && tokens[index] !== '>') return length;
-    return ExpandIfCursorOnPotentialConditionOperator.getComparisonOperatorExtensionForStart(tokens, index - 1, length + 1);
-  }
-
-  private static getLengthOfGreaterOrLessThanComparisonOperator(tokens: Tokens, index: number, delta: number, length: number): number {
-    if (tokens[index] === tokens[index + delta]) {
-      return ExpandIfCursorOnPotentialConditionOperator.getLengthOfGreaterOrLessThanComparisonOperator(tokens, index + delta, delta, length + 1);
-    }
-    return length;
-  }
-
-  private static getGreaterOrLessSymbolsExpansion(tokens: Tokens, index: number, delta: number): number {
-    // only used for the end where < is the current token
-    // <<|=
-    if (tokens[index + 1] === '=') {
-      return 1;
-    }
-    return ExpandIfCursorOnPotentialConditionOperator.getLengthOfGreaterOrLessThanComparisonOperator(tokens, index, delta, 0);
-  }
-
-  private static getLogicalOperatorOrAssignmentExpansionForEnd(tokens: Tokens, index: number): number {
-    const currentToken = tokens[index];
-    // uses the value on the left
-    // &|& and &|&=
-    // &&| and &&|=
-    if (currentToken === tokens[index + 1]) {
-      if (tokens[index + 2] === '=') {
-        return 2;
-      }
-      return 1;
-    }
-    if (currentToken === tokens[index - 1]) {
-      if (tokens[index + 1] === '=') {
-        return 2;
-      }
-      return 1;
-    }
-    return 0;
-  }
-
   public static getExpansionIfBeforeStart(tokens: Tokens, index: number): number {
     const token = tokens[index] as string;
     switch (token) {
       case '|':
       case '&':
-        // &|& and &|&=
-        return Number(tokens[index] === tokens[index - 1]);
+        return LogicalOrAssignmentOperatorExpansion.getForSelectionStart(tokens, index);
       case '<':
       case '>':
-        return ExpandIfCursorOnPotentialConditionOperator.getGreaterOrLessSymbolsExpansion(tokens, index, -1);
+        return GreaterOrLessThanOperatorExpansion.getForSelectionStart(tokens, index);
       case '=':
-        return ExpandIfCursorOnPotentialConditionOperator.getComparisonOperatorExtensionForStart(tokens, index - 1);
+        return ComparisonOperatorExpansion.getForSelectionStart(tokens, index - 1);
       default:
         return 0;
     }
@@ -75,15 +28,15 @@ export class ExpandIfCursorOnPotentialConditionOperator {
     switch (token) {
       case '|':
       case '&':
-        return ExpandIfCursorOnPotentialConditionOperator.getLogicalOperatorOrAssignmentExpansionForEnd(tokens, index);
+        return LogicalOrAssignmentOperatorExpansion.getForSelectionEnd(tokens, index);
       case '<':
       case '>':
-        return ExpandIfCursorOnPotentialConditionOperator.getGreaterOrLessSymbolsExpansion(tokens, index, 1);
+        return GreaterOrLessThanOperatorExpansion.getForSelectionEnd(tokens, index);
       case '=':
       case '!':
-        return ExpandIfCursorOnPotentialConditionOperator.getComparisonOperatorExtensionForEnd(tokens, index + 1);
+        return ComparisonOperatorExpansion.getForSelectionEnd(tokens, index);
       case '?':
-        return ExpandIfCursorOnPotentialConditionOperator.getQuestionMarkExpansionForEnd(tokens, index);
+        return QuestionMarkOperatorExpansion.getForSelectionEnd(tokens, index);
       default:
         return 0;
     }
