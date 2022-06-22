@@ -9,8 +9,8 @@ export class InversionRangeDetailsFactory {
   // WORK - _ that is next to the string should be regarded as part of it
   public static create(editor: TextEditor): InversionRangeDetails {
     const fullWordRange = FullWordRange.extract(editor);
-    const startPositionDetails = ConditionIndicatorBeforeStart.getStartPositionDetails(editor, fullWordRange.start);
-    const endPositionDetails = ConditionIndicatorAfterEnd.getEndPositionDetails(editor, fullWordRange.end, startPositionDetails);
+    const startPositionDetails = ConditionIndicatorBeforeStart.getStartPositionDetails(editor, fullWordRange);
+    const endPositionDetails = ConditionIndicatorAfterEnd.getEndPositionDetails(editor, fullWordRange, startPositionDetails);
     return {
       range: RangeCreator.create(startPositionDetails.position, endPositionDetails.position),
       startOperatorPadding: startPositionDetails.startOperatorPadding || '',
