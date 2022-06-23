@@ -10,10 +10,20 @@ export class LogicalOrAssignmentOperatorExpansion {
       // &|&
       return 1;
     }
+    // |&&
     return 0;
   }
 
   public static getForSelectionStart(tokens: Tokens, index: number): number {
-    return Number(tokens[index] === tokens[index - 1]);
+    if (tokens[index] === tokens[index - 1]) {
+      // &&|=
+      if (tokens[index + 1] === '=') {
+        return 2;
+      }
+      // &&|
+      return 0;
+    }
+    // &|&
+    return 1;
   }
 }

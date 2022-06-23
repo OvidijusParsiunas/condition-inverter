@@ -17,7 +17,8 @@ export class ExpandIfCursorOnPotentialConditionOperator {
       case '>':
         return GreaterOrLessThanOperatorExpansion.getForSelectionStart(tokens, index);
       case '=':
-        return ComparisonOperatorExpansion.getForSelectionStart(tokens, index - 1);
+      case '!':
+        return ComparisonOperatorExpansion.getForSelectionStart(tokens, index);
       default:
         return 0;
     }

@@ -4,53 +4,71 @@ import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { Range, TextEditor } from 'vscode';
 
+interface SubstringAroundPosition {
+  substringRange: Range;
+  substring: string;
+}
+
 export class FullWordRange {
   // this is used as part of an optimisation approach to reduce the amount of tokenization and token traversal to determine if cursor
   // is on a potential condition operator
   private static readonly conditionDelta = 20;
 
-  private static getIndexOfWordOrSymbolOnSelection(lineString: string, selectionChar: number, isStart: boolean): number {
+  private static getIndexForSelectionEnd(lineString: string, selectionEndChar: number): number {
     const tokens = Tokenizer.tokenize(lineString);
     let currentStringIndex = 0;
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i] as string;
       currentStringIndex += token.length;
-      if (isStart || i === 0) {
-        if (currentStringIndex > selectionChar) {
-          const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i);
-          return currentStringIndex - token.length - expansion;
-        }
-      } else if (currentStringIndex >= selectionChar) {
+      if (currentStringIndex > selectionEndChar) {
         const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfAfterEnd(tokens, i);
-        return currentStringIndex + expansion;
+        const totalExpansion = currentStringIndex + expansion;
+        return currentStringIndex - token.length < selectionEndChar ? totalExpansion : totalExpansion - token.length;
+      }
+    }
+    return selectionEndChar;
+  }
+
+  private static getIndexForSelectionStart(lineString: string, selectionChar: number): number {
+    const tokens = Tokenizer.tokenize(lineString);
+    let currentStringIndex = tokens.join('').length;
+    for (let i = tokens.length - 1; i >= 0; i -= 1) {
+      const token = tokens[i] as string;
+      currentStringIndex -= token.length;
+      if (currentStringIndex < selectionChar) {
+        const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i);
+        return currentStringIndex + token.length > selectionChar ? currentStringIndex - expansion : currentStringIndex + token.length - expansion;
       }
     }
     return selectionChar;
   }
 
-  private static getLineStartToCharSelectionText(editor: TextEditor, selection: Position, startCharNumber: number): string {
-    return editor.document.getText(
-      RangeCreator.create(
-        { line: selection.line, character: startCharNumber },
-        {
-          line: selection.line,
-          character: Math.min(selection.character + FullWordRange.conditionDelta, editor.document.lineAt(selection.line).range.end.character),
-        },
-      ),
-    );
+  private static getSubstringAroundPosition(editor: TextEditor, selection: Position, relativeCharNumber: number): SubstringAroundPosition {
+    // extracts text 20 (conditionDelta) chars before and after selection
+    const startPosition = { line: selection.line, character: Math.max(relativeCharNumber - FullWordRange.conditionDelta, 0) };
+    const endPosition = {
+      line: selection.line,
+      character: Math.min(selection.character + FullWordRange.conditionDelta, editor.document.lineAt(selection.line).range.end.character),
+    };
+    const substringRange = RangeCreator.create(startPosition, endPosition);
+    const substring = editor.document.getText(substringRange);
+    return { substringRange, substring };
   }
 
-  private static getPositionOfWordOrSymbol(editor: TextEditor, position: Position, isStart: boolean): Position {
-    const startCharNumber = Math.max(position.character - FullWordRange.conditionDelta, 0);
-    const lineString = FullWordRange.getLineStartToCharSelectionText(editor, position, startCharNumber);
-    const newCharNumber = FullWordRange.getIndexOfWordOrSymbolOnSelection(lineString, position.character - startCharNumber, isStart);
-    return { line: position.line, character: startCharNumber + newCharNumber };
+  private static getPositionOfWordOrSymbol(editor: TextEditor, selectedPosition: Position, isStart: boolean): Position {
+    const { substring, substringRange } = FullWordRange.getSubstringAroundPosition(editor, selectedPosition, selectedPosition.character);
+    const substringStartChar = substringRange.start.character;
+    const substringStartRelativeToSelectionChar = selectedPosition.character - substringStartChar;
+    const fullWordOrComparisonSymbolChar = isStart
+      ? FullWordRange.getIndexForSelectionStart(substring, substringStartRelativeToSelectionChar)
+      : FullWordRange.getIndexForSelectionEnd(substring, substringStartRelativeToSelectionChar);
+    return { line: selectedPosition.line, character: substringStartChar + fullWordOrComparisonSymbolChar };
   }
 
   public static extract(editor: TextEditor): Range {
     const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start, true);
-    // IF false, check if end
-    // check ternary operator too
+    // WORK - IF false, check if end
+    // WORK - check ternary operator too
     const endSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.end, false);
     return RangeCreator.create(startSelectionPosition, endSelectionPosition);
   }

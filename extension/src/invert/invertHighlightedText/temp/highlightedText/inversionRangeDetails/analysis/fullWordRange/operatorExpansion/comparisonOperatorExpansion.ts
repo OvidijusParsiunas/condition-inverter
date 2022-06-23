@@ -23,10 +23,20 @@ export class ComparisonOperatorExpansion {
     return 0;
   }
 
-  public static getForSelectionStart(tokens: Tokens, index: number, length = 0): number {
-    if (!SelectionExpansionUtil.isEqualityOperator(tokens[index]) && !SelectionExpansionUtil.isGreaterLessThanSymbol(tokens[index])) {
+  private static getTotalStartExpansion(tokens: Tokens, index: number, length: number): number {
+    const token = tokens[index];
+    if (token !== '=' && token !== '!') {
       return length;
     }
-    return ComparisonOperatorExpansion.getForSelectionStart(tokens, index - 1, length + 1);
+    return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, length + 1);
+  }
+
+  public static getForSelectionStart(tokens: Tokens, index: number, length = 0): number {
+    // =|
+    if (tokens[index + 1] !== '=') {
+      return length;
+    }
+    // =|=, ==|=, =|==, !=|=
+    return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, length + 1);
   }
 }
