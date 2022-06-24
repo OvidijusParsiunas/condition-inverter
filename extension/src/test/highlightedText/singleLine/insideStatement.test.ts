@@ -88,7 +88,7 @@ suite.only('Highlighted Inside Statement Suite', () => {
     {
       lines: [
         {
-          input: 'if (dog && cat || mouse) { console.log(2) }',
+          input: 'if (!dog && cat || mouse) { console.log(2) }',
           output: 'if (dog || !cat && mouse) { console.log(2) }',
         },
       ],
@@ -1451,6 +1451,22 @@ suite.only('Highlighted Inside Statement Suite', () => {
       selection: {
         start: new vscode.Position(0, 0),
         end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input:
+            // eslint-disable-next-line max-len
+            'if (dog && asdiuhaisudhiuashdiuahsdiuhasduihasiudhiausdhihas && aiushdiuahsdiuhasdiuhasiudhasuidh || ausidhuiahsduihauisdhiuashdiuhasdhuasduihuashdiuas && asdhuayshdyuagsudygasuydgasydug) {}',
+          output:
+            // eslint-disable-next-line max-len
+            'if (dog && asdiuhaisudhiuashdiuahsdiuhasduihasiudhiausdhihas || !aiushdiuahsdiuhasdiuhasiudhasuidh && ausidhuiahsduihauisdhiuashdiuhasdhuasduihuashdiuas && asdhuayshdyuagsudygasuydgasydug) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 62),
+        end: new vscode.Position(0, 99),
       },
     },
   ]);
