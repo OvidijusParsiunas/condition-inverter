@@ -6,8 +6,9 @@ import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { SPACE_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { Position } from '../../../../../../../shared/types/position';
+import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { TextEditor } from 'vscode';
+import { Range, TextEditor } from 'vscode';
 
 export class ConditionIndicatorBeforeStart {
   private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
@@ -65,28 +66,45 @@ export class ConditionIndicatorBeforeStart {
         return ConditionIndicatorBeforeStart.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens);
       }
     }
-    if (line - 1 < 0) return { position: { line, character: 0 } };
     return ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, line - 1);
   }
 
-  private static isStartOnOrAfterConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
-    endChar ??= 0;
-    const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, endChar);
+  private static isConditionIndicator(editor: TextEditor, line: number, lineTokens: Tokens, startChar: number): boolean {
+    // the following line is used to help evaluate more detailed operators like a ternary operator which needs to make sure that there is are no
+    // particular symbols before it as otherwise the logic would not recognise it as a ternary operator and return false. Additionally we can trust
+    // startChar to not be in the middle of a word due to prior analysis at FullWordRange
+    const tokensBeforeChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, startChar);
+    return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(tokensBeforeChar.concat(lineTokens), tokensBeforeChar.length);
+  }
+
+  private static isStartAfterConditionIndicator(editor: TextEditor, line: number, startChar?: number): boolean {
+    startChar ??= 0;
+    const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
     for (let i = 0; i < lineTokens.length; i += 1) {
       if (!SPACE_JSON[lineTokens[i] as string]) {
-        // this is used to help evaluating more detailed operators like a ternary operator which needs to make sure there is a space before it
-        // as otherwise the logic is set to not recognise it as a ternary operator as it is better to skip it (or in this case not traverse
-        // backwards past over it). Additionally we can trust endChar to not be in the middle of a word due to previous analysis at FullWordRange
-        const tokensBeforeChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
-        return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(tokensBeforeChar.concat(lineTokens), i + tokensBeforeChar.length);
+        return ConditionIndicatorBeforeStart.isConditionIndicator(editor, line, lineTokens, startChar);
       }
     }
     if (editor.document.lineCount - 1 < line + 1) return false;
-    return ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, line + 1);
+    return ConditionIndicatorBeforeStart.isStartAfterConditionIndicator(editor, line + 1);
   }
 
-  public static getStartPositionDetails(editor: TextEditor, highlightStart: Position): StartPositionDetails {
-    if (!ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, highlightStart.line, highlightStart.character)) {
+  private static isStartOnOrAfterConditionIndicator(editor: TextEditor, highlightStart: Position): boolean {
+    const { line, character } = highlightStart;
+    const charBeforeStart = editor.document.getText(RangeCreator.create({ line, character: Math.max(0, character - 1) }, highlightStart));
+    // if the cursor is on the right of a non-space, check if it is a condition
+    // contrary to isStartAfterConditionIndicator, this brings an advantage to check for a case where the start cursor is at the end of
+    // a line and the condition indicator is at the start of the next
+    if (Object.keys(SPACE_JSON).indexOf(charBeforeStart) === -1 && charBeforeStart !== '') {
+      const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, character);
+      return ConditionIndicatorBeforeStart.isConditionIndicator(editor, line, lineTokens, character);
+    }
+    return ConditionIndicatorBeforeStart.isStartAfterConditionIndicator(editor, line, character);
+  }
+
+  public static getStartPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
+    const highlightStart = fullWordRange.start;
+    if (!ConditionIndicatorBeforeStart.isStartOnOrAfterConditionIndicator(editor, highlightStart)) {
       return ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }
     return { position: highlightStart };
