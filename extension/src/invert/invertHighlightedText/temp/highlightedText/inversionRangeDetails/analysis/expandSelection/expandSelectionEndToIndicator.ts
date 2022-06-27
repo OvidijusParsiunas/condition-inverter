@@ -16,7 +16,7 @@ import { Position } from '../../../../../../../shared/types/position';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
-export class ConditionIndicatorAfterEnd {
+export class ExpandSelectionEndToIndicator {
   private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
     if (conditionIndicatorPresent || conditionIndicatorToken === ';') return '';
     // if an indicator is a statement initiator, keep it in original form
@@ -37,10 +37,10 @@ export class ConditionIndicatorAfterEnd {
   private static searchLineFromIndex(
       conditionIndicatorPresent: boolean, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
     for (let i = startIndex; i < lineTokens.length; i += 1) {
-      if (ConditionIndicatorAfterEnd.isConditionIndicator(lineTokens, i)) {
+      if (ExpandSelectionEndToIndicator.isConditionIndicator(lineTokens, i)) {
         return {
           position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
-          endOperatorPadding: ConditionIndicatorAfterEnd.generateEndOperatorPadding(conditionIndicatorPresent, lineTokens[i]),
+          endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(conditionIndicatorPresent, lineTokens[i]),
         };
       }
     }
@@ -54,11 +54,11 @@ export class ConditionIndicatorAfterEnd {
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
     for (let i = 0; i < lineTokens.length; i += 1) {
       if (!SPACE_JSON[lineTokens[i] as string]) {
-        return ConditionIndicatorAfterEnd.searchLineFromIndex(conditionIndicatorPresent, lineTokens, line, startChar, i);
+        return ExpandSelectionEndToIndicator.searchLineFromIndex(conditionIndicatorPresent, lineTokens, line, startChar, i);
       }
     }
     if (editor.document.lineCount - 1 < line + 1) return null;
-    return ConditionIndicatorAfterEnd.searchRightAndDownwards(editor, conditionIndicatorPresent, line + 1);
+    return ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, conditionIndicatorPresent, line + 1);
   }
 
   private static isConditionIndicatorPresent(editor: TextEditor, highlightEnd: Position, startPositionDetails: StartPositionDetails): boolean {
@@ -68,12 +68,12 @@ export class ConditionIndicatorAfterEnd {
     return true;
   }
 
-  public static getEndPositionDetails(editor: TextEditor, fullWordRange: Range, startPositionDetails: StartPositionDetails): EndPositionDetails {
+  public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range, startPositionDetails: StartPositionDetails): EndPositionDetails {
     const highlightEnd = fullWordRange.end;
     if (!IsEndOnOrAfterConditionIndicator.check(editor, highlightEnd)) {
-      const endPositionDetails = ConditionIndicatorAfterEnd.searchRightAndDownwards(
+      const endPositionDetails = ExpandSelectionEndToIndicator.searchRightAndDownwards(
         editor,
-        ConditionIndicatorAfterEnd.isConditionIndicatorPresent(editor, highlightEnd, startPositionDetails),
+        ExpandSelectionEndToIndicator.isConditionIndicatorPresent(editor, highlightEnd, startPositionDetails),
         highlightEnd.line,
         highlightEnd.character,
       );

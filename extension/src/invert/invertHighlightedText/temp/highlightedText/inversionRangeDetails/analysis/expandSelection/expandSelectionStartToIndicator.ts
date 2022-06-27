@@ -9,7 +9,7 @@ import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
 
-export class ConditionIndicatorBeforeStart {
+export class ExpandSelectionStartToIndicator {
   private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
 
   // this is mostly used for property access -  e.g. if (name().hello)  or  if (name()['hello'])
@@ -28,7 +28,7 @@ export class ConditionIndicatorBeforeStart {
     // if there is a ternary operator before the start, there is no need to replace it with
     // a condition operator to trigger an invertion on the first ternary expression
     // the close bracket is used to stop traversing any further into another conditional expression e.g. if (hello) |
-    if (token !== '?' && !ConditionIndicatorBeforeStart.stopSymbols[token as keyof typeof ConditionIndicatorBeforeStart.stopSymbols]) {
+    if (token !== '?' && !ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]) {
       startPositionDetails.startOperatorPadding = token as string;
     }
     return startPositionDetails;
@@ -36,21 +36,21 @@ export class ConditionIndicatorBeforeStart {
 
   private static isValidToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
     return (
-      ConditionIndicatorBeforeStart.isPermittedIfCloseBracket(fullLineTokens, index) &&
+      ExpandSelectionStartToIndicator.isPermittedIfCloseBracket(fullLineTokens, index) &&
       (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
-        ConditionIndicatorBeforeStart.stopSymbols[token as keyof typeof ConditionIndicatorBeforeStart.stopSymbols])
+        ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols])
     );
   }
 
   private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
-    const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ConditionIndicatorBeforeStart.stopSymbols } as TokensJSON;
+    const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
     const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
     if (result) {
-      if (ConditionIndicatorBeforeStart.isValidToken(fullLineTokens, result)) {
-        return ConditionIndicatorBeforeStart.generateNewStartPositionDetails(line, lineTokens, result);
+      if (ExpandSelectionStartToIndicator.isValidToken(fullLineTokens, result)) {
+        return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, result);
       }
-      return ConditionIndicatorBeforeStart.searchLineFromIndex(line, tokens, result.index, fullLineTokens);
+      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, tokens, result.index, fullLineTokens);
     }
     return { position: { line, character: 0 } };
   }
@@ -62,16 +62,16 @@ export class ConditionIndicatorBeforeStart {
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
       if (!SPACE_JSON[lineTokens[i] as string]) {
         const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
-        return ConditionIndicatorBeforeStart.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens);
+        return ExpandSelectionStartToIndicator.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens);
       }
     }
-    return ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, line - 1);
+    return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, line - 1);
   }
 
-  public static getStartPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
+  public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
     const highlightStart = fullWordRange.start;
     if (!IsStartOnOrBeforeConditionIndicator.check(editor, highlightStart)) {
-      return ConditionIndicatorBeforeStart.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
+      return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }
     return { position: highlightStart };
   }
