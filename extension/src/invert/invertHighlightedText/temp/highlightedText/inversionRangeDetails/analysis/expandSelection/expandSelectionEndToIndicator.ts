@@ -17,6 +17,13 @@ import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
+  private static isConditionIndicatorPresent(editor: TextEditor, highlightEnd: Position, startPositionDetails: StartPositionDetails): boolean {
+    if (!startPositionDetails.startOperatorPadding) {
+      return ConditionIndicatorPresence.isInRange(editor, RangeCreator.create(startPositionDetails.position, highlightEnd));
+    }
+    return true;
+  }
+
   private static generateEndOperatorPadding(conditionIndicatorPresent: boolean, conditionIndicatorToken: Token): string {
     if (conditionIndicatorPresent || conditionIndicatorToken === ';') return '';
     // if an indicator is a statement initiator, keep it in original form
@@ -59,13 +66,6 @@ export class ExpandSelectionEndToIndicator {
     }
     if (editor.document.lineCount - 1 < line + 1) return null;
     return ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, conditionIndicatorPresent, line + 1);
-  }
-
-  private static isConditionIndicatorPresent(editor: TextEditor, highlightEnd: Position, startPositionDetails: StartPositionDetails): boolean {
-    if (!startPositionDetails.startOperatorPadding) {
-      return ConditionIndicatorPresence.isInRange(editor, RangeCreator.create(startPositionDetails.position, highlightEnd));
-    }
-    return true;
   }
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range, startPositionDetails: StartPositionDetails): EndPositionDetails {

@@ -30,7 +30,7 @@ export class IsStartOnOrBeforeConditionIndicator {
     const { line, character } = highlightStart;
     const charBeforeStart = editor.document.getText(RangeCreator.create({ line, character: Math.max(0, character - 1) }, highlightStart));
     // if the cursor is on the right of a non-space, check if it is a condition
-    // contrary to isStartAfterConditionIndicator, this brings an advantage to check for a case where the start cursor is at the end of
+    // this brings an advantage to check for a case where the start cursor is at the end of
     // a line and the condition indicator is at the start of the next
     if (Object.keys(SPACE_JSON).indexOf(charBeforeStart) === -1 && charBeforeStart !== '') {
       const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, character);

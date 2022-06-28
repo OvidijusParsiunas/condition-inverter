@@ -20,7 +20,6 @@ export class IsEndOnOrAfterConditionIndicator {
 
   private static isAfterStatementToken(editor: TextEditor, line: number, lineTokens: Tokens): boolean {
     const siblingTokenResult = IsEndOnOrAfterConditionIndicator.getNonSpaceCharacterLeftAndUpwards(editor, line, lineTokens.join('').length);
-    // WORK - what about the else word in else if
     return STATEMENT_JSON[siblingTokenResult as keyof typeof STATEMENT_JSON];
   }
 
@@ -47,6 +46,7 @@ export class IsEndOnOrAfterConditionIndicator {
     return IsEndOnOrAfterConditionIndicator.isEndAfterConditionIndicator(editor, line - 1);
   }
 
+  // WORK - what about the else word in else if
   public static check(editor: TextEditor, highlightEnd: Position): boolean {
     const charAfterEnd = editor.document.getText(
       RangeCreator.create(highlightEnd, { line: highlightEnd.line, character: highlightEnd.character + 1 }),

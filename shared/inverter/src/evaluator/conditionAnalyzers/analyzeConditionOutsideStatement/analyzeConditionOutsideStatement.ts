@@ -17,6 +17,7 @@ export class AnalyzeConditionOutsideStatement {
     AnalyzeConditionOutsideStatement.isLessOrGreaterThanOperatorToken,
     AnalyzeConditionOutsideStatement.isPythonLogicalOperatorToken,
     AnalyzeConditionOutsideStatement.isEqualityOperatorToken,
+    AnalyzeConditionOutsideStatement.isNotEqualsOperatorToken,
   ];
 
   private static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
@@ -49,7 +50,11 @@ export class AnalyzeConditionOutsideStatement {
   }
 
   private static isEqualityOperatorToken(tokens: Tokens, currentIndex: number): boolean {
-    return tokens[currentIndex] === '=' && (tokens[currentIndex + 1] === '=' || tokens[currentIndex - 1] === '!');
+    return tokens[currentIndex] === '=' && tokens[currentIndex + 1] === '=';
+  }
+
+  private static isNotEqualsOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    return tokens[currentIndex] === '!' && tokens[currentIndex + 1] === '=';
   }
 
   // not inverting if expression starts with ! or not because that is regarded as a statement and not a condition

@@ -6,6 +6,8 @@ import { LineTokenTraversalUtils } from './lineTokenTraversalUtils';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class ConditionIndicatorValidator {
+  private static readonly lineConditionIndicators = { ['!']: true, ...LineTokenTraversalUtils.conditionIndicators };
+
   private static isLogicalOperator(tokens: Tokens, index: number, checkRightWards: boolean): boolean {
     const currentToken = tokens[index];
     const delta = checkRightWards ? 1 : -1;
@@ -17,6 +19,10 @@ export class ConditionIndicatorValidator {
     return false;
   }
 
+  private static isDoesNotEqualOpearator(tokens: Tokens, index: number): boolean {
+    return tokens[index + 1] === '=';
+  }
+
   private static isEqualityOperator(tokens: Tokens, index: number): boolean {
     const previousToken = tokens[index - 1];
     if (previousToken === '!' || previousToken === '=') {
@@ -25,6 +31,8 @@ export class ConditionIndicatorValidator {
     if (previousToken === '<' || previousToken === '>') {
       return previousToken !== tokens[index - 2];
     }
+    const nextToken = tokens[index + 1];
+    if (nextToken === '=') return true;
     return false;
   }
 
@@ -33,13 +41,14 @@ export class ConditionIndicatorValidator {
   }
 
   private static readonly isTokenPartOfConditionIndicator: {
-    [key in keyof typeof LineTokenTraversalUtils.conditionIndicators]: (tokens: Tokens, index: number, checkRightWards: boolean) => boolean;
+    [key in keyof typeof ConditionIndicatorValidator.lineConditionIndicators]: (tokens: Tokens, index: number, checkRightWards: boolean) => boolean;
   } = {
     ['&']: ConditionIndicatorValidator.isLogicalOperator,
     ['|']: ConditionIndicatorValidator.isLogicalOperator,
     ['<']: ConditionIndicatorValidator.isGreaterThanOrLessThanOperator,
     ['>']: ConditionIndicatorValidator.isGreaterThanOrLessThanOperator,
     ['=']: ConditionIndicatorValidator.isEqualityOperator,
+    ['!']: ConditionIndicatorValidator.isDoesNotEqualOpearator,
     ['?']: AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
     ['and']: (): boolean => true,
     ['or']: (): boolean => true,
