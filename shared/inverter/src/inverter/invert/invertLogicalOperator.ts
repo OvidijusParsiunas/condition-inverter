@@ -19,6 +19,6 @@ export class InvertLogicalOperator {
   public static removeNot(tokens: Tokens, tokenIndex: number, tokenIndexDelta: number): number {
     const siblinTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, tokenIndex + 1);
     tokens.splice(tokenIndex, siblinTokenIndex - tokenIndex);
-    return tokenIndexDelta - 1;
+    return tokenIndexDelta - 2;
   }
 }
