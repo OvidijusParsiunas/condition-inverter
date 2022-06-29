@@ -4,7 +4,7 @@ import { QuestionMarkOperatorExpansion } from './operatorExpansion/questionMarkO
 import { ComparisonOperatorExpansion } from './operatorExpansion/comparisonOperatorExpansion';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
-// gets expansion delta even for non-conditional symbol collections - e.g. >>>
+// gets expansion delta even for non-conditional symbol collections - e.g. >>> or =
 export class ExpandIfCursorOnPotentialConditionOperator {
   private static getExpansionIfBeforeHighlightSelectionStart(tokens: Tokens, index: number): number {
     const token = tokens[index] as string;

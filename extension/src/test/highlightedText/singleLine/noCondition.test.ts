@@ -653,7 +653,7 @@ suite.only('Highlighted No Condition Text Suite', () => {
       lines: [
         {
           input: 'if (dog && cat) { console.log(2) }',
-          output: 'if (dog && cat) { console.log(2) }',
+          output: 'if (!dog && cat) { console.log(2) }',
         },
       ],
       selection: {
@@ -665,7 +665,7 @@ suite.only('Highlighted No Condition Text Suite', () => {
       lines: [
         {
           input: 'if (dog && cat) { console.log(2) }',
-          output: 'if (dog && cat) { console.log(2) }',
+          output: 'if (dog && !cat) { console.log(2) }',
         },
       ],
       selection: {
@@ -1463,6 +1463,199 @@ suite.only('Highlighted No Condition Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 1),
         end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog & cat',
+          output: 'dog & cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog&cat',
+          output: 'dog&cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 4),
+      },
+    },
+
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog | cat',
+          output: 'dog | cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog|cat',
+          output: 'dog|cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 4),
       },
     },
   ]);

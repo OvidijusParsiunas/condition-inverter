@@ -221,6 +221,26 @@ suite.only('Highlighted Outside Statement Suite', () => {
       lines: [
         {
           input: `cat\n`,
+          output: `!cat`,
+        },
+        {
+          input: ` &&\n`,
+          output: ` ||`,
+        },
+        {
+          input: `dog\n`,
+          output: `dog`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(1, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `cat\n`,
           output: `cat`,
         },
         {

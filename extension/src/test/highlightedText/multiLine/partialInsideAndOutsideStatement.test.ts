@@ -176,8 +176,8 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
           output: `cat`,
         },
         {
-          input: `&&\n`,
-          output: `&&`,
+          input: `||\n`,
+          output: `||`,
         },
         {
           input: `dog\n`,
