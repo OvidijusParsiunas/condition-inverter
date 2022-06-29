@@ -2,7 +2,7 @@ import { ExpandIfCursorOnPotentialConditionOperator } from './expandIfCursorOnPo
 import { Position } from '../../../../../../../shared/types/position';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
-import { Range, TextEditor } from 'vscode';
+import { Range, Selection, TextEditor } from 'vscode';
 
 interface SubstringAroundPosition {
   substringRange: Range;
@@ -14,14 +14,14 @@ export class FullWordRange {
   // is on a potential condition operator
   private static readonly conditionDelta = 20;
 
-  private static getIndexForSelectionEnd(lineString: string, selectionEndChar: number): number {
+  private static getIndexForSelectionEnd(lineString: string, selectionEndChar: number, isHighlighted: boolean): number {
     const tokens = Tokenizer.tokenize(lineString);
     let currentStringIndex = 0;
     for (let i = 0; i < tokens.length; i += 1) {
       const token = tokens[i] as string;
       currentStringIndex += token.length;
       if (currentStringIndex > selectionEndChar) {
-        const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfAfterEnd(tokens, i);
+        const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfAfterEnd(tokens, i, isHighlighted);
         const totalExpansion = currentStringIndex + expansion;
         return currentStringIndex - token.length < selectionEndChar ? totalExpansion : totalExpansion - token.length;
       }
@@ -29,14 +29,14 @@ export class FullWordRange {
     return selectionEndChar;
   }
 
-  private static getIndexForSelectionStart(lineString: string, selectionChar: number): number {
+  private static getIndexForSelectionStart(lineString: string, selectionChar: number, isHighlighted: boolean): number {
     const tokens = Tokenizer.tokenize(lineString);
     let currentStringIndex = tokens.join('').length;
     for (let i = tokens.length - 1; i >= 0; i -= 1) {
       const token = tokens[i] as string;
       currentStringIndex -= token.length;
       if (currentStringIndex < selectionChar) {
-        const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i);
+        const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i, isHighlighted);
         return currentStringIndex + token.length > selectionChar ? currentStringIndex - expansion : currentStringIndex + token.length - expansion;
       }
     }
@@ -55,21 +55,27 @@ export class FullWordRange {
     return { substringRange, substring };
   }
 
-  private static getPositionOfWordOrSymbol(editor: TextEditor, selectedPosition: Position, isStart: boolean): Position {
+  private static getPositionOfWordOrSymbol(editor: TextEditor, selectedPosition: Position, isHighlighted: boolean, isStart: boolean): Position {
     const { substring, substringRange } = FullWordRange.getSubstringAroundPosition(editor, selectedPosition, selectedPosition.character);
     const substringStartChar = substringRange.start.character;
     const substringStartRelativeToSelectionChar = selectedPosition.character - substringStartChar;
     const fullWordOrComparisonSymbolChar = isStart
-      ? FullWordRange.getIndexForSelectionStart(substring, substringStartRelativeToSelectionChar)
-      : FullWordRange.getIndexForSelectionEnd(substring, substringStartRelativeToSelectionChar);
+      ? FullWordRange.getIndexForSelectionStart(substring, substringStartRelativeToSelectionChar, isHighlighted)
+      : FullWordRange.getIndexForSelectionEnd(substring, substringStartRelativeToSelectionChar, isHighlighted);
     return { line: selectedPosition.line, character: substringStartChar + fullWordOrComparisonSymbolChar };
   }
 
+  private static isHighlighted(selection: Selection): boolean {
+    const { start, end } = selection;
+    return start.line !== end.line || start.character !== end.character;
+  }
+
   public static extract(editor: TextEditor): Range {
-    const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start, true);
+    const isHighlighted = FullWordRange.isHighlighted(editor.selection);
+    const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start, isHighlighted, true);
     // WORK - IF false, check if end
     // WORK - check ternary operator too
-    const endSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.end, false);
+    const endSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.end, isHighlighted, false);
     return RangeCreator.create(startSelectionPosition, endSelectionPosition);
   }
 }
