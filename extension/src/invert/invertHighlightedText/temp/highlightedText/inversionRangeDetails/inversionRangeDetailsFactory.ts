@@ -10,7 +10,7 @@ export class InversionRangeDetailsFactory {
   public static create(editor: TextEditor): InversionRangeDetails {
     const fullWordRange = FullWordRange.extract(editor);
     const startPositionDetails = ExpandSelectionStartToIndicator.getNewPositionDetails(editor, fullWordRange);
-    const endPositionDetails = ExpandSelectionEndToIndicator.getNewPositionDetails(editor, fullWordRange, startPositionDetails);
+    const endPositionDetails = ExpandSelectionEndToIndicator.getNewPositionDetails(editor, fullWordRange);
     return {
       range: RangeCreator.create(startPositionDetails.position, endPositionDetails.position),
       startOperatorPadding: startPositionDetails.startOperatorPadding || '',
