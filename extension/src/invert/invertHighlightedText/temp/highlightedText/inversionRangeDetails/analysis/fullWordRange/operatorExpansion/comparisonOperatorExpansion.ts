@@ -23,11 +23,14 @@ export class ComparisonOperatorExpansion {
     return 0;
   }
 
-  public static getForSelectionEnd(tokens: Tokens, index: number, numberOfEquals = 0): number {
+  public static getForSelectionEnd(tokens: Tokens, index: number): number {
     if (tokens[index + 1] === '=') {
       return SelectionExpansionUtil.getEqualsExpansionUntilItEnds(tokens, index + 1, 1);
     }
-    return numberOfEquals;
+    // expand over an equals no matter if it is a condition or not
+    // this is most used for situations as follows
+    // <<|= &&|=
+    return 1;
   }
 
   private static getTotalStartExpansion(tokens: Tokens, index: number, length: number): number {
