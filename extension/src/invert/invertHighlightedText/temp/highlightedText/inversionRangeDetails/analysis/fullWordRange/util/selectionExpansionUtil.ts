@@ -13,10 +13,10 @@ export class ExpandIfCursorOnPotentialConditionOperatorUtil {
     return token === '=' || token === '!';
   }
 
-  public static getEqualsExpansionUntilItEnds(tokens: Tokens, index: number, length: number): number {
+  public static getEqualsExpansionUntilItEnds(tokens: Tokens, index: number, expansion: number): number {
     if (tokens[index] === '=') {
-      return ExpandIfCursorOnPotentialConditionOperatorUtil.getEqualsExpansionUntilItEnds(tokens, index + 1, length);
+      return ExpandIfCursorOnPotentialConditionOperatorUtil.getEqualsExpansionUntilItEnds(tokens, index + 1, expansion + 1);
     }
-    return length;
+    return expansion;
   }
 }

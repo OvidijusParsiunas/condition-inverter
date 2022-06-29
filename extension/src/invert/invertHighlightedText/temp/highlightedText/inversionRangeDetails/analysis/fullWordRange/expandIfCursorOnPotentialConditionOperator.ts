@@ -17,7 +17,7 @@ export class ExpandIfCursorOnPotentialConditionOperator {
         return GreaterOrLessThanOperatorExpansion.getForSelectionStart(tokens, index);
       case '=':
       case '!':
-        return ComparisonOperatorExpansion.getForSelectionStart(tokens, index);
+        return ComparisonOperatorExpansion.getForHighlightSelectionStart(tokens, index);
       default:
         return 0;
     }
@@ -57,7 +57,7 @@ export class ExpandIfCursorOnPotentialConditionOperator {
         return GreaterOrLessThanOperatorExpansion.getForSelectionEnd(tokens, index);
       case '=':
       case '!':
-        return ComparisonOperatorExpansion.getForSelectionEnd(tokens, index);
+        return ComparisonOperatorExpansion.getForHighlightSelectionEnd(tokens, index);
       case '?':
         return QuestionMarkOperatorExpansion.getForSelectionEnd(tokens, index);
       default:

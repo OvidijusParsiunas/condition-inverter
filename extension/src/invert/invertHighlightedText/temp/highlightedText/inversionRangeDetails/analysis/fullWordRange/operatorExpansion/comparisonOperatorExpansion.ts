@@ -3,14 +3,14 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class ComparisonOperatorExpansion {
   private static getEndOfOperator(tokens: Tokens, index: number): number {
-    const length = 1;
+    const initialExpansion = 1;
     if (tokens[index + 1] === '=') {
-      return SelectionExpansionUtil.getEqualsExpansionUntilItEnds(tokens, index, length);
+      return SelectionExpansionUtil.getEqualsExpansionUntilItEnds(tokens, index, initialExpansion);
     }
-    return length;
+    return initialExpansion;
   }
 
-  public static getForSelectionEnd(tokens: Tokens, index: number): number {
+  public static getForHighlightSelectionEnd(tokens: Tokens, index: number): number {
     if (
       (SelectionExpansionUtil.isGreaterLessThanSymbol(tokens[index - 1]) && !SelectionExpansionUtil.isGreaterLessThanSymbol(tokens[index - 2])) ||
       SelectionExpansionUtil.isBitwiseAssignment(tokens[index - 1])
@@ -23,6 +23,13 @@ export class ComparisonOperatorExpansion {
     return 0;
   }
 
+  public static getForSelectionEnd(tokens: Tokens, index: number, numberOfEquals = 0): number {
+    if (tokens[index + 1] === '=') {
+      return SelectionExpansionUtil.getEqualsExpansionUntilItEnds(tokens, index + 1, 1);
+    }
+    return numberOfEquals;
+  }
+
   private static getTotalStartExpansion(tokens: Tokens, index: number, length: number): number {
     const token = tokens[index];
     if (token !== '=' && token !== '!') {
@@ -31,12 +38,18 @@ export class ComparisonOperatorExpansion {
     return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, length + 1);
   }
 
-  public static getForSelectionStart(tokens: Tokens, index: number, length = 0): number {
+  public static getForHighlightSelectionStart(tokens: Tokens, index: number): number {
+    // WORK - How does this work for <<=
+    const initialLength = 0;
     // =|
     if (tokens[index + 1] !== '=') {
-      return length;
+      return initialLength;
     }
     // =|=, ==|=, =|==, !=|=
-    return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, length + 1);
+    return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, initialLength + 1);
+  }
+
+  public static getForSelectionStart(tokens: Tokens, index: number): number {
+    return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, 1);
   }
 }
