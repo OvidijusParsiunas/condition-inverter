@@ -1285,6 +1285,54 @@ suite.only('Selected Text Suite', () => {
         end: new vscode.Position(0, 6),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (  dog  )',
+          output: 'if (  !dog  )',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (  (dog)  )',
+          output: 'if (  (!dog)  )',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (  ((dog))  )',
+          output: 'if (  ((!dog))  )',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (  ((dog))  )',
+          output: 'if (  ((!dog))  )',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 15),
+      },
+    },
     // WORK
     // {
     //   lines: [

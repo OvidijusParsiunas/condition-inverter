@@ -3,6 +3,7 @@ import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidat
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
+import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position } from 'vscode';
 
 export class IsEndOnOrAfterConditionIndicator {
@@ -34,7 +35,8 @@ export class IsEndOnOrAfterConditionIndicator {
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
       if (!SPACE_JSON[lineTokens[i] as string]) {
-        if (lineTokens[i] === '(') {
+        // cursor selected after open bracket - traverse further
+        if (lineTokens[i] === '(' && IsTextHighlighted.check(editor.selection)) {
           // WORK - should not be a problem for statements with no brackets (check)
           // it is ok that this does not work for for loops for (let i = 0;| dog > cat
           return IsEndOnOrAfterConditionIndicator.isConditionIndicator(editor, line, lineTokens.slice(0, i - 1));
