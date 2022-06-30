@@ -13,6 +13,7 @@ export class EvaluateAndPrepareOutsideStatement {
   // prettier-ignore
   private static getStartIndexForEquals(
       tokens: Tokens, equalsIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+    // arrow function
     if (tokens[equalsIndex + 1] === '>') {
       const openBracketIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, '(', false);
       const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, openBracketIndex, 1);
@@ -24,6 +25,9 @@ export class EvaluateAndPrepareOutsideStatement {
       // e.g: if num := 9
       const semicolonIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, ';');
       return semicolonIndex === -1 ? tokens.length : semicolonIndex;
+    }
+    if (tokens[equalsIndex - 1] === '>' || tokens[equalsIndex - 1] === '<') {
+      return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, equalsIndex - 1, traversalIndex, evaluationState, traversalState);
     }
     return traversalIndex;
   }
