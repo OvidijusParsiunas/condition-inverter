@@ -45,12 +45,12 @@ export class ExpandSelectionStartToIndicator {
   private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
     const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
-    const result = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
-    if (result) {
-      if (ExpandSelectionStartToIndicator.isValidToken(fullLineTokens, result)) {
-        return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, result);
+    const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
+    if (firstFoundConditionIndicatorToken) {
+      if (ExpandSelectionStartToIndicator.isValidToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
+        return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken);
       }
-      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, tokens, result.index, fullLineTokens);
+      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens);
     }
     return { position: { line, character: 0 } };
   }

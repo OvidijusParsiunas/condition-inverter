@@ -553,6 +553,332 @@ suite.only('Selected Text Suite', () => {
         end: new vscode.Position(0, 11),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (cat <= mouse) { console.log(2) }',
+          output: 'if (cat > mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat <= mouse) { console.log(2) }',
+          output: 'if (cat > mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat <= mouse) { console.log(2) }',
+          output: 'if (cat > mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >= mouse) { console.log(2) }',
+          output: 'if (cat < mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >= mouse) { console.log(2) }',
+          output: 'if (cat < mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >= mouse) { console.log(2) }',
+          output: 'if (cat < mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat < mouse) { console.log(2) }',
+          output: 'if (cat >= mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat < mouse) { console.log(2) }',
+          output: 'if (cat >= mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat > mouse) { console.log(2) }',
+          output: 'if (cat <= mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat > mouse) { console.log(2) }',
+          output: 'if (cat <= mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat << mouse) { console.log(2) }',
+          output: 'if (!(cat << mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat << mouse) { console.log(2) }',
+          output: 'if (!(cat << mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat << mouse) { console.log(2) }',
+          output: 'if (!(cat << mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >> mouse) { console.log(2) }',
+          output: 'if (!(cat >> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >> mouse) { console.log(2) }',
+          output: 'if (!(cat >> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >> mouse) { console.log(2) }',
+          output: 'if (!(cat >> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>> mouse) { console.log(2) }',
+          output: 'if (!(cat >>> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>> mouse) { console.log(2) }',
+          output: 'if (!(cat >>> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>> mouse) { console.log(2) }',
+          output: 'if (!(cat >>> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>> mouse) { console.log(2) }',
+          output: 'if (!(cat >>> mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+
+    {
+      lines: [
+        {
+          input: 'if (cat >>>= mouse) { console.log(2) }',
+          output: 'if (!(cat >>>= mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>>= mouse) { console.log(2) }',
+          output: 'if (!(cat >>>= mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>>= mouse) { console.log(2) }',
+          output: 'if (!(cat >>>= mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>>= mouse) { console.log(2) }',
+          output: 'if (!(cat >>>= mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat >>>= mouse) { console.log(2) }',
+          output: 'if (!(cat >>>= mouse)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (!(cat >>>= mouse)) { console.log(2) }',
+          output: 'if (cat >>>= mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    // WORK
+    // {
+    //   lines: [
+    //     {
+    //       input: 'if (cat <= mouse) { console.log(2) }',
+    //       output: 'if (cat < mouse) { console.log(2) }',
+    //     },
+    //   ],
+    //   selection: {
+    //     start: new vscode.Position(0, 11),
+    //     end: new vscode.Position(0, 11),
+    //   },
+    // },
     // {
     //   lines: [
     //     {

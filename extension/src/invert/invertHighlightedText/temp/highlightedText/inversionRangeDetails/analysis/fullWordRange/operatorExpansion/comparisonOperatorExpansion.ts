@@ -1,4 +1,5 @@
 import { ExpandIfCursorOnPotentialConditionOperatorUtil as SelectionExpansionUtil } from '../util/selectionExpansionUtil';
+import { GreaterOrLessThanOperatorExpansion } from './greaterOrLessThanOperatorExpansion';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class ComparisonOperatorExpansion {
@@ -53,6 +54,11 @@ export class ComparisonOperatorExpansion {
   }
 
   public static getForSelectionStart(tokens: Tokens, index: number): number {
-    return ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, 1);
+    const equalsExpansion = ComparisonOperatorExpansion.getTotalStartExpansion(tokens, index - 1, 1);
+    if (SelectionExpansionUtil.isGreaterLessThanSymbol(tokens[index - equalsExpansion])) {
+      const greaterOrLessThanExpansion = GreaterOrLessThanOperatorExpansion.getForSelectionStart(tokens, index - equalsExpansion);
+      return equalsExpansion + greaterOrLessThanExpansion;
+    }
+    return equalsExpansion;
   }
 }
