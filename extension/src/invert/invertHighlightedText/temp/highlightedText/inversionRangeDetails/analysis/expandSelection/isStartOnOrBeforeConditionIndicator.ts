@@ -3,15 +3,27 @@ import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { SPACE_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position } from 'vscode';
 
 export class IsStartOnOrBeforeConditionIndicator {
+  // technically a ternary operator is recognised as a condition indicator, however we do not want it to be recognised as one when the user
+  // has selected the cursor on itself which would stop the expansion to the tokens on the left
+  private static acknowledgeTernaryOperatorAsIndicator(editor: TextEditor, isConditionIndicator: boolean): boolean {
+    return IsTextHighlighted.check(editor.selection) ? isConditionIndicator : false;
+  }
+
   private static isConditionIndicator(editor: TextEditor, line: number, lineTokens: Tokens, startChar: number): boolean {
     // the following line is used to help evaluate more detailed operators like a ternary operator which needs to make sure that there is are no
     // particular symbols before it as otherwise the logic would not recognise it as a ternary operator and return false. Additionally we can trust
     // startChar to not be in the middle of a word due to prior analysis at FullWordRange
     const tokensBeforeChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, startChar);
-    return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(tokensBeforeChar.concat(lineTokens), tokensBeforeChar.length);
+    const allLineTokens = tokensBeforeChar.concat(lineTokens);
+    const isConditionIndicator = ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(allLineTokens, tokensBeforeChar.length);
+    if (allLineTokens[tokensBeforeChar.length] === '?') {
+      return IsStartOnOrBeforeConditionIndicator.acknowledgeTernaryOperatorAsIndicator(editor, isConditionIndicator);
+    }
+    return isConditionIndicator;
   }
 
   private static isStartBeforeConditionIndicator(editor: TextEditor, line: number, startChar?: number): boolean {

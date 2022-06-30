@@ -6,17 +6,27 @@ import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToke
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { SPACE_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
-import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {
   private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
 
-  // this is mostly used for property access -  e.g. if (name().hello)  or  if (name()['hello'])
-  private static isPermittedIfCloseBracket(fullLineTokens: Tokens, index: number): boolean {
+  private static isPropertyAccessOperator(token: Token): boolean {
+    return token === '.' || token === '[';
+  }
+
+  private static isCloseBracketStopToken(fullLineTokens: Tokens, index: number): boolean {
+    const nextIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index + 1);
+    return !ExpandSelectionStartToIndicator.isPropertyAccessOperator(fullLineTokens[nextIndex]);
+  }
+
+  // this is mostly used for property access operators when highlighting - e.g. if (name().hello)  or  if (name()['hello'])
+  private static isPotentialStopToken(fullLineTokens: Tokens, index: number, isHighlighted: boolean): boolean {
     if (fullLineTokens[index] === ')') {
-      const nextIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index + 1);
-      return fullLineTokens[nextIndex] !== '.' && fullLineTokens[nextIndex] !== '[';
+      if (!isHighlighted) return false;
+      return ExpandSelectionStartToIndicator.isCloseBracketStopToken(fullLineTokens, index);
     }
     return true;
   }
@@ -34,23 +44,28 @@ export class ExpandSelectionStartToIndicator {
     return startPositionDetails;
   }
 
-  private static isValidToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
+  // stop token is a token that should end further expansion
+  private static isStopToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken, isHighlighted: boolean): boolean {
     return (
-      ExpandSelectionStartToIndicator.isPermittedIfCloseBracket(fullLineTokens, index) &&
+      ExpandSelectionStartToIndicator.isPotentialStopToken(fullLineTokens, index, isHighlighted) &&
       (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
         ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols])
     );
   }
 
-  private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
+  // prettier-ignore
+  private static searchLineFromIndex(
+      line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens, isHighlighted: boolean): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
     const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
     const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
     if (firstFoundConditionIndicatorToken) {
-      if (ExpandSelectionStartToIndicator.isValidToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
+      if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken, isHighlighted)) {
         return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken);
       }
-      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens);
+      // prettier-ignore
+      return ExpandSelectionStartToIndicator.searchLineFromIndex(
+        line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens, isHighlighted);
     }
     return { position: { line, character: 0 } };
   }
@@ -62,7 +77,8 @@ export class ExpandSelectionStartToIndicator {
     for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
       if (!SPACE_JSON[lineTokens[i] as string]) {
         const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
-        return ExpandSelectionStartToIndicator.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens);
+        const isHighlighted = IsTextHighlighted.check(editor.selection);
+        return ExpandSelectionStartToIndicator.searchLineFromIndex(line, lineTokens, i + 1, fullLineTokens, isHighlighted);
       }
     }
     return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, line - 1);

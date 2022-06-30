@@ -202,6 +202,21 @@ suite.only('Partial Outside Statement Inversion Suite', () => {
     { input: '&& myFunc ?', output: '|| !myFunc ?' },
     { input: 'dog + cat ? ', output: '!(dog + cat) ? ' },
     { input: '(dog + cat) ? ', output: '!(dog + cat) ? ' },
+    { input: `dog >>>= mouse ? `, output: '!(dog >>>= mouse) ? ' },
+    { input: `dog >>>= mouse ? `, output: '!(dog >>>= mouse) ? ' },
+    { input: `dog >= mouse ? `, output: 'dog < mouse ? ' },
+    { input: `dog <= mouse ? `, output: 'dog > mouse ? ' },
+    { input: `dog > mouse ? `, output: 'dog <= mouse ? ' },
+    { input: `dog < mouse ? `, output: 'dog >= mouse ? ' },
+    { input: `dog >>= mouse ? `, output: '!(dog >>= mouse) ? ' },
+    { input: `dog <<= mouse ? `, output: '!(dog <<= mouse) ? ' },
+    { input: `dog << mouse ? `, output: '!(dog << mouse) ? ' },
+    { input: `cat && dog >>= mouse ? `, output: '!cat || !(dog >>= mouse) ? ' },
+    { input: `dog >>= mouse && cat ? `, output: '!(dog >>= mouse) || !cat ? ' },
+    { input: `dog >> mouse ? `, output: '!(dog >> mouse) ? ' },
+    { input: `dog === mouse ? `, output: 'dog !== mouse ? ' },
+    { input: `dog & mouse ? `, output: '!(dog & mouse) ? ' },
+    { input: `dog | mouse ? `, output: '!(dog | mouse) ? ' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

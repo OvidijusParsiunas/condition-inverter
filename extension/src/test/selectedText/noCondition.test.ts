@@ -301,5 +301,65 @@ suite.only('Selected No Condition Text Suite', () => {
         end: new vscode.Position(0, 9),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog ? cat : fish) { console.log(2) }',
+          output: 'if (dog ? cat : fish) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog ? cat : fish) { console.log(2) }',
+          output: 'if (dog ? cat : fish) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog ? cat : fish) { console.log(2) }',
+          output: 'if (dog ? cat : fish) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog ? cat : fish) { console.log(2) }',
+          output: 'if (dog ? cat : fish) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog ? cat : fish) { console.log(2) }',
+          output: 'if (dog ? cat : fish) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
   ]);
 });

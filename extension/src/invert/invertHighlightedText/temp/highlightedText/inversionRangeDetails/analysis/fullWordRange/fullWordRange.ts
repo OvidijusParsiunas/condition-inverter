@@ -1,8 +1,9 @@
 import { ExpandIfCursorOnPotentialConditionOperator } from './expandIfCursorOnPotentialConditionOperator';
 import { Position } from '../../../../../../../shared/types/position';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
+import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
-import { Range, Selection, TextEditor } from 'vscode';
+import { Range, TextEditor } from 'vscode';
 
 interface SubstringAroundPosition {
   substringRange: Range;
@@ -65,15 +66,10 @@ export class FullWordRange {
     return { line: selectedPosition.line, character: substringStartChar + fullWordOrComparisonSymbolChar };
   }
 
-  private static isHighlighted(selection: Selection): boolean {
-    const { start, end } = selection;
-    return start.line !== end.line || start.character !== end.character;
-  }
-
   // the STRATEGY is to expand over the symbol when selection with no highlight is beside or on a condition indicator - e.g. |< or &|&
   // however expansion for highlight occurs only when selection is on an indicator - e.g. will not expand for |< but will for &|&
   public static extract(editor: TextEditor): Range {
-    const isHighlighted = FullWordRange.isHighlighted(editor.selection);
+    const isHighlighted = IsTextHighlighted.check(editor.selection);
     const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start, isHighlighted, true);
     // WORK - IF false, check if end
     // WORK - check ternary operator too
