@@ -557,6 +557,18 @@ suite.only('Selected Text Suite', () => {
       lines: [
         {
           input: 'if (cat <= mouse) { console.log(2) }',
+          output: 'if (!cat <= mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat <= mouse) { console.log(2) }',
           output: 'if (cat > mouse) { console.log(2) }',
         },
       ],
@@ -587,6 +599,18 @@ suite.only('Selected Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 10),
         end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat <= mouse) { console.log(2) }',
+          output: 'if (cat <= !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
       },
     },
     {
@@ -1333,19 +1357,6 @@ suite.only('Selected Text Suite', () => {
         end: new vscode.Position(0, 15),
       },
     },
-    // WORK
-    // {
-    //   lines: [
-    //     {
-    //       input: 'if (cat <= mouse) { console.log(2) }',
-    //       output: 'if (cat < mouse) { console.log(2) }',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 11),
-    //     end: new vscode.Position(0, 11),
-    //   },
-    // },
     // {
     //   lines: [
     //     {

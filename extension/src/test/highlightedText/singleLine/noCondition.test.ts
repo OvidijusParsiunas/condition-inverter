@@ -1658,5 +1658,53 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 4),
       },
     },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 10; i += 1) {}\n',
+          output: 'for (let i = 0; i < 10; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (i < 10) {}\n',
+          output: 'if (i < 10) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ( i < 10) {}\n',
+          output: 'if ( i < 10) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ( i < 10) {}\n',
+          output: 'if ( i < 10) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
   ]);
 });
