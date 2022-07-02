@@ -36,6 +36,7 @@ suite.only('Outside Statement No Condition Suite', () => {
     { input: `? cat :`, output: `? cat :` },
     { input: `:`, output: `:` },
     { input: `: dog`, output: `: dog` },
+    { input: `) ?`, output: `) ?` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

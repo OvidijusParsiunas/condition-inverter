@@ -53,6 +53,8 @@ export class TokenInverter {
       case 'in':
         tokenIndexDelta = InvertIdentityOrMembershipOperator.invertMembership(tokens, tokenIndex, tokenIndexDelta);
         break;
+      case ')':
+        break;
       default: {
         tokenIndexDelta += InsertNewSyntax.insert(tokens, tokenIndex, '!');
       }
