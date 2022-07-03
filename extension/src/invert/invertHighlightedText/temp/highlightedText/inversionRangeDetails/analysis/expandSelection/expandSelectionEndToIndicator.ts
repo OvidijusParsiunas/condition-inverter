@@ -7,8 +7,9 @@ import {
   AnalyzeConditionInsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { EndPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
-import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
+import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { IsEndOnOrAfterConditionIndicator } from './isEndOnOrAfterConditionIndicator';
+import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
@@ -47,10 +48,9 @@ export class ExpandSelectionEndToIndicator {
   private static searchRightAndDownwards(editor: TextEditor, line: number, startChar?: number): EndPositionDetails | null {
     startChar ??= 0;
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
-    for (let i = 0; i < lineTokens.length; i += 1) {
-      if (!SPACE_JSON[lineTokens[i] as string]) {
-        return ExpandSelectionEndToIndicator.searchLineFromIndex(lineTokens, line, startChar, i);
-      }
+    const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, 0);
+    if (nonSpaceIndex > -1 && nonSpaceIndex < lineTokens.length) {
+      return ExpandSelectionEndToIndicator.searchLineFromIndex(lineTokens, line, startChar, nonSpaceIndex);
     }
     if (editor.document.lineCount - 1 < line + 1) return null;
     return ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, line + 1);

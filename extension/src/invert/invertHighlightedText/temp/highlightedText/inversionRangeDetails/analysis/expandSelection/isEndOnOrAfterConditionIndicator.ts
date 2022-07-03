@@ -11,10 +11,9 @@ export class IsEndOnOrAfterConditionIndicator {
   private static getNonSpaceCharacterLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): Token | null {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
-    for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
-      if (!SPACE_JSON[lineTokens[i] as string]) {
-        return lineTokens[i];
-      }
+    const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
+    if (nonSpaceTokenIndex > -1) {
+      return lineTokens[nonSpaceTokenIndex];
     }
     if (line - 1 < 0) return null;
     return IsEndOnOrAfterConditionIndicator.getNonSpaceCharacterLeftAndUpwards(editor, line - 1);
@@ -38,21 +37,22 @@ export class IsEndOnOrAfterConditionIndicator {
   private static isEndAfterConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
-    for (let i = lineTokens.length - 1; i >= 0; i -= 1) {
-      if (!SPACE_JSON[lineTokens[i] as string]) {
-        // cursor selected after open bracket - traverse further
-        if (IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(lineTokens[i], editor.selection)) {
-          // WORK - should not be a problem for statements with no brackets (check)
-          // it is ok that this does not work for for loops for (let i = 0;| dog > cat
-          return IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, i - 1));
-        }
-        return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, i, false);
+    const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
+    if (nonSpaceTokenIndex > -1) {
+      // cursor selected after open bracket - traverse further
+      if (IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(lineTokens[nonSpaceTokenIndex], editor.selection)) {
+        // WORK - should not be a problem for statements with no brackets (check)
+        // it is ok that this does not work for for loops for (let i = 0;| dog > cat
+        return IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
       }
+      return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false);
     }
     if (line - 1 < 0) return false;
     return IsEndOnOrAfterConditionIndicator.isEndAfterConditionIndicator(editor, line - 1);
   }
 
+  // cannot simply use nonSpaceTokensAfterEnd like nonSpaceTokensBeforeStart in isStartOnOrBEforeConditionIndicator as we do not want to invert
+  // conditions like if |(dog) into if |(!dog), hence the logic here takes care of it simply here
   private static isImmediateTokenConditionIndicator(editor: TextEditor, highlightEnd: Position): boolean {
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, highlightEnd.line, highlightEnd.character);
     const siblingLeftTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
