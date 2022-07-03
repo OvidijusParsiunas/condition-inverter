@@ -40,6 +40,18 @@ suite.only('Highlighted Ends On Condition Operator Suite', () => {
     {
       lines: [
         {
+          input: 'dog && cat ? cat : dog',
+          output: 'dog && cat ? cat : dog',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
           input: 'if (dog && cat) { console.log(2) }',
           output: 'if (dog && cat) { console.log(2) }',
         },

@@ -1456,6 +1456,78 @@ suite.only('Highlighted Inside Statement Suite', () => {
     {
       lines: [
         {
+          input: '(  i < 10  )   ?\n',
+          output: '(  i < !10  )   ?',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '((i < 10)  )   ?\n',
+          output: '((i < !10)  )   ?',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '((i < 10)  )   ?\n',
+          output: '((i < !10)  )   ?',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (((i < 10)) && cat)',
+          output: 'if (((i < !10)) && cat)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (((i < arbFunc())) && cat)',
+          output: 'if (((i < !arbFunc())) && cat)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (((i < arbFunc())) && cat)',
+          output: 'if (((i < !arbFunc())) && cat)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
           input:
             // eslint-disable-next-line max-len
             'if (dog && asdiuhaisudhiuashdiuahsdiuhasduihasiudhiausdhihas && aiushdiuahsdiuhasdiuhasiudhasuidh || ausidhuiahsduihauisdhiuashdiuhasdhuasduihuashdiuas && asdhuayshdyuagsudygasuydgasydug) {}',

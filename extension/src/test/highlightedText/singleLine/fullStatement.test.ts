@@ -121,5 +121,29 @@ suite.only('Highlighted Full Statement Suite', () => {
         end: new vscode.Position(0, 45),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (i < 10) {}\n',
+          output: 'if (!i < 10) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ( hello() ) {}\n',
+          output: 'if ( !hello() ) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 11),
+      },
+    },
   ]);
 });

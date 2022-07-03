@@ -1,5 +1,6 @@
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
+import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
@@ -26,14 +27,31 @@ export class IsStartOnOrBeforeConditionIndicator {
     return isConditionIndicator;
   }
 
-  // WORK - might fail for partial
-  private static isTokenBeforeCloseBracketConditionIndicator(editor: TextEditor, line: number, startChar: number): boolean {
-    const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, startChar);
-    const openBracketIndex = TraversalUtil.getIndexOfOpenBracket(tokensLeftOfStartChar, tokensLeftOfStartChar.length, 1);
-    const leftSiblingOfOpenBracket = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensLeftOfStartChar, openBracketIndex - 1, false);
+  private static getLeftSiblingOfOpenBracketIndex(editor: TextEditor, line: number, endChar?: number): boolean {
+    endChar ??= editor.document.lineAt(line).range.end.character;
+    const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const leftSiblingOfOpenBracketIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensLeftOfStartChar, tokensLeftOfStartChar.length - 1, false);
     // strategy here is to not invert condition if the close bracket on the right of cursor is for condition group:
     // if (hello |) will not be inverted
-    return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(tokensLeftOfStartChar, leftSiblingOfOpenBracket);
+    if (leftSiblingOfOpenBracketIndex > -1) {
+      return STATEMENT_JSON[tokensLeftOfStartChar[leftSiblingOfOpenBracketIndex] as keyof typeof STATEMENT_JSON];
+    }
+    if (line === 0) return false;
+    return IsStartOnOrBeforeConditionIndicator.getLeftSiblingOfOpenBracketIndex(editor, line - 1);
+  }
+
+  private static isTokenBeforeCloseBracketConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
+    endChar ??= editor.document.lineAt(line).range.end.character;
+    const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const openBracketIndex = TraversalUtil.getIndexOfOpenBracket(tokensLeftOfStartChar, tokensLeftOfStartChar.length, 1);
+    if (openBracketIndex > -1) {
+      // prettier-ignore
+      return IsStartOnOrBeforeConditionIndicator.getLeftSiblingOfOpenBracketIndex(
+        editor, line, LineTokenTraversalUtils.getTokenStringIndex(tokensLeftOfStartChar, openBracketIndex),
+      );
+    }
+    if (line === 0) return false;
+    return IsStartOnOrBeforeConditionIndicator.isTokenBeforeCloseBracketConditionIndicator(editor, line - 1);
   }
 
   // prettier-ignore

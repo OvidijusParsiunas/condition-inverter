@@ -209,5 +209,125 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(2, 0),
       },
     },
+    {
+      lines: [
+        {
+          input: '\n',
+          output: '',
+        },
+        {
+          input: '|| mouse) { console.log(2) }',
+          output: '|| !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 8),
+        end: new vscode.Position(1, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog\n',
+          output: 'dog',
+        },
+        {
+          input: '|| mouse) { console.log(2) }',
+          output: '|| !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 8),
+        end: new vscode.Position(1, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog\n',
+          output: 'dog',
+        },
+        {
+          input: '|| mouse) && dog) { console.log(2) }',
+          output: '|| !mouse) && dog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 8),
+        end: new vscode.Position(1, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '(dog\n',
+          output: '(dog',
+        },
+        {
+          input: '|| mouse) { console.log(2) }',
+          output: '|| !mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 8),
+        end: new vscode.Position(1, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '(dog\n',
+          output: '(dog',
+        },
+        {
+          input: '|| mouse) && dog) { console.log(2) }',
+          output: '|| !mouse) && dog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 8),
+        end: new vscode.Position(1, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (\n',
+          output: 'if (',
+        },
+        {
+          input: 'dog && (cat\n',
+          output: 'dog && !(cat',
+        },
+        {
+          input: ')) { console.log(2) }',
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if\n',
+          output: 'if',
+        },
+        {
+          input: '(dog && (cat\n',
+          output: '(dog && !(cat',
+        },
+        {
+          input: ')) { console.log(2) }',
+          output: ')) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 1),
+      },
+    },
   ]);
 });
