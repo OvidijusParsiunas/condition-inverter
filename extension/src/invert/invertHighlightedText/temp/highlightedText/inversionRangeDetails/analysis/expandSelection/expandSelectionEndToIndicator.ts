@@ -23,7 +23,7 @@ export class ExpandSelectionEndToIndicator {
     return conditionIndicatorToken === '?' ? '?' : '&&';
   }
 
-  private static isConditionIndicator(lineTokens: Tokens, index: number): boolean {
+  private static isStopToken(lineTokens: Tokens, index: number): boolean {
     return (
       AnalyzeConditionInsideStatement.shouldAnalysisStart(lineTokens, index) ||
       AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index) ||
@@ -31,9 +31,10 @@ export class ExpandSelectionEndToIndicator {
     );
   }
 
+  // REF - 1334
   private static searchLineFromIndex(lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
     for (let i = startIndex; i < lineTokens.length; i += 1) {
-      if (ExpandSelectionEndToIndicator.isConditionIndicator(lineTokens, i)) {
+      if (ExpandSelectionEndToIndicator.isStopToken(lineTokens, i)) {
         return {
           position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
           endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(lineTokens[i]),

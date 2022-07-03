@@ -9,6 +9,12 @@ extension:
 
 if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imported ifInverter code is using relative path instead of the module path
 
+STRATEGY:
+
+REF - 1334
+When the user has highlighted or selected an arbitrary position within a line, the algorithm attempts to expand and find the closest condition indicator on the left and right,
+however to not have to traverse upwards and downwards infinitely, it looks for the first non space token on each side and then attempts to find the condition indicator on that line
+
 website:
 
 the website has an alternative top right logo that is a github corner, however decided to not use it as we need to use a vscode logo as well

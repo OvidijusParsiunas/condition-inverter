@@ -48,24 +48,31 @@ export class TraversalUtil {
     return TraversalUtil.getEndQuoteIndex(tokens, index + 1, quoteString);
   }
 
-  private static getIndexOfClosingSyntaxToken(tokens: Tokens, index: number, openSyntax: string, closeSyntax: string, openBrackets: number): number {
-    if (index > tokens.length - 1) {
-      return -1;
+  // prettier-ignore
+  private static getIndexOfClosingSyntaxToken(
+      tokens: Tokens, index: number, openSyntax: string, closeSyntax: string, openSyntaxes: number, traverseForwards = true): number {
+    if (traverseForwards) {
+      if (index > tokens.length - 1) return -1;
+    } else if (index < 0) return -1;
+    const nextIndex = traverseForwards ? index + 1 : index - 1;
+    if (tokens[nextIndex] === openSyntax) {
+      return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, nextIndex, openSyntax, closeSyntax, openSyntaxes + 1, traverseForwards);
     }
-    if (tokens[index + 1] === openSyntax) {
-      return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index + 1, openSyntax, closeSyntax, openBrackets + 1);
-    }
-    if (tokens[index + 1] === closeSyntax) {
-      if (openBrackets === 1) {
-        return index + 1;
+    if (tokens[nextIndex] === closeSyntax) {
+    if (openSyntaxes === 1) {
+        return nextIndex;
       }
-      return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index + 1, openSyntax, closeSyntax, openBrackets - 1);
+      return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, nextIndex, openSyntax, closeSyntax, openSyntaxes - 1, traverseForwards);
     }
-    return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index + 1, openSyntax, closeSyntax, openBrackets);
+    return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, nextIndex, openSyntax, closeSyntax, openSyntaxes, traverseForwards);
   }
 
   public static getIndexOfClosingBracket(tokens: Tokens, index: number, openBrackets = 0): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '(', ')', openBrackets);
+  }
+
+  public static getIndexOfOpenBracket(tokens: Tokens, index: number, closeBrackets = 0): number {
+    return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, ')', '(', closeBrackets, false);
   }
 
   public static getIndexOfClosingBrace(tokens: Tokens, index: number, openBrackets = 0): number {

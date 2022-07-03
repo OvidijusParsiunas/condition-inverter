@@ -63,6 +63,6 @@ export class ConditionIndicatorValidator {
   // >>|>=
   public static isTokenIndexPartOfConditionIndicator(tokens: Tokens, index: number, checkRightWards = true): boolean {
     const currentToken = tokens[index] as keyof typeof LineTokenTraversalUtils.conditionIndicators;
-    return ConditionIndicatorValidator.isTokenPartOfConditionIndicator[currentToken]?.(tokens, index, checkRightWards);
+    return Boolean(ConditionIndicatorValidator.isTokenPartOfConditionIndicator[currentToken]?.(tokens, index, checkRightWards));
   }
 }
