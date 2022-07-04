@@ -25,9 +25,7 @@ export class ShouldExpandSelectionStartPastCloseBracket {
   }
 
   public static check(fullLineTokens: Tokens, index: number, isHighlighted: boolean): boolean {
-    // WORK - if ()|
     if (!isHighlighted) return false;
-    // WORK - need to fix this structure when not on the same line
     const isCloseBracketForIndicator = ShouldExpandSelectionStartPastCloseBracket.isCloseBracketForIndicator(fullLineTokens, index);
     if (!isCloseBracketForIndicator) {
       return ShouldExpandSelectionStartPastCloseBracket.isRightSiblingIndicatorForStopToken(fullLineTokens, index);

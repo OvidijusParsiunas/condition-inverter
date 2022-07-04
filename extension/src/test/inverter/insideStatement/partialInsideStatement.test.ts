@@ -70,6 +70,7 @@ suite.only('Partial Inside Statement Inversion Suite', () => {
     { input: `if (not dog &&`, output: `if (dog ||` },
     { input: `if  (not dog  &&`, output: `if  (dog  ||` },
     { input: `if  (((cat))) { dog &&`, output: `if  (((!cat))) { dog ||` },
+    { input: `const = dog && cat; dog &&`, output: `const = !dog || !cat; !dog ||` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
