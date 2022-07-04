@@ -16,11 +16,17 @@ export class Evaluator {
     return index;
   }
 
+  private static didInversionHappen(analysisEndIndex: number, currentIndex: number): boolean {
+    return analysisEndIndex > currentIndex;
+  }
+
   public static evaluate(tokens: Tokens): SyntaxToBeInverted[] {
     const evaluationState = EvaluationStateUtil.generateNewState();
     evaluationState.conditionSequenceEndIndex = tokens.length - 1;
     for (let index = 0; index < tokens.length; index += 1) {
-      index = Evaluator.invertConditionsUsingAnalyzer(tokens, index, evaluationState);
+      const analysisEndIndex = Evaluator.invertConditionsUsingAnalyzer(tokens, index, evaluationState);
+      index = analysisEndIndex;
+      if (Evaluator.didInversionHappen(analysisEndIndex, index)) evaluationState.conditionSequenceEndIndex = analysisEndIndex;
     }
     return evaluationState.syntaxToBeInverted;
   }

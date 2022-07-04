@@ -127,10 +127,15 @@ export class EvaluateAndPrepareOutsideStatement {
     }
   }
 
+  private static isIndexBeforeEndOfPreviousAnalysis(tokens: Tokens, index: number, evaluationState: EvaluationState): boolean {
+    return evaluationState.conditionSequenceEndIndex !== tokens.length - 1 && index < evaluationState.conditionSequenceEndIndex;
+  }
+
   // tracks back until a token before the condition start is found
-  // prettier-ignore
-  private static getStartIndex(
-      tokens: Tokens, index: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+  private static getStartIndex(tokens: Tokens, index: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+    if (EvaluateAndPrepareOutsideStatement.isIndexBeforeEndOfPreviousAnalysis(tokens, index, evaluationState)) {
+      return evaluationState.conditionSequenceEndIndex + 1;
+    }
     if (index === 0) return 0;
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
     if (previousIndex === -1) return index;
