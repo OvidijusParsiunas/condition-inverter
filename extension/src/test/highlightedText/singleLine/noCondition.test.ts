@@ -1898,5 +1898,17 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 5),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat || mouse) { console.log(2) }',
+          output: 'if (dog && cat || mouse) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 35),
+      },
+    },
   ]);
 });

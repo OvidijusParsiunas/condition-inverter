@@ -32,8 +32,25 @@ export class ExpandSelectionEndToIndicator {
     );
   }
 
+  // when end selector before condition group on a line - do not invert
+  // prettier-ignore
+  private static isStartOfLineOpenBracket(
+      editor: TextEditor, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails | null {
+    const openBracketChar = startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, startIndex);
+    const tokensBeforeChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, openBracketChar);
+    const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
+    if (nonSpaceIndex === -1) return { position: { line, character: openBracketChar } };
+    return null;
+  }
+
   // REF - 1334
-  private static searchLineFromIndex(lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
+  // prettier-ignore
+  private static searchLineFromIndex(
+      editor: TextEditor, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
+    if (lineTokens[startIndex] === '(') {
+      const startPosition = ExpandSelectionEndToIndicator.isStartOfLineOpenBracket(editor, lineTokens, line, startChar, startIndex);
+      if (startPosition) return startPosition;
+    }
     for (let i = startIndex; i < lineTokens.length; i += 1) {
       if (ExpandSelectionEndToIndicator.isStopToken(lineTokens, i)) {
         return {
@@ -50,7 +67,7 @@ export class ExpandSelectionEndToIndicator {
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
     const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, 0);
     if (nonSpaceIndex > -1 && nonSpaceIndex < lineTokens.length) {
-      return ExpandSelectionEndToIndicator.searchLineFromIndex(lineTokens, line, startChar, nonSpaceIndex);
+      return ExpandSelectionEndToIndicator.searchLineFromIndex(editor, lineTokens, line, startChar, nonSpaceIndex);
     }
     if (editor.document.lineCount - 1 < line + 1) return null;
     return ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, line + 1);

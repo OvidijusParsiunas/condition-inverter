@@ -27,7 +27,7 @@ export class IsStartOnOrBeforeConditionIndicator {
     return isConditionIndicator;
   }
 
-  private static getLeftSiblingOfOpenBracketIndex(editor: TextEditor, line: number, endChar?: number): boolean {
+  private static isLeftSiblingOfOpenBracketStatementWord(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     const leftSiblingOfOpenBracketIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensLeftOfStartChar, tokensLeftOfStartChar.length - 1, false);
@@ -37,7 +37,7 @@ export class IsStartOnOrBeforeConditionIndicator {
       return STATEMENT_JSON[tokensLeftOfStartChar[leftSiblingOfOpenBracketIndex] as keyof typeof STATEMENT_JSON];
     }
     if (line === 0) return false;
-    return IsStartOnOrBeforeConditionIndicator.getLeftSiblingOfOpenBracketIndex(editor, line - 1);
+    return IsStartOnOrBeforeConditionIndicator.isLeftSiblingOfOpenBracketStatementWord(editor, line - 1);
   }
 
   private static isTokenBeforeCloseBracketConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
@@ -46,7 +46,7 @@ export class IsStartOnOrBeforeConditionIndicator {
     const openBracketIndex = TraversalUtil.getIndexOfOpenBracket(tokensLeftOfStartChar, tokensLeftOfStartChar.length, 1);
     if (openBracketIndex > -1) {
       // prettier-ignore
-      return IsStartOnOrBeforeConditionIndicator.getLeftSiblingOfOpenBracketIndex(
+      return IsStartOnOrBeforeConditionIndicator.isLeftSiblingOfOpenBracketStatementWord(
         editor, line, LineTokenTraversalUtils.getTokenStringIndex(tokensLeftOfStartChar, openBracketIndex),
       );
     }
