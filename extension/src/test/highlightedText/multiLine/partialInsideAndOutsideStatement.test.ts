@@ -16,6 +16,50 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
     {
       lines: [
         {
+          input: `if (\n`,
+          output: 'if (',
+        },
+        {
+          input: `dog\n`,
+          output: '!dog',
+        },
+        {
+          input: `) { console.log(2) }`,
+          output: ') { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (\n`,
+          output: 'if (',
+        },
+        {
+          input: `\n`,
+          output: '',
+        },
+        {
+          input: `dog\n`,
+          output: '!dog',
+        },
+        {
+          input: `) { console.log(2) }`,
+          output: ') { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 3),
+      },
+    },
+    {
+      lines: [
+        {
           input: 'if (dog &&\n',
           output: 'if (!dog ||',
         },

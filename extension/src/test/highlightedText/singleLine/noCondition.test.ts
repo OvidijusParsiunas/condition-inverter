@@ -1971,5 +1971,101 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 35),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if dog: print',
+          output: 'if dog: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog: print',
+          output: 'if dog: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog < cat: print',
+          output: 'if dog < cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog < cat: print',
+          output: 'if dog < cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog < cat: print',
+          output: 'if dog < cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog < cat : print',
+          output: 'if dog < cat : print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog < cat: print',
+          output: 'if dog < cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog < cat:  print',
+          output: 'if dog < cat:  print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 19),
+      },
+    },
   ]);
 });

@@ -361,5 +361,125 @@ suite.only('Selected No Condition Text Suite', () => {
         end: new vscode.Position(0, 18),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if ()',
+          output: 'if ()',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ()',
+          output: 'if ()',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ()',
+          output: 'if ()',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ()',
+          output: 'if ()',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ()',
+          output: 'if ()',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if ()',
+          output: 'if ()',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if () {}',
+          output: 'if () {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if () {}',
+          output: 'if () {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if () {}',
+          output: 'if () {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if () {}',
+          output: 'if () {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
   ]);
 });

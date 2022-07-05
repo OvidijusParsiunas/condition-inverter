@@ -59,7 +59,10 @@ export class IsEndOnOrAfterConditionIndicator {
     const analysisTokens = IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(lineTokens[siblingLeftTokenIndex], editor.selection)
       ? lineTokens.slice(0, siblingLeftTokenIndex)
       : lineTokens;
-    return IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
+    const isIndicator = IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
+    const isHighlighted = IsTextHighlighted.check(editor.selection);
+    // do not want to stop expansion when cursor selection is after a statement e.g. if |dog
+    return isIndicator ? isHighlighted : false;
   }
 
   // WORK - what about the else word in else if
