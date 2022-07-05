@@ -1,6 +1,6 @@
 const mocha = require('../../../node_modules/mocha/lib/mocha.js');
-import { TextEditorObj } from '../../shared/types/tests';
-import { TestUtil } from '../util/testUtil';
+import { TextEditorObj } from '../../../shared/types/tests';
+import { TestUtil } from '../../util/testUtil';
 import * as vscode from 'vscode';
 
 suite.only('Selected Text Suite', () => {
@@ -1357,17 +1357,6 @@ suite.only('Selected Text Suite', () => {
         end: new vscode.Position(0, 15),
       },
     },
-    // {
-    //   lines: [
-    //     {
-    //       input: 'if fishif and catif: print("2") if ifcat and dogif: print("2")',
-    //       output: 'if fishif and catif: print("2") if !ifcat or !dogif: print("2")',
-    //     },
-    //   ],
-    //   selection: {
-    //     start: new vscode.Position(0, 48),
-    //     end: new vscode.Position(0, 48),
-    //   },
-    // },
+    // WORK - if (dog && cat|)
   ]);
 });
