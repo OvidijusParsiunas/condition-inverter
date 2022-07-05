@@ -22,9 +22,13 @@ export class FullWordRange {
       const token = tokens[i] as string;
       currentStringIndex += token.length;
       if (currentStringIndex > selectionEndChar) {
+        // if word - just go to the end
+        // if (dog|if && cat) { console.log(2) } we want the new index to be at if (dogif| && cat) { console.log(2) }
+        // if dogif an|d cat { console.log(2) } we want the new index to be at if dogif and| cat { console.log(2) }
+        if (currentStringIndex - token.length < selectionEndChar) return currentStringIndex;
         const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfAfterEnd(tokens, i, isHighlighted);
-        const totalExpansion = currentStringIndex + expansion;
-        return currentStringIndex - token.length < selectionEndChar ? totalExpansion : totalExpansion - token.length;
+        // - token.length due to += token.length above
+        return currentStringIndex - token.length + expansion;
       }
     }
     return selectionEndChar;
@@ -37,8 +41,13 @@ export class FullWordRange {
       const token = tokens[i] as string;
       currentStringIndex -= token.length;
       if (currentStringIndex < selectionChar) {
+        // if word - just go to the start
+        // if (dog|if && cat) { console.log(2) } we want the new index to be at if (|dogif && cat) { console.log(2) }
+        // if dogif an|d cat { console.log(2) } we want the new index to be at if dogif |and cat { console.log(2) }
+        if (currentStringIndex + token.length > selectionChar) return currentStringIndex;
         const expansion = ExpandIfCursorOnPotentialConditionOperator.getExpansionIfBeforeStart(tokens, i, isHighlighted);
-        return currentStringIndex + token.length > selectionChar ? currentStringIndex - expansion : currentStringIndex + token.length - expansion;
+        // + token.length due to -= token.length above
+        return currentStringIndex + token.length - expansion;
       }
     }
     return selectionChar;

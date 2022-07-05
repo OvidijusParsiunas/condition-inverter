@@ -10,7 +10,11 @@ export class InvertTextWithStartPadding implements InvertTextWithPaddingImpl {
 
   private getPaddingText(): string {
     // the reason why we keep original if longer than 1 is because if it is a 'for' then the inversion will have to be processed differently
-    const paddingText = this.startOperatorPadding.length < 2 ? '&&' : this.startOperatorPadding;
+    // 'and' and 'or' should not be kept as original as their length changes post inversion
+    const paddingText =
+      this.startOperatorPadding.length < 2 || this.startOperatorPadding === 'and' || this.startOperatorPadding === 'or'
+        ? '&&'
+        : this.startOperatorPadding;
     // the reason why there is a space after paddingText is because when paddingConditionStarterText is a word, it can merge into another word
     // hence there needs to be a separation between them, e.g:
     // '&&dog' -> will need to be regarded as 'if dog'
@@ -35,7 +39,7 @@ export class InvertTextWithStartPadding implements InvertTextWithPaddingImpl {
     return RangeCreator.create(
       {
         line: inversionRangeDetails.range.start.line,
-        // need to use + inversionRangeDetails.startOperatorPadding because we are always using if and we could be working with < etc.
+        // need to use + inversionRangeDetails.startOperatorPadding because its length can vary
         character: inversionRangeDetails.range.start.character + inversionRangeDetails.startOperatorPadding.length,
       },
       inversionRangeDetails.range.end,

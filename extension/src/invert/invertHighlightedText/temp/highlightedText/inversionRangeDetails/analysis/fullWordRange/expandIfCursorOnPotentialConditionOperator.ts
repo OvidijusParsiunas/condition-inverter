@@ -35,6 +35,9 @@ export class ExpandIfCursorOnPotentialConditionOperator {
       case '=':
       case '!':
         return ComparisonOperatorExpansion.getForSelectionStart(tokens, index);
+      case 'and':
+      case 'or':
+        return token.length;
       default:
         return 0;
     }
@@ -79,6 +82,9 @@ export class ExpandIfCursorOnPotentialConditionOperator {
         return ComparisonOperatorExpansion.getForSelectionEnd(tokens, index);
       case '?':
         return QuestionMarkOperatorExpansion.getForSelectionEnd(tokens, index);
+      case 'and':
+      case 'or':
+        return token.length;
       default:
         return 0;
     }

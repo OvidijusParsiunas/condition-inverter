@@ -17,30 +17,6 @@ suite.only('Selected Python Statement Suite', () => {
       lines: [
         {
           input: 'if dog: print',
-          output: 'if dog: print',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 0),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if dog: print',
-          output: 'if dog: print',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 2),
-        end: new vscode.Position(0, 2),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if dog: print',
           output: 'if !dog: print',
         },
       ],
@@ -52,97 +28,217 @@ suite.only('Selected Python Statement Suite', () => {
     {
       lines: [
         {
-          input: 'if !dog: print',
-          output: 'if dog: print',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 13),
-      },
-    },
-    {
-      lines: [
-        {
           input: 'if dog: print',
           output: 'if !dog: print',
         },
       ],
       selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if !fishif and catif: print("2")',
+        },
+      ],
+      selection: {
         start: new vscode.Position(0, 3),
-        end: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 3),
       },
     },
     {
       lines: [
         {
-          input: 'if dog < cat: print',
-          output: 'if dog >= cat: print',
+          input: 'if fishif and catif: print("2")',
+          output: 'if !fishif and catif: print("2")',
         },
       ],
       selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 19),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if dog < cat: print',
-          output: 'if !dog < cat: print',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 4),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if dog < cat: print',
-          output: 'if !dog < cat: print',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 6),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if dog < cat: print',
-          output: 'if !dog < cat: print',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
+        start: new vscode.Position(0, 7),
         end: new vscode.Position(0, 7),
       },
     },
     {
       lines: [
         {
-          input: 'if dog < cat: print',
-          output: 'if dog >= cat: print',
+          input: 'if fishif and catif: print("2")',
+          output: 'if !fishif and catif: print("2")',
         },
       ],
       selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 8),
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
       },
     },
     {
       lines: [
         {
-          input: 'if dog < cat: print',
-          output: 'if dog >= cat: print',
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif or catif: print("2")',
         },
       ],
       selection: {
-        start: new vscode.Position(0, 3),
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif or catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif or catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif or catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif and !catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif and !catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif and !catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif and !catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
         end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif or catif: print("2")',
+          output: 'if !fishif or catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif or catif: print("2")',
+          output: 'if fishif and catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif or catif: print("2")',
+          output: 'if fishif and catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif or catif: print("2")',
+          output: 'if fishif and catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif or catif: print("2")',
+          output: 'if fishif or !catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif or catif: print("2")',
+          output: 'if fishif or !catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
       },
     },
   ]);

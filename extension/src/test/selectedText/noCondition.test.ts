@@ -481,5 +481,53 @@ suite.only('Selected No Condition Text Suite', () => {
         end: new vscode.Position(0, 8),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if dog: print',
+          output: 'if dog: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog: print',
+          output: 'if dog: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog: print',
+          output: 'if dog: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if fishif and catif: print("2")',
+          output: 'if fishif and catif: print("2")',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 20),
+      },
+    },
   ]);
 });
