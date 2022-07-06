@@ -30,8 +30,12 @@ export class IsEndOnOrAfterConditionIndicator {
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, lineTokens.length - 1, false);
   }
 
-  private static considerOpenBracketConditionIndicator(token: Token, selection: Selection): boolean {
-    return token === '(' && IsTextHighlighted.check(selection);
+  private static considerOpenBracketConditionIndicator(fullLineTokens: Tokens, nonSpaceTokenIndex: number, selection: Selection): boolean {
+    return (
+      fullLineTokens[nonSpaceTokenIndex] === '(' &&
+      (IsTextHighlighted.check(selection) ||
+        TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, nonSpaceTokenIndex + 1) === fullLineTokens.length)
+    );
   }
 
   private static isEndAfterConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
@@ -39,8 +43,8 @@ export class IsEndOnOrAfterConditionIndicator {
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
-      // cursor selected after open bracket - traverse further
-      if (IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(lineTokens[nonSpaceTokenIndex], editor.selection)) {
+      const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
+      if (IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(fullLineTokens, nonSpaceTokenIndex, editor.selection)) {
         // WORK - should not be a problem for statements with no brackets (check)
         // it is ok that this does not work for for loops for (let i = 0;| dog > cat
         return IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
@@ -56,9 +60,11 @@ export class IsEndOnOrAfterConditionIndicator {
   private static isImmediateTokenConditionIndicator(editor: TextEditor, highlightEnd: Position): boolean {
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, highlightEnd.line, highlightEnd.character);
     const siblingLeftTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
-    const analysisTokens = IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(lineTokens[siblingLeftTokenIndex], editor.selection)
-      ? lineTokens.slice(0, siblingLeftTokenIndex)
-      : lineTokens;
+    const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, highlightEnd.line);
+    // prettier-ignore
+    const analysisTokens = IsEndOnOrAfterConditionIndicator.considerOpenBracketConditionIndicator(
+        fullLineTokens, siblingLeftTokenIndex, editor.selection)
+      ? lineTokens.slice(0, siblingLeftTokenIndex) : lineTokens;
     const isIndicator = IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
     const isHighlighted = IsTextHighlighted.check(editor.selection);
     // do not want to stop expansion when cursor selection is after a statement e.g. if |dog
