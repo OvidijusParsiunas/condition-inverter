@@ -1213,5 +1213,89 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(0, 9),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat`)',
+          output: 'if (!(`dog` + `cat`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat`)',
+          output: 'if (!(`dog` + `cat`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat`)',
+          output: 'if (!(`dog` + `cat`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat`)',
+          output: 'if (!(`dog` + `cat`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat`)',
+          output: 'if (!(`dog` + `cat`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat` + `fish`)',
+          output: 'if (!(`dog` + `cat` + `fish`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` + `cat` + `fish`)',
+          output: 'if (!(`dog` + `cat` + `fish`))',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 19),
+      },
+    },
   ]);
 });
