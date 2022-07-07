@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../../shared/types/tests';
 import { TestUtil } from '../../util/testUtil';
 import * as vscode from 'vscode';
 
-suite.only('Selected Text Suite', () => {
+suite.only('Selected Partial Inside And Outside Statement Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -1355,6 +1355,295 @@ suite.only('Selected Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 15),
         end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if (!'dog' && 'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if (!'dog' && 'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if (!'dog' && 'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if (!'dog' && 'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if ('dog' && !'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if ('dog' && !'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if ('dog' && !'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ('dog' && 'cat')`,
+          output: `if ('dog' && !'cat')`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if (!"dog" && "cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if (!"dog" && "cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if (!"dog" && "cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if (!"dog" && "cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if ("dog" && !"cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if ("dog" && !"cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if ("dog" && !"cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ("dog" && "cat")`,
+          output: `if ("dog" && !"cat")`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (!`dog` && `cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (!`dog` && `cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (!`dog` && `cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (!`dog` && `cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (`dog` && !`cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (`dog` && !`cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (`dog` && !`cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`dog` && `cat`)',
+          output: 'if (`dog` && !`cat`)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
       },
     },
     // WORK - if (dog && cat|)

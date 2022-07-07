@@ -343,6 +343,14 @@ suite.only('Arithmetics Inversion Suite', () => {
       input: `if (dog + cat && cat) { console.log(2) }`,
       output: `if (!(dog + cat) || !cat) { console.log(2) }`,
     },
+    {
+      input: `if (dog + cat + cat && cat) { console.log(2) }`,
+      output: `if (!(dog + cat + cat) || !cat) { console.log(2) }`,
+    },
+    {
+      input: `if (dog + cat - cat && cat) { console.log(2) }`,
+      output: `if (!(dog + cat - cat) || !cat) { console.log(2) }`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
