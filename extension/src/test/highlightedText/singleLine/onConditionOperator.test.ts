@@ -113,7 +113,7 @@ suite.only('Highlighted Ends On Condition Operator Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (dog && cat && !mouse) { console.log(2) }',
+          output: 'if (dog && cat && mouse) { console.log(2) }',
         },
       ],
       selection: {
@@ -149,7 +149,7 @@ suite.only('Highlighted Ends On Condition Operator Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (dog && !cat && mouse) { console.log(2) }',
+          output: 'if (dog && cat && mouse) { console.log(2) }',
         },
       ],
       selection: {

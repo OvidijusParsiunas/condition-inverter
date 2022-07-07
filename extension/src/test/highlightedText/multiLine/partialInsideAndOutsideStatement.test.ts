@@ -245,7 +245,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
         },
         {
           input: `dog\n`,
-          output: `!dog`,
+          output: `dog`,
         },
       ],
       selection: {

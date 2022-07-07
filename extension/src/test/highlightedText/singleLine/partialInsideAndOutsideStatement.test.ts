@@ -77,7 +77,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+          output: 'if (!dog || !cat && mouse) { console.log(2) }',
         },
       ],
       selection: {
@@ -149,7 +149,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (!dog || !cat || mouse) { console.log(2) }',
+          output: 'if (!dog || cat || mouse) { console.log(2) }',
         },
       ],
       selection: {
@@ -293,7 +293,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (!dog || !cat && !mouse) { console.log(2) }',
+          output: 'if (dog || !cat && !mouse) { console.log(2) }',
         },
       ],
       selection: {
@@ -365,7 +365,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
       lines: [
         {
           input: 'if (dog && cat || mouse) { console.log(2) }',
-          output: 'if (dog && !cat && !mouse) { console.log(2) }',
+          output: 'if (dog && cat && !mouse) { console.log(2) }',
         },
       ],
       selection: {
@@ -677,7 +677,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
       lines: [
         {
           input: 'if (dog && cat) { console.log(2) }',
-          output: 'if (!dog || !cat) { console.log(2) }',
+          output: 'if (dog || !cat) { console.log(2) }',
         },
       ],
       selection: {
@@ -749,7 +749,7 @@ suite.only('Highlighted Partial Inside and Outside Statement Suite', () => {
       lines: [
         {
           input: 'if (dog && cat) { console.log(2) }',
-          output: 'if (!dog || !cat) { console.log(2) }',
+          output: 'if (!dog || cat) { console.log(2) }',
         },
       ],
       selection: {

@@ -201,7 +201,7 @@ suite.only('Highlighted Outside Statement Suite', () => {
       lines: [
         {
           input: `cat\n`,
-          output: `!cat`,
+          output: `cat`,
         },
         {
           input: `&&\n`,
@@ -221,7 +221,7 @@ suite.only('Highlighted Outside Statement Suite', () => {
       lines: [
         {
           input: `cat\n`,
-          output: `!cat`,
+          output: `cat`,
         },
         {
           input: ` &&\n`,
@@ -249,7 +249,7 @@ suite.only('Highlighted Outside Statement Suite', () => {
         },
         {
           input: `dog\n`,
-          output: `!dog`,
+          output: `dog`,
         },
       ],
       selection: {

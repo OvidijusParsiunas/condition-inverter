@@ -2,30 +2,28 @@ import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/st
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
-import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { RangeCreator } from '../../../../../../shared/rangeCreator';
+import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position, Selection } from 'vscode';
 
 export class IsEndOnOrAfterConditionIndicator {
-  private static getNonSpaceCharacterLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): Token | null {
+  private static getNonSpaceCharacterLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
-      return lineTokens[nonSpaceTokenIndex];
+      return IsTextHighlighted.check(editor.selection)
+        ? ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false)
+        : STATEMENT_JSON[lineTokens[nonSpaceTokenIndex] as keyof typeof STATEMENT_JSON];
     }
-    if (line - 1 < 0) return null;
+    if (line - 1 < 0) return false;
     return IsEndOnOrAfterConditionIndicator.getNonSpaceCharacterLeftAndUpwards(editor, line - 1);
   }
 
-  private static isAfterStatementToken(editor: TextEditor, line: number, lineTokens: Tokens): boolean {
-    const siblingTokenResult = IsEndOnOrAfterConditionIndicator.getNonSpaceCharacterLeftAndUpwards(editor, line, lineTokens.join('').length);
-    return STATEMENT_JSON[siblingTokenResult as keyof typeof STATEMENT_JSON];
-  }
-
   private static isTokensEndConditionIndicator(editor: TextEditor, line: number, lineTokens: Tokens): boolean {
-    const isAfterStatementToken = IsEndOnOrAfterConditionIndicator.isAfterStatementToken(editor, line, lineTokens);
+    // if |(  or  && |dog
+    const isAfterStatementToken = IsEndOnOrAfterConditionIndicator.getNonSpaceCharacterLeftAndUpwards(editor, line, lineTokens.join('').length);
     if (isAfterStatementToken) return true;
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, lineTokens.length - 1, false);
   }
@@ -66,9 +64,8 @@ export class IsEndOnOrAfterConditionIndicator {
         fullLineTokens, siblingLeftTokenIndex, editor.selection)
       ? lineTokens.slice(0, siblingLeftTokenIndex) : lineTokens;
     const isIndicator = IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
-    const isHighlighted = IsTextHighlighted.check(editor.selection);
     // do not want to stop expansion when cursor selection is after a statement e.g. if |dog
-    return isIndicator ? isHighlighted : false;
+    return isIndicator ? IsTextHighlighted.check(editor.selection) : false;
   }
 
   // WORK - what about the else word in else if

@@ -714,7 +714,7 @@ suite.only('Highlighted No Condition Text Suite', () => {
       lines: [
         {
           input: 'if (dog && cat) { console.log(2) }',
-          output: 'if (!dog && cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) }',
         },
       ],
       selection: {
@@ -726,7 +726,7 @@ suite.only('Highlighted No Condition Text Suite', () => {
       lines: [
         {
           input: 'if (dog && cat) { console.log(2) }',
-          output: 'if (dog && !cat) { console.log(2) }',
+          output: 'if (dog && cat) { console.log(2) }',
         },
       ],
       selection: {
