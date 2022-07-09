@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../../shared/types/tests';
 import { TestUtil } from '../../util/testUtil';
 import * as vscode from 'vscode';
 
-suite.only('Selected Python Statement Suite', () => {
+suite('Selected Python Statement Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));

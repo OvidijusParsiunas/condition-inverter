@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../../shared/types/tests';
 import { TestUtil } from '../../util/testUtil';
 import * as vscode from 'vscode';
 
-suite.only('Selected Inside Statement Text Suite', () => {
+suite('Selected Inside Statement Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -275,6 +275,18 @@ suite.only('Selected Inside Statement Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 11),
         end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog && cat) { console.log(2) }',
+          output: 'if (dog && !cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
       },
     },
     {
@@ -1682,7 +1694,6 @@ suite.only('Selected Inside Statement Text Suite', () => {
         end: new vscode.Position(0, 18),
       },
     },
-    // WORK - if (dog && cat|)
     {
       lines: [
         {

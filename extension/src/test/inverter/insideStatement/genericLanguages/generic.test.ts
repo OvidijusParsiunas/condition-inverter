@@ -8,7 +8,7 @@ import * as assert from 'assert';
 // when the user inserts arbitrary text into website - we need to execute the following strategy
 // if no if statements/while within text, proceed to look for conditions
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
-suite.only('Generic Inversion Suite', () => {
+suite('Generic Inversion Suite', () => {
   [
     { input: '', output: '' },
     { input: ' ', output: ' ' },
