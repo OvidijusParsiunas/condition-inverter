@@ -59,9 +59,7 @@ export class IsStartOnOrBeforeConditionIndicator {
   // prettier-ignore
   private static isConditionIndicatorForHighlight(
       editor: TextEditor, line: number, character: number, fullLineTokens: Tokens, tokenIndex: number): boolean {
-    // when start selection before :, can safely assume that it is for end of python if statement and do not need to check if there is a character
-    // before it using nonSpaceTokensBeforeStart as the app is not inverting when the end is after statement start; if |dog  =  if |dog
-    // e.g. if dog|:  =  if dog|: or if dog |:  =  if dog |:
+    // when start selection before :, can safely assume that it is for end of python if statement
     if (fullLineTokens[tokenIndex] === ':') return true;
     if (fullLineTokens[tokenIndex] === ')') {
       return IsStartOnOrBeforeConditionIndicator.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);

@@ -625,7 +625,30 @@ suite.only('Selected Python Statement Suite', () => {
         end: new vscode.Position(0, 7),
       },
     },
-
+    {
+      lines: [
+        {
+          input: 'if (True): print',
+          output: 'if (False): print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (True): print',
+          output: 'if (False): print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
     {
       lines: [
         {

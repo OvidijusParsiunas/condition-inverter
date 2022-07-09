@@ -2067,5 +2067,17 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 19),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog) ',
+          output: 'if (dog) ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 9),
+      },
+    },
   ]);
 });

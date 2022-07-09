@@ -97,5 +97,69 @@ suite.only('Selected No Condition Text Suite', () => {
         end: new vscode.Position(1, 0),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if \n',
+          output: 'if ',
+        },
+        {
+          input: '(dog)',
+          output: '(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if \n',
+          output: 'if ',
+        },
+        {
+          input: '(dog)',
+          output: '(dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if \n',
+          output: 'if ',
+        },
+        {
+          input: ' (dog)',
+          output: ' (dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if \n',
+          output: 'if ',
+        },
+        {
+          input: ' (dog)',
+          output: ' (dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
   ]);
 });

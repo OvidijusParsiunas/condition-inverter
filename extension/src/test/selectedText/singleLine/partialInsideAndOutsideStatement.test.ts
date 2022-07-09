@@ -1281,32 +1281,8 @@ suite.only('Selected Partial Inside And Outside Statement Text Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(0, 10),
-        end: new vscode.Position(0, 10),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if ((dog))',
-          output: 'if ((!dog))',
-        },
-      ],
-      selection: {
         start: new vscode.Position(0, 9),
         end: new vscode.Position(0, 9),
-      },
-    },
-    {
-      lines: [
-        {
-          input: 'if ((dog))',
-          output: 'if ((!dog))',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 10),
-        end: new vscode.Position(0, 10),
       },
     },
     {

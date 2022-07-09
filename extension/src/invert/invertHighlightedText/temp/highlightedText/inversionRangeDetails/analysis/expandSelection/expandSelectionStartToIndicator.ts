@@ -7,7 +7,6 @@ import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToke
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {
@@ -27,28 +26,26 @@ export class ExpandSelectionStartToIndicator {
   }
 
   // stop token is a token that should end further expansion
-  private static isStopToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken, isHighlighted: boolean): boolean {
+  private static isStopToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
     return (
-      (fullLineTokens[index] !== ')' || ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index, isHighlighted)) &&
+      (fullLineTokens[index] !== ')' || ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
       (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
         ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols])
     );
   }
 
   // REF - 1334
-  // prettier-ignore
-  private static searchLineFromIndex(
-      line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens, isHighlighted: boolean): StartPositionDetails {
+  private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
     const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
     const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
     if (firstFoundConditionIndicatorToken) {
-      if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken, isHighlighted)) {
+      if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
         return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken);
       }
       // prettier-ignore
       return ExpandSelectionStartToIndicator.searchLineFromIndex(
-        line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens, isHighlighted);
+        line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens);
     }
     return { position: { line, character: 0 } };
   }
@@ -59,8 +56,7 @@ export class ExpandSelectionStartToIndicator {
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
       const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
-      const isHighlighted = IsTextHighlighted.check(editor.selection);
-      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, lineTokens, nonSpaceTokenIndex + 1, fullLineTokens, isHighlighted);
+      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, lineTokens, nonSpaceTokenIndex + 1, fullLineTokens);
     }
     if (line === 0) return { position: { line: 0, character: 0 } };
     return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, line - 1);

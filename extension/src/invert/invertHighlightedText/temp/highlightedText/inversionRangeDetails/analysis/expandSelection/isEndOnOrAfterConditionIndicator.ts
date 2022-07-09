@@ -62,8 +62,14 @@ export class IsEndOnOrAfterConditionIndicator {
         fullLineTokens, siblingLeftTokenIndex, editor.selection)
       ? lineTokens.slice(0, siblingLeftTokenIndex) : lineTokens;
     const isIndicator = IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
-    // do not want to stop expansion when cursor selection is after a statement e.g. if |dog
-    return isIndicator ? IsTextHighlighted.check(editor.selection) : false;
+    if (IsTextHighlighted.check(editor.selection)) {
+      return isIndicator;
+    }
+    // when selection cursor is beside an open bracket after a statment - do not invert, otherwise invert
+    // if |(dog)  =  if |(dog)
+    // if |dog  =  if |!dog
+    const nextSiblingIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, siblingLeftTokenIndex + 1);
+    return isIndicator && fullLineTokens[nextSiblingIndex] === '(';
   }
 
   // cannot simply use nonSpaceTokensAfterEnd like nonSpaceTokensBeforeStart in isStartOnOrBEforeConditionIndicator as we do not want to invert
