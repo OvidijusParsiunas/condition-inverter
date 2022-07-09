@@ -2317,5 +2317,101 @@ suite('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 14),
       },
     },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;(i < 2); i += 1) {}',
+          output: 'for (let i = 0;(i < 2); i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; (i < 2); i += 1) {}',
+          output: 'for (let i = 0; (i < 2); i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; (i < 2); i += 1) {}',
+          output: 'for (let i = 0; (i < 2); i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; (i < 2); i += 1) {}',
+          output: 'for (let i = 0; (i < 2); i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;(i < 2); i += 1) {}',
+          output: 'for (let i = 0;(i < 2); i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;(i < 2) ; i += 1) {}',
+          output: 'for (let i = 0;(i < 2) ; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;(i < 2) ; i += 1) {}',
+          output: 'for (let i = 0;(i < 2) ; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;(i < 2) ; i += 1) {}',
+          output: 'for (let i = 0;(i < 2) ; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 23),
+      },
+    },
   ]);
 });

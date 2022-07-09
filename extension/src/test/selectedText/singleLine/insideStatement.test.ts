@@ -2090,5 +2090,77 @@ suite('Selected Inside Statement Text Suite', () => {
         end: new vscode.Position(0, 34),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+          output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+          output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+          output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+          output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+          output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 36),
+        end: new vscode.Position(0, 36),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }',
+          output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 37),
+        end: new vscode.Position(0, 37),
+      },
+    },
   ]);
 });

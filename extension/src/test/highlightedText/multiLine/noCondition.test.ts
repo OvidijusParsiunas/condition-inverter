@@ -97,8 +97,6 @@ suite('Highlighted Inside Text Suite', () => {
         end: new vscode.Position(4, 3),
       },
     },
-    // WORK - do reverse of that in the end
-    // WORK - start with an exclamation mark
     {
       lines: [
         {
