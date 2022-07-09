@@ -257,7 +257,7 @@ suite.only('Highlighted Full Statement Suite', () => {
         },
         {
           input: 'for (let i = 0; i < 10; i += 1) {}\n',
-          output: 'for (let i = 0; !i < 10; i += 1) {}',
+          output: 'for (let i = 0; i < 10; i += 1) {}',
         },
       ],
       selection: {

@@ -23,8 +23,9 @@ export class IsStartOnOrBeforeConditionIndicator {
 
   // prettier-ignore
   private static isConditionIndicatorForSelect(
-      editor: TextEditor, fullLineTokens: Tokens, tokenIndex: number, nonSpaceTokensBeforeStart: boolean): boolean {
-    const isConditionIndicator = IsStartOnOrBeforeConditionIndicator.isTokenConditionIndicator(editor, fullLineTokens, tokenIndex);
+      editor: TextEditor, fullLineTokens: Tokens, nonSpaceIndex: number, charIndexForFullLine: number, nonSpaceTokensBeforeStart: boolean): boolean {
+    const isConditionIndicator = IsStartOnOrBeforeConditionIndicator.isTokenConditionIndicator(editor, fullLineTokens, charIndexForFullLine)
+      || fullLineTokens[nonSpaceIndex + charIndexForFullLine] === ';';
     // if start on/before condition and there are no symbol tokens on the same line before it, do not expand further
     return isConditionIndicator ? nonSpaceTokensBeforeStart : false;
   }
@@ -60,7 +61,8 @@ export class IsStartOnOrBeforeConditionIndicator {
   private static isConditionIndicatorForHighlight(
       editor: TextEditor, line: number, character: number, fullLineTokens: Tokens, tokenIndex: number): boolean {
     // when start selection before :, can safely assume that it is for end of python if statement
-    if (fullLineTokens[tokenIndex] === ':') return true;
+    // when start selection before ;, can safely assume end of for loop conditional statement
+    if (fullLineTokens[tokenIndex] === ':' || fullLineTokens[tokenIndex] === ';') return true;
     if (fullLineTokens[tokenIndex] === ')') {
       return IsStartOnOrBeforeConditionIndicator.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
     }
@@ -82,7 +84,7 @@ export class IsStartOnOrBeforeConditionIndicator {
     // the identification of whether the selection did have non space characters before it or not at |&& cat - on the next line
     // prettier-ignore
     return IsStartOnOrBeforeConditionIndicator.isConditionIndicatorForSelect(
-      editor, fullLineTokens, charIndexForFullLine, nonSpaceTokensBeforeStart);
+      editor, fullLineTokens, nonSpaceIndex, charIndexForFullLine, nonSpaceTokensBeforeStart);
   }
 
   private static isStartBeforeConditionIndicator(editor: TextEditor, line: number, nonSpaceTokensBeforeStart: boolean, startChar?: number): boolean {

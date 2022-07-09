@@ -1683,5 +1683,77 @@ suite.only('Selected Partial Inside And Outside Statement Text Suite', () => {
       },
     },
     // WORK - if (dog && cat|)
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; !i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; !i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i >= 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i >= 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < !2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < !2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 21),
+        end: new vscode.Position(0, 21),
+      },
+    },
   ]);
 });

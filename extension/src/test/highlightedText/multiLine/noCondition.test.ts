@@ -1234,5 +1234,821 @@ suite.only('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(1, 6),
       },
     },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;\n',
+          output: 'for (let i = 0;',
+        },
+        {
+          input: 'i < 10;\n',
+          output: 'i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10;\n',
+          output: 'i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10;\n',
+          output: 'i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: ' i < 10;\n',
+          output: ' i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: ' i < 10;\n',
+          output: ' i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10;\n',
+          output: 'i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(1, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10;\n',
+          output: 'i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: '  i < 10;\n',
+          output: '  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(1, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: ';i < 10;\n',
+          output: ';i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: ';i < 10;\n',
+          output: ';i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: '; i < 10;\n',
+          output: '; i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: '; i < 10;\n',
+          output: '; i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: '; i < 10;\n',
+          output: '; i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 1),
+        end: new vscode.Position(1, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: ';  i < 10;\n',
+          output: ';  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 1),
+        end: new vscode.Position(1, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: ';  i < 10;\n',
+          output: ';  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 2),
+        end: new vscode.Position(1, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0\n',
+          output: 'for (let i = 0',
+        },
+        {
+          input: ';  i < 10;\n',
+          output: ';  i < 10;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 1),
+        end: new vscode.Position(1, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10 ;\n',
+          output: 'i < 10 ;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(3, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10 ;\n',
+          output: 'i < 10 ;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 7),
+        end: new vscode.Position(3, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10 ;\n',
+          output: 'i < 10 ;',
+        },
+        {
+          input: 'i += 1)\n',
+          output: 'i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(1, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10  \n',
+          output: 'i < 10  ',
+        },
+        {
+          input: ';i += 1)\n',
+          output: ';i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(1, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10  \n',
+          output: 'i < 10  ',
+        },
+        {
+          input: ';i += 1)\n',
+          output: ';i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 7),
+        end: new vscode.Position(1, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10  \n',
+          output: 'i < 10  ',
+        },
+        {
+          input: ';i += 1)\n',
+          output: ';i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(1, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10\n',
+          output: 'i < 10',
+        },
+        {
+          input: ';i += 1)\n',
+          output: ';i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10\n',
+          output: 'i < 10',
+        },
+        {
+          input: ';i += 1)\n',
+          output: ';i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 6),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10\n',
+          output: 'i < 10',
+        },
+        {
+          input: ';i += 1)\n',
+          output: ';i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10\n',
+          output: 'i < 10',
+        },
+        {
+          input: ' ;i += 1)\n',
+          output: ' ;i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10\n',
+          output: 'i < 10',
+        },
+        {
+          input: ' ;i += 1)\n',
+          output: ' ;i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 1),
+        end: new vscode.Position(2, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; \n',
+          output: 'for (let i = 0; ',
+        },
+        {
+          input: 'i < 10\n',
+          output: 'i < 10',
+        },
+        {
+          input: ' ;i += 1)\n',
+          output: ' ;i += 1)',
+        },
+        {
+          input: '{}\n',
+          output: '{}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 1),
+        end: new vscode.Position(3, 2),
+      },
+    },
   ]);
 });

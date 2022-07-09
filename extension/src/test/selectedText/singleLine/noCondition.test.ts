@@ -1225,5 +1225,402 @@ suite.only('Selected No Condition Text Suite', () => {
         end: new vscode.Position(0, 33),
       },
     },
+
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 2),
+        end: new vscode.Position(0, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9;  num < 0 { fmt.Println(num, "is negative") }`,
+          output: `if num := 9;  num < 0 { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 36),
+        end: new vscode.Position(0, 36),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 37),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 40),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 42),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 54),
+        end: new vscode.Position(0, 54),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 55),
+        end: new vscode.Position(0, 55),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 56),
+        end: new vscode.Position(0, 56),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 57),
+        end: new vscode.Position(0, 57),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+          output: `if num := 9; num < dog { fmt.Println(num, "is negative") }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 58),
+        end: new vscode.Position(0, 58),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2; i += 1) {}',
+          output: 'for (let i = 0; i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0;  i < 2; i += 1) {}',
+          output: 'for (let i = 0;  i < 2; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2 ; i += 1) {}',
+          output: 'for (let i = 0; i < 2 ; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'for (let i = 0; i < 2  ; i += 1) {}',
+          output: 'for (let i = 0; i < 2  ; i += 1) {}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 22),
+      },
+    },
   ]);
 });

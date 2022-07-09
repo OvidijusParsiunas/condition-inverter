@@ -9,13 +9,19 @@ import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position, Selection } from 'vscode';
 
 export class IsEndOnOrAfterConditionIndicator {
+  private static isStopToken(lineTokens: Tokens, nonSpaceTokenIndex: number): boolean {
+    return (
+      ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false) ||
+      lineTokens[nonSpaceTokenIndex] === ';'
+    );
+  }
   private static isNextCharLeftAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
       return IsTextHighlighted.check(editor.selection)
-        ? ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false)
+        ? IsEndOnOrAfterConditionIndicator.isStopToken(lineTokens, nonSpaceTokenIndex)
         : STATEMENT_JSON[lineTokens[nonSpaceTokenIndex] as keyof typeof STATEMENT_JSON];
     }
     if (line - 1 < 0) return false;
@@ -48,7 +54,7 @@ export class IsEndOnOrAfterConditionIndicator {
         // it is ok that this does not work for for loops for (let i = 0;| dog > cat
         return IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
       }
-      return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false);
+      return IsEndOnOrAfterConditionIndicator.isStopToken(fullLineTokens, nonSpaceTokenIndex);
     }
     if (line - 1 < 0) return false;
     return IsEndOnOrAfterConditionIndicator.isEndAfterConditionIndicator(editor, line - 1);
@@ -62,7 +68,7 @@ export class IsEndOnOrAfterConditionIndicator {
         fullLineTokens, siblingLeftTokenIndex, editor.selection)
       ? lineTokens.slice(0, siblingLeftTokenIndex) : lineTokens;
     const isIndicator = IsEndOnOrAfterConditionIndicator.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
-    if (IsTextHighlighted.check(editor.selection)) {
+      if (IsTextHighlighted.check(editor.selection)) {
       return isIndicator;
     }
     // when selection cursor is beside an open bracket after a statment - do not invert, otherwise invert
