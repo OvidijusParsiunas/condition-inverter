@@ -1,18 +1,12 @@
-// WORK - move the directories
-import { InvertHighlightedTextNew } from './invertHighlightedText/temp/highlightedText/invertHighlightedText';
-import { ErrorHandling } from './shared/errorHandling';
+import { InvertSelectedEditorText } from './invertSelectedEditorText/invertEditorText';
+import { ErrorHandling } from './invertSelectedEditorText/shared/functionality/errorHandling';
 import { window } from 'vscode';
 
 export class Invert {
   private static start(): void {
     const editor = window.activeTextEditor;
     if (editor) {
-      const { start, end } = editor.selection;
-      if (start.line === end.line && start.character === end.character) {
-        InvertHighlightedTextNew.invert(editor);
-      } else {
-        InvertHighlightedTextNew.invert(editor);
-      }
+      InvertSelectedEditorText.invert(editor);
     }
   }
 

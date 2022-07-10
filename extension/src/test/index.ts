@@ -1,4 +1,4 @@
-import { NYC } from './util/nyc';
+import { NYC } from './shared/functionality/nyc';
 import * as Mocha from 'mocha';
 import * as path from 'path';
 import * as glob from 'glob';

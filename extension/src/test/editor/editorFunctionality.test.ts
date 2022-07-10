@@ -1,5 +1,5 @@
+import { TestUtil } from '../shared/functionality/testUtil';
 import { deactivate } from '../../extension';
-import { TestUtil } from '../util/testUtil';
 
 suite('Editor Functionality Suite', () => {
   test('When the extension is deactivated, nothing should happen', () => {

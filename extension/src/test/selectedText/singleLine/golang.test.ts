@@ -1,6 +1,6 @@
 const mocha = require('../../../../node_modules/mocha/lib/mocha.js');
-import { TextEditorObj } from '../../../shared/types/tests';
-import { TestUtil } from '../../util/testUtil';
+import { TestUtil } from '../../shared/functionality/testUtil';
+import { TextEditorObj } from '../../shared/types/tests';
 import * as vscode from 'vscode';
 
 suite('Selected Golang Statement Text Suite', () => {
