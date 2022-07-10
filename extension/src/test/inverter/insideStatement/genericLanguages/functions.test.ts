@@ -268,6 +268,54 @@ suite('Generic Language Nested Function Inversion Suite', () => {
       input: `if ((): void => { if (dog) { console.log('hello') }} && dog)`,
       output: `if (!((): void => { if (dog) { console.log('hello') }}) || !dog)`,
     },
+    {
+      input: 'function isFish() { dog &&',
+      output: 'function isFish() { !dog ||',
+    },
+    {
+      input: 'function isFish() { return dog &&',
+      output: 'function isFish() { return !dog ||',
+    },
+    {
+      input: 'function isFish() return dog &&',
+      output: 'function isFish() return !dog ||',
+    },
+    {
+      input: 'isFish = () => dog &&',
+      output: 'isFish = () => !dog ||',
+    },
+    {
+      input: 'isFish = () => dog && cat',
+      output: 'isFish = () => !dog || !cat',
+    },
+    {
+      input: 'isFish = (): void => dog && cat',
+      output: 'isFish = (): void => !dog || !cat',
+    },
+    {
+      input: 'isFish = (param: { cat: dog }) => dog && cat',
+      output: 'isFish = (param: { cat: dog }) => !dog || !cat',
+    },
+    {
+      input: 'isFish = (param: { cat: dog }): void => dog && cat',
+      output: 'isFish = (param: { cat: dog }): void => !dog || !cat',
+    },
+    {
+      input: 'isFish = () => { dog &&',
+      output: 'isFish = () => { !dog ||',
+    },
+    {
+      input: 'isFish = () => { dog && cat }',
+      output: 'isFish = () => { !dog || !cat }',
+    },
+    {
+      input: 'isFish = (): void => { dog && cat }',
+      output: 'isFish = (): void => { !dog || !cat }',
+    },
+    {
+      input: 'function isFish(pet: Fish | Bird): pet is Fish {\nreturn (pet as Fish).swim !==',
+      output: 'function isFish(pet: Fish | Bird): pet is Fish {\nreturn (pet as Fish).swim ===',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

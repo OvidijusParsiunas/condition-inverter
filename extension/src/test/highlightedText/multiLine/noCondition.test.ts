@@ -2050,5 +2050,25 @@ suite('Highlighted Inside Text Suite', () => {
         end: new vscode.Position(3, 2),
       },
     },
+    // {
+    //   lines: [
+    //     {
+    //       input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+    //       output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+    //     },
+    //     {
+    //       input: 'return (pet as Fish).swim !== undefined;\n',
+    //       output: 'return (pet as Fish).swim !== undefined;',
+    //     },
+    //     {
+    //       input: '}',
+    //       output: '}',
+    //     },
+    //   ],
+    //   selection: {
+    //     start: new vscode.Position(0, 0),
+    //     end: new vscode.Position(0, 48),
+    //   },
+    // },
   ]);
 });

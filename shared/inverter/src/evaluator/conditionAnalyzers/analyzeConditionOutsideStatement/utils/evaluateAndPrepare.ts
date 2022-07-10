@@ -11,8 +11,8 @@ interface TraversalState {
 
 export class EvaluateAndPrepareOutsideStatement {
   // prettier-ignore
-  private static getStartIndexForEquals(
-      tokens: Tokens, equalsIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+  private static getIndexForEqualsOrContinue(
+      tokens: Tokens, equalsIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     // arrow function
     if (tokens[equalsIndex + 1] === '>') {
       const openBracketIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, '(', false);
@@ -27,9 +27,9 @@ export class EvaluateAndPrepareOutsideStatement {
       return semicolonIndex === -1 ? tokens.length : semicolonIndex;
     }
     if (tokens[equalsIndex - 1] === '>' || tokens[equalsIndex - 1] === '<') {
-      return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, equalsIndex - 1, traversalIndex, evaluationState, traversalState);
+      return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, equalsIndex - 1, originalIndex, evaluationState, traversalState);
     }
-    return traversalIndex;
+    return originalIndex;
   }
 
   private static isFunctionInvocation(tokens: Tokens, previousIndex: number): boolean {
@@ -59,7 +59,7 @@ export class EvaluateAndPrepareOutsideStatement {
     }
     if (tokens[previousIndex] === '(') {
       // prettier-ignore
-      return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(
+      return EvaluateAndPrepareOutsideStatement.getIndexForOpenBracket(
         tokens, previousIndex, indexAfterBracket, evaluationState, traversalState);
     }
     if (EvaluateAndPrepareOutsideStatement.isFunctionInvocation(tokens, previousIndex)
@@ -69,9 +69,9 @@ export class EvaluateAndPrepareOutsideStatement {
     return indexAfterBracket;
   }
 
-  // indexAfterFirstBracket in the context of backward traversal
+  // indexAfterBracket in the context of backward traversal
   // prettier-ignore
-  private static getStartIndexForOpenBracket(
+  private static getIndexForOpenBracket(
       tokens: Tokens, openBracketIndex: number, indexAfterBracket: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     if (traversalState.closeBracketNum > 0) {
       traversalState.closeBracketNum -= 1;
@@ -84,9 +84,9 @@ export class EvaluateAndPrepareOutsideStatement {
   // e.g: ? dog : fish ? cat ? dog  -  should result in ? dog : !fish ? cat ? dog
   // prettier-ignore
   private static getIndexIfColonBeforeTernaryOperator(
-    tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState
+    tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState
   ): number {
-    if (traversalState.startedOnternaryOperator) return traversalIndex;
+    if (traversalState.startedOnternaryOperator) return originalIndex;
     return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
   }
 
@@ -94,32 +94,44 @@ export class EvaluateAndPrepareOutsideStatement {
   // e.g: ? fish ? dog : cat  -  should result in ? !fish ? dog : cat
   // prettier-ignore
   private static getIndexIfOutsideTernaryOperator(
-      tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
-    if (tokens[previousIndex - 1] !== '?' && tokens[traversalIndex + 1] !== '?' && tokens[traversalIndex + 1] !== '.') {
-      return traversalIndex;
+      tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+    if (tokens[previousIndex - 1] !== '?' && tokens[originalIndex + 1] !== '?' && tokens[originalIndex + 1] !== '.') {
+      return originalIndex;
     }
     return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
   }
 
   // prettier-ignore
+  private static getIndexIfArrowOrContinue(
+      tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+    return tokens[previousIndex - 1] === '='
+      ? originalIndex
+      : EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, previousIndex - 2, originalIndex, evaluationState, traversalState);
+  }
+
+  // prettier-ignore
   private static getStartIndexAfterSymbol(
-      tokens: Tokens, previousIndex: number, traversalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+      tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     switch (tokens[previousIndex]) {
       case ';':
       case ',':
-        return traversalIndex;
+      case '}': 
+      case '{':
+      case 'return':
+      case 'function':
+        return originalIndex;
+      case '>':
+        return EvaluateAndPrepareOutsideStatement.getIndexIfArrowOrContinue(tokens, previousIndex, originalIndex, evaluationState, traversalState);
       case '=':
-        return EvaluateAndPrepareOutsideStatement.getStartIndexForEquals(tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+        return EvaluateAndPrepareOutsideStatement.getIndexForEqualsOrContinue(tokens, previousIndex, originalIndex, evaluationState, traversalState);
       case '(':
-        return EvaluateAndPrepareOutsideStatement.getStartIndexForOpenBracket(tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+        return EvaluateAndPrepareOutsideStatement.getIndexForOpenBracket(tokens, previousIndex, originalIndex, evaluationState, traversalState);
       case '?':
         return EvaluateAndPrepareOutsideStatement.getIndexIfOutsideTernaryOperator(
-            tokens, previousIndex, traversalIndex, evaluationState, traversalState);
+          tokens, previousIndex, originalIndex, evaluationState, traversalState);
       case ':':
         return EvaluateAndPrepareOutsideStatement.getIndexIfColonBeforeTernaryOperator(
-          tokens, previousIndex, traversalIndex, evaluationState, traversalState);
-      case '}': 
-          return traversalIndex;
+          tokens, previousIndex, originalIndex, evaluationState, traversalState);
       case ')':
         traversalState.closeBracketNum += 1;
       default:

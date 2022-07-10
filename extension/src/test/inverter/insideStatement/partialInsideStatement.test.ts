@@ -35,7 +35,7 @@ suite('Partial Inside Statement Inversion Suite', () => {
     },
     {
       input: `if ((): void => { if (dog) { console.log('hello') }} && dog`,
-      output: `if (!((): void => { if (dog) { console.log('hello') }}) || !dog`,
+      output: `if ((): void => { if (dog) { console.log('hello') }} || !dog`,
     },
     { input: `for (let i = 0; ((dog && cat`, output: 'for (let i = 0; ((!dog || !cat' },
     { input: `for (let i = 0; ((dog && cat)`, output: 'for (let i = 0; ((!dog || !cat)' },
@@ -69,7 +69,7 @@ suite('Partial Inside Statement Inversion Suite', () => {
     { input: `for (let i = 0; i < 2;`, output: `for (let i = 0; i >= 2;` },
     { input: `if (not dog &&`, output: `if (dog ||` },
     { input: `if  (not dog  &&`, output: `if  (dog  ||` },
-    { input: `if  (((cat))) { dog &&`, output: `if  (((!cat))) { dog ||` },
+    { input: `if  (((cat))) { dog &&`, output: `if  (((!cat))) { !dog ||` },
     { input: `const = dog && cat; dog &&`, output: `const = !dog || !cat; !dog ||` },
   ].forEach((testProps) => {
     test(testProps.input, () => {

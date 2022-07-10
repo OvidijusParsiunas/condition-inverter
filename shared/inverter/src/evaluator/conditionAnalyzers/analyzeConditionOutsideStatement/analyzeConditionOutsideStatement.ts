@@ -45,7 +45,9 @@ export class AnalyzeConditionOutsideStatement {
     return (
       AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex] as string] &&
       !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex - 1] as string] &&
-      !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex + 1] as string]
+      !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex + 1] as string] &&
+      // not an arrow function
+      !(tokens[currentIndex] === '>' && tokens[currentIndex - 1] === '=')
     );
   }
 

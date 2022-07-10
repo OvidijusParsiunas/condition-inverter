@@ -9,7 +9,8 @@ export class AnalyzeFunction {
     const openBracketIndex = TraversalUtil.findTokenIndex(tokens, index, '(');
     const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, openBracketIndex, 1);
     const openCurlyBracketIndex = TraversalUtil.findTokenIndex(tokens, closeBracketIndex + 1, '{');
-    return TraversalUtil.getIndexOfClosingBrace(tokens, openCurlyBracketIndex, 1);
+    const closeBraceIndex = TraversalUtil.getIndexOfClosingBrace(tokens, openCurlyBracketIndex, 1);
+    return closeBraceIndex === -1 ? tokens.length - 1 : closeBraceIndex;
   }
 
   public static updateStateForArrow(tokens: Tokens, index: number, evaluationState: EvaluationState): number {

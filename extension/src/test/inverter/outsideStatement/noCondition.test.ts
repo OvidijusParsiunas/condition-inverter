@@ -38,6 +38,106 @@ suite('Outside Statement No Condition Suite', () => {
     { input: `: dog`, output: `: dog` },
     { input: `) ?`, output: `) ?` },
     { input: `)) ?`, output: `)) ?` },
+    {
+      input: `function isFish() { console.log('dog') } `,
+      output: `function isFish() { console.log('dog') } `,
+    },
+    {
+      input: 'function ',
+      output: 'function ',
+    },
+    {
+      input: 'function isFish',
+      output: 'function isFish',
+    },
+    {
+      input: 'function isFish(',
+      output: 'function isFish(',
+    },
+    {
+      input: 'function isFish(param: {',
+      output: 'function isFish(param: {',
+    },
+    {
+      input: 'function isFish(param: { dog',
+      output: 'function isFish(param: { dog',
+    },
+    {
+      input: 'function isFish(param: { dog:',
+      output: 'function isFish(param: { dog:',
+    },
+    {
+      input: 'function isFish(param: { dog: cat',
+      output: 'function isFish(param: { dog: cat',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }',
+      output: 'function isFish(param: { dog: cat }',
+    },
+    {
+      input: 'function isFish(param: { dog: cat })',
+      output: 'function isFish(param: { dog: cat })',
+    },
+    {
+      input: 'function isFish() { dog &&',
+      output: 'function isFish() { !dog ||',
+    },
+    {
+      input: 'function isFish() { dog && cat }',
+      output: 'function isFish() { !dog || !cat }',
+    },
+    {
+      input: 'function isFish(param: { dog: cat })',
+      output: 'function isFish(param: { dog: cat })',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }):',
+      output: 'function isFish(param: { dog: cat }):',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): {',
+      output: 'function isFish(param: { dog: cat }): {',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog',
+      output: 'function isFish(param: { dog: cat }): { dog',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog :',
+      output: 'function isFish(param: { dog: cat }): { dog :',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat',
+      output: 'function isFish(param: { dog: cat }): { dog : cat',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat }',
+      output: 'function isFish(param: { dog: cat }): { dog : cat }',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat } {',
+      output: 'function isFish(param: { dog: cat }): { dog : cat } {',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat } { fish',
+      output: 'function isFish(param: { dog: cat }): { dog : cat } { fish',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat } { fish(',
+      output: 'function isFish(param: { dog: cat }): { dog : cat } { fish(',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat } { fish()',
+      output: 'function isFish(param: { dog: cat }): { dog : cat } { fish()',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat } { fish();',
+      output: 'function isFish(param: { dog: cat }): { dog : cat } { fish();',
+    },
+    {
+      input: 'function isFish(param: { dog: cat }): { dog : cat } { fish(); }',
+      output: 'function isFish(param: { dog: cat }): { dog : cat } { fish(); }',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
