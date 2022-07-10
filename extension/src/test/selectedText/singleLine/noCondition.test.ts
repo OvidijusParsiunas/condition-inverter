@@ -3,7 +3,7 @@ import { TextEditorObj } from '../../../shared/types/tests';
 import { TestUtil } from '../../util/testUtil';
 import * as vscode from 'vscode';
 
-suite('Selected No Condition Text Suite', () => {
+suite.only('Selected No Condition Text Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -1740,6 +1740,426 @@ suite('Selected No Condition Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 23),
         end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 62),
+        end: new vscode.Position(0, 62),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined;  }',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined;  }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 63),
+        end: new vscode.Position(0, 63),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 63),
+        end: new vscode.Position(0, 63),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 64),
+        end: new vscode.Position(0, 64),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined; } ',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 65),
+        end: new vscode.Position(0, 65),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }  ',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }  ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 66),
+        end: new vscode.Position(0, 66),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 21),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 27),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 30),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 31),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 33),
+        end: new vscode.Position(0, 33),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+          output: 'function isFish(pet): pet is Fish {return dog !== undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 34),
+        end: new vscode.Position(0, 34),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is cat: print',
+          output: 'if dog is not cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is cat: print',
+          output: 'if dog is not cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is cat: print',
+          output: 'if dog is not cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is cat: print',
+          output: 'if dog is not cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is cat: print',
+          output: 'if dog is not cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is cat: print',
+          output: 'if dog is not cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if dog is not cat: print',
+          output: 'if dog is cat: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
       },
     },
   ]);

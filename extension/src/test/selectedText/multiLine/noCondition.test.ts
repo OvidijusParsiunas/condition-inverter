@@ -953,5 +953,389 @@ suite('Selected No Condition Text Suite', () => {
         end: new vscode.Position(1, 2),
       },
     },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;}\n',
+          output: 'return (pet as Fish).swim === undefined;}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 40),
+        end: new vscode.Position(1, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined; }\n',
+          output: 'return (pet as Fish).swim === undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 40),
+        end: new vscode.Position(1, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined; }\n',
+          output: 'return (pet as Fish).swim === undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 41),
+        end: new vscode.Position(1, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;  }\n',
+          output: 'return (pet as Fish).swim === undefined;  }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 41),
+        end: new vscode.Position(1, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;  }\n',
+          output: 'return (pet as Fish).swim === undefined;  }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 43),
+        end: new vscode.Position(1, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined; } \n',
+          output: 'return (pet as Fish).swim === undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 42),
+        end: new vscode.Position(1, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined; } \n',
+          output: 'return (pet as Fish).swim === undefined; } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 43),
+        end: new vscode.Position(1, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 40),
+        end: new vscode.Position(1, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined; \n',
+          output: 'return (pet as Fish).swim === undefined; ',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 40),
+        end: new vscode.Position(1, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined; \n',
+          output: 'return (pet as Fish).swim === undefined; ',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 41),
+        end: new vscode.Position(1, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: ' }',
+          output: ' }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 40),
+        end: new vscode.Position(1, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: ' }',
+          output: ' }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: ' }',
+          output: ' }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 1),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 1),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: ' } ',
+          output: ' } ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 2),
+        end: new vscode.Position(2, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: '} ',
+          output: '} ',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 2),
+        end: new vscode.Position(2, 2),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: '\n',
+          output: '',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: ' \n',
+          output: ' ',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet: Fish | Bird): pet is Fish {\n',
+          output: 'function isFish(pet: Fish | Bird): pet is Fish {',
+        },
+        {
+          input: 'return (pet as Fish).swim === undefined;\n',
+          output: 'return (pet as Fish).swim === undefined;',
+        },
+        {
+          input: ' \n',
+          output: ' ',
+        },
+        {
+          input: '}',
+          output: '}',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(2, 1),
+        end: new vscode.Position(2, 1),
+      },
+    },
   ]);
 });
