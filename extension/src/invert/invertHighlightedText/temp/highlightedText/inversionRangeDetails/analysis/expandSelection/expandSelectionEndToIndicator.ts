@@ -16,8 +16,6 @@ import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
   private static generateEndOperatorPadding(conditionIndicatorToken: Token): string {
-    // WORK - check what is the use of this
-    if (conditionIndicatorToken === ';') return '';
     // if an indicator is a statement initiator, keep it in original form
     if (STATEMENT_JSON[conditionIndicatorToken as keyof typeof STATEMENT_JSON]) return conditionIndicatorToken as string;
     // need to use ? as it does not cause invertion of expression before a colon: e.g: cat : dog ? cat : dog needs to result in cat : !dog ? cat dog
@@ -27,8 +25,7 @@ export class ExpandSelectionEndToIndicator {
   private static isStopToken(lineTokens: Tokens, index: number): boolean {
     return (
       AnalyzeConditionInsideStatement.shouldAnalysisStart(lineTokens, index) ||
-      AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index) ||
-      lineTokens[index] === ';'
+      AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index)
     );
   }
 
@@ -57,6 +54,10 @@ export class ExpandSelectionEndToIndicator {
           position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
           endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(lineTokens[i]),
         };
+      }
+      // stop traversal when encountered ; or { token
+      if (lineTokens[i] === ';' || lineTokens[i] === '{') {
+        return { position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) } };
       }
     }
     return { position: { line, character: startChar + lineTokens.join('').length } };

@@ -12,7 +12,8 @@ export class IsEndOnOrAfterConditionIndicator {
   private static isStopToken(lineTokens: Tokens, nonSpaceTokenIndex: number): boolean {
     return (
       ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false) ||
-      lineTokens[nonSpaceTokenIndex] === ';'
+      lineTokens[nonSpaceTokenIndex] === ';' ||
+      lineTokens[nonSpaceTokenIndex] === '{'
     );
   }
   private static isNextCharLeftAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {

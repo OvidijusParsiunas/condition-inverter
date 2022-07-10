@@ -8,9 +8,8 @@ import * as assert from 'assert';
 // vs
 // if ((mouse ? mouse && cat : mouse && cat) && cat) -> if (!(mouse ? mouse && cat : mouse && cat) || !cat)
 // the reason why this is allowed is because brackets are something to be very careful about as nested ones cannot simply be inverted,
-// hence any further nested brackets for outside condition inversion are no longer inverted and above is the only case ever allowed
+// hence any further nested brackets for outside condition inversion are no longer inverted and above is the only case allowed
 
-// the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 // WORK - when user has highlighted a statement, make sure that left of (same line) is not a start of a statement, this would help identify if
 // highlighted text should be inverted as we are not inverting python's 'is' operator to 'not is' as 'is' is a typescript type predicate
 suite('Outside Statement Inversion Suite', () => {
@@ -271,8 +270,20 @@ suite('Outside Statement Inversion Suite', () => {
     },
     {
       input: `(): void => { if (dog) { console.log('hello') }} && dog`,
-      output: `!((): void => { if (dog) { console.log('hello') }}) || !dog`,
+      output: `(): void => { if (!dog) { console.log('hello') }} || !dog`,
     },
+    {
+      input: 'function isFish() { const hello = dog &&',
+      output: 'function isFish() { const hello = !dog ||',
+    },
+    {
+      input: 'function isFish() { const hello = dog && cat ',
+      output: 'function isFish() { const hello = !dog || !cat ',
+    },
+    { input: `&&  cat + mouse `, output: `||  !(cat + mouse) ` },
+    { input: `&&  cat + mouse) `, output: `||  !(cat + mouse)) ` },
+    { input: `&&  cat + mouse; `, output: `||  !(cat + mouse); ` },
+    { input: `&&  (cat + mouse)) `, output: `||  !(cat + mouse)) ` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

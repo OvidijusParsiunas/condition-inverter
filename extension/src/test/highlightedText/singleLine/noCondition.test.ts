@@ -2413,5 +2413,65 @@ suite('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 23),
       },
     },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 21),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) { return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+          output: 'function isFish(pet) {return (pet as Fish).swim !== undefined; }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 22),
+      },
+    },
   ]);
 });

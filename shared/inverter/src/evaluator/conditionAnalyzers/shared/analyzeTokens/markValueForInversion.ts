@@ -3,11 +3,12 @@ import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class MarkValueForInversion {
-  private static markForBracketAddition(endIndex: number, evaluationState: EvaluationState): void {
+  private static markForBracketAddition(tokens: Tokens, endIndex: number, evaluationState: EvaluationState): void {
+    const leftNonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, endIndex, false);
     evaluationState.syntaxToBeInverted.push({
       insertNewBrackets: true,
       start: evaluationState.currentConditionStartIndex,
-      end: endIndex,
+      end: leftNonSpaceTokenIndex,
     });
   }
 
@@ -43,7 +44,7 @@ export class MarkValueForInversion {
         MarkValueForInversion.markForVariableInversion(evaluationState);
       }
       if (evaluationState.isOperationWrappableInBrackets && !evaluationState.areBracketsAlreadyPresent) {
-        MarkValueForInversion.markForBracketAddition(endIndex, evaluationState);
+        MarkValueForInversion.markForBracketAddition(tokens, endIndex, evaluationState);
       }
     }
   }

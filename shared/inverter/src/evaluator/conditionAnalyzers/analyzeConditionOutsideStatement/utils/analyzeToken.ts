@@ -33,12 +33,9 @@ export class AnalyzeOutsideStatement {
   // e.g. dog + cat) console.log(dog) should invert to !(dog + cat)) console.log(dog) not !(dog + cat) console.log(dog))
   private static markForBracketAddition(tokens: Tokens, index: number, evaluationState: EvaluationState): void {
     if (evaluationState.isOperationWrappableInBrackets && evaluationState.numberOfBracketsOpen === 0) {
-      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
-      if (nextTokenIndex < tokens.length) {
-        MarkValueForInversion.mark(tokens, index, evaluationState);
-        evaluationState.markedForOperatorInversion = true;
-        evaluationState.isOperationWrappableInBrackets = false;
-      }
+      MarkValueForInversion.mark(tokens, index, evaluationState);
+      evaluationState.markedForOperatorInversion = true;
+      evaluationState.isOperationWrappableInBrackets = false;
     }
   }
 
