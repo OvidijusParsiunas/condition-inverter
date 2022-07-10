@@ -6,7 +6,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position } from 'vscode';
 
-export class IsStartOnOrBeforeConditionIndicator {
+export class ShouldStartSelectionExpand {
   // technically a ternary operator is recognised as a condition indicator, however we do not want it to be recognised as one when the user
   // has selected the cursor on the left of itself which would stop the expansion to the condition on the left
   private static acknowledgeTernaryOperatorAsIndicator(editor: TextEditor, isConditionIndicator: boolean): boolean {
@@ -16,7 +16,7 @@ export class IsStartOnOrBeforeConditionIndicator {
   private static isTokenConditionIndicator(editor: TextEditor, fullLineTokens: Tokens, tokenIndex: number): boolean {
     const isConditionIndicator = ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, tokenIndex);
     if (fullLineTokens[tokenIndex] === '?') {
-      return IsStartOnOrBeforeConditionIndicator.acknowledgeTernaryOperatorAsIndicator(editor, isConditionIndicator);
+      return ShouldStartSelectionExpand.acknowledgeTernaryOperatorAsIndicator(editor, isConditionIndicator);
     }
     return isConditionIndicator;
   }
@@ -24,7 +24,7 @@ export class IsStartOnOrBeforeConditionIndicator {
   // prettier-ignore
   private static isConditionIndicatorForSelect(
       editor: TextEditor, fullLineTokens: Tokens, nonSpaceIndex: number, charIndexForFullLine: number, nonSpaceTokensBeforeStart: boolean): boolean {
-    const isConditionIndicator = IsStartOnOrBeforeConditionIndicator.isTokenConditionIndicator(editor, fullLineTokens, charIndexForFullLine)
+    const isConditionIndicator = ShouldStartSelectionExpand.isTokenConditionIndicator(editor, fullLineTokens, charIndexForFullLine)
       || fullLineTokens[nonSpaceIndex + charIndexForFullLine] === ';';
     // if start on/before condition and there are no symbol tokens on the same line before it, do not expand further
     return isConditionIndicator ? nonSpaceTokensBeforeStart : false;
@@ -40,7 +40,7 @@ export class IsStartOnOrBeforeConditionIndicator {
       return STATEMENT_JSON[tokensLeftOfStartChar[leftSiblingOfOpenBracketIndex] as keyof typeof STATEMENT_JSON];
     }
     if (line === 0) return false;
-    return IsStartOnOrBeforeConditionIndicator.isLeftSiblingOfOpenBracketStatementWord(editor, line - 1);
+    return ShouldStartSelectionExpand.isLeftSiblingOfOpenBracketStatementWord(editor, line - 1);
   }
 
   private static isTokenBeforeCloseBracketConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
@@ -49,12 +49,12 @@ export class IsStartOnOrBeforeConditionIndicator {
     const openBracketIndex = TraversalUtil.getIndexOfOpenBracket(tokensLeftOfStartChar, tokensLeftOfStartChar.length, 1);
     if (openBracketIndex > -1) {
       // prettier-ignore
-      return IsStartOnOrBeforeConditionIndicator.isLeftSiblingOfOpenBracketStatementWord(
+      return ShouldStartSelectionExpand.isLeftSiblingOfOpenBracketStatementWord(
         editor, line, LineTokenTraversalUtils.getTokenStringIndex(tokensLeftOfStartChar, openBracketIndex),
       );
     }
     if (line === 0) return false;
-    return IsStartOnOrBeforeConditionIndicator.isTokenBeforeCloseBracketConditionIndicator(editor, line - 1);
+    return ShouldStartSelectionExpand.isTokenBeforeCloseBracketConditionIndicator(editor, line - 1);
   }
 
   // prettier-ignore
@@ -64,9 +64,9 @@ export class IsStartOnOrBeforeConditionIndicator {
     // when start selection before ;, can safely assume end of for loop conditional statement
     if (fullLineTokens[tokenIndex] === ':' || fullLineTokens[tokenIndex] === ';') return true;
     if (fullLineTokens[tokenIndex] === ')') {
-      return IsStartOnOrBeforeConditionIndicator.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
+      return ShouldStartSelectionExpand.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
     }
-    return IsStartOnOrBeforeConditionIndicator.isTokenConditionIndicator(editor, fullLineTokens, tokenIndex);
+    return ShouldStartSelectionExpand.isTokenConditionIndicator(editor, fullLineTokens, tokenIndex);
   }
 
   // prettier-ignore
@@ -76,14 +76,14 @@ export class IsStartOnOrBeforeConditionIndicator {
     const charIndexForFullLine = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, character).length;
     if (IsTextHighlighted.check(editor.selection)) {
       // prettier-ignore
-      return IsStartOnOrBeforeConditionIndicator.isConditionIndicatorForHighlight(
+      return ShouldStartSelectionExpand.isConditionIndicatorForHighlight(
         editor, line, character, fullLineTokens, nonSpaceIndex + charIndexForFullLine);
     }
     // the reason why nonSpaceTokensBeforeStart needs to be passed down from the very start is because a multiline selection could start with if (dog|
     // however, isStartBeforeConditionIndicator method will traverse downwards causing startChar to be at the start of a new line, hence preventing
     // the identification of whether the selection did have non space characters before it or not at |&& cat - on the next line
     // prettier-ignore
-    return IsStartOnOrBeforeConditionIndicator.isConditionIndicatorForSelect(
+    return ShouldStartSelectionExpand.isConditionIndicatorForSelect(
       editor, fullLineTokens, nonSpaceIndex, charIndexForFullLine, nonSpaceTokensBeforeStart);
   }
 
@@ -96,12 +96,12 @@ export class IsStartOnOrBeforeConditionIndicator {
       // particular symbols before it as otherwise the logic would not recognise it as a ternary operator and return false.
       const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
       // prettier-ignore
-      return IsStartOnOrBeforeConditionIndicator.isConditionIndicator(
+      return ShouldStartSelectionExpand.isConditionIndicator(
         editor, line, startChar, fullLineTokens, nonSpaceIndex, nonSpaceTokensBeforeStart,
       );
     }
     if (editor.document.lineCount - 1 < line + 1) return false;
-    return IsStartOnOrBeforeConditionIndicator.isStartBeforeConditionIndicator(editor, line + 1, nonSpaceTokensBeforeStart);
+    return ShouldStartSelectionExpand.isStartBeforeConditionIndicator(editor, line + 1, nonSpaceTokensBeforeStart);
   }
 
   private static areThereNonSpaceTokensBeforeStartOnSameLine(editor: TextEditor, highlightStart: Position): boolean {
@@ -112,7 +112,7 @@ export class IsStartOnOrBeforeConditionIndicator {
 
   public static check(editor: TextEditor, highlightStart: Position): boolean {
     const { line, character } = highlightStart;
-    const nonSpaceTokensBeforeStart = IsStartOnOrBeforeConditionIndicator.areThereNonSpaceTokensBeforeStartOnSameLine(editor, highlightStart);
-    return IsStartOnOrBeforeConditionIndicator.isStartBeforeConditionIndicator(editor, line, nonSpaceTokensBeforeStart, character);
+    const nonSpaceTokensBeforeStart = ShouldStartSelectionExpand.areThereNonSpaceTokensBeforeStartOnSameLine(editor, highlightStart);
+    return ShouldStartSelectionExpand.isStartBeforeConditionIndicator(editor, line, nonSpaceTokensBeforeStart, character);
   }
 }

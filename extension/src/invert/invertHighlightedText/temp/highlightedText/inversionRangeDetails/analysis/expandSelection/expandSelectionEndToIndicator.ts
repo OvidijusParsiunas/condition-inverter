@@ -8,10 +8,10 @@ import {
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { EndPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
-import { IsEndOnOrAfterConditionIndicator } from './isEndOnOrAfterConditionIndicator';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { ShouldEndSelectionExpand } from './shouldEndSelectionExpand';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
@@ -76,7 +76,7 @@ export class ExpandSelectionEndToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): EndPositionDetails {
     const highlightEnd = fullWordRange.end;
-    if (!IsEndOnOrAfterConditionIndicator.check(editor, highlightEnd)) {
+    if (!ShouldEndSelectionExpand.check(editor, highlightEnd)) {
       const endPositionDetails = ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, highlightEnd.line, highlightEnd.character);
       if (endPositionDetails) return endPositionDetails;
     }

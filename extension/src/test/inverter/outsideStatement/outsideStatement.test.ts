@@ -10,8 +10,6 @@ import * as assert from 'assert';
 // the reason why this is allowed is because brackets are something to be very careful about as nested ones cannot simply be inverted,
 // hence any further nested brackets for outside condition inversion are no longer inverted and above is the only case allowed
 
-// WORK - when user has highlighted a statement, make sure that left of (same line) is not a start of a statement, this would help identify if
-// highlighted text should be inverted as we are not inverting python's 'is' operator to 'not is' as 'is' is a typescript type predicate
 suite('Outside Statement Inversion Suite', () => {
   [
     { input: 'mouse && cat', output: '!mouse || !cat' },

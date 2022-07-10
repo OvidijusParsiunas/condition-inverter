@@ -1,10 +1,10 @@
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
 import { StartPositionDetails } from '../../../../../../../shared/types/inversionRangeDetails';
-import { IsStartOnOrBeforeConditionIndicator } from './isStartOnOrBeforeConditionIndicator';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToken';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { ShouldStartSelectionExpand } from './shouldStartSelectionExpand';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
@@ -64,7 +64,7 @@ export class ExpandSelectionStartToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
     const highlightStart = fullWordRange.start;
-    if (!IsStartOnOrBeforeConditionIndicator.check(editor, highlightStart)) {
+    if (!ShouldStartSelectionExpand.check(editor, highlightStart)) {
       return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }
     return { position: highlightStart };
