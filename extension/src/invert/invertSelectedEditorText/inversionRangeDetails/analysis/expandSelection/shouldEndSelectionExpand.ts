@@ -51,8 +51,6 @@ export class ShouldEndSelectionExpand {
     if (nonSpaceTokenIndex > -1) {
       const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
       if (ShouldEndSelectionExpand.considerOpenBracketConditionIndicator(fullLineTokens, nonSpaceTokenIndex, editor.selection)) {
-        // WORK - should not be a problem for statements with no brackets (check)
-        // it is ok that this does not work for for loops for (let i = 0;| dog > cat
         return ShouldEndSelectionExpand.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
       }
       return ShouldEndSelectionExpand.isStopToken(fullLineTokens, nonSpaceTokenIndex);
@@ -96,7 +94,6 @@ export class ShouldEndSelectionExpand {
       editor, highlightEnd, lineTokens, fullLineTokens, siblingLeftTokenIndex);
   }
 
-  // WORK - what about the else word in else if
   public static check(editor: TextEditor, highlightEnd: Position): boolean {
     const charAfterEnd = editor.document.getText(
       RangeCreator.create(highlightEnd, { line: highlightEnd.line, character: highlightEnd.character + 1 }),

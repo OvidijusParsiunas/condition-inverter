@@ -80,8 +80,6 @@ export class FullWordRange {
   public static extract(editor: TextEditor): Range {
     const isHighlighted = IsTextHighlighted.check(editor.selection);
     const startSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.start, isHighlighted, true);
-    // WORK - IF false, check if end
-    // WORK - check ternary operator too
     const endSelectionPosition = FullWordRange.getPositionOfWordOrSymbol(editor, editor.selection.end, isHighlighted, false);
     return RangeCreator.create(startSelectionPosition, endSelectionPosition);
   }

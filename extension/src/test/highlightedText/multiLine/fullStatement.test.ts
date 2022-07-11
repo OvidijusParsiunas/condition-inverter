@@ -557,5 +557,69 @@ suite('Highlighted Full Statement Suite', () => {
         end: new vscode.Position(3, 2),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (dog) { console.log(2) }\n',
+          output: 'if (!dog) { console.log(2) }',
+        },
+        {
+          input: 'else if (cat) { console.log(2) }\n',
+          output: 'else if (!cat) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog) { const hello = dog && cat }\n',
+          output: 'if (!dog) { const hello = !dog || !cat }',
+        },
+        {
+          input: 'else if (cat) { const hello = dog && cat }\n',
+          output: 'else if (!cat) { const hello = !dog || !cat }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog) console.log(2)\n',
+          output: 'if (!dog) console.log(2)',
+        },
+        {
+          input: 'else if (cat) console.log(2)\n',
+          output: 'else if (!cat) console.log(2)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (dog) const hello = dog && cat\n',
+          output: 'if (!dog) const hello = !dog || !cat',
+        },
+        {
+          input: 'else if (cat) const hello = dog && cat\n',
+          output: 'else if (!cat) const hello = !dog || !cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(1, 38),
+      },
+    },
   ]);
 });

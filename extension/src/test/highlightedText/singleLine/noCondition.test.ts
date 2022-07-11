@@ -2617,5 +2617,53 @@ suite('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 33),
       },
     },
+    {
+      lines: [
+        {
+          input: `else if (dog) { console.log('dog') }`,
+          output: `else if (dog) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `else if (dog) { console.log('dog') }`,
+          output: `else if (dog) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `else if (dog) { console.log('dog') }`,
+          output: `else if (dog) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `else if (dog) { console.log('dog') }`,
+          output: `else if (dog) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 8),
+      },
+    },
   ]);
 });

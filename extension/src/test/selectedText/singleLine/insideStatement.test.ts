@@ -112,6 +112,54 @@ suite('Selected Inside Statement Text Suite', () => {
     {
       lines: [
         {
+          input: 'else if (dog) { console.log(2) }',
+          output: 'else if (!dog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'else if (dog) { console.log(2) }',
+          output: 'else if (!dog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'else if (dog) { console.log(2) }',
+          output: 'else if (!dog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'else if (dog) { console.log(2) }',
+          output: 'else if (!dog) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
           input: 'if (dog && cat || mouse) { console.log(2) }',
           output: 'if (!dog && cat || mouse) { console.log(2) }',
         },

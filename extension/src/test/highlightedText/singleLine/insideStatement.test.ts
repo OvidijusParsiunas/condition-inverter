@@ -2284,6 +2284,18 @@ suite('Highlighted Inside Statement Suite', () => {
     {
       lines: [
         {
+          input: 'else if (dog)',
+          output: 'else if (!dog)',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
           input:
             // eslint-disable-next-line max-len
             'if (dog && asdiuhaisudhiuashdiuahsdiuhasduihasiudhiausdhihas && aiushdiuahsdiuhasdiuhasiudhasuidh || ausidhuiahsduihauisdhiuashdiuhasdhuasduihuashdiuas && asdhuayshdyuagsudygasuydgasydug) {}',

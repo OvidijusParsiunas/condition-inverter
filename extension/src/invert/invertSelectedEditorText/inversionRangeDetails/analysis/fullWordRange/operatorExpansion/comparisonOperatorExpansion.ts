@@ -43,7 +43,6 @@ export class ComparisonOperatorExpansion {
   }
 
   public static getForHighlightSelectionStart(tokens: Tokens, index: number): number {
-    // WORK - How does this work for <<=
     const initialLength = 0;
     // =|
     if (tokens[index + 1] !== '=') {
