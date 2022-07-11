@@ -2,11 +2,11 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
-import { LineTokenTraversalUtils } from './lineTokenTraversalUtils';
+import { LineTokenTraversalUtil } from './lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class ConditionIndicatorValidator {
-  private static readonly lineConditionIndicators = { ['!']: true, ...LineTokenTraversalUtils.conditionIndicators };
+  private static readonly lineConditionIndicators = { ['!']: true, ...LineTokenTraversalUtil.conditionIndicators };
 
   private static isLogicalOperator(tokens: Tokens, index: number, checkRightWards: boolean): boolean {
     const currentToken = tokens[index];
@@ -62,7 +62,7 @@ export class ConditionIndicatorValidator {
   // eliminated by the ExpandIfCursorOnPotentialConditionOperator, hence index will not be in a middle of a potential indicator e.g:
   // >>|>=
   public static isTokenIndexPartOfConditionIndicator(tokens: Tokens, index: number, checkRightWards = true): boolean {
-    const currentToken = tokens[index] as keyof typeof LineTokenTraversalUtils.conditionIndicators;
+    const currentToken = tokens[index] as keyof typeof LineTokenTraversalUtil.conditionIndicators;
     return Boolean(ConditionIndicatorValidator.isTokenPartOfConditionIndicator[currentToken]?.(tokens, index, checkRightWards));
   }
 }

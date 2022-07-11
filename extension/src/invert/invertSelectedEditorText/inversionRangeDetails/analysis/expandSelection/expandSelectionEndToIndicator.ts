@@ -9,7 +9,7 @@ import {
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
-import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { ShouldEndSelectionExpand } from './shouldEndSelectionExpand';
@@ -34,13 +34,13 @@ export class ExpandSelectionEndToIndicator {
     for (let i = startIndex; i < fullLineTokens.length; i += 1) {
       if (ExpandSelectionEndToIndicator.isStopToken(fullLineTokens, i)) {
         return {
-          position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(fullLineTokens, i) },
+          position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) },
           endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(fullLineTokens[i]),
         };
       }
       // stop traversal when encountered ; or { (not a string template) token
       if (fullLineTokens[i] === ';' || CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, i)) {
-        return { position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(fullLineTokens, i) } };
+        return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) } };
       }
     }
     return null;
@@ -51,7 +51,7 @@ export class ExpandSelectionEndToIndicator {
     if (fullLineTokens[startIndex] === '(') {
       // when end selector before open bracket at the start of line - do not invert
       const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, startIndex - 1, false);
-      if (nonSpaceIndex === -1) return { position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(fullLineTokens, startIndex) } };
+      if (nonSpaceIndex === -1) return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, startIndex) } };
     }
     const endPositionDetails = ExpandSelectionEndToIndicator.getPositionIfLineContainsStopTokenAfterIndex(fullLineTokens, line, startIndex);
     return endPositionDetails || { position: { line, character: fullLineTokens.join('').length } };
@@ -59,11 +59,11 @@ export class ExpandSelectionEndToIndicator {
 
   private static searchRightAndDownwards(editor: TextEditor, line: number, startChar?: number): EndPositionDetails | null {
     startChar ??= 0;
-    const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
+    const lineTokens = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, startChar);
     const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, 0);
     if (nonSpaceIndex > -1 && nonSpaceIndex < lineTokens.length) {
-      const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
-      const numberOfTokensBeforeStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, startChar).length;
+      const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, line);
+      const numberOfTokensBeforeStartChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, startChar).length;
       return ExpandSelectionEndToIndicator.searchLineAfterIndex(fullLineTokens, line, numberOfTokensBeforeStartChar + nonSpaceIndex);
     }
     if (editor.document.lineCount - 1 < line + 1) return null;

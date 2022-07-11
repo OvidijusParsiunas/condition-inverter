@@ -42,7 +42,7 @@ export class TraversalUtil {
   }
 
   public static getEndQuoteIndex(tokens: Tokens, index: number, quoteString: `'` | '`' | '"'): number {
-    if (tokens[index] === quoteString) {
+    if (tokens[index] === quoteString || index > tokens.length - 1) {
       return index;
     }
     return TraversalUtil.getEndQuoteIndex(tokens, index + 1, quoteString);
@@ -77,6 +77,10 @@ export class TraversalUtil {
 
   public static getIndexOfClosingBrace(tokens: Tokens, index: number, openBrackets = 0): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '{', '}', openBrackets);
+  }
+
+  public static getIndexOfOpenBrace(tokens: Tokens, index: number, openBrackets = 0): number {
+    return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '}', '{', openBrackets, false);
   }
 
   public static getIndexOfCurrentTernaryColon(tokens: Tokens, index: number, openBrackets = 0): number {

@@ -3,7 +3,7 @@ import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversa
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { StartPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToken';
-import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { ShouldStartSelectionExpand } from './shouldStartSelectionExpand';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
@@ -15,7 +15,7 @@ export class ExpandSelectionStartToIndicator {
 
   private static generateNewStartPositionDetails(line: number, lineTokens: Tokens, { index, token }: FirstFoundToken): StartPositionDetails {
     const startPositionDetails: StartPositionDetails = {
-      position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(lineTokens, index) },
+      position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) },
     };
     // if there is a ternary operator before the start, there is no need to replace it with
     // a condition operator to trigger an invertion on the first ternary expression
@@ -39,7 +39,7 @@ export class ExpandSelectionStartToIndicator {
   // REF - 1334
   private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
-    const conditionIndicatorTokens = { ...LineTokenTraversalUtils.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
+    const conditionIndicatorTokens = { ...LineTokenTraversalUtil.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
     const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
     if (firstFoundConditionIndicatorToken) {
       if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
@@ -54,10 +54,10 @@ export class ExpandSelectionStartToIndicator {
 
   private static searchLeftAndUpwards(editor: TextEditor, line: number, endChar?: number): StartPositionDetails {
     endChar ??= editor.document.lineAt(line).range.end.character;
-    const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
-      const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
+      const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, line);
       return ExpandSelectionStartToIndicator.searchLineFromIndex(line, lineTokens, nonSpaceTokenIndex + 1, fullLineTokens);
     }
     if (line === 0) return { position: { line: 0, character: 0 } };

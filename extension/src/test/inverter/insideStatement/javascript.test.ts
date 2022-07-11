@@ -152,6 +152,54 @@ suite('JavaScript Invertion Suite', () => {
       input: `if (!(/[^.]+/.exec(url)[0].substr(7))) { console.log(2) }`,
       output: 'if (/[^.]+/.exec(url)[0].substr(7)) { console.log(2) }',
     },
+    {
+      input: 'if (`${dog}`) { console.log(`dog`) }',
+      output: 'if (!`${dog}`) { console.log(`dog`) }',
+    },
+    {
+      input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+      output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+    },
+    {
+      input: 'if (cat && `aa  ${  dog + cat  }  aa` && fish) { console.log(`dog`) }',
+      output: 'if (!cat || !`aa  ${  dog + cat  }  aa` || !fish) { console.log(`dog`) }',
+    },
+    {
+      input: 'if (`${dog}` && cat) { console.log(`dog`) }',
+      output: 'if (!`${dog}` || !cat) { console.log(`dog`) }',
+    },
+    {
+      input: 'if (cat && `${dog}` && fish) { console.log(`dog`) }',
+      output: 'if (!cat || !`${dog}` || !fish) { console.log(`dog`) }',
+    },
+    {
+      input: 'if (cat && `${dog}`) { console.log(`dog`) }',
+      output: 'if (!cat || !`${dog}`) { console.log(`dog`) }',
+    },
+    {
+      input: 'const hello = `${dog}` && cat',
+      output: 'const hello = !`${dog}` || !cat',
+    },
+    {
+      input: 'const hello = cat && `${dog}` && fish',
+      output: 'const hello = !cat || !`${dog}` || !fish',
+    },
+    {
+      input: 'const hello = cat && `${dog}`',
+      output: 'const hello = !cat || !`${dog}`',
+    },
+    {
+      input: 'const hello = cat && `${dog',
+      output: 'const hello = !cat || !`${dog',
+    },
+    {
+      input: 'dog}` || cat',
+      output: '!dog}` || cat',
+    },
+    {
+      input: 'const hello = `aa  ${  dog + cat  }  aa` && dog',
+      output: 'const hello = !`aa  ${  dog + cat  }  aa` || !dog',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

@@ -4,7 +4,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { TextEditor } from 'vscode';
 
-export class LineTokenTraversalUtils {
+export class LineTokenTraversalUtil {
   // prettier-ignore
   public static readonly conditionIndicators = {
     ['&']: true, ['|']: true, ['and']: true, ['or']: true, ['<']: true, ['>']: true, ['=']: true, ['?']: true, ...STATEMENT_JSON };

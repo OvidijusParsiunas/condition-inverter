@@ -1,7 +1,7 @@
 import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
-import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { RangeCreator } from '../../../shared/functionality/rangeCreator';
 import { FindNextNonSpaceToken } from '../shared/findNextNonSpaceToken';
@@ -19,7 +19,7 @@ export class ShouldEndSelectionExpand {
   }
   private static isNextCharLeftAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
-    const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
       return IsTextHighlighted.check(editor.selection)
@@ -47,10 +47,10 @@ export class ShouldEndSelectionExpand {
 
   private static isEndAfterConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
-    const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
-      const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
+      const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, line);
       if (ShouldEndSelectionExpand.considerOpenBracketConditionIndicator(fullLineTokens, nonSpaceTokenIndex, editor.selection)) {
         return ShouldEndSelectionExpand.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
       }
@@ -81,9 +81,9 @@ export class ShouldEndSelectionExpand {
   // cannot simply use nonSpaceTokensAfterEnd like nonSpaceTokensBeforeStart in isStartOnOrBEforeConditionIndicator as we do not want to invert
   // conditions like if |(dog) into if |(!dog), hence the logic here takes care of it simply here
   private static isImmediateTokenConditionIndicator(editor: TextEditor, highlightEnd: Position): boolean {
-    const lineTokens = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, highlightEnd.line, highlightEnd.character);
+    const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, highlightEnd.line, highlightEnd.character);
     const siblingLeftTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
-    const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, highlightEnd.line);
+    const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, highlightEnd.line);
     if (siblingLeftTokenIndex === -1 && IsTextHighlighted.check(editor.selection)) {
       // when text is highlighted and there are no non space characters before end of selection, traverse upwards to check if the above line
       // ends with a '(' symbol and if it does, do not proceed to invert text after the end selection

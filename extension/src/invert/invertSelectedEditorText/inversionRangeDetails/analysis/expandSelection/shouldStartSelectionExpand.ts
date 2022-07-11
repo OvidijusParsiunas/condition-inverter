@@ -1,7 +1,7 @@
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
-import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position } from 'vscode';
@@ -32,7 +32,7 @@ export class ShouldStartSelectionExpand {
 
   private static isLeftSiblingOfOpenBracketStatementWord(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
-    const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const tokensLeftOfStartChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
     const leftSiblingOfOpenBracketIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensLeftOfStartChar, tokensLeftOfStartChar.length - 1, false);
     // strategy here is to not invert condition if the close bracket on the right of cursor is for condition group:
     // if (hello |) will not be inverted
@@ -45,12 +45,12 @@ export class ShouldStartSelectionExpand {
 
   private static isTokenBeforeCloseBracketConditionIndicator(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
-    const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, endChar);
+    const tokensLeftOfStartChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
     const openBracketIndex = TraversalUtil.getIndexOfOpenBracket(tokensLeftOfStartChar, tokensLeftOfStartChar.length, 1);
     if (openBracketIndex > -1) {
       // prettier-ignore
       return ShouldStartSelectionExpand.isLeftSiblingOfOpenBracketStatementWord(
-        editor, line, LineTokenTraversalUtils.getTokenStringIndex(tokensLeftOfStartChar, openBracketIndex),
+        editor, line, LineTokenTraversalUtil.getTokenStringIndex(tokensLeftOfStartChar, openBracketIndex),
       );
     }
     if (line === 0) return false;
@@ -73,7 +73,7 @@ export class ShouldStartSelectionExpand {
   private static isConditionIndicator(
       editor: TextEditor, line: number, character: number, fullLineTokens: Tokens,
       nonSpaceIndex: number, nonSpaceTokensBeforeStart: boolean): boolean {
-    const charIndexForFullLine = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, character).length;
+    const charIndexForFullLine = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character).length;
     if (IsTextHighlighted.check(editor.selection)) {
       // prettier-ignore
       return ShouldStartSelectionExpand.isConditionIndicatorForHighlight(
@@ -89,12 +89,12 @@ export class ShouldStartSelectionExpand {
 
   private static isStartBeforeConditionIndicator(editor: TextEditor, line: number, nonSpaceTokensBeforeStart: boolean, startChar?: number): boolean {
     startChar ??= 0;
-    const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
+    const lineTokens = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, startChar);
     const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, 0);
     if (nonSpaceIndex > -1 && nonSpaceIndex < lineTokens.length) {
       // fullLineTokens is used to help evaluate more detailed operators like a ternary operator which needs to make sure that there are no
       // particular symbols before it as otherwise the logic would not recognise it as a ternary operator and return false.
-      const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
+      const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, line);
       return ShouldStartSelectionExpand.isConditionIndicator(editor, line, startChar, fullLineTokens, nonSpaceIndex, nonSpaceTokensBeforeStart);
     }
     if (editor.document.lineCount - 1 < line + 1) return false;
@@ -102,7 +102,7 @@ export class ShouldStartSelectionExpand {
   }
 
   private static areThereNonSpaceTokensBeforeStartOnSameLine(editor: TextEditor, highlightStart: Position): boolean {
-    const tokensLeftOfStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, highlightStart.line, highlightStart.character);
+    const tokensLeftOfStartChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, highlightStart.line, highlightStart.character);
     const leftSiblingIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensLeftOfStartChar, tokensLeftOfStartChar.length - 1, false);
     return tokensLeftOfStartChar.length === 0 || leftSiblingIndex !== tokensLeftOfStartChar.length - 1;
   }

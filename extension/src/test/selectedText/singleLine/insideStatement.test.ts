@@ -2318,5 +2318,173 @@ suite('Selected Inside Statement Text Suite', () => {
         end: new vscode.Position(0, 12),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 22),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 27),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+          output: 'if (!`aa  ${  dog + cat  }  aa`) { console.log(`dog`) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 29),
+      },
+    },
   ]);
 });
