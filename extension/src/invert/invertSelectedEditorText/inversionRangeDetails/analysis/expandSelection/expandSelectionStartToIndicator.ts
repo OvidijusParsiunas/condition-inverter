@@ -1,9 +1,10 @@
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
-import { StartPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
+import { StartPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToken';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { ShouldStartSelectionExpand } from './shouldStartSelectionExpand';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
@@ -29,6 +30,7 @@ export class ExpandSelectionStartToIndicator {
   private static isStopToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
     return (
       (fullLineTokens[index] !== ')' || ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
+      !CurlyBracketSyntaxUtil.isStringTemplateOpenToken(fullLineTokens, index) &&
       (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
         ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols])
     );

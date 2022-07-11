@@ -95,10 +95,7 @@ export class ShouldStartSelectionExpand {
       // fullLineTokens is used to help evaluate more detailed operators like a ternary operator which needs to make sure that there are no
       // particular symbols before it as otherwise the logic would not recognise it as a ternary operator and return false.
       const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
-      // prettier-ignore
-      return ShouldStartSelectionExpand.isConditionIndicator(
-        editor, line, startChar, fullLineTokens, nonSpaceIndex, nonSpaceTokensBeforeStart,
-      );
+      return ShouldStartSelectionExpand.isConditionIndicator(editor, line, startChar, fullLineTokens, nonSpaceIndex, nonSpaceTokensBeforeStart);
     }
     if (editor.document.lineCount - 1 < line + 1) return false;
     return ShouldStartSelectionExpand.isStartBeforeConditionIndicator(editor, line + 1, nonSpaceTokensBeforeStart);

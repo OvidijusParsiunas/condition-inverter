@@ -6,10 +6,11 @@ import {
 import {
   AnalyzeConditionInsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
-import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
+import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
+import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { ShouldEndSelectionExpand } from './shouldEndSelectionExpand';
 import { Range, TextEditor } from 'vscode';
@@ -29,38 +30,31 @@ export class ExpandSelectionEndToIndicator {
     );
   }
 
-  // when end selector before condition group on a line - do not invert
-  // prettier-ignore
-  private static isStartOfLineOpenBracket(
-      editor: TextEditor, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails | null {
-    const openBracketChar = startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, startIndex);
-    const tokensBeforeChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, openBracketChar);
-    const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
-    if (nonSpaceIndex === -1) return { position: { line, character: openBracketChar } };
+  private static getPositionIfLineContainsStopTokenAfterIndex(fullLineTokens: Tokens, line: number, startIndex: number): EndPositionDetails | null {
+    for (let i = startIndex; i < fullLineTokens.length; i += 1) {
+      if (ExpandSelectionEndToIndicator.isStopToken(fullLineTokens, i)) {
+        return {
+          position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(fullLineTokens, i) },
+          endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(fullLineTokens[i]),
+        };
+      }
+      // stop traversal when encountered ; or { (not a string template) token
+      if (fullLineTokens[i] === ';' || CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, i)) {
+        return { position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(fullLineTokens, i) } };
+      }
+    }
     return null;
   }
 
   // REF - 1334
-  // prettier-ignore
-  private static searchLineFromIndex(
-      editor: TextEditor, lineTokens: Tokens, line: number, startChar: number, startIndex: number): EndPositionDetails {
-    if (lineTokens[startIndex] === '(') {
-      const startPosition = ExpandSelectionEndToIndicator.isStartOfLineOpenBracket(editor, lineTokens, line, startChar, startIndex);
-      if (startPosition) return startPosition;
+  private static searchLineAfterIndex(fullLineTokens: Tokens, line: number, startIndex: number): EndPositionDetails {
+    if (fullLineTokens[startIndex] === '(') {
+      // when end selector before open bracket at the start of line - do not invert
+      const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, startIndex - 1, false);
+      if (nonSpaceIndex === -1) return { position: { line, character: LineTokenTraversalUtils.getTokenStringIndex(fullLineTokens, startIndex) } };
     }
-    for (let i = startIndex; i < lineTokens.length; i += 1) {
-      if (ExpandSelectionEndToIndicator.isStopToken(lineTokens, i)) {
-        return {
-          position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) },
-          endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(lineTokens[i]),
-        };
-      }
-      // stop traversal when encountered ; or { token
-      if (lineTokens[i] === ';' || lineTokens[i] === '{') {
-        return { position: { line, character: startChar + LineTokenTraversalUtils.getTokenStringIndex(lineTokens, i) } };
-      }
-    }
-    return { position: { line, character: startChar + lineTokens.join('').length } };
+    const endPositionDetails = ExpandSelectionEndToIndicator.getPositionIfLineContainsStopTokenAfterIndex(fullLineTokens, line, startIndex);
+    return endPositionDetails || { position: { line, character: fullLineTokens.join('').length } };
   }
 
   private static searchRightAndDownwards(editor: TextEditor, line: number, startChar?: number): EndPositionDetails | null {
@@ -68,7 +62,9 @@ export class ExpandSelectionEndToIndicator {
     const lineTokens = LineTokenTraversalUtils.getLineTokensAfterCharNumber(editor, line, startChar);
     const nonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, 0);
     if (nonSpaceIndex > -1 && nonSpaceIndex < lineTokens.length) {
-      return ExpandSelectionEndToIndicator.searchLineFromIndex(editor, lineTokens, line, startChar, nonSpaceIndex);
+      const fullLineTokens = LineTokenTraversalUtils.getFullLineTokens(editor, line);
+      const numberOfTokensBeforeStartChar = LineTokenTraversalUtils.getLineTokensBeforeCharNumber(editor, line, startChar).length;
+      return ExpandSelectionEndToIndicator.searchLineAfterIndex(fullLineTokens, line, numberOfTokensBeforeStartChar + nonSpaceIndex);
     }
     if (editor.document.lineCount - 1 < line + 1) return null;
     return ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, line + 1);

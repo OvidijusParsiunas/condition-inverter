@@ -2,8 +2,9 @@ import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/st
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { LineTokenTraversalUtils } from '../shared/lineTokenTraversalUtils';
-import { FindNextNonSpaceToken } from '../shared/findNextNonSpaceToken';
+import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { RangeCreator } from '../../../shared/functionality/rangeCreator';
+import { FindNextNonSpaceToken } from '../shared/findNextNonSpaceToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position, Selection } from 'vscode';
@@ -13,7 +14,7 @@ export class ShouldEndSelectionExpand {
     return (
       ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false) ||
       lineTokens[nonSpaceTokenIndex] === ';' ||
-      lineTokens[nonSpaceTokenIndex] === '{'
+      CurlyBracketSyntaxUtil.isScopeOpenToken(lineTokens, nonSpaceTokenIndex)
     );
   }
   private static isNextCharLeftAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {
