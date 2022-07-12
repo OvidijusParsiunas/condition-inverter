@@ -9,7 +9,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position, Selection } from 'vscode';
 
-export class ShouldEndSelectionExpand {
+export class IsEndAfterStopToken {
   private static isStopToken(lineTokens: Tokens, nonSpaceTokenIndex: number): boolean {
     return (
       ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false) ||
@@ -23,16 +23,16 @@ export class ShouldEndSelectionExpand {
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
       return IsTextHighlighted.check(editor.selection)
-        ? ShouldEndSelectionExpand.isStopToken(lineTokens, nonSpaceTokenIndex)
+        ? IsEndAfterStopToken.isStopToken(lineTokens, nonSpaceTokenIndex)
         : STATEMENT_JSON[lineTokens[nonSpaceTokenIndex] as keyof typeof STATEMENT_JSON];
     }
     if (line - 1 < 0) return false;
-    return ShouldEndSelectionExpand.isNextCharLeftAndUpwardsCondition(editor, line - 1);
+    return IsEndAfterStopToken.isNextCharLeftAndUpwardsCondition(editor, line - 1);
   }
 
   private static isTokensEndConditionIndicator(editor: TextEditor, line: number, lineTokens: Tokens): boolean {
     // if |(  or  && |dog
-    const isNextNonSpaceTokenCondition = ShouldEndSelectionExpand.isNextCharLeftAndUpwardsCondition(editor, line, lineTokens.join('').length);
+    const isNextNonSpaceTokenCondition = IsEndAfterStopToken.isNextCharLeftAndUpwardsCondition(editor, line, lineTokens.join('').length);
     if (isNextNonSpaceTokenCondition) return true;
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, lineTokens.length - 1, false);
   }
@@ -51,23 +51,23 @@ export class ShouldEndSelectionExpand {
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
       const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, line);
-      if (ShouldEndSelectionExpand.considerOpenBracketConditionIndicator(fullLineTokens, nonSpaceTokenIndex, editor.selection)) {
-        return ShouldEndSelectionExpand.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
+      if (IsEndAfterStopToken.considerOpenBracketConditionIndicator(fullLineTokens, nonSpaceTokenIndex, editor.selection)) {
+        return IsEndAfterStopToken.isTokensEndConditionIndicator(editor, line, lineTokens.slice(0, nonSpaceTokenIndex - 1));
       }
-      return ShouldEndSelectionExpand.isStopToken(fullLineTokens, nonSpaceTokenIndex);
+      return IsEndAfterStopToken.isStopToken(fullLineTokens, nonSpaceTokenIndex);
     }
     if (line - 1 < 0) return false;
-    return ShouldEndSelectionExpand.isEndAfterConditionIndicator(editor, line - 1);
+    return IsEndAfterStopToken.isEndAfterConditionIndicator(editor, line - 1);
   }
 
   // prettier-ignore
   private static isLeftTokenOnSameLineConditionIndicator(
       editor: TextEditor, highlightEnd: Position, lineTokens: Tokens, fullLineTokens: Tokens, siblingLeftTokenIndex: number): boolean {
     // prettier-ignore
-    const analysisTokens = ShouldEndSelectionExpand.considerOpenBracketConditionIndicator(
+    const analysisTokens = IsEndAfterStopToken.considerOpenBracketConditionIndicator(
         fullLineTokens, siblingLeftTokenIndex, editor.selection)
       ? lineTokens.slice(0, siblingLeftTokenIndex) : lineTokens;
-    const isIndicator = ShouldEndSelectionExpand.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
+    const isIndicator = IsEndAfterStopToken.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
       if (IsTextHighlighted.check(editor.selection)) {
       return isIndicator;
     }
@@ -91,7 +91,7 @@ export class ShouldEndSelectionExpand {
       if (leftNonSpaceToken === '(') return true;
     }
     // prettier-ignore
-    return ShouldEndSelectionExpand.isLeftTokenOnSameLineConditionIndicator(
+    return IsEndAfterStopToken.isLeftTokenOnSameLineConditionIndicator(
       editor, highlightEnd, lineTokens, fullLineTokens, siblingLeftTokenIndex);
   }
 
@@ -108,14 +108,14 @@ export class ShouldEndSelectionExpand {
   }
 
   public static check(editor: TextEditor, highlightEnd: Position): boolean {
-    const wasExtendedOverLogicalOperator = ShouldEndSelectionExpand.wasExtendedOverLogicalOperator(editor, highlightEnd);
+    const wasExtendedOverLogicalOperator = IsEndAfterStopToken.wasExtendedOverLogicalOperator(editor, highlightEnd);
     if (wasExtendedOverLogicalOperator) return true;
     const charAfterEnd = editor.document.getText(
       RangeCreator.create(highlightEnd, { line: highlightEnd.line, character: highlightEnd.character + 1 }),
     );
     if (Object.keys(SPACE_JSON).indexOf(charAfterEnd) === -1 && charAfterEnd !== '') {
-      return ShouldEndSelectionExpand.isImmediateTokenConditionIndicator(editor, highlightEnd);
+      return IsEndAfterStopToken.isImmediateTokenConditionIndicator(editor, highlightEnd);
     }
-    return ShouldEndSelectionExpand.isEndAfterConditionIndicator(editor, highlightEnd.line, highlightEnd.character);
+    return IsEndAfterStopToken.isEndAfterConditionIndicator(editor, highlightEnd.line, highlightEnd.character);
   }
 }

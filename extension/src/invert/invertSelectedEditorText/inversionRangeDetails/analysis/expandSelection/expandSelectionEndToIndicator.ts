@@ -12,7 +12,7 @@ import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { ShouldEndSelectionExpand } from './shouldEndSelectionExpand';
+import { IsEndAfterStopToken } from './isStartAfterStopToken';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
@@ -72,7 +72,7 @@ export class ExpandSelectionEndToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): EndPositionDetails {
     const highlightEnd = fullWordRange.end;
-    if (!ShouldEndSelectionExpand.check(editor, highlightEnd)) {
+    if (!IsEndAfterStopToken.check(editor, highlightEnd)) {
       const endPositionDetails = ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, highlightEnd.line, highlightEnd.character);
       if (endPositionDetails) return endPositionDetails;
     }

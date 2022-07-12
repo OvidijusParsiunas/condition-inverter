@@ -5,8 +5,8 @@ import { StartPositionDetails } from '../../../shared/types/inversionRangeDetail
 import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToken';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
-import { ShouldStartSelectionExpand } from './shouldStartSelectionExpand';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
+import { IsStartBeforeStopToken } from './isStartBeforeStopToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
 
@@ -66,7 +66,7 @@ export class ExpandSelectionStartToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
     const highlightStart = fullWordRange.start;
-    if (!ShouldStartSelectionExpand.check(editor, highlightStart)) {
+    if (!IsStartBeforeStopToken.check(editor, highlightStart)) {
       return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }
     return { position: highlightStart };
