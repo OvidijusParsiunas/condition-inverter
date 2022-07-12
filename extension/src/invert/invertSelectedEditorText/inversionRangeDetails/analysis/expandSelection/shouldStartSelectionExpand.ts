@@ -1,3 +1,7 @@
+// prettier-ignore
+import {
+  AnalyzeConditionOutsideStatement
+} from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
@@ -107,7 +111,21 @@ export class ShouldStartSelectionExpand {
     return tokensLeftOfStartChar.length === 0 || leftSiblingIndex !== tokensLeftOfStartChar.length - 1;
   }
 
+  // this is used to prevent further extension of range when has already been extended over a logical operator in FullWordRange,
+  // e.g: cat&&d|og  to  cat|&&dog  -  the inversion should result: cat||dog
+  public static wasExtendedOverLogicalOperator(editor: TextEditor, highlightStart: Position): boolean {
+    if (editor.selection.start.character !== highlightStart.character) {
+      const lineTokens = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, highlightStart.line, highlightStart.character);
+      if (lineTokens[0] === '|' || lineTokens[0] === '&') {
+        return AnalyzeConditionOutsideStatement.isLogicalOperatorToken(lineTokens, 0);
+      }
+    }
+    return false;
+  }
+
   public static check(editor: TextEditor, highlightStart: Position): boolean {
+    const wasExtendedOverLogicalOperator = ShouldStartSelectionExpand.wasExtendedOverLogicalOperator(editor, highlightStart);
+    if (wasExtendedOverLogicalOperator) return true;
     const { line, character } = highlightStart;
     const nonSpaceTokensBeforeStart = ShouldStartSelectionExpand.areThereNonSpaceTokensBeforeStartOnSameLine(editor, highlightStart);
     return ShouldStartSelectionExpand.isStartBeforeConditionIndicator(editor, line, nonSpaceTokensBeforeStart, character);

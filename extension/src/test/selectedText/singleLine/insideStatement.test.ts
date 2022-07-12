@@ -2486,5 +2486,233 @@ suite('Selected Inside Statement Text Suite', () => {
         end: new vscode.Position(0, 29),
       },
     },
+    {
+      lines: [
+        {
+          input: `if (dog&&fish) { console.log('dog') }`,
+          output: `if (!dog||fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog&&fish) { console.log('dog') }`,
+          output: `if (dog||fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog&&fish) { console.log('dog') }`,
+          output: `if (dog||!fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog||fish) { console.log('dog') }`,
+          output: `if (!dog&&fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog||fish) { console.log('dog') }`,
+          output: `if (dog&&fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog||fish) { console.log('dog') }`,
+          output: `if (dog&&!fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog<fish) { console.log('dog') }`,
+          output: `if (dog>=fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog<fish) { console.log('dog') }`,
+          output: `if (dog>=fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog<<fish) { console.log('dog') }`,
+          output: `if (!(dog<<fish)) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog<<fish) { console.log('dog') }`,
+          output: `if (!(dog<<fish)) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog<<fish) { console.log('dog') }`,
+          output: `if (!(dog<<fish)) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog===fish) { console.log('dog') }`,
+          output: `if (dog!==fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog===fish) { console.log('dog') }`,
+          output: `if (dog!==fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog===fish) { console.log('dog') }`,
+          output: `if (dog!==fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog===fish) { console.log('dog') }`,
+          output: `if (dog!==fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog!==fish) { console.log('dog') }`,
+          output: `if (dog===fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog!==fish) { console.log('dog') }`,
+          output: `if (dog===fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog!==fish) { console.log('dog') }`,
+          output: `if (dog===fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog!==fish) { console.log('dog') }`,
+          output: `if (dog===fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
   ]);
 });

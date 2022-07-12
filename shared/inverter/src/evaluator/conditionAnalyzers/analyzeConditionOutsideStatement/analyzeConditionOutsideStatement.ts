@@ -20,7 +20,7 @@ export class AnalyzeConditionOutsideStatement {
     AnalyzeConditionOutsideStatement.isNotEqualsOperatorToken,
   ];
 
-  private static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+  public static isLogicalOperatorToken(tokens: Tokens, currentIndex: number): boolean {
     return (
       AnalyzeConditionOutsideStatement.logicalOperatorStartTokens[tokens[currentIndex] as string] &&
       AnalyzeConditionOutsideStatement.logicalOperatorStartTokens[tokens[currentIndex + 1] as string] &&

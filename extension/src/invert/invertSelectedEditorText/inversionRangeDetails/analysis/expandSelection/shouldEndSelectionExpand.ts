@@ -95,7 +95,21 @@ export class ShouldEndSelectionExpand {
       editor, highlightEnd, lineTokens, fullLineTokens, siblingLeftTokenIndex);
   }
 
+  // this is used to prevent further extension of range when has already been extended over a logical operator in FullWordRange,
+  // e.g: cat|&&dog  to  cat&&|dog  -  the inversion should result: cat||dog
+  public static wasExtendedOverLogicalOperator(editor: TextEditor, highlightEnd: Position): boolean {
+    if (editor.selection.end.character !== highlightEnd.character) {
+      const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, highlightEnd.line, highlightEnd.character);
+      if (lineTokens[lineTokens.length - 1] === '|' || lineTokens[lineTokens.length - 1] === '&') {
+        return ConditionIndicatorValidator.isLogicalOperator(lineTokens, lineTokens.length - 1, false);
+      }
+    }
+    return false;
+  }
+
   public static check(editor: TextEditor, highlightEnd: Position): boolean {
+    const wasExtendedOverLogicalOperator = ShouldEndSelectionExpand.wasExtendedOverLogicalOperator(editor, highlightEnd);
+    if (wasExtendedOverLogicalOperator) return true;
     const charAfterEnd = editor.document.getText(
       RangeCreator.create(highlightEnd, { line: highlightEnd.line, character: highlightEnd.character + 1 }),
     );

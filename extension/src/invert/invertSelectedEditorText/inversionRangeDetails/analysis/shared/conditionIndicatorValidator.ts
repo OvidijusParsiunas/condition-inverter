@@ -8,7 +8,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 export class ConditionIndicatorValidator {
   private static readonly lineConditionIndicators = { ['!']: true, ...LineTokenTraversalUtil.conditionIndicators };
 
-  private static isLogicalOperator(tokens: Tokens, index: number, checkRightWards: boolean): boolean {
+  public static isLogicalOperator(tokens: Tokens, index: number, checkRightWards: boolean): boolean {
     const currentToken = tokens[index];
     const delta = checkRightWards ? 1 : -1;
     const siblingToken = tokens[index + delta];
