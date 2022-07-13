@@ -14,13 +14,13 @@ export class ExpandSelectionStartToIndicator {
   private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
 
   private static generateNewStartPositionDetails(line: number, lineTokens: Tokens, { index, token }: FirstFoundToken): StartPositionDetails {
+    // if start cursor is directly before a ternary operator, do not include it in inversion text to not invert anything after it
+    if (token === '?') return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) + 1 } };
     const startPositionDetails: StartPositionDetails = {
       position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) },
     };
-    // if there is a ternary operator before the start, there is no need to replace it with
-    // a condition operator to trigger an invertion on the first ternary expression
     // the close bracket is used to stop traversing any further into another conditional expression e.g. if (hello) |
-    if (token !== '?' && !ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]) {
+    if (!ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]) {
       startPositionDetails.startOperatorPadding = token as string;
     }
     return startPositionDetails;
@@ -29,7 +29,7 @@ export class ExpandSelectionStartToIndicator {
   // stop token is a token that should end further expansion
   private static isStopToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
     return (
-      (fullLineTokens[index] !== ')' || ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
+      (fullLineTokens[index] !== ')' || !ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
       !CurlyBracketSyntaxUtil.isStringTemplateOpenToken(fullLineTokens, index) &&
       (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
         ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols])
@@ -45,9 +45,7 @@ export class ExpandSelectionStartToIndicator {
       if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
         return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken);
       }
-      // prettier-ignore
-      return ExpandSelectionStartToIndicator.searchLineFromIndex(
-        line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens);
+      return ExpandSelectionStartToIndicator.searchLineFromIndex(line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens);
     }
     return { position: { line, character: 0 } };
   }

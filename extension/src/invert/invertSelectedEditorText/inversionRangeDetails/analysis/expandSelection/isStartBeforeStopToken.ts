@@ -56,7 +56,7 @@ export class IsStartBeforeStopToken {
     if (fullLineTokens[tokenIndex] === ')') {
       return IsStartBeforeStopToken.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
     }
-    return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, tokenIndex);;
+    return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, tokenIndex);
   }
 
   // prettier-ignore

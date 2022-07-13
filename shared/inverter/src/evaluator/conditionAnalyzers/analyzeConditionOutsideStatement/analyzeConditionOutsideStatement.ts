@@ -13,7 +13,7 @@ export class AnalyzeConditionOutsideStatement {
 
   private static readonly isConditionStartFuncs = [
     AnalyzeConditionOutsideStatement.isLogicalOperatorToken,
-    AnalyzeConditionOutsideStatement.isTernaryOperatorToken,
+    AnalyzeConditionOutsideStatement.isInvertableTernaryOperatorToken,
     AnalyzeConditionOutsideStatement.isLessOrGreaterThanOperatorToken,
     AnalyzeConditionOutsideStatement.isPythonLogicalOperatorToken,
     AnalyzeConditionOutsideStatement.isEqualityOperatorToken,
@@ -33,7 +33,11 @@ export class AnalyzeConditionOutsideStatement {
   }
 
   public static isTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
-    if (tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?') {
+    return tokens[currentIndex] === '?' && tokens[currentIndex + 1] !== '?' && tokens[currentIndex + 1] !== '.' && tokens[currentIndex - 1] !== '?';
+  }
+
+  private static isInvertableTernaryOperatorToken(tokens: Tokens, currentIndex: number): boolean {
+    if (AnalyzeConditionOutsideStatement.isTernaryOperatorToken(tokens, currentIndex)) {
       // do not proceed to invert if there is no logic before the ternary operator
       const siblingTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
       return siblingTokenIndex > -1;

@@ -301,5 +301,125 @@ suite('Selected Outside Statement Text Suite', () => {
         end: new vscode.Position(0, 9),
       },
     },
+    {
+      lines: [
+        {
+          input: `if ((cat)&&= fish)`,
+          output: `if (!((cat)&&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 9),
+        end: new vscode.Position(0, 9),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat)&&= fish)`,
+          output: `if (!((cat)&&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat)&&=fish)`,
+          output: `if (!((cat)&&=fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat)&&=fish)`,
+          output: `if (!((cat)&&=fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat) &&= fish)`,
+          output: `if (!((cat) &&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat) &&= fish)`,
+          output: `if (!((cat) &&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat) &&= fish)`,
+          output: `if (!((cat) &&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat) &&= fish)`,
+          output: `if (!((cat) &&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 13),
+        end: new vscode.Position(0, 13),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat) + fish)`,
+          output: `if (!((cat) + fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if ((cat) + fish)`,
+          output: `if (!((cat) + fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 11),
+        end: new vscode.Position(0, 11),
+      },
+    },
   ]);
 });

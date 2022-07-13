@@ -541,7 +541,7 @@ suite('Highlighted Inside Text Suite', () => {
         },
         {
           input: '|| mouse) { console.log(2) }',
-          output: '|| mouse) { console.log(2) }',
+          output: '|| !mouse) { console.log(2) }',
         },
       ],
       selection: {
@@ -673,7 +673,39 @@ suite('Highlighted Inside Text Suite', () => {
       lines: [
         {
           input: '((i < 10)\n',
-          output: '((i < 10)',
+          output: '((i < !10)',
+        },
+        {
+          input: '  )   ?\n',
+          output: '  )   ?',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '((i < 10)\n',
+          output: '((i < !10)',
+        },
+        {
+          input: '  )   ?\n',
+          output: '  )   ?',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '((i < 10)\n',
+          output: '((i < !10)',
         },
         {
           input: '  )   ?\n',
@@ -689,7 +721,7 @@ suite('Highlighted Inside Text Suite', () => {
       lines: [
         {
           input: '((i < 10)  \n',
-          output: '((i < 10)  ',
+          output: '((i < !10)  ',
         },
         {
           input: '  )   ?\n',
