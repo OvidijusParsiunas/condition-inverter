@@ -2677,5 +2677,29 @@ suite('Highlighted No Condition Text Suite', () => {
         end: new vscode.Position(0, 8),
       },
     },
+    {
+      lines: [
+        {
+          input: `cat? fish : parrot`,
+          output: `cat? fish : parrot`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 3),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `!(cat)? fish : parrot`,
+          output: `!(cat)? fish : parrot`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 21),
+      },
+    },
   ]);
 });

@@ -12,7 +12,7 @@ import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { IsEndAfterStopToken } from './isStartAfterStopToken';
+import { IsEndAfterStopToken } from './isEndAfterStopToken';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {

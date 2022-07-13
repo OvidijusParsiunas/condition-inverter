@@ -1001,7 +1001,7 @@ suite('Selected Inside Statement Text Suite', () => {
       lines: [
         {
           input: 'if (dog ? cat : fish) { console.log(2) }',
-          output: 'if (!dog ? cat : fish) { console.log(2) }',
+          output: 'if (dog ? cat : fish) { console.log(2) }',
         },
       ],
       selection: {

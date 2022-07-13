@@ -2342,5 +2342,53 @@ suite('Selected No Condition Text Suite', () => {
         end: new vscode.Position(0, 8),
       },
     },
+    {
+      lines: [
+        {
+          input: 'let dog &&= cat',
+          output: 'let dog &&= cat',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog ? cat : fish',
+          output: 'dog ? cat : fish',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog  ? cat : fish',
+          output: 'dog  ? cat : fish',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'dog ? cat : fish',
+          output: 'dog ? cat : fish',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
   ]);
 });
