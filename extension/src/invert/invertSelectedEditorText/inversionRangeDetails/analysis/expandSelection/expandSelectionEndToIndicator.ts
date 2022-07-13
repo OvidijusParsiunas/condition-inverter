@@ -41,6 +41,10 @@ export class ExpandSelectionEndToIndicator {
       // stop traversal when encountered ; or { (not a string template) token
       if (fullLineTokens[i] === ';' || CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, i)) {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) } };
+        // if end cursor before property value colon, do not proceed - dog|: cat && dog  -  dog|: cat && dog
+        // + 1 is used to included the : symbol in the text as otherwise python for loops will be inverted
+      } else if (fullLineTokens[i] === ':' && fullLineTokens[i + 1] !== '=') {
+        return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) + 1 } };
       }
     }
     return null;

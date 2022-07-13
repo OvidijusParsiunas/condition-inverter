@@ -6,7 +6,6 @@ import { RangeCreator } from '../shared/functionality/rangeCreator';
 import { TextEditor } from 'vscode';
 
 export class InversionRangeDetailsFactory {
-  // WORK - _ that is next to the string should be regarded as part of it
   public static create(editor: TextEditor): InversionRangeDetails {
     const fullWordRange = FullWordRange.extract(editor);
     const startPositionDetails = ExpandSelectionStartToIndicator.getNewPositionDetails(editor, fullWordRange);

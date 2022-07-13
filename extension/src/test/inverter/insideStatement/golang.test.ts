@@ -25,6 +25,7 @@ suite('GoLang Invertion Suite', () => {
     { input: `for input.Scan() { fmt.Println("hi") }`, output: `for !input.Scan() { fmt.Println("hi") }` },
     { input: `for input.Scan(){ fmt.Println("hi") }`, output: `for !input.Scan(){ fmt.Println("hi") }` },
     { input: `for i < 5`, output: `for i >= 5` },
+    { input: `for i, s := range strings {`, output: 'for i, s := range strings {' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

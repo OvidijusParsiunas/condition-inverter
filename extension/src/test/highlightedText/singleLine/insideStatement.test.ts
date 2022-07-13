@@ -1432,18 +1432,6 @@ suite('Highlighted Inside Statement Suite', () => {
     {
       lines: [
         {
-          input: 'for dog in cat: print(dog)',
-          output: 'for dog in cat: print(dog)',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(0, 0),
-        end: new vscode.Position(0, 14),
-      },
-    },
-    {
-      lines: [
-        {
           input: 'if (True): print',
           output: 'if (False): print',
         },
