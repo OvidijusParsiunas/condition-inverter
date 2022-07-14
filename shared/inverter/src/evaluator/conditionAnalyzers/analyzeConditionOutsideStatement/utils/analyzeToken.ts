@@ -1,5 +1,6 @@
 import { jstsReservedTerminatingWords } from '../../../../shared/consts/jstsReservedTerminatingWords';
 import { MarkValueForInversion } from '../../shared/analyzeTokens/markValueForInversion';
+import { AnalyzeHTMLTag } from '../../shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { CleanUpRedundancies } from '../../shared/redundancies/cleanUpRedundancies';
 import { EvaluationStateUtil } from '../../../evaluationState/evaluationStateUtil';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
@@ -24,6 +25,10 @@ export class AnalyzeOutsideStatement {
       const resut = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
       AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, resut);
       return index - 1;
+    }
+    if (tokens[index] === '>' && AnalyzeHTMLTag.isGreaterThanSymbolForEndOfOpenTag(tokens, index)) {
+      AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, index - 1);
+      return index;
     }
     return -1;
   }

@@ -1,12 +1,15 @@
 import { jstsReservedTerminatingWords } from '../../../../../shared/consts/jstsReservedTerminatingWords';
 import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
 import { Tokens } from '../../../../../shared/types/tokens';
+import { AnalyzeHTMLTag } from './analyzeHTMLTag';
 
 export class AnalyzeTernaryOperator {
   private static getColonEndViaTerminatingToken(tokens: Tokens, colonIndex: number): number {
     const colonEndToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex + 1, jstsReservedTerminatingWords);
     if (colonEndToken) return colonEndToken.index - 1;
-    return -1;
+    // the reason why openTagIndex - 1 is being used is because attemptToFinishViaTerminatingWord needs to end symbol for the open tag
+    const openTagEndIndex = AnalyzeHTMLTag.findEndOfOpenTagIndex(tokens, colonIndex + 1);
+    return openTagEndIndex > -1 ? openTagEndIndex - 1 : -1;
   }
 
   private static movePastColonExpression(tokens: Tokens, colonIndex: number, conditionSequenceEndIndex: number): number {

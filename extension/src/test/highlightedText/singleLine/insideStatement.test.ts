@@ -2860,6 +2860,42 @@ suite('Highlighted Inside Statement Suite', () => {
     {
       lines: [
         {
+          input: `if (dog>fish) { console.log('dog') }`,
+          output: `if (!dog>fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog<fish) { console.log('dog') }`,
+          output: `if (dog<!fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (dog>fish) { console.log('dog') }`,
+          output: `if (dog>!fish) { console.log('dog') }`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
           input: `if (dog<fish) { console.log('dog') }`,
           output: `if (dog>=fish) { console.log('dog') }`,
         },
@@ -3254,7 +3290,6 @@ suite('Highlighted Inside Statement Suite', () => {
         end: new vscode.Position(0, 10),
       },
     },
-
     {
       lines: [
         {

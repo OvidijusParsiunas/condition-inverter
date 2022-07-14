@@ -292,6 +292,18 @@ suite('Selected Outside Statement Text Suite', () => {
     {
       lines: [
         {
+          input: `if (cat??= fish)`,
+          output: `if (!(cat??= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
           input: `if ((cat)??= fish)`,
           output: `if (!((cat)??= fish))`,
         },
@@ -347,6 +359,18 @@ suite('Selected Outside Statement Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 12),
         end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `if (cat &&= fish)`,
+          output: `if (!(cat &&= fish))`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
       },
     },
     {

@@ -62,6 +62,14 @@ suite('TypeScript Invertion Suite', () => {
       input: 'if (cat ? myFunc<{ dog: cat }>() && cat : cat) { console.log(2) }',
       output: 'if (!cat ? myFunc<{ dog: cat }>() && cat : cat) { console.log(2) }',
     },
+    {
+      input: 'cat ? myFunc<dog>() && cat : cat',
+      output: '!cat ? myFunc<dog>() && cat : cat',
+    },
+    {
+      input: 'cat ? myFunc<{ dog: cat }>() && cat : cat',
+      output: '!cat ? myFunc<{ dog: cat }>() && cat : cat',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

@@ -1,3 +1,4 @@
+import { AnalyzeHTMLTag } from '../shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { EvaluateAndPrepareOutsideStatement } from './utils/evaluateAndPrepare';
 import { TraversalUtil } from '../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../shared/types/evaluationState';
@@ -50,6 +51,8 @@ export class AnalyzeConditionOutsideStatement {
       AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex] as string] &&
       !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex - 1] as string] &&
       !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex + 1] as string] &&
+      !AnalyzeHTMLTag.isStartTagSymbol(tokens, currentIndex) &&
+      !AnalyzeHTMLTag.isEndTagSymbol(tokens, currentIndex) &&
       // not an arrow function
       !(tokens[currentIndex] === '>' && tokens[currentIndex - 1] === '=')
     );
