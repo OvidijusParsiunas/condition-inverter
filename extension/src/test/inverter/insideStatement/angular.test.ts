@@ -5,26 +5,6 @@ import * as assert from 'assert';
 suite('Angular Invertion Suite', () => {
   [
     {
-      input: '<div>',
-      output: '<div>',
-    },
-    {
-      input: '</div>',
-      output: '</div>',
-    },
-    {
-      input: '<Header />',
-      output: '<Header />',
-    },
-    {
-      input: '<div class="asdasd">',
-      output: '<div class="asdasd">',
-    },
-    {
-      input: '<div></div>',
-      output: '<div></div>',
-    },
-    {
       input: 'className={`banner ${active ? "active" : ""}`}',
       output: 'className={`banner ${!active ? "active" : ""}`}',
     },
