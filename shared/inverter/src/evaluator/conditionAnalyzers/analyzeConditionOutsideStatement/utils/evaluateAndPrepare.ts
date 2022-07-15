@@ -33,7 +33,7 @@ export class EvaluateAndPrepareOutsideStatement {
     // if =" and there is an uneven amount of string quotes since condition - can assume that it is a condition in a template
     const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, equalsIndex + 1);
     if (STRING_QUOTE_JSON[tokens[nextTokenIndex] as keyof typeof STRING_QUOTE_JSON] && traversalState.stringQuoteNum % 2 === 1) {
-      return nextTokenIndex + 1;
+      return TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, nextTokenIndex + 1);
     }
     return originalIndex;
   }

@@ -25,12 +25,40 @@ suite('DOM No Condition Invertion Suite', () => {
       output: '<div></div>',
     },
     {
+      input: 'div></div>',
+      output: 'div></div>',
+    },
+    {
+      input: '></div',
+      output: '></div',
+    },
+    {
       input: '<div></div',
       output: '<div></div',
     },
     {
       input: '<div></',
       output: '<div></',
+    },
+    {
+      input: '<div><div/>',
+      output: '<div><div/>',
+    },
+    {
+      input: 'div><div/>',
+      output: 'div><div/>',
+    },
+    {
+      input: '><div/>',
+      output: '><div/>',
+    },
+    {
+      input: '<div><div/',
+      output: '<div><div/',
+    },
+    {
+      input: '><div/',
+      output: '><div/',
     },
     {
       input: '<div><div></div></div>',
@@ -53,12 +81,28 @@ suite('DOM No Condition Invertion Suite', () => {
       output: '<div><div>',
     },
     {
+      input: '</div></div>',
+      output: '</div></div>',
+    },
+    {
+      input: '<div/><div/>',
+      output: '<div/><div/>',
+    },
+    {
       input: '<Header />',
       output: '<Header />',
     },
     {
       input: '<div class="asdasd">',
       output: '<div class="asdasd">',
+    },
+    {
+      input: 'class="myValue">Content to render when condition is true.</div>',
+      output: 'class="myValue">Content to render when condition is true.</div>',
+    },
+    {
+      input: 'class = "myValue">Content to render when condition is true.</div>',
+      output: 'class = "myValue">Content to render when condition is true.</div>',
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

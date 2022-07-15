@@ -1,5 +1,6 @@
 import { TraversalUtil } from '../../../../../../shared/functionality/traversalUtil';
 import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
+import { STRING_QUOTE_JSON } from '../../../../../../shared/consts/specialTokens';
 import { EvaluationState } from '../../../../../../shared/types/evaluationState';
 import { StartEndIndexes } from '../../../../../../shared/types/StartEndIndexes';
 import { LANGUAGE } from '../../../../../../shared/consts/languages';
@@ -71,11 +72,28 @@ export class SetStateForGenericStatement {
     };
   }
 
+  private static getHTMLAttributeIndexes(tokens: Tokens, startSymbolIndex: number): StartEndIndexes | null {
+    const indexOfTokenAfterSymbol = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, startSymbolIndex);
+    if (tokens[indexOfTokenAfterSymbol] === '=') {
+      const symbolIndexAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterSymbol + 1);
+      if (STRING_QUOTE_JSON[tokens[symbolIndexAfterEquals] as keyof typeof STRING_QUOTE_JSON]) {
+        const endQuoteIndex = TraversalUtil.findTokenIndex(tokens, symbolIndexAfterEquals + 1, tokens[symbolIndexAfterEquals] as string);
+        return {
+          start: symbolIndexAfterEquals,
+          end: endQuoteIndex > -1 ? endQuoteIndex : tokens.length,
+        };
+      }
+    }
+    return null;
+  }
+
   private static getIndexesOfStatementAndSetLanguage(tokens: Tokens, analysisStartIndex: number, evaluationState: EvaluationState): StartEndIndexes {
     const startSymbolIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, analysisStartIndex + 1);
     if (tokens[startSymbolIndex] === '(') {
       return SetStateForGenericStatement.getBrackatableStatementIndexesAndSetLanguage(tokens, analysisStartIndex, startSymbolIndex, evaluationState);
     }
+    const htmlAttributeIndexes = SetStateForGenericStatement.getHTMLAttributeIndexes(tokens, startSymbolIndex);
+    if (htmlAttributeIndexes) return htmlAttributeIndexes;
     return SetStateForGenericStatement.getNoBracketsStatementIndexesAndSetLanguage(tokens, startSymbolIndex, evaluationState);
   }
 

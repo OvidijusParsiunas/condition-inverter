@@ -1,5 +1,6 @@
-import { STRING_QUOTE_JSON } from '../../../../../shared/consts/specialTokens';
+import { jstsReservedTerminatingWords } from '../../../../../shared/consts/jstsReservedTerminatingWords';
 import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
+import { STRING_QUOTE_JSON } from '../../../../../shared/consts/specialTokens';
 import { Token, Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeHTMLTag {
@@ -19,12 +20,25 @@ export class AnalyzeHTMLTag {
     return false;
   }
 
+  private static isHTMLAttributeBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
+    if (index < 0 || jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) return false;
+    if (tokens[index] === '=') {
+      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
+      if (STRING_QUOTE_JSON[tokens[nextTokenIndex] as keyof typeof STRING_QUOTE_JSON]) {
+        return true;
+      }
+    }
+    return AnalyzeHTMLTag.isHTMLAttributeBeforeGreaterThanSymbol(tokens, index - 1);
+  }
+
   public static isEndTagSymbol(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '>') {
       const htmlTagOpenSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '<', false);
       if (htmlTagOpenSymbol > -1) {
         return AnalyzeHTMLTag.isStartTagSymbol(tokens, htmlTagOpenSymbol);
       }
+      // identifies if a html attribute appears before a > symbol - identifying an end of tag
+      return AnalyzeHTMLTag.isHTMLAttributeBeforeGreaterThanSymbol(tokens, currentIndex);
     }
     return false;
   }

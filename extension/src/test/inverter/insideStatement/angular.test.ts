@@ -65,6 +65,10 @@ suite('Angular Invertion Suite', () => {
       output: '{!active ? "active" : ""',
     },
     {
+      input: `<div [class.my_class]="step === 'step1'">{children}</div>`,
+      output: `<div [class.my_class]="step !== 'step1'">{children}</div>`,
+    },
+    {
       input: `<div [class.my_class] = "step === 'step1'">{children}</div>`,
       output: `<div [class.my_class] = "step !== 'step1'">{children}</div>`,
     },
@@ -77,8 +81,16 @@ suite('Angular Invertion Suite', () => {
       output: `<div [ngClass]="{'active': step!='step1'}">{children}</div>`,
     },
     {
+      input: `<div [ ngClass ] = " {'active': step=='step1'}">{children}</div>`,
+      output: `<div [ ngClass ] = " {'active': step!='step1'}">{children}</div>`,
+    },
+    {
       input: `<div [ngClass]="step=='step1'?'class1':'class2'">{children}</div>`,
       output: `<div [ngClass]="step!='step1'?'class1':'class2'">{children}</div>`,
+    },
+    {
+      input: `<div [ ngClass ] = " step=='step1'?'class1':'class2'">{children}</div>`,
+      output: `<div [ ngClass ] = " step!='step1'?'class1':'class2'">{children}</div>`,
     },
     {
       input: `<div [ngClass]="(step=='step1')?'class1':'class2'">{children}</div>`,
@@ -116,38 +128,98 @@ suite('Angular Invertion Suite', () => {
       input: `<div className={"btn-group pull-right " + this.props.showBulkActions ? 'show' : 'hidden'}>{children}</div>`,
       output: `<div className={!("btn-group pull-right " + this.props.showBulkActions) ? 'show' : 'hidden'}>{children}</div>`,
     },
+    // {
+    //   input: '<div [hidden]="expression">Content to render when condition is true.</div>',
+    //   output: '<div [hidden]="expression">Content to render when condition is true.</div>',
+    // },
     {
-      input: '<div [hidden]="expression">Content to render when condition is true.</div>',
-      output: '<div [hidden]="expression">Content to render when condition is true.</div>',
+      input: '<div ng-show="myValue">Content to render when condition is true.</div>',
+      output: '<div ng-show="!myValue">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show = " myValue">Content to render when condition is true.</div>',
+      output: '<div ng-show = " !myValue">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show="`myValue`">Content to render when condition is true.</div>',
+      output: '<div ng-show="!`myValue`">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show=`myValue`>Content to render when condition is true.</div>',
+      output: '<div ng-show=`!myValue`>Content to render when condition is true.</div>',
+    },
+    {
+      input: `<div ng-show='myValue'>Content to render when condition is true.</div>`,
+      output: `<div ng-show='!myValue'>Content to render when condition is true.</div>`,
+    },
+    {
+      input: 'div ng-show="myValue">Content to render when condition is true.</div>',
+      output: 'div ng-show="!myValue">Content to render when condition is true.</div>',
+    },
+    {
+      input: 'div ng-show="(myValue)">Content to render when condition is true.</div>',
+      output: 'div ng-show="(!myValue)">Content to render when condition is true.</div>',
+    },
+    {
+      input: 'div ng-show="!(myValue)">Content to render when condition is true.</div>',
+      output: 'div ng-show="myValue">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show="myValue && cat">Content to render when condition is true.</div>',
+      output: '<div ng-show="!myValue || !cat">Content to render when condition is true.</div>',
     },
     // {
-    //   input: '<div ng-show="myValue">Content to render when condition is true.</div>',
-    //   output: '<div ng-show="myValue">Content to render when condition is true.</div>',
+    //   input: '<div ng-show="myValue ? dog : cat" ng-hide="myValue && cat">Content to render when condition is true.</div>',
+    //   output: '<div ng-show="!myValue ? dog : cat" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
     // },
     // {
-    //   input: '<div ng-hide="expression">Content to render when condition is true.</div>',
-    //   output: '<div ng-hide="expression">Content to render when condition is true.</div>',
+    //   input: '<div ng-show="myValue ? dog : cat" ng-hide="myValue ? dog : cat">Content to render when condition is true.</div>',
+    //   output: '<div ng-show="!myValue ? dog : cat" ng-hide="!myValue ? dog : cat">Content to render when condition is true.</div>',
     // },
-    // {
-    //   input: '<div *ngIf="cat && dog">Content to render when condition is true.</div>',
-    //   output: '<div *ngIf="!cat || !dog">Content to render when condition is true.</div>',
-    // },
-    // {
-    //   input: '<div [ngIf]="cat && dog">Content to render when condition is true.</div>',
-    //   output: '<div [ngIf]="!cat || !dog">Content to render when condition is true.</div>',
-    // },
+    {
+      input: '<div ng-show="myValue && cat" ng-hide="myValue && cat">Content to render when condition is true.</div>',
+      output: '<div ng-show="!myValue || !cat" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: 'ng-show="myValue',
+      output: 'ng-show="!myValue',
+    },
+    {
+      input: 'ng-show="',
+      output: 'ng-show="',
+    },
+    {
+      input: 'ng-show=',
+      output: 'ng-show=',
+    },
+    {
+      input: 'ng-show',
+      output: 'ng-show',
+    },
+    {
+      input: '<div ng-hide="expression">Content to render when condition is true.</div>',
+      output: '<div ng-hide="!expression">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div *ngIf="cat && dog">Content to render when condition is true.</div>',
+      output: '<div *ngIf="!cat || !dog">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div *ngIf = " cat && dog">Content to render when condition is true.</div>',
+      output: '<div *ngIf = " !cat || !dog">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div [ngIf]="cat && dog">Content to render when condition is true.</div>',
+      output: '<div [ngIf]="!cat || !dog">Content to render when condition is true.</div>',
+    },
     // {
     //   input: '<div *ngIf="condition">Content to render when condition is true.</div>',
     //   output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
     // },
-    // {
-    //   input: 'const dog = cat ? fish : parrot\nconst dog = cat ? fish : parrot',
-    //   output: 'const dog = !cat ? fish : parrot\nconst dog = !cat ? fish : parrot',
-    // },
-    // {
-    //   input: `<div class="col-md-3 d-flex" [ngStyle]="{'background-color': (vars.state=='Signup') ? '#73c7af' : '#ffffff'}">{children}</div>`,
-    //   output: `<div class="col-md-3 d-flex" [ngStyle]="{'background-color': (vars.state!='Signup') ? '#73c7af' : '#ffffff'}">{children}</div>`,
-    // },
+    {
+      input: `<div class="col-md-3 d-flex" [ngStyle]="{'background-color': (vars.state=='Signup') ? '#73c7af' : '#ffffff'}">{children}</div>`,
+      output: `<div class="col-md-3 d-flex" [ngStyle]="{'background-color': (vars.state!='Signup') ? '#73c7af' : '#ffffff'}">{children}</div>`,
+    },
     {
       input: `<div class="col-md-3 d-flex" [style.background-color]="style1 ? 'red' : (style2 ? 'blue' : null)">{children}</div>`,
       output: `<div class="col-md-3 d-flex" [style.background-color]="!style1 ? 'red' : (style2 ? 'blue' : null)">{children}</div>`,
@@ -163,6 +235,10 @@ suite('Angular Invertion Suite', () => {
     {
       input: `<div [ngStyle]="{ 'top': yourVar === true ? widthColumHalf + 'px': '302px' }">{children}</div>`,
       output: `<div [ngStyle]="{ 'top': yourVar !== true ? widthColumHalf + 'px': '302px' }">{children}</div>`,
+    },
+    {
+      input: `<div [ ngStyle ] = " {  'top': yourVar === true ? widthColumHalf + 'px': '302px' }">{children}</div>`,
+      output: `<div [ ngStyle ] = " {  'top': yourVar !== true ? widthColumHalf + 'px': '302px' }">{children}</div>`,
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

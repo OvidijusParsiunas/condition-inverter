@@ -283,6 +283,10 @@ suite('Outside Statement Inversion Suite', () => {
     { input: `&&  cat + mouse; `, output: `||  !(cat + mouse); ` },
     { input: `&&  (cat + mouse)) `, output: `||  !(cat + mouse)) ` },
     { input: 'dog: cat ? fish : parrot,', output: 'dog: !cat ? fish : parrot,' },
+    {
+      input: 'const dog = cat ? fish : parrot\nconst dog = cat ? fish : parrot',
+      output: 'const dog = !cat ? fish : parrot\nconst dog = !cat ? fish : parrot',
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
