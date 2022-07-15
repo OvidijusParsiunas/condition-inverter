@@ -1,12 +1,13 @@
 import { jstsReservedTerminatingWords } from '../../../../shared/consts/jstsReservedTerminatingWords';
 import { TraversalUtil } from '../../../../shared/functionality/traversalUtil';
+import { STRING_QUOTE_JSON } from '../../../../shared/consts/specialTokens';
 import { IsTokenWord } from '../../../../shared/functionality/isTokenWord';
 import { EvaluationState } from '../../../../shared/types/evaluationState';
 import { Tokens } from '../../../../shared/types/tokens';
 
 interface TraversalState {
   closeBracketNum: number;
-  startedOnternaryOperator: boolean;
+  stringQuoteNum: number;
 }
 
 export class EvaluateAndPrepareOutsideStatement {
@@ -28,6 +29,11 @@ export class EvaluateAndPrepareOutsideStatement {
     }
     if (tokens[equalsIndex - 1] === '>' || tokens[equalsIndex - 1] === '<') {
       return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, equalsIndex - 1, originalIndex, evaluationState, traversalState);
+    }
+    // if =" and there is an uneven amount of string quotes since condition - can assume that it is a condition in a template
+    const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, equalsIndex + 1);
+    if (STRING_QUOTE_JSON[tokens[nextTokenIndex] as keyof typeof STRING_QUOTE_JSON] && traversalState.stringQuoteNum % 2 === 1) {
+      return nextTokenIndex + 1;
     }
     return originalIndex;
   }
@@ -80,16 +86,6 @@ export class EvaluateAndPrepareOutsideStatement {
     return EvaluateAndPrepareOutsideStatement.getIndexAroundOpenBracket(tokens, openBracketIndex, indexAfterBracket, evaluationState, traversalState);
   }
 
-  // this is used for a scenarion where a ternary operator with no conditions in front of it has passed and the expression contains another one,
-  // e.g: ? dog : fish ? cat ? dog  -  should result in ? dog : !fish ? cat ? dog
-  // prettier-ignore
-  private static getIndexIfColonBeforeTernaryOperator(
-    tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState
-  ): number {
-    if (traversalState.startedOnternaryOperator) return originalIndex;
-    return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
-  }
-
   // this is used for a scenarion where a ternary operator with no conditions in front of it has passed and the second one should be inverted instead,
   // e.g: ? fish ? dog : cat  -  should result in ? !fish ? dog : cat
   // prettier-ignore
@@ -127,6 +123,7 @@ export class EvaluateAndPrepareOutsideStatement {
     switch (tokens[previousIndex]) {
       case '{':
       case ';':
+      case ':':
       case ',':
       case 'return':
       case 'function':
@@ -144,9 +141,11 @@ export class EvaluateAndPrepareOutsideStatement {
       case '?':
         return EvaluateAndPrepareOutsideStatement.getIndexIfOutsideTernaryOperator(
           tokens, previousIndex, originalIndex, evaluationState, traversalState);
-      case ':':
-        return EvaluateAndPrepareOutsideStatement.getIndexIfColonBeforeTernaryOperator(
-          tokens, previousIndex, originalIndex, evaluationState, traversalState);
+      case `'`:
+      case '`':
+      case '"':
+        traversalState.stringQuoteNum += 1;
+        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);
       case ')':
         traversalState.closeBracketNum += 1;
       default:
@@ -170,7 +169,7 @@ export class EvaluateAndPrepareOutsideStatement {
   }
 
   public static getStartIndexAndUpdateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const initialTraversalState = { closeBracketNum: 0, startedOnternaryOperator: tokens[index] === '?' };
+    const initialTraversalState = { closeBracketNum: 0, stringQuoteNum: 0 };
     const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, index, evaluationState, initialTraversalState);
     evaluationState.currentConditionStartIndex = startIndex;
     evaluationState.isEvaluatingConditions = true;

@@ -1,3 +1,4 @@
+import { STRING_QUOTE_JSON } from '../../../../../shared/consts/specialTokens';
 import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
 import { Token, Tokens } from '../../../../../shared/types/tokens';
 
@@ -36,7 +37,7 @@ export class AnalyzeHTMLTag {
         return tokens[openBraceIndex - 1] === '=';
       }
     }
-    return Boolean(tokens[previousSiblingIndex] === '"' || tokens[previousSiblingIndex] === `'` || tokens[previousSiblingIndex] === '`');
+    return STRING_QUOTE_JSON[tokens[previousSiblingIndex] as keyof typeof STRING_QUOTE_JSON];
   }
 
   public static findEndOfOpenTagIndex(tokens: Tokens, startIndex: number): number {
