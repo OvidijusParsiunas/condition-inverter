@@ -20,7 +20,7 @@ export class AnalyzeHTMLTag {
     return false;
   }
 
-  private static isHTMLAttributeBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
+  private static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
     if (index < 0 || jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) return false;
     if (tokens[index] === '=') {
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
@@ -28,7 +28,14 @@ export class AnalyzeHTMLTag {
         return true;
       }
     }
-    return AnalyzeHTMLTag.isHTMLAttributeBeforeGreaterThanSymbol(tokens, index - 1);
+    if (tokens[index] === '}') {
+      const openBraceIndex = TraversalUtil.getIndexOfOpenBrace(tokens, index, 1);
+      if (openBraceIndex > -1) {
+        const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, openBraceIndex - 1, false);
+        return tokens[previousTokenIndex] === '=';
+      }
+    }
+    return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, index - 1);
   }
 
   public static isEndTagSymbol(tokens: Tokens, currentIndex: number): boolean {
@@ -38,28 +45,15 @@ export class AnalyzeHTMLTag {
         return AnalyzeHTMLTag.isStartTagSymbol(tokens, htmlTagOpenSymbol);
       }
       // identifies if a html attribute appears before a > symbol - identifying an end of tag
-      return AnalyzeHTMLTag.isHTMLAttributeBeforeGreaterThanSymbol(tokens, currentIndex);
+      return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, currentIndex);
     }
     return false;
   }
 
-  public static isGreaterThanSymbolForEndOfOpenTag(tokens: Tokens, greaterThanSymbolIndex: number): boolean {
-    const previousSiblingIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, greaterThanSymbolIndex - 1, false);
-    if (tokens[previousSiblingIndex] === '}') {
-      const openBraceIndex = TraversalUtil.getIndexOfOpenBrace(tokens, previousSiblingIndex, 1);
-      if (openBraceIndex > -1) {
-        return tokens[openBraceIndex - 1] === '=';
-      }
-    }
-    return STRING_QUOTE_JSON[tokens[previousSiblingIndex] as keyof typeof STRING_QUOTE_JSON];
-  }
-
   public static findEndOfOpenTagIndex(tokens: Tokens, startIndex: number): number {
     const greaterThanSymbolIndex = TraversalUtil.findTokenIndex(tokens, startIndex, '>');
-    if (greaterThanSymbolIndex < tokens.length) {
-      if (AnalyzeHTMLTag.isGreaterThanSymbolForEndOfOpenTag(tokens, greaterThanSymbolIndex)) {
-        return greaterThanSymbolIndex;
-      }
+    if (AnalyzeHTMLTag.isEndTagSymbol(tokens, greaterThanSymbolIndex)) {
+      return greaterThanSymbolIndex;
     }
     return -1;
   }

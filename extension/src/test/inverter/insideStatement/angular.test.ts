@@ -4,66 +4,10 @@ import * as assert from 'assert';
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite('Angular Invertion Suite', () => {
   [
-    {
-      input: 'className={`banner ${active ? "active" : ""}`}',
-      output: 'className={`banner ${!active ? "active" : ""}`}',
-    },
-    {
-      input: 'className={active ? "active" : ""}',
-      output: 'className={!active ? "active" : ""}',
-    },
-    {
-      input: '={`banner ${active ? "active" : ""}`}',
-      output: '={`banner ${!active ? "active" : ""}`}',
-    },
-    {
-      input: '{`banner ${active ? "active" : ""}`}',
-      output: '{`banner ${!active ? "active" : ""}`}',
-    },
-    {
-      input: '`banner ${active ? "active" : ""}`}',
-      output: '`banner ${!active ? "active" : ""}`}',
-    },
-    {
-      input: '{`banner ${active ? "active" : ""}`',
-      output: '{`banner ${!active ? "active" : ""}`',
-    },
-    {
-      input: '`banner ${active ? "active" : ""}`',
-      output: '`banner ${!active ? "active" : ""}`',
-    },
-    {
-      input: 'banner ${active ? "active" : ""}`',
-      output: 'banner ${!active ? "active" : ""}`',
-    },
-    {
-      input: '`banner ${active ? "active" : ""}',
-      output: '`banner ${!active ? "active" : ""}',
-    },
-    {
-      input: 'banner ${active ? "active" : ""}',
-      output: 'banner ${!active ? "active" : ""}',
-    },
-    {
-      input: '${active ? "active" : ""}',
-      output: '${!active ? "active" : ""}',
-    },
-    {
-      input: '{active ? "active" : ""}',
-      output: '{!active ? "active" : ""}',
-    },
-    {
-      input: 'active ? "active" : ""}',
-      output: '!active ? "active" : ""}',
-    },
-    {
-      input: '${active ? "active" : ""',
-      output: '${!active ? "active" : ""',
-    },
-    {
-      input: '{active ? "active" : ""',
-      output: '{!active ? "active" : ""',
-    },
+    // {
+    //   input: `<div [class.my_class]="condition">{children}</div>`,
+    //   output: `<div [class.my_class]="!condition">{children}</div>`,
+    // },
     {
       input: `<div [class.my_class]="step === 'step1'">{children}</div>`,
       output: `<div [class.my_class]="step !== 'step1'">{children}</div>`,
@@ -168,17 +112,29 @@ suite('Angular Invertion Suite', () => {
       input: '<div ng-show="myValue && cat">Content to render when condition is true.</div>',
       output: '<div ng-show="!myValue || !cat">Content to render when condition is true.</div>',
     },
-    // {
-    //   input: '<div ng-show="myValue ? dog : cat" ng-hide="myValue && cat">Content to render when condition is true.</div>',
-    //   output: '<div ng-show="!myValue ? dog : cat" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
-    // },
-    // {
-    //   input: '<div ng-show="myValue ? dog : cat" ng-hide="myValue ? dog : cat">Content to render when condition is true.</div>',
-    //   output: '<div ng-show="!myValue ? dog : cat" ng-hide="!myValue ? dog : cat">Content to render when condition is true.</div>',
-    // },
     {
       input: '<div ng-show="myValue && cat" ng-hide="myValue && cat">Content to render when condition is true.</div>',
       output: '<div ng-show="!myValue || !cat" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show="myValue ? dog : cat" ng-hide="myValue && cat">Content to render when condition is true.</div>',
+      output: '<div ng-show="!myValue ? dog : cat" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show="myValue ? `dog` : `cat`" ng-hide="myValue && cat">Content to render when condition is true.</div>',
+      output: '<div ng-show="!myValue ? `dog` : `cat`" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-hide="myValue && cat" ng-show="myValue ? dog : cat">Content to render when condition is true.</div>',
+      output: '<div ng-hide="!myValue || !cat" ng-show="!myValue ? dog : cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-show="myValue ? dog : cat">Content<div ng-show="myValue ? dog : cat"></div></div>',
+      output: '<div ng-show="!myValue ? dog : cat">Content<div ng-show="!myValue ? dog : cat"></div></div>',
+    },
+    {
+      input: '<div ng-show="myValue ? dog : cat" ng-hide="myValue ? dog : cat">Content to render when condition is true.</div>',
+      output: '<div ng-show="!myValue ? dog : cat" ng-hide="!myValue ? dog : cat">Content to render when condition is true.</div>',
     },
     {
       input: 'ng-show="myValue',

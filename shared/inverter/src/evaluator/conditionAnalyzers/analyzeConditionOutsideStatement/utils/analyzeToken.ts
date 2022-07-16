@@ -26,7 +26,7 @@ export class AnalyzeOutsideStatement {
       AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, resut);
       return index - 1;
     }
-    if (tokens[index] === '>' && AnalyzeHTMLTag.isGreaterThanSymbolForEndOfOpenTag(tokens, index)) {
+    if (tokens[index] === '>' && AnalyzeHTMLTag.isEndTagSymbol(tokens, index)) {
       AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, index - 1);
       return index;
     }

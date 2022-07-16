@@ -1,15 +1,36 @@
 import { jstsReservedTerminatingWords } from '../../../../../shared/consts/jstsReservedTerminatingWords';
+import { SPACE_JSON, STRING_QUOTE_JSON } from '../../../../../shared/consts/specialTokens';
 import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
 import { Tokens } from '../../../../../shared/types/tokens';
 import { AnalyzeHTMLTag } from './analyzeHTMLTag';
 
 export class AnalyzeTernaryOperator {
+  private static getEndIndexIfInHTMLTag(tokens: Tokens, colonIndex: number): number {
+    // if string quote token or end of open tag appear - the first one is considered end of ternary operator
+    const stringQuoteToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex, STRING_QUOTE_JSON);
+    const endOfOpenTagIndex = AnalyzeHTMLTag.findEndOfOpenTagIndex(tokens, colonIndex);
+    if (endOfOpenTagIndex > -1) {
+      if (stringQuoteToken && stringQuoteToken.index < endOfOpenTagIndex) {
+        return stringQuoteToken.index;
+      }
+      // the reason why endOfOpenTagIndex - 1 is being used is because attemptToFinishViaTerminatingWord needs to end symbol for the open tag
+      return endOfOpenTagIndex - 1;
+    }
+    if (stringQuoteToken) {
+      return stringQuoteToken.index;
+    }
+    return -1;
+  }
+
   private static getColonEndViaTerminatingToken(tokens: Tokens, colonIndex: number): number {
-    const colonEndToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex + 1, jstsReservedTerminatingWords);
-    if (colonEndToken) return colonEndToken.index - 1;
-    // the reason why openTagIndex - 1 is being used is because attemptToFinishViaTerminatingWord needs to end symbol for the open tag
-    const openTagEndIndex = AnalyzeHTMLTag.findEndOfOpenTagIndex(tokens, colonIndex + 1);
-    return openTagEndIndex > -1 ? openTagEndIndex - 1 : -1;
+    const terminatingWordToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex + 1, jstsReservedTerminatingWords);
+    if (terminatingWordToken) return terminatingWordToken.index - 1;
+    const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, colonIndex + 1);
+    // if token after colon is a string quote, the ternary operator will end after that index ends
+    if (STRING_QUOTE_JSON[tokens[nextTokenIndex] as keyof typeof SPACE_JSON]) {
+      return TraversalUtil.findTokenIndex(tokens, nextTokenIndex, tokens[nextTokenIndex]) + 1;
+    }
+    return AnalyzeTernaryOperator.getEndIndexIfInHTMLTag(tokens, colonIndex);
   }
 
   private static movePastColonExpression(tokens: Tokens, colonIndex: number, conditionSequenceEndIndex: number): number {
