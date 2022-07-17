@@ -4,10 +4,22 @@ import * as assert from 'assert';
 // the reason why these tests are done in the extension directory instead of inverter is because they are used to achieve 100% test coverage
 suite('Angular Invertion Suite', () => {
   [
-    // {
-    //   input: `<div [class.my_class]="condition">{children}</div>`,
-    //   output: `<div [class.my_class]="!condition">{children}</div>`,
-    // },
+    {
+      input: `<div [class.my_class]="condition">{children}</div>`,
+      output: `<div [class.my_class]="!condition">{children}</div>`,
+    },
+    {
+      input: `<div [class.active]="condition">{children}</div>`,
+      output: `<div [class.active]="!condition">{children}</div>`,
+    },
+    {
+      input: `<div [ class.my_class ] = " condition">{children}</div>`,
+      output: `<div [ class.my_class ] = " !condition">{children}</div>`,
+    },
+    {
+      input: `<div [class.my_class]="condition" [class.my_class]="condition">{children}</div>`,
+      output: `<div [class.my_class]="!condition" [class.my_class]="!condition">{children}</div>`,
+    },
     {
       input: `<div [class.my_class]="step === 'step1'">{children}</div>`,
       output: `<div [class.my_class]="step !== 'step1'">{children}</div>`,
@@ -65,17 +77,13 @@ suite('Angular Invertion Suite', () => {
       output: '<div className={`banner ${!active ? "active" : ""}`}>{children}</div>',
     },
     {
-      input: `<div className={"btn-group pull-right " + (this.props.showBulkActions ? 'show' : 'hidden')}>{children}</div>`,
-      output: `<div className={"btn-group pull-right " + (!this.props.showBulkActions ? 'show' : 'hidden')}>{children}</div>`,
+      input: '<div [hidden]="expression">Content to render when condition is true.</div>',
+      output: '<div [hidden]="!expression">Content to render when condition is true.</div>',
     },
     {
-      input: `<div className={"btn-group pull-right " + this.props.showBulkActions ? 'show' : 'hidden'}>{children}</div>`,
-      output: `<div className={!("btn-group pull-right " + this.props.showBulkActions) ? 'show' : 'hidden'}>{children}</div>`,
+      input: '<div [ hidden ] = " expression">Content to render when condition is true.</div>',
+      output: '<div [ hidden ] = " !expression">Content to render when condition is true.</div>',
     },
-    // {
-    //   input: '<div [hidden]="expression">Content to render when condition is true.</div>',
-    //   output: '<div [hidden]="expression">Content to render when condition is true.</div>',
-    // },
     {
       input: '<div ng-show="myValue">Content to render when condition is true.</div>',
       output: '<div ng-show="!myValue">Content to render when condition is true.</div>',
@@ -125,6 +133,14 @@ suite('Angular Invertion Suite', () => {
       output: '<div ng-show="!myValue ? `dog` : `cat`" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
     },
     {
+      input: '<div ng-hide="expression">Content to render when condition is true.</div>',
+      output: '<div ng-hide="!expression">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-hide = " expression">Content to render when condition is true.</div>',
+      output: '<div ng-hide = " !expression">Content to render when condition is true.</div>',
+    },
+    {
       input: '<div ng-hide="myValue && cat" ng-show="myValue ? dog : cat">Content to render when condition is true.</div>',
       output: '<div ng-hide="!myValue || !cat" ng-show="!myValue ? dog : cat">Content to render when condition is true.</div>',
     },
@@ -153,8 +169,12 @@ suite('Angular Invertion Suite', () => {
       output: 'ng-show',
     },
     {
-      input: '<div ng-hide="expression">Content to render when condition is true.</div>',
-      output: '<div ng-hide="!expression">Content to render when condition is true.</div>',
+      input: '<div ng-if="cat">Content to render when condition is true.</div>',
+      output: '<div ng-if="!cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div ng-if="cat && dog">Content to render when condition is true.</div>',
+      output: '<div ng-if="!cat || !dog">Content to render when condition is true.</div>',
     },
     {
       input: '<div *ngIf="cat && dog">Content to render when condition is true.</div>',
@@ -165,13 +185,17 @@ suite('Angular Invertion Suite', () => {
       output: '<div *ngIf = " !cat || !dog">Content to render when condition is true.</div>',
     },
     {
+      input: '<div *ngIf="condition">Content to render when condition is true.</div>',
+      output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
+    },
+    {
+      input: '<div [ngIf]="cat">Content to render when condition is true.</div>',
+      output: '<div [ngIf]="!cat">Content to render when condition is true.</div>',
+    },
+    {
       input: '<div [ngIf]="cat && dog">Content to render when condition is true.</div>',
       output: '<div [ngIf]="!cat || !dog">Content to render when condition is true.</div>',
     },
-    // {
-    //   input: '<div *ngIf="condition">Content to render when condition is true.</div>',
-    //   output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
-    // },
     {
       input: `<div class="col-md-3 d-flex" [ngStyle]="{'background-color': (vars.state=='Signup') ? '#73c7af' : '#ffffff'}">{children}</div>`,
       output: `<div class="col-md-3 d-flex" [ngStyle]="{'background-color': (vars.state!='Signup') ? '#73c7af' : '#ffffff'}">{children}</div>`,
@@ -195,6 +219,10 @@ suite('Angular Invertion Suite', () => {
     {
       input: `<div [ ngStyle ] = " {  'top': yourVar === true ? widthColumHalf + 'px': '302px' }">{children}</div>`,
       output: `<div [ ngStyle ] = " {  'top': yourVar !== true ? widthColumHalf + 'px': '302px' }">{children}</div>`,
+    },
+    {
+      input: `<div [style.color]="condition?dog:cat">{children}</div>`,
+      output: `<div [style.color]="!condition?dog:cat">{children}</div>`,
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {

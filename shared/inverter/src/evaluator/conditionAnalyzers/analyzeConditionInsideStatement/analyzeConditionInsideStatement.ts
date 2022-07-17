@@ -5,29 +5,17 @@ import { EvaluationState } from '../../../shared/types/evaluationState';
 import { ConditionAnalyzer } from '../shared/conditionAnalyzer';
 import { TokensJSON } from '../../../shared/types/tokensJSON';
 import { AnalyzeInsideStatement } from './utils/analyzeToken';
+import { AnalyzeAngular } from './utils/analyzeAngular';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeConditionInsideStatement {
   private static readonly statementStartTokens: TokensJSON = { if: true, elif: true, while: true, for: true };
 
-  // WORK - export to a class dedicated for angular analysis
-  // important to note that html attribute conditions are regarded and analysed as outside of statement conditions, however because there
-  // are dom conditions syntax that must be inverted without a condition symbol such as ng-hide; ng-hide="dog" = ng-hide="!dog"
-  private static isAngularJSDirective(tokens: Tokens, index: number): boolean {
-    if (tokens[index] === 'hide' || tokens[index] === 'show') {
-      if (tokens[index - 1] === '-') {
-        if (tokens[index - 2] === 'ng') {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
     return (
       Boolean(AnalyzeConditionInsideStatement.statementStartTokens[tokens[index] as string]) ||
-      AnalyzeConditionInsideStatement.isAngularJSDirective(tokens, index)
+      AnalyzeAngular.isAngularJSDirective(tokens, index) ||
+      AnalyzeAngular.isAngular2Directive(tokens, index)
     );
   }
 

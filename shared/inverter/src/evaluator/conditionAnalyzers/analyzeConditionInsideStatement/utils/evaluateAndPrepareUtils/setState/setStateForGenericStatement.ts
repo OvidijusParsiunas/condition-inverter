@@ -72,10 +72,9 @@ export class SetStateForGenericStatement {
     };
   }
 
-  private static getHTMLAttributeIndexes(tokens: Tokens, startSymbolIndex: number): StartEndIndexes | null {
-    const indexOfTokenAfterSymbol = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, startSymbolIndex);
-    if (tokens[indexOfTokenAfterSymbol] === '=') {
-      const symbolIndexAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterSymbol + 1);
+  private static isEqualsSymbolForHTMLAttribute(tokens: Tokens, indexOfTokenAfterStartSymbol: number): StartEndIndexes | null {
+    if (tokens[indexOfTokenAfterStartSymbol] === '=') {
+      const symbolIndexAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
       if (STRING_QUOTE_JSON[tokens[symbolIndexAfterEquals] as keyof typeof STRING_QUOTE_JSON]) {
         const endQuoteIndex = TraversalUtil.findTokenIndex(tokens, symbolIndexAfterEquals + 1, tokens[symbolIndexAfterEquals] as string);
         return {
@@ -85,6 +84,21 @@ export class SetStateForGenericStatement {
       }
     }
     return null;
+  }
+
+  private static getHTMLAttributeIndexes(tokens: Tokens, startSymbolIndex: number): StartEndIndexes | null {
+    let indexOfTokenAfterStartSymbol = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, startSymbolIndex);
+    if (tokens[indexOfTokenAfterStartSymbol] === '.') {
+      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
+      // when class.name]=", we need to skip the name and set indexOfTokenAfterStartSymbol to ] index
+      const indexOfTokenAfterNext = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, nextTokenIndex + 1);
+      indexOfTokenAfterStartSymbol = indexOfTokenAfterNext;
+    }
+    if (tokens[indexOfTokenAfterStartSymbol] === ']') {
+      // if indexOfTokenAfterStartSymbol is at ], set it to next token to analyze that if it is =, it is for a condition
+      indexOfTokenAfterStartSymbol = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
+    }
+    return SetStateForGenericStatement.isEqualsSymbolForHTMLAttribute(tokens, indexOfTokenAfterStartSymbol);
   }
 
   private static getIndexesOfStatementAndSetLanguage(tokens: Tokens, analysisStartIndex: number, evaluationState: EvaluationState): StartEndIndexes {

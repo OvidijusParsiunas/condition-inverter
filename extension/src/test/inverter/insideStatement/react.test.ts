@@ -21,6 +21,10 @@ suite('React Invertion Suite', () => {
       output: 'className={!active ? "active" : dog}><className={!active ? "active" : dog}>',
     },
     {
+      input: `<div className={"btn-group pull-right " + this.props.showBulkActions ? 'show' : 'hidden'}>{children}</div>`,
+      output: `<div className={!("btn-group pull-right " + this.props.showBulkActions) ? 'show' : 'hidden'}>{children}</div>`,
+    },
+    {
       input: 'className = { active ? "active" : ""}',
       output: 'className = { !active ? "active" : ""}',
     },
