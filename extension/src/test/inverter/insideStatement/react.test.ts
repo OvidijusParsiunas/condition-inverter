@@ -88,6 +88,10 @@ suite('React Invertion Suite', () => {
       input: '{active ? "active" : ""',
       output: '{!active ? "active" : ""',
     },
+    {
+      input: `<div style={{ visibility: this.state.driverDetails.firstName != undefined? 'visible': 'hidden'}}></div>`,
+      output: `<div style={{ visibility: this.state.driverDetails.firstName == undefined? 'visible': 'hidden'}}></div>`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

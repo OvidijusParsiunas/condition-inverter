@@ -79,7 +79,7 @@ export class SetStateForGenericStatement {
         const endQuoteIndex = TraversalUtil.findTokenIndex(tokens, symbolIndexAfterEquals + 1, tokens[symbolIndexAfterEquals] as string);
         return {
           start: symbolIndexAfterEquals,
-          end: endQuoteIndex > -1 ? endQuoteIndex : tokens.length,
+          end: endQuoteIndex,
         };
       }
     }

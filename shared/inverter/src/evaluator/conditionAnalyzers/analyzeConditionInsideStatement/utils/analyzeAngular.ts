@@ -26,7 +26,10 @@ export class AnalyzeAngular {
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 2);
       // when class.name]=", we need to skip the name and set indexOfTokenAfterStartSymbol to ] index
       const indexOfTokenAfterNext = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, nextTokenIndex + 1);
-      return tokens[indexOfTokenAfterNext] === ']';
+      if (tokens[indexOfTokenAfterNext] === ']') {
+        const indexOfTokenAfterCloseSqrBracket = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterNext + 1);
+        return tokens[indexOfTokenAfterCloseSqrBracket] === '=';
+      }
     }
     // *ngIf=
     return tokens[index] === 'ngIf';

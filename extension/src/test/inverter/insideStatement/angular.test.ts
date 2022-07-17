@@ -33,6 +33,66 @@ suite('Angular Invertion Suite', () => {
       output: `<div [class.active]="step !== 'step1'">{children}</div>`,
     },
     {
+      input: `<div [class.active]="step === 'step1'">`,
+      output: `<div [class.active]="step !== 'step1'">`,
+    },
+    {
+      input: `div [class.active]="step === 'step1'"`,
+      output: `div [class.active]="step !== 'step1'"`,
+    },
+    {
+      input: `div [class.active]="step === 'step1'`,
+      output: `div [class.active]="step !== 'step1'`,
+    },
+    {
+      input: `div [class.active]="step === 'step1`,
+      output: `div [class.active]="step !== 'step1`,
+    },
+    {
+      input: `div [class.active]="step === '`,
+      output: `div [class.active]="step !== '`,
+    },
+    {
+      input: `div [class.active]="step ===`,
+      output: `div [class.active]="step !==`,
+    },
+    {
+      input: `div [class.active]="step ==`,
+      output: `div [class.active]="step !=`,
+    },
+    {
+      input: `div [class.active]="step`,
+      output: `div [class.active]="!step`,
+    },
+    {
+      input: `div [class.active]="`,
+      output: `div [class.active]="`,
+    },
+    {
+      input: `div [class.active]=`,
+      output: `div [class.active]=`,
+    },
+    {
+      input: `div [class.active]`,
+      output: `div [class.active]`,
+    },
+    {
+      input: `div [class.active`,
+      output: `div [class.active`,
+    },
+    {
+      input: `div [class.`,
+      output: `div [class.`,
+    },
+    {
+      input: `div [class`,
+      output: `div [class`,
+    },
+    {
+      input: `div [`,
+      output: `div [`,
+    },
+    {
       input: `<div [ngClass]="{'active': step=='step1'}">{children}</div>`,
       output: `<div [ngClass]="{'active': step!='step1'}">{children}</div>`,
     },
