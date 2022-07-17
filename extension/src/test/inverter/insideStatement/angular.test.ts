@@ -125,6 +125,54 @@ suite('Angular Invertion Suite', () => {
       output: `<div [ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}</div>`,
     },
     {
+      input: `div [ngClass]="`,
+      output: `div [ngClass]="`,
+    },
+    {
+      input: `div [ngClass]=`,
+      output: `div [ngClass]=`,
+    },
+    {
+      input: `div [ngClass]`,
+      output: `div [ngClass]`,
+    },
+    {
+      input: `div [ngClass`,
+      output: `div [ngClass`,
+    },
+    {
+      input: `ngClass]="{'someClass': property1.isValid && property2.isValid}">{children}</div>`,
+      output: `ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}</div>`,
+    },
+    {
+      input: `ngClass]="{'someClass': property1.isValid && property2.isValid}">{children}</div`,
+      output: `ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}</div`,
+    },
+    {
+      input: `ngClass]="{'someClass': property1.isValid && property2.isValid}">{children}</`,
+      output: `ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}</`,
+    },
+    {
+      input: `ngClass]="{'someClass': property1.isValid && property2.isValid}">{children}<`,
+      output: `ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}<`,
+    },
+    {
+      input: `ngclass]="{'someclass': property1.isvalid && property2.isvalid}">`,
+      output: `ngclass]="{'someclass': !property1.isvalid || !property2.isvalid}">`,
+    },
+    {
+      input: `ngclass]="{'someclass': property1.isvalid && property2.isvalid}"`,
+      output: `ngclass]="{'someclass': !property1.isvalid || !property2.isvalid}"`,
+    },
+    {
+      input: `ngclass]="{'someclass': property1.isvalid && property2.isvalid}`,
+      output: `ngclass]="{'someclass': !property1.isvalid || !property2.isvalid}`,
+    },
+    {
+      input: `]="{'someclass': property1.isvalid && property2.isvalid}`,
+      output: `]="{'someclass': !property1.isvalid || !property2.isvalid}`,
+    },
+    {
       input: `'someClass': property1.isValid && property2.isValid`,
       output: `'someClass': !property1.isValid || !property2.isValid`,
     },
@@ -139,6 +187,22 @@ suite('Angular Invertion Suite', () => {
     {
       input: '<div [hidden]="expression">Content to render when condition is true.</div>',
       output: '<div [hidden]="!expression">Content to render when condition is true.</div>',
+    },
+    {
+      input: 'div [hidden]="',
+      output: 'div [hidden]="',
+    },
+    {
+      input: 'div [hidden]=',
+      output: 'div [hidden]=',
+    },
+    {
+      input: 'div [hidden]',
+      output: 'div [hidden]',
+    },
+    {
+      input: 'div [hidden',
+      output: 'div [hidden',
     },
     {
       input: '<div [ hidden ] = " expression">Content to render when condition is true.</div>',
@@ -191,6 +255,22 @@ suite('Angular Invertion Suite', () => {
     {
       input: '<div ng-show="myValue ? `dog` : `cat`" ng-hide="myValue && cat">Content to render when condition is true.</div>',
       output: '<div ng-show="!myValue ? `dog` : `cat`" ng-hide="!myValue || !cat">Content to render when condition is true.</div>',
+    },
+    {
+      input: 'div ng-show="dog',
+      output: 'div ng-show="!dog',
+    },
+    {
+      input: 'div ng-show="',
+      output: 'div ng-show="',
+    },
+    {
+      input: 'div ng-show=',
+      output: 'div ng-show=',
+    },
+    {
+      input: 'div ng-show',
+      output: 'div ng-show',
     },
     {
       input: '<div ng-hide="expression">Content to render when condition is true.</div>',
