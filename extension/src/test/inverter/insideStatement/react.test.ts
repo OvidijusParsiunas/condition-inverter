@@ -5,6 +5,74 @@ import * as assert from 'assert';
 suite('React Invertion Suite', () => {
   [
     {
+      input: 'unreadMessages.length > 0 && <div></div>',
+      output: 'unreadMessages.length <= 0 || !(<div></div>)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && <div></div',
+      output: 'unreadMessages.length <= 0 || !(<div></div)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && <div></',
+      output: 'unreadMessages.length <= 0 || !(<div></)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && <div><',
+      output: 'unreadMessages.length <= 0 || !(<div><)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && <div>',
+      output: 'unreadMessages.length <= 0 || !(<div>)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && <div',
+      output: 'unreadMessages.length <= 0 || !(<div)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && <',
+      output: 'unreadMessages.length <= 0 || !(<)',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<div></div>)',
+      output: 'unreadMessages.length <= 0 || <div></div>',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<div></div)',
+      output: 'unreadMessages.length <= 0 || <div></div',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<div></)',
+      output: 'unreadMessages.length <= 0 || <div></',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<div><)',
+      output: 'unreadMessages.length <= 0 || <div><',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<div>)',
+      output: 'unreadMessages.length <= 0 || <div>',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<div)',
+      output: 'unreadMessages.length <= 0 || <div',
+    },
+    {
+      input: 'unreadMessages.length > 0 && !(<)',
+      output: 'unreadMessages.length <= 0 || <',
+    },
+    // {
+    //   input: '{unreadMessages.length > 0 && <div></div>}',
+    //   output: '{unreadMessages.length <= 0 || <div></div>}',
+    // },
+    // {
+    //   input: '{unreadMessages.length > 0 && <div',
+    //   output: '{unreadMessages.length <= 0 || <div',
+    // },
+    // {
+    //   input: '{unreadMessages.length > 0 && <',
+    //   output: '{unreadMessages.length <= 0 || <',
+    // },
+    {
       input: 'className={`banner ${active ? "active" : ""}`}',
       output: 'className={`banner ${!active ? "active" : ""}`}',
     },
@@ -35,6 +103,34 @@ suite('React Invertion Suite', () => {
     {
       input: 'className = { active ? "active" : ""} >',
       output: 'className = { !active ? "active" : ""} >',
+    },
+    {
+      input: 'className={active ? "active" : ""',
+      output: 'className={!active ? "active" : ""',
+    },
+    {
+      input: 'className={active ? "active" : "',
+      output: 'className={!active ? "active" : "',
+    },
+    {
+      input: 'className={active ? "active" :',
+      output: 'className={!active ? "active" :',
+    },
+    {
+      input: 'className={active ? "active"',
+      output: 'className={!active ? "active"',
+    },
+    {
+      input: 'className={active ? "active',
+      output: 'className={!active ? "active',
+    },
+    {
+      input: 'className={active ? "',
+      output: 'className={!active ? "',
+    },
+    {
+      input: 'className={active ?',
+      output: 'className={!active ?',
     },
     {
       input: '={`banner ${active ? "active" : ""}`}',

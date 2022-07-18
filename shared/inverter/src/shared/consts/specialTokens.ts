@@ -6,3 +6,5 @@ export const STATEMENT_JSON: TokensJSON = { if: true, elif: true, while: true, f
 export const SPACE_JSON: TokensJSON = { [' ']: true, ['\n']: true, ['\r']: true };
 
 export const STRING_QUOTE_JSON: TokensJSON = { [`'`]: true, ['`']: true, ['"']: true };
+
+export const LOGICAL_OPERATOR_PART_JSON: TokensJSON = { ['|']: true, ['&']: true, ['and']: true, ['or']: true };

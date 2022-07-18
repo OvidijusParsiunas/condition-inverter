@@ -2,7 +2,9 @@ import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAs
 import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBitwiseShiftOperator } from './analyzeBitwiseShiftOperator';
+import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { Tokens } from '../../../../../shared/types/tokens';
+import { LOGICAL_OPERATOR_PART_JSON } from '../../../../../shared/consts/specialTokens';
 
 export class AnalyzeGreaterOrLessThanSign {
   private static isTypeScriptGenericVariableStart(tokens: Tokens, index: number): number {
@@ -39,6 +41,23 @@ export class AnalyzeGreaterOrLessThanSign {
     return index;
   }
 
+  private static updateStateIfHTMLTag(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    // if isOperationWrappableInBrackets is already set to true or < is directly after logical operator - e.g: && < proceed
+    // to move to the end of tag
+    if (
+      tokens[index] === '<' &&
+      (evaluationState.isOperationWrappableInBrackets ||
+        LOGICAL_OPERATOR_PART_JSON[
+          tokens[TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false)] as keyof typeof LOGICAL_OPERATOR_PART_JSON
+        ])
+    ) {
+      AnalyzeBrackatableSyntax.updateState(evaluationState);
+      const indexOfCloseTag = TraversalUtil.findTokenIndex(tokens, index, '>');
+      return indexOfCloseTag > -1 ? indexOfCloseTag : tokens.length - 1;
+    }
+    return -1;
+  }
+
   private static updateStateIfShiftOperator(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const firstSymbol = tokens[index];
     if (tokens[index + 1] === firstSymbol) {
@@ -53,8 +72,10 @@ export class AnalyzeGreaterOrLessThanSign {
   }
 
   public static updateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
-    const newState = AnalyzeGreaterOrLessThanSign.updateStateIfShiftOperator(tokens, index, evaluationState);
-    if (newState > -1) return newState;
+    const shiftOperatorState = AnalyzeGreaterOrLessThanSign.updateStateIfShiftOperator(tokens, index, evaluationState);
+    if (shiftOperatorState > -1) return shiftOperatorState;
+    const hTMLTagState = AnalyzeGreaterOrLessThanSign.updateStateIfHTMLTag(tokens, index, evaluationState);
+    if (hTMLTagState > -1) return hTMLTagState;
     return AnalyzeGreaterOrLessThanSign.updateStateForComparisonOperator(tokens, index, evaluationState);
   }
 }

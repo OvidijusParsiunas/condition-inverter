@@ -14,14 +14,6 @@ export class SetStateForGenericStatement {
     return start + 1;
   }
 
-  // If the no symbols approach causes issues for golang when if statement initialization is used e.g. if num := 9; num > 0 add the following code
-  // private static getGoStatementIndexes(startSymbolIndex: number, tokensFromIfStart: Tokens): StartEndIndexes {
-  //   return {
-  //     start: startSymbolIndex + tokensFromIfStart.indexOf(';') + 1,
-  //     end: startSymbolIndex + tokensFromIfStart.indexOf('{'),
-  //   };
-  // }
-
   private static getStatementWithNoSymbolsIndexes(startSymbolIndex: number, tokensFromStartSymbol: Tokens): StartEndIndexes {
     const openCurlyBraceIndex = tokensFromStartSymbol.indexOf('{');
     return {
@@ -30,6 +22,14 @@ export class SetStateForGenericStatement {
       // we can set end to -1 in order to identify that there is no end, which SetEvaluationState.set will react
       // to appropriately and set evaluationState accordingly
       end: openCurlyBraceIndex === -1 ? -1 : startSymbolIndex + openCurlyBraceIndex,
+    };
+  }
+
+  private static getGoStatementIndexes(startSymbolIndex: number, tokensFromIfStart: Tokens, evaluationState: EvaluationState): StartEndIndexes {
+    evaluationState.language = LANGUAGE.golang;
+    return {
+      start: startSymbolIndex + tokensFromIfStart.indexOf(';') + 1,
+      end: startSymbolIndex + tokensFromIfStart.indexOf('{'),
     };
   }
 
@@ -51,11 +51,9 @@ export class SetStateForGenericStatement {
     if (colonIndex > -1 && tokensFromStartSymbol[colonIndex + 1] !== '=') {
       return SetStateForGenericStatement.getStatementWithColonEndIndexesAndSetLanguage(startSymbolIndex, colonIndex, evaluationState);
     }
-    // If the no symbols approach causes issues for golang when if statement initialization is used e.g. if num := 9; num > 0 add the following code
-    // if (colonIndex > -1) {
-    //   return AnalyzeStatementUtil.getGoStatementIndexes(startSymbolIndex, tokensFromStartSymbol);
-    // }
-    return SetStateForGenericStatement.getStatementWithNoSymbolsIndexes(startSymbolIndex, tokensFromStartSymbol);
+    return colonIndex > -1
+      ? SetStateForGenericStatement.getGoStatementIndexes(startSymbolIndex, tokensFromStartSymbol, evaluationState)
+      : SetStateForGenericStatement.getStatementWithNoSymbolsIndexes(startSymbolIndex, tokensFromStartSymbol);
   }
 
   // prettier-ignore
