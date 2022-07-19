@@ -20,6 +20,18 @@ export class AnalyzeHTMLTag {
     return false;
   }
 
+  private static isOpenBraceForHTMLAttribute(tokens: Tokens, indexOfOpenBrace: number): boolean {
+    const tokenIndexBeforeOpenBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfOpenBrace - 1, false);
+    // if ={
+    if (tokens[tokenIndexBeforeOpenBrace] === '=') return true;
+    // if ="{
+    if (STRING_QUOTE_JSON[tokens[tokenIndexBeforeOpenBrace] as keyof typeof STRING_QUOTE_JSON]) {
+      const tokenIndexBeforeStringQuote = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, tokenIndexBeforeOpenBrace - 1, false);
+      return tokens[tokenIndexBeforeStringQuote] === '=';
+    }
+    return false;
+  }
+
   private static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
     if (index < 0 || jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) return false;
     if (tokens[index] === '=') {
@@ -30,10 +42,7 @@ export class AnalyzeHTMLTag {
     }
     if (tokens[index] === '}') {
       const openBraceIndex = TraversalUtil.getIndexOfOpenBrace(tokens, index, 1);
-      if (openBraceIndex > -1) {
-        const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, openBraceIndex - 1, false);
-        return tokens[previousTokenIndex] === '=';
-      }
+      if (openBraceIndex > -1) return AnalyzeHTMLTag.isOpenBraceForHTMLAttribute(tokens, openBraceIndex);
     }
     return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, index - 1);
   }

@@ -114,7 +114,7 @@ export class EvaluateAndPrepareOutsideStatement {
         ? EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, indexOfOpenBrace - 1, originalIndex, evaluationState, traversalState)
         : originalIndex;
     }
-    return 0;
+    return evaluationState.currentConditionStartIndex;
   }
 
   // prettier-ignore
@@ -169,6 +169,7 @@ export class EvaluateAndPrepareOutsideStatement {
   }
 
   public static getStartIndexAndUpdateState(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
+    evaluationState.currentConditionStartIndex = index;
     const initialTraversalState = { closeBracketNum: 0, stringQuoteNum: 0 };
     const startIndex = EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, index, evaluationState, initialTraversalState);
     evaluationState.currentConditionStartIndex = startIndex;

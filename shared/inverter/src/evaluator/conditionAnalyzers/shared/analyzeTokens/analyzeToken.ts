@@ -12,6 +12,7 @@ import { AnalyzeQuestionMark } from './analyzeSyntax/analyzeQuestionMark';
 import { AnalyzeEqualsSign } from './analyzeSyntax/analyzeEqualsSign';
 import { AnalyzeFunction } from './analyzeSyntax/analyzeFunction';
 import { AnalyzeBracket } from './analyzeSyntax/analyzeBracket';
+import { AnalyzeBrace } from './analyzeSyntax/analyzeBrace';
 import { Tokens } from '../../../../shared/types/tokens';
 
 export class AnalyzeToken {
@@ -50,6 +51,10 @@ export class AnalyzeToken {
       case '`':
       case '"':
         return TraversalUtil.getEndQuoteIndex(tokens, index + 1, currentToken);
+      case '{':
+        return AnalyzeBrace.updateStateForOpenBrace(index, evaluationState);
+      case '}':
+        return AnalyzeBrace.updateStateForCloseBrace(index, evaluationState);
       case '-':
       case '+':
       case '/':

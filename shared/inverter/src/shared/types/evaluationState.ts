@@ -37,6 +37,7 @@ export interface EvaluationState {
   markedForOperatorInversion: boolean;
   areBracketsAlreadyPresent: boolean;
   numberOfBracketsOpen: number;
+  numberOfBracesOpen: number;
   lastRedundantOpenBracketIndex?: number;
   language: LANGUAGE;
 }

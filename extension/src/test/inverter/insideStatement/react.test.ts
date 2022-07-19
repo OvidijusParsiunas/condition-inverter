@@ -60,18 +60,18 @@ suite('React Invertion Suite', () => {
       input: 'unreadMessages.length > 0 && !(<)',
       output: 'unreadMessages.length <= 0 || <',
     },
-    // {
-    //   input: '{unreadMessages.length > 0 && <div></div>}',
-    //   output: '{unreadMessages.length <= 0 || <div></div>}',
-    // },
-    // {
-    //   input: '{unreadMessages.length > 0 && <div',
-    //   output: '{unreadMessages.length <= 0 || <div',
-    // },
-    // {
-    //   input: '{unreadMessages.length > 0 && <',
-    //   output: '{unreadMessages.length <= 0 || <',
-    // },
+    {
+      input: '{unreadMessages.length > 0 && <div></div>}',
+      output: '{unreadMessages.length <= 0 || !(<div></div>)}',
+    },
+    {
+      input: '{unreadMessages.length > 0 && <div',
+      output: '{unreadMessages.length <= 0 || !(<div)',
+    },
+    {
+      input: '{unreadMessages.length > 0 && <',
+      output: '{unreadMessages.length <= 0 || !(<)',
+    },
     {
       input: 'className={`banner ${active ? "active" : ""}`}',
       output: 'className={`banner ${!active ? "active" : ""}`}',
@@ -163,26 +163,6 @@ suite('React Invertion Suite', () => {
     {
       input: 'banner ${active ? "active" : ""}',
       output: 'banner ${!active ? "active" : ""}',
-    },
-    {
-      input: '${active ? "active" : ""}',
-      output: '${!active ? "active" : ""}',
-    },
-    {
-      input: '{active ? "active" : ""}',
-      output: '{!active ? "active" : ""}',
-    },
-    {
-      input: 'active ? "active" : ""}',
-      output: '!active ? "active" : ""}',
-    },
-    {
-      input: '${active ? "active" : ""',
-      output: '${!active ? "active" : ""',
-    },
-    {
-      input: '{active ? "active" : ""',
-      output: '{!active ? "active" : ""',
     },
     {
       input: `<div style={{ visibility: this.state.driverDetails.firstName != undefined? 'visible': 'hidden'}}></div>`,

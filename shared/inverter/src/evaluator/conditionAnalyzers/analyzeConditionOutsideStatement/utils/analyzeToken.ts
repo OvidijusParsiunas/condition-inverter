@@ -22,11 +22,16 @@ export class AnalyzeOutsideStatement {
 
   private static attemptToFinishViaTerminatingWord(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     if (jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) {
-      const resut = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
-      AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, resut);
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
+      AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, previousTokenIndex);
       return index - 1;
     }
-    if (tokens[index] === '>' && AnalyzeHTMLTag.isEndTagSymbol(tokens, index)) {
+    // if end tag symbol *ngIf="condition">
+    // if condition is inside a brace - end brace symbol defines condition end
+    if (
+      (tokens[index] === '>' && AnalyzeHTMLTag.isEndTagSymbol(tokens, index)) ||
+      (tokens[index] === '}' && evaluationState.numberOfBracesOpen === 0)
+    ) {
       AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, index - 1);
       return index;
     }

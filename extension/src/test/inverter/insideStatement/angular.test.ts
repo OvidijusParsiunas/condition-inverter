@@ -5,10 +5,6 @@ import * as assert from 'assert';
 suite('Angular Invertion Suite', () => {
   [
     {
-      input: `<div [class.my_class]="condition">{children}</div>`,
-      output: `<div [class.my_class]="!condition">{children}</div>`,
-    },
-    {
       input: `<div [class.active]="condition">{children}</div>`,
       output: `<div [class.active]="!condition">{children}</div>`,
     },
@@ -153,10 +149,6 @@ suite('Angular Invertion Suite', () => {
       output: `ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}</`,
     },
     {
-      input: `ngClass]="{'someClass': property1.isValid && property2.isValid}">{children}<`,
-      output: `ngClass]="{'someClass': !property1.isValid || !property2.isValid}">{children}<`,
-    },
-    {
       input: `ngclass]="{'someclass': property1.isvalid && property2.isvalid}">`,
       output: `ngclass]="{'someclass': !property1.isvalid || !property2.isvalid}">`,
     },
@@ -167,6 +159,10 @@ suite('Angular Invertion Suite', () => {
     {
       input: `ngclass]="{'someclass': property1.isvalid && property2.isvalid}`,
       output: `ngclass]="{'someclass': !property1.isvalid || !property2.isvalid}`,
+    },
+    {
+      input: `ngClass]="myClass">{children}</div>`,
+      output: `ngClass]="myClass">{children}</div>`,
     },
     {
       input: `]="{'someclass': property1.isvalid && property2.isvalid}`,

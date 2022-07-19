@@ -16,6 +16,7 @@ export class EvaluationStateUtil {
       markedForOperatorInversion: false,
       areBracketsAlreadyPresent: false,
       numberOfBracketsOpen: 0,
+      numberOfBracesOpen: 0,
       language: LANGUAGE.unknown,
     };
   }

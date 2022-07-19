@@ -194,7 +194,7 @@ suite('JavaScript Invertion Suite', () => {
     },
     {
       input: 'dog}` || cat',
-      output: '!dog}` || cat',
+      output: 'dog}` && !cat',
     },
     {
       input: 'const hello = `aa  ${  dog + cat  }  aa` && dog',
