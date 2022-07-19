@@ -106,6 +106,16 @@ export class EvaluateAndPrepareOutsideStatement {
   }
 
   // prettier-ignore
+  private static getIndexIfOpenSqrBracket(
+    tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, previousIndex - 1, false);
+      if (STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON]) {
+        return originalIndex;
+      }
+      return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, previousIndex - 1, originalIndex, evaluationState, traversalState);
+  }
+
+  // prettier-ignore
   private static getIndexIfCloseScopeBraceOrContinue(
       tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     const indexOfOpenBrace = TraversalUtil.getIndexOfOpenBrace(tokens, previousIndex, 1);
@@ -129,9 +139,10 @@ export class EvaluateAndPrepareOutsideStatement {
       case 'function':
         return originalIndex;
       case '}':
-        // prettier-ignore
         return EvaluateAndPrepareOutsideStatement.getIndexIfCloseScopeBraceOrContinue(
           tokens, previousIndex, originalIndex, evaluationState, traversalState);
+      case '[':
+        return EvaluateAndPrepareOutsideStatement.getIndexIfOpenSqrBracket(tokens, previousIndex, originalIndex, evaluationState, traversalState);  
       case '>':
         return EvaluateAndPrepareOutsideStatement.getIndexIfArrowOrContinue(tokens, previousIndex, originalIndex, evaluationState, traversalState);
       case '=':

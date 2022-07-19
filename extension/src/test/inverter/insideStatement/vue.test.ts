@@ -9,6 +9,10 @@ suite('Vue Invertion Suite', () => {
       output: `<h1 v-if="!awesome">Vue is awesome!</h1>`,
     },
     {
+      input: `<h1 v-if = " awesome">Vue is awesome!</h1>`,
+      output: `<h1 v-if = " !awesome">Vue is awesome!</h1>`,
+    },
+    {
       input: `<h1 v-if="awesome">`,
       output: `<h1 v-if="!awesome">`,
     },
@@ -47,6 +51,42 @@ suite('Vue Invertion Suite', () => {
     {
       input: `<h1 v-show="ok">Hello!</h1>`,
       output: `<h1 v-show="!ok">Hello!</h1>`,
+    },
+    {
+      input: `<div :class="[isActive ? activeClass : '', errorClass]"></div>`,
+      output: `<div :class="[!isActive ? activeClass : '', errorClass]"></div>`,
+    },
+    {
+      input: `<div :class="[isActive ? activeClass : '', errorClass]" :class="[isActive ? activeClass : '', errorClass]"></div>`,
+      output: `<div :class="[!isActive ? activeClass : '', errorClass]" :class="[!isActive ? activeClass : '', errorClass]"></div>`,
+    },
+    {
+      input: `<div :class='[isActive ? activeClass : "", errorClass]'></div>`,
+      output: `<div :class='[!isActive ? activeClass : "", errorClass]'></div>`,
+    },
+    {
+      input: `<div : class = " [ isActive ? activeClass : '', errorClass]"></div>`,
+      output: `<div : class = " [ !isActive ? activeClass : '', errorClass]"></div>`,
+    },
+    {
+      input: `<div :class="[{ active: cat && dog }, errorClass]"></div>`,
+      output: `<div :class="[{ active: !cat || !dog }, errorClass]"></div>`,
+    },
+    {
+      input: `<div : class = " [ { active: cat && dog }, errorClass]"></div>`,
+      output: `<div : class = " [ { active: !cat || !dog }, errorClass]"></div>`,
+    },
+    {
+      input: `<div v-bind:style="[condition ? {styleA} : {styleB}]"></div>`,
+      output: `<div v-bind:style="[!condition ? {styleA} : {styleB}]"></div>`,
+    },
+    {
+      input: `<div v-bind : style = " [ condition ? {styleA} : {styleB}]"></div>`,
+      output: `<div v-bind : style = " [ !condition ? {styleA} : {styleB}]"></div>`,
+    },
+    {
+      input: `<div :style="[item.main_featured ? {'background': 'url(' + item + ') center no-repeat'} : {'background': '#FFF'}]"></div>`,
+      output: `<div :style="[!item.main_featured ? {'background': 'url(' + item + ') center no-repeat'} : {'background': '#FFF'}]"></div>`,
     },
   ].forEach((testProps) => {
     test(testProps.input, () => {
