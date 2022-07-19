@@ -25,7 +25,7 @@ export class TraversalUtil {
         if (result) return result;
       }
     } else {
-      for (let i = tokens.length - 1; i >= 0; i -= 1) {
+      for (let i = startIndex; i >= 0; i -= 1) {
         const result = TraversalUtil.generateResultIfTokenFound(tokens, targetTokens, i);
         if (result) return result;
       }

@@ -40,7 +40,7 @@ export class ExpandSelectionStartToIndicator {
   private static searchLineFromIndex(line: number, lineTokens: Tokens, endIndex: number, fullLineTokens: Tokens): StartPositionDetails {
     const tokens = lineTokens.slice(0, endIndex);
     const conditionIndicatorTokens = { ...LineTokenTraversalUtil.conditionIndicators, ...ExpandSelectionStartToIndicator.stopSymbols } as TokensJSON;
-    const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, 0, conditionIndicatorTokens, false);
+    const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, tokens.length - 1, conditionIndicatorTokens, false);
     if (firstFoundConditionIndicatorToken) {
       if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
         return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken);

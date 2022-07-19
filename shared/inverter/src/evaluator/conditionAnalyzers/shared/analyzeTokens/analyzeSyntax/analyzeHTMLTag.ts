@@ -25,8 +25,10 @@ export class AnalyzeHTMLTag {
     // if ={
     if (tokens[tokenIndexBeforeOpenBrace] === '=') return true;
     // if ="{
-    if (STRING_QUOTE_JSON[tokens[tokenIndexBeforeOpenBrace] as keyof typeof STRING_QUOTE_JSON]) {
-      const tokenIndexBeforeStringQuote = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, tokenIndexBeforeOpenBrace - 1, false);
+    // if ="class-name {{" - ember
+    const stringQuoteToken = TraversalUtil.findFirstTokenFromSelection(tokens, tokenIndexBeforeOpenBrace, STRING_QUOTE_JSON, false);
+    if (stringQuoteToken) {
+      const tokenIndexBeforeStringQuote = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, stringQuoteToken.index - 1, false);
       return tokens[tokenIndexBeforeStringQuote] === '=';
     }
     return false;

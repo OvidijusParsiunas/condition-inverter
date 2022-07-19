@@ -14,6 +14,20 @@ export class AnalyzeFrontendFramework {
     return false;
   }
 
+  public static isEmberIsActiveArgument(tokens: Tokens, isActiveKeyIndex: number): boolean {
+    if (tokens[isActiveKeyIndex - 1] === '@') {
+      const indexOfTokenAfterIsActive = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, isActiveKeyIndex + 1);
+      if (tokens[indexOfTokenAfterIsActive] === '=') {
+        const indexOfTokenAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterIsActive + 1);
+        if (tokens[indexOfTokenAfterEquals] === '{') {
+          const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterEquals + 1);
+          return tokens[indexOfTokenAfterOpenCurlyBrace] === '{';
+        }
+      }
+    }
+    return false;
+  }
+
   public static isAngular2Directive(tokens: Tokens, index: number): boolean {
     // [hidden]=
     if (tokens[index] === 'hidden') {
@@ -33,6 +47,7 @@ export class AnalyzeFrontendFramework {
         return tokens[indexOfTokenAfterCloseSqrBracket] === '=';
       }
     }
+    if (tokens[index] === 'isActive') return AnalyzeFrontendFramework.isEmberIsActiveArgument(tokens, index);
     // *ngIf=
     return tokens[index] === 'ngIf';
   }

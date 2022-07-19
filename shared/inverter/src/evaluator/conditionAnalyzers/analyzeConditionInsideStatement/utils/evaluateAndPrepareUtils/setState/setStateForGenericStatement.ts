@@ -15,13 +15,13 @@ export class SetStateForGenericStatement {
   }
 
   private static getStatementWithNoSymbolsIndexes(startSymbolIndex: number, tokensFromStartSymbol: Tokens): StartEndIndexes {
-    const openCurlyBraceIndex = tokensFromStartSymbol.indexOf('{');
+    const curlyBraceIndex = TraversalUtil.findFirstTokenFromSelection(tokensFromStartSymbol, 0, { ['{']: true, ['}']: true });
     return {
       start: startSymbolIndex - 1,
       // if there is no open curly brace, then the user has likely partially highlighted the if statement - if dog
       // we can set end to -1 in order to identify that there is no end, which SetEvaluationState.set will react
       // to appropriately and set evaluationState accordingly
-      end: openCurlyBraceIndex === -1 ? -1 : startSymbolIndex + openCurlyBraceIndex,
+      end: curlyBraceIndex ? startSymbolIndex + curlyBraceIndex.index : -1,
     };
   }
 
@@ -70,6 +70,20 @@ export class SetStateForGenericStatement {
     };
   }
 
+  private static getStartEndIndexesIfEmberIsActiveArgument(tokens: Tokens, symbolIndexAfterEquals: number): StartEndIndexes | null {
+    if (tokens[symbolIndexAfterEquals] === '{') {
+      const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, symbolIndexAfterEquals + 1);
+      if (tokens[indexOfTokenAfterOpenCurlyBrace] === '{') {
+        const endQuoteIndex = TraversalUtil.getIndexOfClosingBrace(tokens, indexOfTokenAfterOpenCurlyBrace, 1);
+        return {
+          start: indexOfTokenAfterOpenCurlyBrace,
+          end: endQuoteIndex,
+        };
+      }
+    }
+    return null;
+  }
+
   private static isEqualsSymbolForHTMLAttribute(tokens: Tokens, indexOfTokenAfterStartSymbol: number): StartEndIndexes | null {
     if (tokens[indexOfTokenAfterStartSymbol] === '=') {
       const symbolIndexAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
@@ -79,6 +93,10 @@ export class SetStateForGenericStatement {
           start: symbolIndexAfterEquals,
           end: endQuoteIndex,
         };
+      }
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol - 1, false);
+      if (tokens[previousTokenIndex] === 'isActive') {
+        return SetStateForGenericStatement.getStartEndIndexesIfEmberIsActiveArgument(tokens, symbolIndexAfterEquals);
       }
     }
     return null;

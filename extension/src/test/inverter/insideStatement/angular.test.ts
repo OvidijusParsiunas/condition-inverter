@@ -321,6 +321,10 @@ suite('Angular Invertion Suite', () => {
       output: '<div *ngIf = " !cat || !dog">Content to render when condition is true.</div>',
     },
     {
+      input: '*ngIf = " cat && dog">',
+      output: '*ngIf = " !cat || !dog">',
+    },
+    {
       input: '<div *ngIf="condition">Content to render when condition is true.</div>',
       output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
     },
@@ -343,6 +347,10 @@ suite('Angular Invertion Suite', () => {
     {
       input: `<div [ngStyle]="{'background-color': style1 ? 'red' : (style2 ? 'blue' : null) }">{children}</div>`,
       output: `<div [ngStyle]="{'background-color': !style1 ? 'red' : (style2 ? 'blue' : null) }">{children}</div>`,
+    },
+    {
+      input: `[ngStyle]="{'background-color': style1 ? 'red' : (style2 ? 'blue' : null) }">`,
+      output: `[ngStyle]="{'background-color': !style1 ? 'red' : (style2 ? 'blue' : null) }">`,
     },
     {
       input: `<div [ngStyle]="styleOne?{'background-color': 'red'} : {'background-color': 'blue'}">{children}</div>`,
