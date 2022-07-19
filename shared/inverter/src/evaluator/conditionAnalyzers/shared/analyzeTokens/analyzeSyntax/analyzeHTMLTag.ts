@@ -4,9 +4,9 @@ import { STRING_QUOTE_JSON } from '../../../../../shared/consts/specialTokens';
 import { Token, Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeHTMLTag {
-  // no numbers or symbols
+  // not a space or symbol
   private static isHTMLTagWord(word: Token): boolean {
-    return Boolean((word as string).match(/\b[a-zA-Z]+\b/g));
+    return Boolean((word as string).match(/\w+/));
   }
 
   public static isStartTagSymbol(tokens: Tokens, currentIndex: number): boolean {

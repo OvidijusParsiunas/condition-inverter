@@ -3,11 +3,13 @@ import { Tokens } from '../../../../shared/types/tokens';
 
 // important to note that html attribute conditions are regarded and analysed as outside of statement conditions, however there
 // are dom conditions that must be inverted without a condition symbol such as ng-hide; ng-hide="dog" = ng-hide="!dog"
-export class AnalyzeAngular {
-  // ng-hide, ng-show
-  public static isAngularJSDirective(tokens: Tokens, index: number): boolean {
+export class AnalyzeFrontendFramework {
+  // ng-hide, ng-show, v-show
+  public static isAngularJSOrVueDirective(tokens: Tokens, index: number): boolean {
     if (tokens[index] === 'hide' || tokens[index] === 'show') {
-      return tokens[index - 1] === '-' && tokens[index - 2] === 'ng';
+      // ng - angular
+      // v - vue
+      return tokens[index - 1] === '-' && (tokens[index - 2] === 'ng' || tokens[index - 2] === 'v');
     }
     return false;
   }

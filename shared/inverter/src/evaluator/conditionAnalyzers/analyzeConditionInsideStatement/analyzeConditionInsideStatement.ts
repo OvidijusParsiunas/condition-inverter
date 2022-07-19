@@ -1,11 +1,11 @@
 import { AnalyzeOutsideStatement } from '../analyzeConditionOutsideStatement/utils/analyzeToken';
 import { EvaluateAndPrepareInsideStatement } from './utils/evaluateAndPrepare';
 import { NoCloseSymbolInStatement } from './utils/noCloseSymbolInStatement';
+import { AnalyzeFrontendFramework } from './utils/analyzeFrontendFramework';
 import { EvaluationState } from '../../../shared/types/evaluationState';
 import { ConditionAnalyzer } from '../shared/conditionAnalyzer';
 import { TokensJSON } from '../../../shared/types/tokensJSON';
 import { AnalyzeInsideStatement } from './utils/analyzeToken';
-import { AnalyzeAngular } from './utils/analyzeAngular';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeConditionInsideStatement {
@@ -14,8 +14,8 @@ export class AnalyzeConditionInsideStatement {
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
     return (
       Boolean(AnalyzeConditionInsideStatement.statementStartTokens[tokens[index] as string]) ||
-      AnalyzeAngular.isAngularJSDirective(tokens, index) ||
-      AnalyzeAngular.isAngular2Directive(tokens, index)
+      AnalyzeFrontendFramework.isAngularJSOrVueDirective(tokens, index) ||
+      AnalyzeFrontendFramework.isAngular2Directive(tokens, index)
     );
   }
 
