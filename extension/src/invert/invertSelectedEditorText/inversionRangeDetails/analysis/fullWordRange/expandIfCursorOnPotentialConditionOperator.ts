@@ -2,6 +2,7 @@ import { LogicalOrAssignmentOperatorExpansion } from './operatorExpansion/logica
 import { GreaterOrLessThanOperatorExpansion } from './operatorExpansion/greaterOrLessThanOperatorExpansion';
 import { QuestionMarkOperatorExpansion } from './operatorExpansion/questionMarkOperatorExpansion';
 import { ComparisonOperatorExpansion } from './operatorExpansion/comparisonOperatorExpansion';
+import { ForwardSlashExpansion } from './operatorExpansion/forwardSlashExpansion';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 // gets expansion delta even for non-conditional symbol collections - e.g. >>> or =
@@ -63,6 +64,8 @@ export class ExpandIfCursorOnPotentialConditionOperator {
         return ComparisonOperatorExpansion.getForHighlightSelectionEnd(tokens, index);
       case '?':
         return QuestionMarkOperatorExpansion.getForSelectionEnd(tokens, index);
+      case '/':
+        return ForwardSlashExpansion.getForSelectionEnd(tokens, index);
       default:
         return 0;
     }

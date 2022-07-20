@@ -10,6 +10,7 @@ export class AnalyzeHTMLTag {
   }
 
   public static isStartTagSymbol(tokens: Tokens, currentIndex: number): boolean {
+    if (tokens[currentIndex] === '/' && tokens[currentIndex - 1] === '<') return true;
     if (tokens[currentIndex] === '<' && currentIndex < tokens.length - 1) {
       if (tokens[currentIndex + 1] === '/') return true;
       if (AnalyzeHTMLTag.isHTMLTagWord(tokens[currentIndex + 1])) {

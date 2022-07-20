@@ -1,3 +1,4 @@
+import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
@@ -13,14 +14,16 @@ import { Range, TextEditor } from 'vscode';
 export class ExpandSelectionStartToIndicator {
   private static readonly stopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
 
-  private static generateNewStartPositionDetails(line: number, lineTokens: Tokens, { index, token }: FirstFoundToken): StartPositionDetails {
+  // prettier-ignore
+  private static generateNewStartPositionDetails(
+      line: number, lineTokens: Tokens, { index, token }: FirstFoundToken, fullLineTokens: Tokens): StartPositionDetails {
     // if start cursor is directly before a ternary operator, do not include it in inversion text to not invert anything after it
     if (token === '?') return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) + 1 } };
     const startPositionDetails: StartPositionDetails = {
       position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) },
     };
-    // the close bracket is used to stop traversing any further into another conditional expression e.g. if (hello) |
-    if (!ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]) {
+    if (!ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]
+        && (fullLineTokens[index] !== '<' || !AnalyzeHTMLTag.isStartTagSymbol(fullLineTokens, index))) {
       startPositionDetails.startOperatorPadding = token as string;
     }
     return startPositionDetails;
@@ -43,7 +46,7 @@ export class ExpandSelectionStartToIndicator {
     const firstFoundConditionIndicatorToken = TraversalUtil.findFirstTokenFromSelection(tokens, tokens.length - 1, conditionIndicatorTokens, false);
     if (firstFoundConditionIndicatorToken) {
       if (ExpandSelectionStartToIndicator.isStopToken(fullLineTokens, firstFoundConditionIndicatorToken)) {
-        return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken);
+        return ExpandSelectionStartToIndicator.generateNewStartPositionDetails(line, lineTokens, firstFoundConditionIndicatorToken, fullLineTokens);
       }
       return ExpandSelectionStartToIndicator.searchLineFromIndex(line, tokens, firstFoundConditionIndicatorToken.index, fullLineTokens);
     }
