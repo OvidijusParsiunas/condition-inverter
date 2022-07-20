@@ -3,17 +3,15 @@ import { EvaluateAndPrepareInsideStatement } from './utils/evaluateAndPrepare';
 import { NoCloseSymbolInStatement } from './utils/noCloseSymbolInStatement';
 import { AnalyzeFrontendFramework } from './utils/analyzeFrontendFramework';
 import { EvaluationState } from '../../../shared/types/evaluationState';
+import { STATEMENT_JSON } from '../../../shared/consts/specialTokens';
 import { ConditionAnalyzer } from '../shared/conditionAnalyzer';
-import { TokensJSON } from '../../../shared/types/tokensJSON';
 import { AnalyzeInsideStatement } from './utils/analyzeToken';
 import { Tokens } from '../../../shared/types/tokens';
 
 export class AnalyzeConditionInsideStatement {
-  private static readonly statementStartTokens: TokensJSON = { if: true, elif: true, while: true, for: true };
-
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
     return (
-      Boolean(AnalyzeConditionInsideStatement.statementStartTokens[tokens[index] as string]) ||
+      STATEMENT_JSON[tokens[index] as keyof typeof STATEMENT_JSON] ||
       AnalyzeFrontendFramework.isAngularJSOrVueDirective(tokens, index) ||
       AnalyzeFrontendFramework.isAngular2Directive(tokens, index)
     );

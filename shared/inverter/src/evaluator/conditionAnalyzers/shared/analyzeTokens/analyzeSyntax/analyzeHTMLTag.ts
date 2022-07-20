@@ -16,6 +16,8 @@ export class AnalyzeHTMLTag {
         const htmlTagCloseSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '>');
         return htmlTagCloseSymbol > -1;
       }
+      // backbone.js/ASP.NET <% if (dog)
+      if (tokens[currentIndex + 1] === '%') return true;
     }
     return false;
   }
@@ -55,6 +57,8 @@ export class AnalyzeHTMLTag {
       if (htmlTagOpenSymbol > -1) {
         return AnalyzeHTMLTag.isStartTagSymbol(tokens, htmlTagOpenSymbol);
       }
+      // backbone.js/ASP.NET if (dog) %>
+      if (tokens[currentIndex - 1] === '%') return true;
       // identifies if a html attribute appears before a > symbol - identifying an end of tag
       return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, currentIndex);
     }
