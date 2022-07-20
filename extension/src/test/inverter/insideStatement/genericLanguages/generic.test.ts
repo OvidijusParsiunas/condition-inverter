@@ -793,6 +793,10 @@ suite('Generic Inversion Suite', () => {
       input: 'for  ( let  i  =  0 ;  i  <  dog ;  i  +=  1 )  { console.log(2) }',
       output: 'for  ( let  i  =  0 ;  i  >=  dog ;  i  +=  1 )  { console.log(2) }',
     },
+    {
+      input: `if ((!true || (!(100 / 5) == 20) || ((328 / 4) == 82))) || false)`,
+      output: `if ((true && (!(100 / 5) != 20) && ((328 / 4) != 82))) && true)`,
+    },
     { input: 'for (let i = 0; ((dog)); i += 1) { console.log(2) }', output: 'for (let i = 0; ((!dog)); i += 1) { console.log(2) }' },
     { input: 'for (; i < dog; i += 1) { console.log(2) }', output: 'for (; i >= dog; i += 1) { console.log(2) }' },
     { input: 'for (dog in cat) { console.log(2) }', output: 'for (dog in cat) { console.log(2) }' },
