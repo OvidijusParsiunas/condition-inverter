@@ -8,7 +8,7 @@ import {
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
-import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
+import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';

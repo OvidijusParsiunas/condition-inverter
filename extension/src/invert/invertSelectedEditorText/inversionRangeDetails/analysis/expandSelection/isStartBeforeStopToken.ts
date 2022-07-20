@@ -4,7 +4,7 @@ import {
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
-import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
+import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';

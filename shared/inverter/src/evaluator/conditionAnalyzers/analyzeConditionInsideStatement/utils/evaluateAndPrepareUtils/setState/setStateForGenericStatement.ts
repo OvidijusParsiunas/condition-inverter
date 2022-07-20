@@ -3,6 +3,7 @@ import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBracke
 import { STRING_QUOTE_JSON } from '../../../../../../shared/consts/specialTokens';
 import { EvaluationState } from '../../../../../../shared/types/evaluationState';
 import { StartEndIndexes } from '../../../../../../shared/types/StartEndIndexes';
+import { FirstFoundToken } from '../../../../../../shared/types/firstFoundToken';
 import { LANGUAGE } from '../../../../../../shared/consts/languages';
 import { SetEvaluationState } from './shared/setEvaluationState';
 import { Tokens } from '../../../../../../shared/types/tokens';
@@ -14,14 +15,26 @@ export class SetStateForGenericStatement {
     return start + 1;
   }
 
+  private static getStatementEndIndexForNoSymbols(startSymbolIndex: number, tokensFromStartSymbol: Tokens): FirstFoundToken | null {
+    // prettier-ignore
+    const statementEndIndex = TraversalUtil.findFirstTokenFromSelection(
+      tokensFromStartSymbol, startSymbolIndex, { ['{']: true, ['}']: true, ['%']: true });
+    if (statementEndIndex?.token === '%') {
+      if (tokensFromStartSymbol[statementEndIndex.index + 1] !== '>' && tokensFromStartSymbol[statementEndIndex.index + 1] !== '}') {
+        return SetStateForGenericStatement.getStatementEndIndexForNoSymbols(statementEndIndex.index + 1, tokensFromStartSymbol);
+      }
+    }
+    return statementEndIndex;
+  }
+
   private static getStatementWithNoSymbolsIndexes(startSymbolIndex: number, tokensFromStartSymbol: Tokens): StartEndIndexes {
-    const curlyBraceIndex = TraversalUtil.findFirstTokenFromSelection(tokensFromStartSymbol, 0, { ['{']: true, ['}']: true });
+    const statementEndIndex = SetStateForGenericStatement.getStatementEndIndexForNoSymbols(0, tokensFromStartSymbol);
     return {
       start: startSymbolIndex - 1,
-      // if there is no open curly brace, then the user has likely partially highlighted the if statement - if dog
+      // if there is no curly brace or %, then the user has likely partially highlighted the if statement - if dog
       // we can set end to -1 in order to identify that there is no end, which SetEvaluationState.set will react
       // to appropriately and set evaluationState accordingly
-      end: curlyBraceIndex ? startSymbolIndex + curlyBraceIndex.index : -1,
+      end: statementEndIndex ? startSymbolIndex + statementEndIndex.index : -1,
     };
   }
 

@@ -54,6 +54,7 @@ export class ConditionIndicatorValidator {
     ['or']: (): boolean => true,
     ['if']: (): boolean => true,
     ['elif']: (): boolean => true,
+    ['elseif']: (): boolean => true,
     ['for']: (): boolean => true,
     ['while']: (): boolean => true,
   };

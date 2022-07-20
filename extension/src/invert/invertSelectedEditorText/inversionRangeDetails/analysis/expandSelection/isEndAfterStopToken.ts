@@ -1,4 +1,4 @@
-import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/statements';
+import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';

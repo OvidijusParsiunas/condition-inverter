@@ -1,7 +1,8 @@
 import { TokensJSON } from '../types/tokensJSON';
 
 // elif - else if for python
-export const STATEMENT_JSON = { if: true, elif: true, while: true, for: true };
+// elseif - laravel
+export const STATEMENT_JSON = { if: true, elif: true, while: true, for: true, elseif: true };
 
 export const SPACE_JSON: TokensJSON = { [' ']: true, ['\n']: true, ['\r']: true };
 
