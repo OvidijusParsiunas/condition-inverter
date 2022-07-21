@@ -17,7 +17,8 @@ export class IsEndAfterStopToken {
       CurlyBracketSyntaxUtil.isScopeOpenToken(lineTokens, nonSpaceTokenIndex)
     );
   }
-  private static isNextCharLeftAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {
+
+  private static isPreviousCharAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
     const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
@@ -27,12 +28,12 @@ export class IsEndAfterStopToken {
         : STATEMENT_JSON[lineTokens[nonSpaceTokenIndex] as keyof typeof STATEMENT_JSON];
     }
     if (line - 1 < 0) return false;
-    return IsEndAfterStopToken.isNextCharLeftAndUpwardsCondition(editor, line - 1);
+    return IsEndAfterStopToken.isPreviousCharAndUpwardsCondition(editor, line - 1);
   }
 
   private static isTokensEndConditionIndicator(editor: TextEditor, line: number, lineTokens: Tokens): boolean {
     // if |(  or  && |dog
-    const isNextNonSpaceTokenCondition = IsEndAfterStopToken.isNextCharLeftAndUpwardsCondition(editor, line, lineTokens.join('').length);
+    const isNextNonSpaceTokenCondition = IsEndAfterStopToken.isPreviousCharAndUpwardsCondition(editor, line, lineTokens.join('').length);
     if (isNextNonSpaceTokenCondition) return true;
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, lineTokens.length - 1, false);
   }
@@ -63,12 +64,10 @@ export class IsEndAfterStopToken {
   // prettier-ignore
   private static isLeftTokenOnSameLineConditionIndicator(
       editor: TextEditor, highlightEnd: Position, lineTokens: Tokens, fullLineTokens: Tokens, siblingLeftTokenIndex: number): boolean {
-    // prettier-ignore
-    const analysisTokens = IsEndAfterStopToken.considerOpenBracketConditionIndicator(
-        fullLineTokens, siblingLeftTokenIndex, editor.selection)
+    const analysisTokens = IsEndAfterStopToken.considerOpenBracketConditionIndicator(fullLineTokens, siblingLeftTokenIndex, editor.selection)
       ? lineTokens.slice(0, siblingLeftTokenIndex) : lineTokens;
     const isIndicator = IsEndAfterStopToken.isTokensEndConditionIndicator(editor, highlightEnd.line, analysisTokens);
-      if (IsTextHighlighted.check(editor.selection)) {
+    if (IsTextHighlighted.check(editor.selection)) {
       return isIndicator;
     }
     // when selection cursor is beside an open bracket after a statment - do not invert, otherwise invert
@@ -90,9 +89,7 @@ export class IsEndAfterStopToken {
       const leftNonSpaceToken = FindNextNonSpaceToken.getLeftAndUpwards(editor, highlightEnd.line, 0);
       if (leftNonSpaceToken === '(') return true;
     }
-    // prettier-ignore
-    return IsEndAfterStopToken.isLeftTokenOnSameLineConditionIndicator(
-      editor, highlightEnd, lineTokens, fullLineTokens, siblingLeftTokenIndex);
+    return IsEndAfterStopToken.isLeftTokenOnSameLineConditionIndicator(editor, highlightEnd, lineTokens, fullLineTokens, siblingLeftTokenIndex);
   }
 
   // this is used to prevent further extension of range when has already been extended over a logical operator in FullWordRange,

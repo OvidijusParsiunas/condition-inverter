@@ -1,7 +1,7 @@
 import { ExpandIfCursorOnPotentialConditionOperator } from './expandIfCursorOnPotentialConditionOperator';
-import { Position } from '../../../shared/types/position';
 import { RangeCreator } from '../../../shared/functionality/rangeCreator';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
+import { Position } from '../../../shared/types/position';
 import { Tokenizer } from 'shared/tokenizer/tokenizer';
 import { Range, TextEditor } from 'vscode';
 

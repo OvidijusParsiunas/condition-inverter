@@ -13,6 +13,7 @@ import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsEndAfterStopToken } from './isEndAfterStopToken';
+import { HTMLTagUtil } from '../shared/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
@@ -41,9 +42,13 @@ export class ExpandSelectionEndToIndicator {
       // stop traversal when encountered ; or { (not a string template) token
       if (fullLineTokens[i] === ';' || CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, i)) {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) } };
-        // if end cursor before property value colon, do not proceed - dog|: cat && dog  -  dog|: cat && dog
-        // + 1 is used to included the : symbol in the text as otherwise python for loops will be inverted
-      } else if (fullLineTokens[i] === ':' && fullLineTokens[i + 1] !== '=') {
+        // if end cursor before colon, do not proceed - dog|: cat && dog  -  dog|: cat && dog
+        // if end cursor before equls, do not proceed - dog|="cat  -  dog|="cat
+        // + 1 is used to included the : or the equals symbol in the text as otherwise python for loops will be inverted
+      } else if (
+        (fullLineTokens[i] === ':' && fullLineTokens[i + 1] !== '=') ||
+        (fullLineTokens[i] === '=' && HTMLTagUtil.isEqualsForHTMLAttribute(fullLineTokens, i))
+      ) {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) + 1 } };
       }
     }

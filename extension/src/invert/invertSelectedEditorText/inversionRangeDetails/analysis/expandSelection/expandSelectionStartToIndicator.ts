@@ -9,6 +9,7 @@ import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { IsStartBeforeStopToken } from './isStartBeforeStopToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { HTMLTagUtil } from '../shared/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {
@@ -67,6 +68,9 @@ export class ExpandSelectionStartToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
     const highlightStart = fullWordRange.start;
+    if (HTMLTagUtil.isNextTokenTagStart(editor, highlightStart)) {
+      return { position: { line: highlightStart.line, character: highlightStart.character + 1 } };
+    }
     if (!IsStartBeforeStopToken.check(editor, highlightStart)) {
       return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }
