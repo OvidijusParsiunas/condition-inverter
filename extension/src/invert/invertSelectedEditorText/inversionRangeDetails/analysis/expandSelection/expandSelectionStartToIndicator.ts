@@ -1,4 +1,3 @@
-import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
@@ -18,13 +17,14 @@ export class ExpandSelectionStartToIndicator {
   // prettier-ignore
   private static generateNewStartPositionDetails(
       line: number, lineTokens: Tokens, { index, token }: FirstFoundToken, fullLineTokens: Tokens): StartPositionDetails {
-    // if start cursor is directly before a ternary operator, do not include it in inversion text to not invert anything after it
-    if (token === '?') return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) + 1 } };
+    // if start cursor is before a ternary operator or html tag start token, do not include it in inversion text to not invert anything before it
+    if (token === '?' || HTMLTagUtil.isCurrentTokenTagStart(fullLineTokens, index)) {
+      return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) + 1 } };
+    }
     const startPositionDetails: StartPositionDetails = {
       position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) },
     };
-    if (!ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]
-        && (fullLineTokens[index] !== '<' || !AnalyzeHTMLTag.isStartTagSymbol(fullLineTokens, index))) {
+    if (!ExpandSelectionStartToIndicator.stopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.stopSymbols]) {
       startPositionDetails.startOperatorPadding = token as string;
     }
     return startPositionDetails;

@@ -781,5 +781,65 @@ suite('Highlighted Angular Statement Suite', () => {
         end: new vscode.Position(0, 19),
       },
     },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 18),
+      },
+    },
   ]);
 });

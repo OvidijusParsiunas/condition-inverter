@@ -7,9 +7,13 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { TextEditor, Position } from 'vscode';
 
 export class HTMLTagUtil {
+  public static isCurrentTokenTagStart(fullLineTokens: Tokens, index: number): boolean {
+    return fullLineTokens[index] === '<' && AnalyzeHTMLTag.isStartTagSymbol(fullLineTokens, index);
+  }
+
   public static isNextTokenTagStart(editor: TextEditor, highlightStart: Position): boolean {
     const lineTokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, highlightStart.line, highlightStart.character);
-    return lineTokensAfterChar[0] === '<' && AnalyzeHTMLTag.isStartTagSymbol(lineTokensAfterChar, 0);
+    return HTMLTagUtil.isCurrentTokenTagStart(lineTokensAfterChar, 0);
   }
 
   public static isEqualsForHTMLAttribute(fullLineTokens: Tokens, equalsIndex: number): boolean {
