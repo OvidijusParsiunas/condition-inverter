@@ -26,7 +26,7 @@ export class HTMLTagUtil {
   private static getPositionIfStartAfterTagSymbol(editor: TextEditor, highlightStart: Position): Position | null {
     const { line, character } = highlightStart;
     const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
-    const previousNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1);
+    const previousNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
     return HTMLTagUtil.getPositionIfStartAfterTagStart(editor, line, tokensBeforeChar, previousNonSpaceIndex);
   }
 
