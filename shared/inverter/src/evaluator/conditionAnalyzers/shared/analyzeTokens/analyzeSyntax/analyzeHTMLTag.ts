@@ -37,7 +37,7 @@ export class AnalyzeHTMLTag {
     return false;
   }
 
-  private static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
+  public static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
     if (index < 0 || jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) return false;
     if (tokens[index] === '=') {
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
@@ -60,6 +60,9 @@ export class AnalyzeHTMLTag {
       }
       // backbone.js/ASP.NET if (dog) %>
       if (tokens[currentIndex - 1] === '%') return true;
+      // assumption (relatively dangerous) that if a string quote appears before >, > is for tag end symbol
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
+      if (STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON]) return true;
       // identifies if a html attribute appears before a > symbol - identifying an end of tag
       return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, currentIndex);
     }

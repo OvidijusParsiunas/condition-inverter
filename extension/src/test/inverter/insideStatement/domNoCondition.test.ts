@@ -104,6 +104,14 @@ suite('DOM No Condition Invertion Suite', () => {
       input: 'class = "myValue">Content to render when condition is true.</div>',
       output: 'class = "myValue">Content to render when condition is true.</div>',
     },
+    {
+      input: `'">`,
+      output: `'">`,
+    },
+    {
+      input: `dog">`,
+      output: `dog">`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);
