@@ -1,3 +1,4 @@
+import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
@@ -18,7 +19,7 @@ export class ExpandSelectionStartToIndicator {
   private static generateNewStartPositionDetails(
       line: number, lineTokens: Tokens, { index, token }: FirstFoundToken, fullLineTokens: Tokens): StartPositionDetails {
     // if start cursor is before a ternary operator or html tag start token, do not include it in inversion text to not invert anything before it
-    if (token === '?' || HTMLTagUtil.isCurrentTokenTagStart(fullLineTokens, index)) {
+    if (token === '?' || AnalyzeHTMLTag.isTagStartSymbol(fullLineTokens, index) || AnalyzeHTMLTag.isTagEndSymbol(fullLineTokens, index)) {
       return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) + 1 } };
     }
     const startPositionDetails: StartPositionDetails = {
@@ -68,9 +69,8 @@ export class ExpandSelectionStartToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
     const highlightStart = fullWordRange.start;
-    if (HTMLTagUtil.isNextTokenTagStart(editor, highlightStart)) {
-      return { position: { line: highlightStart.line, character: highlightStart.character + 1 } };
-    }
+    const position = HTMLTagUtil.getPositionIfOnHTMLTagSymbol(editor, highlightStart);
+    if (position) return { position };
     if (!IsStartBeforeStopToken.check(editor, highlightStart)) {
       return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }

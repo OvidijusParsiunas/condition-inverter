@@ -9,7 +9,7 @@ export class AnalyzeHTMLTag {
     return Boolean((word as string).match(/\w+/));
   }
 
-  public static isStartTagSymbol(tokens: Tokens, currentIndex: number): boolean {
+  public static isTagStartSymbol(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '/' && tokens[currentIndex - 1] === '<') return true;
     if (tokens[currentIndex] === '<' && currentIndex < tokens.length - 1) {
       if (tokens[currentIndex + 1] === '/') return true;
@@ -52,11 +52,11 @@ export class AnalyzeHTMLTag {
     return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, index - 1);
   }
 
-  public static isEndTagSymbol(tokens: Tokens, currentIndex: number): boolean {
+  public static isTagEndSymbol(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '>') {
       const htmlTagOpenSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '<', false);
       if (htmlTagOpenSymbol > -1) {
-        return AnalyzeHTMLTag.isStartTagSymbol(tokens, htmlTagOpenSymbol);
+        return AnalyzeHTMLTag.isTagStartSymbol(tokens, htmlTagOpenSymbol);
       }
       // backbone.js/ASP.NET if (dog) %>
       if (tokens[currentIndex - 1] === '%') return true;
@@ -68,7 +68,7 @@ export class AnalyzeHTMLTag {
 
   public static findEndOfOpenTagIndex(tokens: Tokens, startIndex: number): number {
     const greaterThanSymbolIndex = TraversalUtil.findTokenIndex(tokens, startIndex, '>');
-    if (AnalyzeHTMLTag.isEndTagSymbol(tokens, greaterThanSymbolIndex)) {
+    if (AnalyzeHTMLTag.isTagEndSymbol(tokens, greaterThanSymbolIndex)) {
       return greaterThanSymbolIndex;
     }
     return -1;

@@ -841,5 +841,437 @@ suite('Highlighted Angular Statement Suite', () => {
         end: new vscode.Position(0, 18),
       },
     },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: ` <div [class.active]="condition">{children}</div>`,
+          output: ` <div [class.active]="!condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 33),
+      },
+    },
+    {
+      lines: [
+        {
+          input: ` <div [class.active]="condition">{children}</div>`,
+          output: ` <div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `><div [class.active]="condition">{children}</div>`,
+          output: `><div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition" >{children}</div>`,
+          output: `<div [class.active]="condition" >{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 49),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 33),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 33),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition" >{children}</div>`,
+          output: `<div [class.active]="condition" >{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition" >{children}</div>`,
+          output: `<div [class.active]="condition" >{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 34),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 33),
+        end: new vscode.Position(0, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 33),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 42),
+        end: new vscode.Position(0, 43),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 42),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 42),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 42),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 43),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 44),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">{children}</div>`,
+          output: `<div [class.active]="condition">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 47),
+        end: new vscode.Position(0, 48),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [class.active]="condition">children</div>`,
+          output: `<div [class.active]="condition">children</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 46),
+      },
+    },
   ]);
 });

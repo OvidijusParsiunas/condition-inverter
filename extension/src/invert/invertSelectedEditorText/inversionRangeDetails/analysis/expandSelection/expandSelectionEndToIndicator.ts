@@ -2,10 +2,6 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
-// prettier-ignore
-import {
-  AnalyzeConditionInsideStatement
-} from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/analyzeConditionInsideStatement';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
@@ -26,8 +22,7 @@ export class ExpandSelectionEndToIndicator {
 
   private static isStopToken(lineTokens: Tokens, index: number): boolean {
     return (
-      AnalyzeConditionInsideStatement.shouldAnalysisStart(lineTokens, index) ||
-      AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index)
+      STATEMENT_JSON[lineTokens[index] as keyof typeof STATEMENT_JSON] || AnalyzeConditionOutsideStatement.shouldAnalysisStart(lineTokens, index)
     );
   }
 

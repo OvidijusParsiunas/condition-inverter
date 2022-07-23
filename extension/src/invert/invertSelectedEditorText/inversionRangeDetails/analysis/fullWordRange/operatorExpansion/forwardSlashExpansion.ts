@@ -3,7 +3,7 @@ import { Tokens } from '../../../../../../../../shared/inverter/src/shared/types
 
 export class ForwardSlashExpansion {
   public static getForSelectionEnd(tokens: Tokens, index: number): number {
-    const isEndTagSymbol = AnalyzeHTMLTag.isStartTagSymbol(tokens, index);
+    const isEndTagSymbol = AnalyzeHTMLTag.isTagStartSymbol(tokens, index);
     return isEndTagSymbol ? -1 : 0;
   }
 }

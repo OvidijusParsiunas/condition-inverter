@@ -29,7 +29,7 @@ export class AnalyzeOutsideStatement {
     // if end tag symbol *ngIf="condition">
     // if condition is inside a brace - end brace symbol defines condition end
     if (
-      (tokens[index] === '>' && AnalyzeHTMLTag.isEndTagSymbol(tokens, index)) ||
+      (tokens[index] === '>' && AnalyzeHTMLTag.isTagEndSymbol(tokens, index)) ||
       (tokens[index] === '}' && evaluationState.numberOfBracesOpen === 0)
     ) {
       AnalyzeOutsideStatement.finishEvaluatingStatement(tokens, evaluationState, index - 1);

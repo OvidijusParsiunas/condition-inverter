@@ -51,8 +51,8 @@ export class AnalyzeConditionOutsideStatement {
       AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex] as string] &&
       !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex - 1] as string] &&
       !AnalyzeConditionOutsideStatement.lessOrGreaterThanOperatorTokens[tokens[currentIndex + 1] as string] &&
-      !AnalyzeHTMLTag.isStartTagSymbol(tokens, currentIndex) &&
-      !AnalyzeHTMLTag.isEndTagSymbol(tokens, currentIndex) &&
+      !AnalyzeHTMLTag.isTagStartSymbol(tokens, currentIndex) &&
+      !AnalyzeHTMLTag.isTagEndSymbol(tokens, currentIndex) &&
       // not an arrow function
       !(tokens[currentIndex] === '>' && tokens[currentIndex - 1] === '=')
     );
