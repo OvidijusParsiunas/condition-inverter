@@ -1969,5 +1969,377 @@ suite('Highlighted Angular Statement Suite', () => {
         end: new vscode.Position(0, 60),
       },
     },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="step == 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+          output: `<div [ngClass]="step != 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 77),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="step == 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+          output: `<div [ngClass]="step != 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="step == 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+          output: `<div [ngClass]="step != 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="step == 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+          output: `<div [ngClass]="step != 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="step == 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+          output: `<div [ngClass]="step == 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 33),
+        end: new vscode.Position(0, 59),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue">Content to render when condition is true.</div>',
+          output: '<div ng-show="myValue">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue">Content to render when condition is true.</div>',
+          output: '<div ng-show="myValue">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue">Content to render when condition is true.</div>',
+          output: '<div ng-show="myValue">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue">Content to render when condition is true.</div>',
+          output: '<div ng-show="!myValue">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" ng-hide="expression">Content to render when condition is true.</div>',
+          output: '<div ng-show="!myValue" ng-hide="!expression">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" ng-hide="expression">Content to render when condition is true.</div>',
+          output: '<div ng-show="!myValue" ng-hide="expression">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" ng-hide="expression">Content to render when condition is true.</div>',
+          output: '<div ng-show="myValue" ng-hide="!expression">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 42),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div *ngIf="condition">Content to render when condition is true.</div>',
+          output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div *ngIf="condition">Content to render when condition is true.</div>',
+          output: '<div *ngIf="condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div *ngIf="condition">Content to render when condition is true.</div>',
+          output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div *ngIf="condition">Content to render when condition is true.</div>',
+          output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div *ngIf="condition">Content to render when condition is true.</div>',
+          output: '<div *ngIf="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" *ngIf="condition" ng-show="myValue">',
+          output: '<div ng-show="myValue" *ngIf="!condition" ng-show="myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" *ngIf="condition" ng-show="myValue">',
+          output: '<div ng-show="myValue" *ngIf="!condition" ng-show="myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 39),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" *ngIf="condition" ng-show="myValue">',
+          output: '<div ng-show="!myValue" *ngIf="condition" ng-show="myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" *ngIf="condition" ng-show="myValue">',
+          output: '<div ng-show="myValue" *ngIf="condition" ng-show="!myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 40),
+        end: new vscode.Position(0, 57),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+          output: '<div [ngIf]="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+          output: '<div [ngIf]="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+          output: '<div [ngIf]="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 10),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+          output: '<div [ngIf]="!condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 12),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+          output: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 11),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+          output: '<div [ngIf]="condition">Content to render when condition is true.</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 10),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" [ngIf]="condition" ng-show="myValue">',
+          output: '<div ng-show="myValue" [ngIf]="!condition" ng-show="myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" [ngIf]="condition" ng-show="myValue">',
+          output: '<div ng-show="myValue" [ngIf]="!condition" ng-show="myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" [ngIf]="condition" ng-show="myValue">',
+          output: '<div ng-show="!myValue" [ngIf]="condition" ng-show="myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 22),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div ng-show="myValue" [ngIf]="condition" ng-show="myValue">',
+          output: '<div ng-show="myValue" [ngIf]="condition" ng-show="!myValue">',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 42),
+        end: new vscode.Position(0, 59),
+      },
+    },
   ]);
 });

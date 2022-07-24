@@ -106,11 +106,18 @@ export class HTMLTagUtil {
     );
   }
 
-  public static isEqualsForHTMLAttribute(fullLineTokens: Tokens, equalsIndex: number): boolean {
-    const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, equalsIndex - 1);
-    if (STRING_QUOTE_JSON[fullLineTokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON] || fullLineTokens[previousTokenIndex] === ']') {
+  private static ifNextTokenStringQuoteIsPartOfHTMLAttribute(fullLineTokens: Tokens, equalsIndex: number, stringQuoteIndex: number): boolean {
+    if (STRING_QUOTE_JSON[fullLineTokens[stringQuoteIndex] as keyof typeof STRING_QUOTE_JSON] || fullLineTokens[stringQuoteIndex] === ']') {
       return ExpandIfCursorOnPotentialConditionOperatorUtil.getEqualsExpansionUntilItEnds(fullLineTokens, equalsIndex) === 1;
     }
     return false;
+  }
+
+  public static isEqualsForHTMLAttribute(fullLineTokens: Tokens, equalsIndex: number): boolean {
+    const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, equalsIndex - 1);
+    const isPreviousTokenForHTMLAttribute = HTMLTagUtil.ifNextTokenStringQuoteIsPartOfHTMLAttribute(fullLineTokens, equalsIndex, previousTokenIndex);
+    if (isPreviousTokenForHTMLAttribute) return true;
+    const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, equalsIndex + 1);
+    return HTMLTagUtil.ifNextTokenStringQuoteIsPartOfHTMLAttribute(fullLineTokens, equalsIndex, nextTokenIndex);
   }
 }

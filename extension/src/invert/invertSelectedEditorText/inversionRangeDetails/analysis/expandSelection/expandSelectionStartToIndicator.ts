@@ -47,8 +47,15 @@ export class ExpandSelectionStartToIndicator {
 
   private static isStringEndQuoteForHtmlAttribute(fullLineTokens: Tokens, index: number): boolean {
     if (STRING_QUOTE_JSON[fullLineTokens[index] as keyof typeof STRING_QUOTE_JSON]) {
+      // }"|
       const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index - 1, false);
       if (fullLineTokens[previousTokenIndex] === '}') return AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(fullLineTokens, previousTokenIndex);
+      // ="dog"|
+      const openStringQuoteIndex = TraversalUtil.findTokenIndex(fullLineTokens, index, fullLineTokens[index], false);
+      if (openStringQuoteIndex > -1) {
+        const tokenIndexBeforeOpenStringQuote = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, openStringQuoteIndex - 1, false);
+        return fullLineTokens[tokenIndexBeforeOpenStringQuote] === '=';
+      }
     }
     return false;
   }

@@ -73,6 +73,10 @@ suite('React Invertion Suite', () => {
       output: '{unreadMessages.length <= 0 || !(<)',
     },
     {
+      input: '<div className={`banner ${active ? "active" : ""}`}>{children}</div>',
+      output: '<div className={`banner ${!active ? "active" : ""}`}>{children}</div>',
+    },
+    {
       input: 'className={`banner ${active ? "active" : ""}`}',
       output: 'className={`banner ${!active ? "active" : ""}`}',
     },

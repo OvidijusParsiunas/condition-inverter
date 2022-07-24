@@ -177,10 +177,6 @@ suite('Angular Invertion Suite', () => {
       output: `<div [ngClass]="step != 'step1' ? 'my_class1' : 'my_class2'">{children}</div>`,
     },
     {
-      input: '<div className={`banner ${active ? "active" : ""}`}>{children}</div>',
-      output: '<div className={`banner ${!active ? "active" : ""}`}>{children}</div>',
-    },
-    {
       input: '<div [hidden]="expression">Content to render when condition is true.</div>',
       output: '<div [hidden]="!expression">Content to render when condition is true.</div>',
     },
