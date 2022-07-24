@@ -2341,5 +2341,209 @@ suite('Highlighted Angular Statement Suite', () => {
         end: new vscode.Position(0, 59),
       },
     },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"><div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="!condition"><div [ngIf]="!condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 60),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">dog<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="!condition">dog<div [ngIf]="!condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 63),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">dog<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition">dog<div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="!condition">{dog}<div [ngIf]="!condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 65),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 34),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition">{dog}<div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 39),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 36),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 27),
+        end: new vscode.Position(0, 34),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 33),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+          output: '<div [ngIf]="condition"> { { dog } } <div [ngIf]="condition"></div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"><div [ngIf]="condition">dog</div></div>',
+          output: '<div [ngIf]="condition"><div [ngIf]="condition">dog</div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 48),
+        end: new vscode.Position(0, 51),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"><div [ngIf]="condition">{dog}</div></div>',
+          output: '<div [ngIf]="condition"><div [ngIf]="condition">{dog}</div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 48),
+        end: new vscode.Position(0, 53),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition"><div [ngIf]="condition">{dog}</div></div>',
+          output: '<div [ngIf]="condition"><div [ngIf]="condition">{dog}</div></div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 49),
+        end: new vscode.Position(0, 52),
+      },
+    },
   ]);
 });

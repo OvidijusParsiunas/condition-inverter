@@ -49,10 +49,63 @@ export class HTMLTagUtil {
     return null;
   }
 
-  public static getPositionIfEndBeforeTagEnd(editor: TextEditor, highlightEnd: Position): Position | null {
-    const { line, character } = highlightEnd;
+  // prettier-ignore
+  private static getPositionIfSelectionBeforeTagStart(
+      selection: Position, tokensBeforeChar: Tokens, tokensAfterChar: Tokens, nextNonSpaceIndex: number, isStart: boolean): Position | null {
+    if (
+      tokensAfterChar[nextNonSpaceIndex] === '<' &&
+      tokensAfterChar[nextNonSpaceIndex + 1] !== '/' &&
+      AnalyzeHTMLTag.isTagStartSymbol(tokensAfterChar, nextNonSpaceIndex)
+    ) {
+      const previousNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
+      let extensionDelta = 0;
+      if (isStart) extensionDelta = tokensBeforeChar[previousNonSpaceIndex] === '>' ? -1 : 1;
+      // start selection:
+      // do not include < if open tag start, however may as well include it if selection start is after close tag symbol
+      // as partial highlighting of the next html tag will allow < not to be inverted due to ><
+      // end selection:
+      // do not include < symbol
+      return {
+        line: selection.line,
+        character: selection.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + extensionDelta,
+      };
+    }
+    return null;
+  }
+
+  private static getPositionIfStartBeforeTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
+    const highlightStart = fullWordRange.start;
+    const { line, character } = highlightStart;
     const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
     const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
+    if (highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) >= fullWordRange.end.character) {
+      return null;
+    }
+    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
+    return (
+      HTMLTagUtil.getPositionIfSelectionBeforeTagStart(highlightStart, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex, true) ||
+      HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightStart, tokensAfterChar, nextNonSpaceIndex)
+    );
+  }
+
+  public static getPositionIfStartOnHTMLTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
+    return (
+      HTMLTagUtil.getPositionIfStartBeforeTagSymbol(editor, fullWordRange) ||
+      HTMLTagUtil.getPositionIfStartAfterTagSymbol(editor, fullWordRange.start)
+    );
+  }
+
+  // prettier-ignore
+  public static getPositionIfEndBeforeTagSymbol(
+      editor: TextEditor, highlightEnd: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
+    const { line, character } = highlightEnd;
+    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
+    return HTMLTagUtil.getPositionIfSelectionBeforeTagStart(highlightEnd, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex, false);
+  }
+
+  // prettier-ignore
+  public static getPositionIfEndBeforeTagEnd(
+      editor: TextEditor, highlightEnd: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
     if (tokensAfterChar[nextNonSpaceIndex] === '>') {
       const position = HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex);
       if (position) {
@@ -64,45 +117,13 @@ export class HTMLTagUtil {
     return null;
   }
 
-  // prettier-ignore
-  private static getPositionIfStartBeforeTagStart(
-      highlightStart: Position, tokensBeforeChar: Tokens, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
-    if (
-      tokensAfterChar[nextNonSpaceIndex] === '<' &&
-      tokensAfterChar[nextNonSpaceIndex + 1] !== '/' &&
-      AnalyzeHTMLTag.isTagStartSymbol(tokensAfterChar, nextNonSpaceIndex)
-    ) {
-      const previousNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
-      const extensionDelta = tokensBeforeChar[previousNonSpaceIndex] === '>' ? -1 : 1;
-        // do not include < if open tag start, however may as well include it if selection start is after close tag symbol
-        // as partial highlighting of the next html tag will allow < not to be inverted due to ><
-        return {
-          line: highlightStart.line,
-          character: highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + extensionDelta,
-        };
-    }
-    return null;
-  }
-
-  private static getPositionIfStartBeforeTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
-    const highlightStart = fullWordRange.start;
-    const { line, character } = highlightStart;
-    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
+  public static getPositionIfEndOnHTMLTagSymbol(editor: TextEditor, highlightEnd: Position): Position | null {
+    const { line, character } = highlightEnd;
     const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
     const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
-    if (highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) >= fullWordRange.end.character) {
-      return null;
-    }
     return (
-      HTMLTagUtil.getPositionIfStartBeforeTagStart(highlightStart, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex) ||
-      HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightStart, tokensAfterChar, nextNonSpaceIndex)
-    );
-  }
-
-  public static getPositionIfStartOnHTMLTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
-    return (
-      HTMLTagUtil.getPositionIfStartBeforeTagSymbol(editor, fullWordRange) ||
-      HTMLTagUtil.getPositionIfStartAfterTagSymbol(editor, fullWordRange.start)
+      HTMLTagUtil.getPositionIfEndBeforeTagEnd(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex) ||
+      HTMLTagUtil.getPositionIfEndBeforeTagSymbol(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex)
     );
   }
 

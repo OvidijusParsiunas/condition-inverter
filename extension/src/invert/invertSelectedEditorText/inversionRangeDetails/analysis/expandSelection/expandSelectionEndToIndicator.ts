@@ -2,6 +2,7 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
+import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
@@ -13,6 +14,17 @@ import { HTMLTagUtil } from '../shared/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
+  private static isNoConditionIndicatorStopToken(fullLineTokens: Tokens, index: number): boolean {
+    return (
+      fullLineTokens[index] === ';' ||
+      CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, index) ||
+      // if end cursor before tag start symbol, do not proceed
+      (fullLineTokens[index] === '<' && AnalyzeHTMLTag.isTagStartSymbol(fullLineTokens, index)) ||
+      // if end cursor before html attribute equals, do not proceed
+      (fullLineTokens[index] === '=' && HTMLTagUtil.isEqualsForHTMLAttribute(fullLineTokens, index))
+    );
+  }
+
   private static generateEndOperatorPadding(conditionIndicatorToken: Token): string {
     // if an indicator is a statement initiator, keep it in original form
     if (STATEMENT_JSON[conditionIndicatorToken as keyof typeof STATEMENT_JSON]) return conditionIndicatorToken as string;
@@ -34,16 +46,11 @@ export class ExpandSelectionEndToIndicator {
           endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(fullLineTokens[i]),
         };
       }
-      // stop traversal when encountered ; or { (not a string template) token
-      if (fullLineTokens[i] === ';' || CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, i)) {
+      if (ExpandSelectionEndToIndicator.isNoConditionIndicatorStopToken(fullLineTokens, i)) {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) } };
-        // if end cursor before colon, do not proceed - dog|: cat && dog  -  dog|: cat && dog
-        // if end cursor before equls, do not proceed - dog|="cat  -  dog|="cat
+        // if end cursor before colon, do not proceed - dog|: cat && dog  -  dog:| cat && dog
         // + 1 is used to included the : or the equals symbol in the text as otherwise python for loops will be inverted
-      } else if (
-        (fullLineTokens[i] === ':' && fullLineTokens[i + 1] !== '=') ||
-        (fullLineTokens[i] === '=' && HTMLTagUtil.isEqualsForHTMLAttribute(fullLineTokens, i))
-      ) {
+      } else if (fullLineTokens[i] === ':' && fullLineTokens[i + 1] !== '=') {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) + 1 } };
       }
     }
@@ -76,7 +83,7 @@ export class ExpandSelectionEndToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): EndPositionDetails {
     const highlightEnd = fullWordRange.end;
-    const position = HTMLTagUtil.getPositionIfEndBeforeTagEnd(editor, highlightEnd);
+    const position = HTMLTagUtil.getPositionIfEndOnHTMLTagSymbol(editor, highlightEnd);
     if (position) return { position };
     if (!IsEndAfterStopToken.check(editor, highlightEnd)) {
       const endPositionDetails = ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, highlightEnd.line, highlightEnd.character);
