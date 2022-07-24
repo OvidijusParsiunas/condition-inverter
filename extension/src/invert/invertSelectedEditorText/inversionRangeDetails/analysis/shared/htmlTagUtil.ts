@@ -7,6 +7,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Position } from '../../../shared/types/position';
 import { Range, TextEditor } from 'vscode';
 
+// the generic strategy is not to include < > as partial highlighting of a tag will cause inverter to invert these symbols
 export class HTMLTagUtil {
   private static getPositionIfStartAfterTagStart(editor: TextEditor, line: number, tokensBeforeChar: Tokens, prvNnSpcIndex: number): Position | null {
     if (tokensBeforeChar[prvNnSpcIndex] === '<' || tokensBeforeChar[prvNnSpcIndex] === '/') {
@@ -63,17 +64,22 @@ export class HTMLTagUtil {
     return null;
   }
 
-  private static getPositionIfStartBeforeTagStart(highlightStart: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
+  // prettier-ignore
+  private static getPositionIfStartBeforeTagStart(
+      highlightStart: Position, tokensBeforeChar: Tokens, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
     if (
       tokensAfterChar[nextNonSpaceIndex] === '<' &&
       tokensAfterChar[nextNonSpaceIndex + 1] !== '/' &&
       AnalyzeHTMLTag.isTagStartSymbol(tokensAfterChar, nextNonSpaceIndex)
     ) {
-      // do not include < if open tag but do if close tag
-      return {
-        line: highlightStart.line,
-        character: highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + 1,
-      };
+      const previousNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
+      const extensionDelta = tokensBeforeChar[previousNonSpaceIndex] === '>' ? -1 : 1;
+        // do not include < if open tag start, however may as well include it if selection start is after close tag symbol
+        // as partial highlighting of the next html tag will allow < not to be inverted due to ><
+        return {
+          line: highlightStart.line,
+          character: highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + extensionDelta,
+        };
     }
     return null;
   }
@@ -81,13 +87,14 @@ export class HTMLTagUtil {
   private static getPositionIfStartBeforeTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
     const highlightStart = fullWordRange.start;
     const { line, character } = highlightStart;
+    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
     const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
     const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
     if (highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) >= fullWordRange.end.character) {
       return null;
     }
     return (
-      HTMLTagUtil.getPositionIfStartBeforeTagStart(highlightStart, tokensAfterChar, nextNonSpaceIndex) ||
+      HTMLTagUtil.getPositionIfStartBeforeTagStart(highlightStart, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex) ||
       HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightStart, tokensAfterChar, nextNonSpaceIndex)
     );
   }
