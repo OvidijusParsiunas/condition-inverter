@@ -5,7 +5,7 @@ import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialToke
 import { LineTokenTraversalUtil } from './lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Position } from '../../../shared/types/position';
-import { TextEditor } from 'vscode';
+import { Range, TextEditor } from 'vscode';
 
 export class HTMLTagUtil {
   private static getPositionIfStartAfterTagStart(editor: TextEditor, line: number, tokensBeforeChar: Tokens, prvNnSpcIndex: number): Position | null {
@@ -48,6 +48,21 @@ export class HTMLTagUtil {
     return null;
   }
 
+  public static getPositionIfEndBeforeTagEnd(editor: TextEditor, highlightEnd: Position): Position | null {
+    const { line, character } = highlightEnd;
+    const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
+    const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
+    if (tokensAfterChar[nextNonSpaceIndex] === '>') {
+      const position = HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex);
+      if (position) {
+        // do not include the < symbol
+        position.character = position.character - 1;
+        return position;
+      }
+    }
+    return null;
+  }
+
   private static getPositionIfStartBeforeTagStart(highlightStart: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
     if (
       tokensAfterChar[nextNonSpaceIndex] === '<' &&
@@ -63,19 +78,24 @@ export class HTMLTagUtil {
     return null;
   }
 
-  private static getPositionIfStartBeforeTagSymbol(editor: TextEditor, highlightStart: Position): Position | null {
+  private static getPositionIfStartBeforeTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
+    const highlightStart = fullWordRange.start;
     const { line, character } = highlightStart;
     const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
     const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
+    if (highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) >= fullWordRange.end.character) {
+      return null;
+    }
     return (
       HTMLTagUtil.getPositionIfStartBeforeTagStart(highlightStart, tokensAfterChar, nextNonSpaceIndex) ||
       HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightStart, tokensAfterChar, nextNonSpaceIndex)
     );
   }
 
-  public static getPositionIfOnHTMLTagSymbol(editor: TextEditor, highlightStart: Position): Position | null {
+  public static getPositionIfStartOnHTMLTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
     return (
-      HTMLTagUtil.getPositionIfStartBeforeTagSymbol(editor, highlightStart) || HTMLTagUtil.getPositionIfStartAfterTagSymbol(editor, highlightStart)
+      HTMLTagUtil.getPositionIfStartBeforeTagSymbol(editor, fullWordRange) ||
+      HTMLTagUtil.getPositionIfStartAfterTagSymbol(editor, fullWordRange.start)
     );
   }
 

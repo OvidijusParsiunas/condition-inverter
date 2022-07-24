@@ -2,6 +2,7 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
+import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
@@ -56,6 +57,7 @@ export class IsStartBeforeStopToken {
     if (fullLineTokens[tokenIndex] === ')') {
       return IsStartBeforeStopToken.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
     }
+    if (fullLineTokens[tokenIndex] === '}') return AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(fullLineTokens, tokenIndex); 
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, tokenIndex);
   }
 
@@ -65,9 +67,7 @@ export class IsStartBeforeStopToken {
       nonSpaceIndex: number, isNonSymbolBeforeStart: boolean): boolean {
     const charIndexForFullLine = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character).length;
     if (IsTextHighlighted.check(editor.selection)) {
-      // prettier-ignore
-      return IsStartBeforeStopToken.isConditionIndicatorForHighlight(
-        editor, line, character, fullLineTokens, nonSpaceIndex + charIndexForFullLine);
+      return IsStartBeforeStopToken.isConditionIndicatorForHighlight(editor, line, character, fullLineTokens, nonSpaceIndex + charIndexForFullLine);
     }
     // the reason why isNonSymbolBeforeStart needs to be passed down from the very start is because a multiline selection could start with if (dog|
     // however, isStartBeforeConditionIndicator method will traverse downwards causing startChar to be at the start of a new line, hence preventing

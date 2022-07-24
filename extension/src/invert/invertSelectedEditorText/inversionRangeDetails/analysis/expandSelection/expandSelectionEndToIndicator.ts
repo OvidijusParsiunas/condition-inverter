@@ -76,6 +76,8 @@ export class ExpandSelectionEndToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): EndPositionDetails {
     const highlightEnd = fullWordRange.end;
+    const position = HTMLTagUtil.getPositionIfEndBeforeTagEnd(editor, highlightEnd);
+    if (position) return { position };
     if (!IsEndAfterStopToken.check(editor, highlightEnd)) {
       const endPositionDetails = ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, highlightEnd.line, highlightEnd.character);
       if (endPositionDetails) return endPositionDetails;

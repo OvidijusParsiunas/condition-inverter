@@ -37,7 +37,13 @@ export class AnalyzeHTMLTag {
     return false;
   }
 
-  public static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
+  public static isCloseBraceForHTMLAttribribute(tokens: Tokens, indexOfCloseBrace: number): boolean {
+    const openBraceIndex = TraversalUtil.getIndexOfOpenBrace(tokens, indexOfCloseBrace, 1);
+    if (openBraceIndex > -1) return AnalyzeHTMLTag.isOpenBraceForHTMLAttribute(tokens, openBraceIndex);
+    return false;
+  }
+
+  private static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
     if (index < 0 || jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) return false;
     if (tokens[index] === '=') {
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
@@ -45,10 +51,7 @@ export class AnalyzeHTMLTag {
         return true;
       }
     }
-    if (tokens[index] === '}') {
-      const openBraceIndex = TraversalUtil.getIndexOfOpenBrace(tokens, index, 1);
-      if (openBraceIndex > -1) return AnalyzeHTMLTag.isOpenBraceForHTMLAttribute(tokens, openBraceIndex);
-    }
+    if (tokens[index] === '}') return AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(tokens, index);
     return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, index - 1);
   }
 

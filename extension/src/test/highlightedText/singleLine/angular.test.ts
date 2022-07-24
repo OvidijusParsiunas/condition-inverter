@@ -1597,7 +1597,6 @@ suite('Highlighted Angular Statement Suite', () => {
         end: new vscode.Position(0, 50),
       },
     },
-
     {
       lines: [
         {
@@ -1788,6 +1787,162 @@ suite('Highlighted Angular Statement Suite', () => {
       selection: {
         start: new vscode.Position(0, 49),
         end: new vscode.Position(0, 50),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step !== 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 81),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step === 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 45),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step === 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 45),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step === 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 27),
+        end: new vscode.Position(0, 46),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step === 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 59),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step === 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 35),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1', 'my_class2' : step === 'step2' }">`,
+          output: `<div [ngClass]="{'my_class': step !== 'step1', 'my_class2' : step !== 'step2' }">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 67),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1'}">`,
+          output: `<div [ngClass]="{'my_class': step === 'step1'}">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 45),
+        end: new vscode.Position(0, 46),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="cat">`,
+          output: `<div class="cat">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div style="dog === cat" [ngClass]="{'my_class': step === 'step1'}">`,
+          output: `<div style="dog === cat" [ngClass]="{'my_class': step !== 'step1'}">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 49),
+        end: new vscode.Position(0, 68),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog">cat`,
+          output: `<div class="dog">cat`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1'}">`,
+          output: `<div [ngClass]="{'my_class': step === 'step1'}">`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 45),
+        end: new vscode.Position(0, 47),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ngClass]="{'my_class': step === 'step1'}" style="{background-color: 'red'}>`,
+          output: `<div [ngClass]="{'my_class': step === 'step1'}" style="{background-color: 'red'}>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 51),
+        end: new vscode.Position(0, 60),
       },
     },
   ]);
