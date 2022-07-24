@@ -12,13 +12,15 @@ export class AnalyzeHTMLTag {
   public static isTagStartSymbol(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '/' && tokens[currentIndex - 1] === '<') return true;
     if (tokens[currentIndex] === '<' && currentIndex < tokens.length - 1) {
-      if (tokens[currentIndex + 1] === '/') return true;
+      // </ or backbone.js/ASP.NET <% if (dog)
+      if (tokens[currentIndex + 1] === '/' || tokens[currentIndex + 1] === '%') return true;
+      // }<
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
+      if (tokens[previousTokenIndex] === '}') return true;
       if (AnalyzeHTMLTag.isHTMLTagWord(tokens[currentIndex + 1])) {
         const htmlTagCloseSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '>');
         return htmlTagCloseSymbol > -1;
       }
-      // backbone.js/ASP.NET <% if (dog)
-      if (tokens[currentIndex + 1] === '%') return true;
     }
     return false;
   }
@@ -57,15 +59,18 @@ export class AnalyzeHTMLTag {
 
   public static isTagEndSymbol(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '>') {
+      // backbone.js/ASP.NET if (dog) %>
+      if (tokens[currentIndex - 1] === '%') return true;
+      // >{
+      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex + 1);
+      if (tokens[nextTokenIndex] === '{') return true;
+      // assumption (relatively dangerous) that if a string quote appears before >, > is for tag end symbol
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
+      if (STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON]) return true;
       const htmlTagOpenSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '<', false);
       if (htmlTagOpenSymbol > -1) {
         return AnalyzeHTMLTag.isTagStartSymbol(tokens, htmlTagOpenSymbol);
       }
-      // backbone.js/ASP.NET if (dog) %>
-      if (tokens[currentIndex - 1] === '%') return true;
-      // assumption (relatively dangerous) that if a string quote appears before >, > is for tag end symbol
-      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
-      if (STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON]) return true;
       // identifies if a html attribute appears before a > symbol - identifying an end of tag
       return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, currentIndex);
     }

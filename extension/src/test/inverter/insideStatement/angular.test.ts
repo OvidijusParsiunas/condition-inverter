@@ -364,6 +364,106 @@ suite('Angular Invertion Suite', () => {
       input: `<div [style.color]="condition?dog:cat">{children}</div>`,
       output: `<div [style.color]="!condition?dog:cat">{children}</div>`,
     },
+    {
+      input: `{dog}<div [ngIf]=`,
+      output: `{dog}<div [ngIf]=`,
+    },
+    {
+      input: `div [ngIf]=`,
+      output: `div [ngIf]=`,
+    },
+    {
+      input: `div [ngIf]`,
+      output: `div [ngIf]`,
+    },
+    {
+      input: `[ngIf]`,
+      output: `[ngIf]`,
+    },
+    {
+      input: `[ngIf]=`,
+      output: `[ngIf]=`,
+    },
+    {
+      input: `[ngIf] =`,
+      output: `[ngIf] =`,
+    },
+    {
+      input: `ngIf`,
+      output: `ngIf`,
+    },
+    {
+      input: `>{dog}`,
+      output: `>{dog}`,
+    },
+    {
+      input: `div>{dog}`,
+      output: `div>{dog}`,
+    },
+    {
+      input: `/div>{dog}`,
+      output: `/div>{dog}`,
+    },
+    {
+      input: `</div>{dog}`,
+      output: `</div>{dog}`,
+    },
+    {
+      input: `div>{dog}<div [ngIf]=`,
+      output: `div>{dog}<div [ngIf]=`,
+    },
+    {
+      input: `div>{dog}<div [ngIf]`,
+      output: `div>{dog}<div [ngIf]`,
+    },
+    {
+      input: `{dog}<div [ngIf]`,
+      output: `{dog}<div [ngIf]`,
+    },
+    {
+      input: `{{dog}}<div [ngIf]`,
+      output: `{{dog}}<div [ngIf]`,
+    },
+    {
+      input: `{dog}}<div [ngIf]`,
+      output: `{dog}}<div [ngIf]`,
+    },
+    {
+      input: `dog}<div [ngIf]`,
+      output: `dog}<div [ngIf]`,
+    },
+    {
+      input: `dog}}<div [ngIf]`,
+      output: `dog}}<div [ngIf]`,
+    },
+    {
+      input: `dog } } <div [ngIf]`,
+      output: `dog } } <div [ngIf]`,
+    },
+    {
+      input: `div> { { dog`,
+      output: `div> { { dog`,
+    },
+    {
+      input: `[class.active]=`,
+      output: `[class.active]=`,
+    },
+    {
+      input: `[class.active]=`,
+      output: `[class.active]=`,
+    },
+    {
+      input: `[class.active] =`,
+      output: `[class.active] =`,
+    },
+    {
+      input: `ng-show=`,
+      output: `ng-show=`,
+    },
+    {
+      input: `ng-show`,
+      output: `ng-show`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

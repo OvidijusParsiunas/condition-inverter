@@ -124,8 +124,10 @@ export class SetStateForGenericStatement {
       indexOfTokenAfterStartSymbol = indexOfTokenAfterNext;
     }
     if (tokens[indexOfTokenAfterStartSymbol] === ']') {
-      // if indexOfTokenAfterStartSymbol is at ], set it to next token to analyze that if it is =, it is for a condition
-      indexOfTokenAfterStartSymbol = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
+      const indexOfTokenAfterCloseSquareBracket = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
+      const endStatementPosition = SetStateForGenericStatement.isEqualsSymbolForHTMLAttribute(tokens, indexOfTokenAfterCloseSquareBracket);
+      // if no equals or other symbols after, set end to -1 to indicate that there is no statement
+      return endStatementPosition || { start: tokens.length - 1, end: -1 };
     }
     return SetStateForGenericStatement.isEqualsSymbolForHTMLAttribute(tokens, indexOfTokenAfterStartSymbol);
   }
