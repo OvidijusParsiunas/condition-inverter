@@ -393,6 +393,10 @@ suite('Angular Invertion Suite', () => {
       output: `ngIf`,
     },
     {
+      input: '[ngIf]="condition"',
+      output: '[ngIf]="!condition"',
+    },
+    {
       input: `>{dog}`,
       output: `>{dog}`,
     },

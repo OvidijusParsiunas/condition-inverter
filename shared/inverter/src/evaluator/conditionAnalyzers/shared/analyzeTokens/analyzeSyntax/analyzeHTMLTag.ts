@@ -5,7 +5,7 @@ import { Token, Tokens } from '../../../../../shared/types/tokens';
 
 export class AnalyzeHTMLTag {
   // not a space or symbol
-  private static isHTMLTagWord(word: Token): boolean {
+  public static isHTMLTagWord(word: Token): boolean {
     return Boolean((word as string).match(/\w+/));
   }
 
@@ -14,9 +14,9 @@ export class AnalyzeHTMLTag {
     if (tokens[currentIndex] === '<' && currentIndex < tokens.length - 1) {
       // </ or backbone.js/ASP.NET <% if (dog)
       if (tokens[currentIndex + 1] === '/' || tokens[currentIndex + 1] === '%') return true;
-      // }<
+      // }< or ><
       const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
-      if (tokens[previousTokenIndex] === '}') return true;
+      if (tokens[previousTokenIndex] === '}' || tokens[previousTokenIndex] === '>') return true;
       if (AnalyzeHTMLTag.isHTMLTagWord(tokens[currentIndex + 1])) {
         const htmlTagCloseSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '>');
         return htmlTagCloseSymbol > -1;
@@ -61,9 +61,9 @@ export class AnalyzeHTMLTag {
     if (tokens[currentIndex] === '>') {
       // backbone.js/ASP.NET if (dog) %>
       if (tokens[currentIndex - 1] === '%') return true;
-      // >{
+      // >{ or ><
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex + 1);
-      if (tokens[nextTokenIndex] === '{') return true;
+      if (tokens[nextTokenIndex] === '{' || tokens[nextTokenIndex] === '<') return true;
       // assumption (relatively dangerous) that if a string quote appears before >, > is for tag end symbol
       const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
       if (STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON]) return true;

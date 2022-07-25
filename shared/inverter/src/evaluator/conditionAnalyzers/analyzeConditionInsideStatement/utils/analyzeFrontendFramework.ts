@@ -5,7 +5,19 @@ import { Tokens } from '../../../../shared/types/tokens';
 // are dom conditions that must be inverted without a condition symbol such as ng-hide; ng-hide="dog" = ng-hide="!dog"
 export class AnalyzeFrontendFramework {
   // ng-hide, ng-show, v-show
-  public static isAngularJSOrVueDirective(tokens: Tokens, index: number): boolean {
+  public static isStartOfAngularJSOrVueDirective(tokens: Tokens, index: number): boolean {
+    // ng - angular
+    // v - vue
+    if (tokens[index] === 'ng' || tokens[index] === 'v') {
+      if (tokens[index + 1] === '-') {
+        return tokens[index + 2] === 'hide' || tokens[index + 2] === 'show';
+      }
+    }
+    return false;
+  }
+
+  // ng-hide, ng-show, v-show
+  public static isEndofAngularJSOrVueDirective(tokens: Tokens, index: number): boolean {
     if (tokens[index] === 'hide' || tokens[index] === 'show') {
       // ng - angular
       // v - vue
@@ -14,16 +26,28 @@ export class AnalyzeFrontendFramework {
     return false;
   }
 
-  public static isEmberIsActiveArgument(tokens: Tokens, isActiveKeyIndex: number): boolean {
-    if (tokens[isActiveKeyIndex - 1] === '@') {
-      const indexOfTokenAfterIsActive = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, isActiveKeyIndex + 1);
-      if (tokens[indexOfTokenAfterIsActive] === '=') {
-        const indexOfTokenAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterIsActive + 1);
-        if (tokens[indexOfTokenAfterEquals] === '{') {
-          const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterEquals + 1);
-          return tokens[indexOfTokenAfterOpenCurlyBrace] === '{';
-        }
+  private static isEmberIsActiveVariablePrefixSymbols(tokens: Tokens, isActiveTokenIndex: number): boolean {
+    const indexOfTokenAfterIsActive = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, isActiveTokenIndex + 1);
+    if (tokens[indexOfTokenAfterIsActive] === '=') {
+      const indexOfTokenAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterIsActive + 1);
+      if (tokens[indexOfTokenAfterEquals] === '{') {
+        const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterEquals + 1);
+        return tokens[indexOfTokenAfterOpenCurlyBrace] === '{';
       }
+    }
+    return false;
+  }
+
+  public static isStartOfEmberIsActiveArgument(tokens: Tokens, atSymbolTokenIndex: number): boolean {
+    if (tokens[atSymbolTokenIndex] === '@' && tokens[atSymbolTokenIndex + 1] === 'isActive') {
+      return AnalyzeFrontendFramework.isEmberIsActiveVariablePrefixSymbols(tokens, atSymbolTokenIndex + 1);
+    }
+    return false;
+  }
+
+  public static isEndOfEmberIsActiveArgument(tokens: Tokens, atSymbolTokenIndex: number): boolean {
+    if (tokens[atSymbolTokenIndex] === 'isActive' && tokens[atSymbolTokenIndex - 1] === '@') {
+      return AnalyzeFrontendFramework.isEmberIsActiveVariablePrefixSymbols(tokens, atSymbolTokenIndex);
     }
     return false;
   }
@@ -47,7 +71,6 @@ export class AnalyzeFrontendFramework {
         return tokens[indexOfTokenAfterCloseSqrBracket] === '=';
       }
     }
-    if (tokens[index] === 'isActive') return AnalyzeFrontendFramework.isEmberIsActiveArgument(tokens, index);
     // *ngIf=
     return tokens[index] === 'ngIf';
   }

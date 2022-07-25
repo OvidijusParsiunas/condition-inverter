@@ -12,8 +12,9 @@ export class AnalyzeConditionInsideStatement {
   public static shouldAnalysisStart(tokens: Tokens, index: number): boolean {
     return (
       STATEMENT_JSON[tokens[index] as keyof typeof STATEMENT_JSON] ||
-      AnalyzeFrontendFramework.isAngularJSOrVueDirective(tokens, index) ||
-      AnalyzeFrontendFramework.isAngular2Directive(tokens, index)
+      AnalyzeFrontendFramework.isEndofAngularJSOrVueDirective(tokens, index) ||
+      AnalyzeFrontendFramework.isAngular2Directive(tokens, index) ||
+      AnalyzeFrontendFramework.isEndOfEmberIsActiveArgument(tokens, index)
     );
   }
 

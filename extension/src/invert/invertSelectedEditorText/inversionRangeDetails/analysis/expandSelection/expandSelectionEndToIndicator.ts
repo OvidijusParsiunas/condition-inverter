@@ -14,12 +14,21 @@ import { HTMLTagUtil } from '../shared/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
+  private static isStopTokenTagEndSymbol(fullLineTokens: Tokens, index: number): boolean {
+    return (
+      !AnalyzeHTMLTag.isTagEndSymbol(fullLineTokens, index) &&
+      TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index + 1) === fullLineTokens.length
+    );
+  }
+
   private static isNoConditionIndicatorStopToken(fullLineTokens: Tokens, index: number): boolean {
     return (
       fullLineTokens[index] === ';' ||
       CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, index) ||
       // if end cursor before tag start symbol, do not proceed
       (fullLineTokens[index] === '<' && AnalyzeHTMLTag.isTagStartSymbol(fullLineTokens, index)) ||
+      // if greater than at the end of a line, consider it as tag end symbol that should not be expanded
+      (fullLineTokens[index] === '>' && ExpandSelectionEndToIndicator.isStopTokenTagEndSymbol(fullLineTokens, index)) ||
       // if end cursor before html attribute equals, do not proceed
       (fullLineTokens[index] === '=' && HTMLTagUtil.isEqualsForHTMLAttribute(fullLineTokens, index))
     );
@@ -40,18 +49,17 @@ export class ExpandSelectionEndToIndicator {
 
   private static getPositionIfLineContainsStopTokenAfterIndex(fullLineTokens: Tokens, line: number, startIndex: number): EndPositionDetails | null {
     for (let i = startIndex; i < fullLineTokens.length; i += 1) {
-      if (ExpandSelectionEndToIndicator.isStopToken(fullLineTokens, i)) {
-        return {
-          position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) },
-          endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(fullLineTokens[i]),
-        };
-      }
       if (ExpandSelectionEndToIndicator.isNoConditionIndicatorStopToken(fullLineTokens, i)) {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) } };
         // if end cursor before colon, do not proceed - dog|: cat && dog  -  dog:| cat && dog
         // + 1 is used to included the : or the equals symbol in the text as otherwise python for loops will be inverted
       } else if (fullLineTokens[i] === ':' && fullLineTokens[i + 1] !== '=') {
         return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) + 1 } };
+      } else if (ExpandSelectionEndToIndicator.isStopToken(fullLineTokens, i)) {
+        return {
+          position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, i) },
+          endOperatorPadding: ExpandSelectionEndToIndicator.generateEndOperatorPadding(fullLineTokens[i]),
+        };
       }
     }
     return null;
