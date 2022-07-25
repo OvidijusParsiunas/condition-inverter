@@ -11,15 +11,17 @@ export class AnalyzeHTMLTag {
 
   public static isTagStartSymbol(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '/' && tokens[currentIndex - 1] === '<') return true;
-    if (tokens[currentIndex] === '<' && currentIndex < tokens.length - 1) {
-      // </ or backbone.js/ASP.NET <% if (dog)
-      if (tokens[currentIndex + 1] === '/' || tokens[currentIndex + 1] === '%') return true;
+    if (tokens[currentIndex] === '<') {
       // }< or ><
       const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
       if (tokens[previousTokenIndex] === '}' || tokens[previousTokenIndex] === '>') return true;
-      if (AnalyzeHTMLTag.isHTMLTagWord(tokens[currentIndex + 1])) {
-        const htmlTagCloseSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '>');
-        return htmlTagCloseSymbol > -1;
+      if (currentIndex < tokens.length - 1) {
+        // </ or backbone.js/ASP.NET <% if (dog)
+        if (tokens[currentIndex + 1] === '/' || tokens[currentIndex + 1] === '%') return true;
+        if (AnalyzeHTMLTag.isHTMLTagWord(tokens[currentIndex + 1])) {
+          const htmlTagCloseSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '>');
+          return htmlTagCloseSymbol > -1;
+        }
       }
     }
     return false;

@@ -28,8 +28,10 @@ export class SelectionStartDetailsForHTMLToken {
   // prettier-ignore
   private static createIfLessThanSymbolHTMLAttribute(
       fullLineTokens: Tokens, line: number, previousTokenIndex: number, currentLessThanSymbolIndex: number): StartPositionDetails | null {
-    if (AnalyzeHTMLTag.isHTMLTagWord(fullLineTokens[currentLessThanSymbolIndex + 1]) && previousTokenIndex === -1) {
-      return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, currentLessThanSymbolIndex + 1, line);
+    const indexOfTokenAfterLessThanSymbol = currentLessThanSymbolIndex + 1;
+    if (previousTokenIndex === -1 && indexOfTokenAfterLessThanSymbol < fullLineTokens.length
+        && AnalyzeHTMLTag.isHTMLTagWord(fullLineTokens[indexOfTokenAfterLessThanSymbol])) {
+      return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, indexOfTokenAfterLessThanSymbol, line);
     }
     return null;
   }

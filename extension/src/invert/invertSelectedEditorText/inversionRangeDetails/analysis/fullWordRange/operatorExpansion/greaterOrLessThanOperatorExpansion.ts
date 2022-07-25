@@ -1,3 +1,4 @@
+import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class GreaterOrLessThanOperatorExpansion {
@@ -16,7 +17,13 @@ export class GreaterOrLessThanOperatorExpansion {
     return GreaterOrLessThanOperatorExpansion.getLengthOfGreaterOrLessThanComparisonOperator(tokens, index, -1, startExpansion);
   }
 
+  private static isHTMLTagSymbol(tokens: Tokens, index: number): boolean {
+    return AnalyzeHTMLTag.isTagStartSymbol(tokens, index) || AnalyzeHTMLTag.isTagEndSymbol(tokens, index);
+  }
+
   public static getForSelectionStart(tokens: Tokens, index: number): number {
+    // WORK - test when greater than or lower than at end of a line
+    if (GreaterOrLessThanOperatorExpansion.isHTMLTagSymbol(tokens, index)) return 0;
     return GreaterOrLessThanOperatorExpansion.getLengthOfGreaterOrLessThanComparisonOperator(tokens, index, -1, 1);
   }
 
@@ -28,6 +35,7 @@ export class GreaterOrLessThanOperatorExpansion {
   }
 
   public static getForSelectionEnd(tokens: Tokens, index: number): number {
+    if (GreaterOrLessThanOperatorExpansion.isHTMLTagSymbol(tokens, index)) return 0;
     return GreaterOrLessThanOperatorExpansion.getLengthOfGreaterOrLessThanComparisonOperator(tokens, index, 1, 1);
   }
 }
