@@ -1,5 +1,5 @@
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
-import { MultiLineSearchResult } from '../../../shared/types/multiLineSearchResult';
+import { MultiLineSearchResult } from '../../../shared/types/multilineSearchResult';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { RangeCreator } from '../../../shared/functionality/rangeCreator';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
