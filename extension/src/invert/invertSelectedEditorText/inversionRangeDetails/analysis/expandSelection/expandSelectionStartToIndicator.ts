@@ -11,7 +11,7 @@ import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { IsStartBeforeStopToken } from './isStartBeforeStopToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { HTMLTagUtil } from '../shared/htmlTagUtil';
+import { HTMLTagUtil } from '../shared/htmlTagUtil/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {

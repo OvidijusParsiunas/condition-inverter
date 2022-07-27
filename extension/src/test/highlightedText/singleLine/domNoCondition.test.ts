@@ -3,7 +3,7 @@ import { TestUtil } from '../../shared/functionality/testUtil';
 import { TextEditorObj } from '../../shared/types/tests';
 import * as vscode from 'vscode';
 
-suite('DOM No Condition Invertion Suite', () => {
+suite('Highlighted DOM No Condition Invertion Suite', () => {
   const textEditorObj: TextEditorObj = { textEditor: null };
 
   mocha.before(() => TestUtil.createTextDocument(textEditorObj));
@@ -153,7 +153,7 @@ suite('DOM No Condition Invertion Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(0, 23),
+        start: new vscode.Position(0, 25),
         end: new vscode.Position(0, 26),
       },
     },

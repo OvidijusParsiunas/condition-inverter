@@ -1,10 +1,11 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
-import { ExpandIfCursorOnPotentialConditionOperatorUtil } from '../fullWordRange/util/selectionExpansionUtil';
+import { ExpandIfCursorOnPotentialConditionOperatorUtil } from '../../fullWordRange/util/selectionExpansionUtil';
+import { GetPositionIfSelectionBeforeOpenTag } from './getPositionIfSelectionBeforeOpenTag';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
-import { LineTokenTraversalUtil } from './lineTokenTraversalUtil';
+import { LineTokenTraversalUtil } from '../lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { Position } from '../../../shared/types/position';
+import { Position } from '../../../../shared/types/position';
 import { Range, TextEditor } from 'vscode';
 
 // the generic strategy is not to include < > as partial highlighting of a tag will cause inverter to invert these symbols
@@ -33,46 +34,31 @@ export class HTMLTagUtil {
 
   // prettier-ignore
   private static getPositionIfStartBeforeTagEnd(
-      editor: TextEditor, highlightStart: Position, tokensBeforeChar: Tokens, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
+      editor: TextEditor, selection: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
     if (tokensAfterChar[nextNonSpaceIndex] === '>') {
-      // prettier-ignore
+    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, selection.line, selection.character);
+    // prettier-ignore
       const tokensBeforeWthGreaterThan = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(
-        editor, highlightStart.line, highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + 1);
+        editor, selection.line, selection.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + 1);
       // not using editor to get fullLineTokens as the sub arrays are already present in some functions invoking this
       const fullLineTokens = tokensBeforeChar.concat(tokensAfterChar);
       if (AnalyzeHTMLTag.isTagEndSymbol(fullLineTokens, tokensBeforeWthGreaterThan.length - 1)) {
         // do not include >
         return {
-          line: highlightStart.line,
-          character: highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + 1,
+          line: selection.line,
+          character: selection.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + 1,
         };
       }
     }
     return null;
   }
 
-  // prettier-ignore
-  private static getPositionIfSelectionBeforeTagStart(
-      selection: Position, tokensBeforeChar: Tokens, tokensAfterChar: Tokens, nextNonSpaceIndex: number, isStart: boolean): Position | null {
-    if (
-      tokensAfterChar[nextNonSpaceIndex] === '<' &&
-      tokensAfterChar[nextNonSpaceIndex + 1] !== '/' &&
-      AnalyzeHTMLTag.isTagStartSymbol(tokensAfterChar, nextNonSpaceIndex)
-    ) {
-      const previousNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensBeforeChar, tokensBeforeChar.length - 1, false);
-      let extensionDelta = 0;
-      if (isStart) extensionDelta = tokensBeforeChar[previousNonSpaceIndex] === '>' ? -1 : 1;
-      // start selection:
-      // do not include < if open tag start, however may as well include it if selection start is after close tag symbol
-      // as partial highlighting of the next html tag will allow < not to be inverted due to ><
-      // end selection:
-      // do not include < symbol
-      return {
-        line: selection.line,
-        character: selection.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) + extensionDelta,
-      };
-    }
-    return null;
+  private static isNextNonSpaceCharAfterStartBeforeEnd(nextNonSpaceChar: number, highlightStart: Position, highlightEnd: Position): boolean {
+    return (
+      highlightStart.line < highlightEnd.line ||
+      highlightStart.line > highlightEnd.line ||
+      highlightStart.character + nextNonSpaceChar < highlightEnd.character
+    );
   }
 
   private static getPositionIfStartBeforeTagSymbol(editor: TextEditor, fullWordRange: Range): Position | null {
@@ -80,13 +66,10 @@ export class HTMLTagUtil {
     const { line, character } = highlightStart;
     const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
     const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
-    if (highlightStart.character + LineTokenTraversalUtil.getTokenStringIndex(tokensAfterChar, nextNonSpaceIndex) >= fullWordRange.end.character) {
-      return null;
-    }
-    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
+    if (!HTMLTagUtil.isNextNonSpaceCharAfterStartBeforeEnd(nextNonSpaceIndex, highlightStart, fullWordRange.end)) return null;
     return (
-      HTMLTagUtil.getPositionIfSelectionBeforeTagStart(highlightStart, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex, true) ||
-      HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightStart, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex)
+      GetPositionIfSelectionBeforeOpenTag.get(editor, highlightStart, true) ||
+      HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightStart, tokensAfterChar, nextNonSpaceIndex)
     );
   }
 
@@ -97,20 +80,12 @@ export class HTMLTagUtil {
     );
   }
 
-  // prettier-ignore
-  public static getPositionIfEndBeforeTagStart(
-      editor: TextEditor, highlightEnd: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
+  private static getPositionIfEndBeforeTagEnd(editor: TextEditor, highlightEnd: Position): Position | null {
     const { line, character } = highlightEnd;
-    const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, character);
-    return HTMLTagUtil.getPositionIfSelectionBeforeTagStart(highlightEnd, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex, false);
-  }
-
-  // prettier-ignore
-  public static getPositionIfEndBeforeTagEnd(
-      editor: TextEditor, highlightEnd: Position, tokensAfterChar: Tokens, nextNonSpaceIndex: number): Position | null {
+    const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
+    const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
     if (tokensAfterChar[nextNonSpaceIndex] === '>') {
-      const tokensBeforeChar = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, highlightEnd.line, highlightEnd.character);
-      const position = HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightEnd, tokensBeforeChar, tokensAfterChar, nextNonSpaceIndex);
+      const position = HTMLTagUtil.getPositionIfStartBeforeTagEnd(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex);
       if (position) {
         // do not include the > symbol
         position.character = position.character - 1;
@@ -121,13 +96,7 @@ export class HTMLTagUtil {
   }
 
   public static getPositionIfEndOnHTMLTagSymbol(editor: TextEditor, highlightEnd: Position): Position | null {
-    const { line, character } = highlightEnd;
-    const tokensAfterChar = LineTokenTraversalUtil.getLineTokensAfterCharNumber(editor, line, character);
-    const nextNonSpaceIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterChar, 0);
-    return (
-      HTMLTagUtil.getPositionIfEndBeforeTagEnd(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex) ||
-      HTMLTagUtil.getPositionIfEndBeforeTagStart(editor, highlightEnd, tokensAfterChar, nextNonSpaceIndex)
-    );
+    return HTMLTagUtil.getPositionIfEndBeforeTagEnd(editor, highlightEnd) || GetPositionIfSelectionBeforeOpenTag.get(editor, highlightEnd, false);
   }
 
   private static ifNextTokenStringQuoteIsPartOfHTMLAttribute(fullLineTokens: Tokens, equalsIndex: number, stringQuoteIndex: number): boolean {

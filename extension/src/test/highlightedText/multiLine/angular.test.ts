@@ -409,6 +409,7 @@ suite('Highlighted Angular Statement Suite', () => {
         end: new vscode.Position(1, 22),
       },
     },
+    // WORK - more testing needs to be done here
     {
       lines: [
         {

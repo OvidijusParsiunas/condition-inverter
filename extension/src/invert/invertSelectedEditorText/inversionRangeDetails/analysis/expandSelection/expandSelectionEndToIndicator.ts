@@ -9,14 +9,14 @@ import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens'
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { HTMLTagUtil } from '../shared/htmlTagUtil/htmlTagUtil';
 import { IsEndAfterStopToken } from './isEndAfterStopToken';
-import { HTMLTagUtil } from '../shared/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionEndToIndicator {
   private static isStopTokenTagEndSymbol(fullLineTokens: Tokens, index: number): boolean {
     return (
-      !AnalyzeHTMLTag.isTagEndSymbol(fullLineTokens, index) &&
+      AnalyzeHTMLTag.isTagEndSymbol(fullLineTokens, index) ||
       TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index + 1) === fullLineTokens.length
     );
   }
