@@ -205,5 +205,117 @@ suite('Selected DOM No Condition Invertion Suite', () => {
         end: new vscode.Position(1, 1),
       },
     },
+    {
+      lines: [
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div>\n',
+          output: '<div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(1, 0),
+      },
+    },
   ]);
 });
