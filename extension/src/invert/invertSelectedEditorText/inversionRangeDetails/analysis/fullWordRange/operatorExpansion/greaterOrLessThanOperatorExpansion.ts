@@ -22,7 +22,6 @@ export class GreaterOrLessThanOperatorExpansion {
   }
 
   public static getForSelectionStart(tokens: Tokens, index: number): number {
-    // WORK - test when greater than or lower than at end of a line
     if (GreaterOrLessThanOperatorExpansion.isHTMLTagSymbol(tokens, index)) return 0;
     return GreaterOrLessThanOperatorExpansion.getLengthOfGreaterOrLessThanComparisonOperator(tokens, index, -1, 1);
   }

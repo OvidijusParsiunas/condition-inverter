@@ -8,28 +8,22 @@ import { TextEditor, Range } from 'vscode';
 
 // REF - 1335
 export class SelectionEndPositionForHTMLTag {
-  private static isTokenBeforeSelection(previousToken: MultiLineSearchResult, selection: Position): boolean {
-    return (
-      previousToken.line < selection.line ||
-      (previousToken.line === selection.line &&
-        LineTokenTraversalUtil.getTokenStringIndex(previousToken.fullLineTokens, previousToken.tokenIndex) < selection.character)
-    );
-  }
-
   // prettier-ignore
   private static getPositionIfSelectionAfterCloseTag(
       fullWordRange: Range, nextTokenDetails: MultiLineSearchResult | null, previousTokenDetails: MultiLineSearchResult | null): Position | null {
-    if (previousTokenDetails?.token === '>' && AnalyzeHTMLTag.isTagEndSymbol(previousTokenDetails.fullLineTokens, previousTokenDetails.tokenIndex)) {
+    if (previousTokenDetails?.token === '>') {
       // change >|< to ><| to prevent inversion
       if (nextTokenDetails?.token === '<') {
         return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex + 1);
       }
       // if previous token is before start selection, stay on current position
-      if (SelectionEndPositionForHTMLTag.isTokenBeforeSelection(previousTokenDetails, fullWordRange.start)) {
+      if (!SelectionPositionForHTMLTagShared.isTokenAfterSelection(previousTokenDetails, fullWordRange.start)) {
         return fullWordRange.end;
       }
-      // change div>| to div> to prevent its inversion
-      if (!nextTokenDetails || nextTokenDetails.token !== '<') {
+      // change div>| to div|> when at end of text editor to prevent inversion
+      // change div>|asdas to div|>asdas when on element to prevent inversion
+      if (!nextTokenDetails ||
+          (nextTokenDetails.token !== '<' && AnalyzeHTMLTag.isTagEndSymbol(previousTokenDetails.fullLineTokens, previousTokenDetails.tokenIndex))){
         return SelectionPositionForHTMLTagShared.getNewPosition(previousTokenDetails, previousTokenDetails.tokenIndex);
       }
     }

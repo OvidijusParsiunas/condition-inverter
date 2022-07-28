@@ -61,6 +61,18 @@ suite('DOM No Condition Invertion Suite', () => {
       output: '><div/',
     },
     {
+      input: '><div>',
+      output: '><div>',
+    },
+    {
+      input: '<div><',
+      output: '<div><',
+    },
+    {
+      input: '><div><',
+      output: '><div><',
+    },
+    {
       input: '<div><div></div></div>',
       output: '<div><div></div></div>',
     },

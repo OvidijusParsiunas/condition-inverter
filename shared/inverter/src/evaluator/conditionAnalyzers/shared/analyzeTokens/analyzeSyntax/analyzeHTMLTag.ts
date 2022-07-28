@@ -6,7 +6,7 @@ import { Token, Tokens } from '../../../../../shared/types/tokens';
 export class AnalyzeHTMLTag {
   // not a space or symbol
   public static isHTMLTagWord(word: Token): boolean {
-    return Boolean((word as string).match(/\w+/));
+    return Boolean(word !== undefined && (word as string).match(/\w+/));
   }
 
   public static isTagStartSymbol(tokens: Tokens, currentIndex: number): boolean {
