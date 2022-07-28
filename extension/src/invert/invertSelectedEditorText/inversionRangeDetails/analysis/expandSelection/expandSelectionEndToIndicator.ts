@@ -2,14 +2,15 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
+import { SelectionPositionForHTMLTagShared } from './htmlTagUtils/newPositionForImmediateTokens/shared/selectionPositionForHTMLTagShared';
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
+import { SelectionEndPositionForHTMLTag } from './htmlTagUtils/newPositionForImmediateTokens/selectionEndPositionForHTMLTag';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Token, Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { HTMLTagUtil } from '../shared/htmlTagUtil/htmlTagUtil';
 import { IsEndAfterStopToken } from './isEndAfterStopToken';
 import { Range, TextEditor } from 'vscode';
 
@@ -30,7 +31,7 @@ export class ExpandSelectionEndToIndicator {
       // if greater than at the end of a line, consider it as tag end symbol that should not be expanded
       (fullLineTokens[index] === '>' && ExpandSelectionEndToIndicator.isStopTokenTagEndSymbol(fullLineTokens, index)) ||
       // if end cursor before html attribute equals, do not proceed
-      (fullLineTokens[index] === '=' && HTMLTagUtil.isEqualsForHTMLAttribute(fullLineTokens, index))
+      (fullLineTokens[index] === '=' && SelectionPositionForHTMLTagShared.isEqualsForHTMLAttribute(fullLineTokens, index))
     );
   }
 
@@ -91,7 +92,7 @@ export class ExpandSelectionEndToIndicator {
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): EndPositionDetails {
     const highlightEnd = fullWordRange.end;
-    const position = HTMLTagUtil.getPositionIfEndOnHTMLTagSymbol(editor, highlightEnd);
+    const position = SelectionEndPositionForHTMLTag.getNewPositionIfOnTag(fullWordRange, editor);
     if (position) return { position };
     if (!IsEndAfterStopToken.check(editor, highlightEnd)) {
       const endPositionDetails = ExpandSelectionEndToIndicator.searchRightAndDownwards(editor, highlightEnd.line, highlightEnd.character);

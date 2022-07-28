@@ -517,5 +517,413 @@ suite('Selected DOM No Condition Invertion Suite', () => {
         end: new vscode.Position(0, 18),
       },
     },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 21),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 27),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 30),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 31),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 33),
+        end: new vscode.Position(0, 3),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 36),
+        end: new vscode.Position(0, 36),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog"><div>cat</div></div>`,
+          output: `<div class="dog"><div>cat</div></div>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 37),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(0, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(0, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 25),
+        end: new vscode.Position(0, 25),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 29),
+        end: new vscode.Position(0, 29),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 30),
+        end: new vscode.Position(0, 30),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 31),
+        end: new vscode.Position(0, 31),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 32),
+        end: new vscode.Position(0, 32),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 33),
+        end: new vscode.Position(0, 33),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 36),
+        end: new vscode.Position(0, 36),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 37),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 38),
+        end: new vscode.Position(0, 38),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 39),
+        end: new vscode.Position(0, 39),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 40),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 41),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 44),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 45),
+        end: new vscode.Position(0, 45),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div class="dog" > <div > cat </div > </div >`,
+          output: `<div class="dog" > <div > cat </div > </div >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 46),
+        end: new vscode.Position(0, 46),
+      },
+    },
   ]);
 });

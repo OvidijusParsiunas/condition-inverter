@@ -15,6 +15,12 @@ REF - 1334
 When the user has highlighted or selected an arbitrary position within a line, the algorithm attempts to expand and find the closest condition indicator on the left and right,
 however to not have to traverse upwards and downwards infinitely, it looks for the first non space token on each side and then attempts to find the condition indicator on that line
 
+REF - 1335
+Strategy for extending user cursor selection in VSCode exntension when working with HTML:
+If cursor is between >|<, selection is extended to both sides to prevent symbol inversion by the inverter |><|
+If cursor is at start of editor and the first token is < or end of editor and last token is >, do not include them in the selection - e.g. |< changed to <| and >| changed to |>
+If cursor is beside < or > - the general strategy (as above) is to not include them in the selection
+
 website:
 
 the website has an alternative top right logo that is a github corner, however decided to not use it as we need to use a vscode logo as well

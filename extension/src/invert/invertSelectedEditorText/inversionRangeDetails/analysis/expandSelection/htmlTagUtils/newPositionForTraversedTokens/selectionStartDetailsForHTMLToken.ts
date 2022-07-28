@@ -3,10 +3,10 @@ import {
   AnalyzeFrontendFramework
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionInsideStatement/utils/analyzeFrontendFramework';
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
+import { StartPositionDetails } from '../../../../../shared/types/inversionRangeDetails';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
-import { StartPositionDetails } from '../../../shared/types/inversionRangeDetails';
-import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
+import { LineTokenTraversalUtil } from '../../../shared/lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class SelectionStartDetailsForHTMLToken {
@@ -63,9 +63,7 @@ export class SelectionStartDetailsForHTMLToken {
     // ="dog"|
     const openStringQuoteIndex = TraversalUtil.findTokenIndex(fullLineTokens, currentIndex, fullLineTokens[currentIndex], false);
     if (openStringQuoteIndex > -1) {
-      // prettier-ignore
-      return SelectionStartDetailsForHTMLToken.createIfOpenStringQuoteHTMLAttribute(
-        fullLineTokens, line, openStringQuoteIndex, currentIndex);
+      return SelectionStartDetailsForHTMLToken.createIfOpenStringQuoteHTMLAttribute(fullLineTokens, line, openStringQuoteIndex, currentIndex);
     }
     return null;
   }

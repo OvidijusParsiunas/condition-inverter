@@ -1,6 +1,7 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
+import { SelectionStartDetailsForHTMLToken } from './htmlTagUtils/newPositionForTraversedTokens/selectionStartDetailsForHTMLToken';
+import { SelectionStartPositionForHTMLTag } from './htmlTagUtils/newPositionForImmediateTokens/selectioStartPositionForHTMLTag';
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
-import { SelectionStartDetailsForHTMLToken } from './selectionStartDetailsForHTMLToken';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
@@ -11,7 +12,6 @@ import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { IsStartBeforeStopToken } from './isStartBeforeStopToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-import { HTMLTagUtil } from '../shared/htmlTagUtil/htmlTagUtil';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {
@@ -86,9 +86,9 @@ export class ExpandSelectionStartToIndicator {
   }
 
   public static getNewPositionDetails(editor: TextEditor, fullWordRange: Range): StartPositionDetails {
-    const position = HTMLTagUtil.getPositionIfStartOnHTMLTagSymbol(editor, fullWordRange);
-    if (position) return { position };
     const highlightStart = fullWordRange.start;
+    const position = SelectionStartPositionForHTMLTag.getNewPositionIfOnTag(editor, highlightStart);
+    if (position) return { position };
     if (!IsStartBeforeStopToken.check(editor, highlightStart)) {
       return ExpandSelectionStartToIndicator.searchLeftAndUpwards(editor, highlightStart.line, highlightStart.character);
     }

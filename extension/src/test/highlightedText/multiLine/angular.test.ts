@@ -202,6 +202,46 @@ suite('Highlighted Angular Statement Suite', () => {
       ],
       selection: {
         start: new vscode.Position(0, 1),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div\n',
+          output: '<div',
+        },
+        {
+          input: '[ngIf]="condition"\n',
+          output: '[ngIf]="!condition"',
+        },
+        {
+          input: '>\n',
+          output: '>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div\n',
+          output: '<div',
+        },
+        {
+          input: '[ngIf]="condition"\n',
+          output: '[ngIf]="!condition"',
+        },
+        {
+          input: '>\n',
+          output: '>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 1),
         end: new vscode.Position(2, 0),
       },
     },
@@ -410,6 +450,198 @@ suite('Highlighted Angular Statement Suite', () => {
       },
     },
     // WORK - more testing needs to be done here
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="!condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 23),
+        end: new vscode.Position(1, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="!condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(1, 23),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="!condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(1, 24),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="!condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="!condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(2, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="!condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 0),
+        end: new vscode.Position(2, 1),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 24),
+        end: new vscode.Position(1, 0),
+      },
+    },
+    {
+      lines: [
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '<div [ngIf]="condition">\n',
+          output: '<div [ngIf]="condition">',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+        {
+          input: '</div>\n',
+          output: '</div>',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(1, 24),
+        end: new vscode.Position(2, 0),
+      },
+    },
     {
       lines: [
         {

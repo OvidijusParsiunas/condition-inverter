@@ -13,7 +13,7 @@ interface SubstringAroundPosition {
 export class FullWordRange {
   // this is used as part of an optimisation approach to reduce the amount of tokenization and token traversal to determine if cursor
   // is on a potential condition operator
-  private static readonly conditionDelta = 20;
+  private static readonly conditionDelta = 500;
 
   private static getIndexForSelectionEnd(lineString: string, selectionEndChar: number, isHighlighted: boolean): number {
     const tokens = Tokenizer.tokenize(lineString);
@@ -54,7 +54,7 @@ export class FullWordRange {
   }
 
   private static getSubstringAroundPosition(editor: TextEditor, selection: Position, relativeCharNumber: number): SubstringAroundPosition {
-    // extracts text 20 (conditionDelta) chars before and after selection
+    // extracts text up to 500 (conditionDelta) chars before and after selection
     const startPosition = { line: selection.line, character: Math.max(relativeCharNumber - FullWordRange.conditionDelta, 0) };
     const endPosition = {
       line: selection.line,

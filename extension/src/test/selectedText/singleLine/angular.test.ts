@@ -1012,13 +1012,361 @@ suite('Selected Angular Statement Suite', () => {
     {
       lines: [
         {
-          input: `<div [ngStyle]="{'color': condition ? 'red' : 'blue'}" [ngIf]="condition" ng-show="myValue" *ngIf="condition" ng-show="myValue">`,
-          output: `<div [ngStyle]="{'color': condition ? 'red' : 'blue'}" [ngIf]="condition" ng-show="myValue" *ngIf="condition" ng-show="myValue">`,
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 5),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 6),
+        end: new vscode.Position(0, 6),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 7),
+        end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 14),
+        end: new vscode.Position(0, 14),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 15),
+        end: new vscode.Position(0, 15),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 16),
+        end: new vscode.Position(0, 16),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 17),
+        end: new vscode.Position(0, 17),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 18),
+        end: new vscode.Position(0, 18),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 19),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 21),
+        end: new vscode.Position(0, 21),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 61),
+        end: new vscode.Position(0, 61),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 62),
+        end: new vscode.Position(0, 62),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 63),
+        end: new vscode.Position(0, 63),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 67),
+        end: new vscode.Position(0, 67),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 68),
+        end: new vscode.Position(0, 68),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 69),
+        end: new vscode.Position(0, 69),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " !condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 74),
+        end: new vscode.Position(0, 74),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 81),
+        end: new vscode.Position(0, 81),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 82),
+        end: new vscode.Position(0, 82),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 89),
+        end: new vscode.Position(0, 89),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " !myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 94),
+        end: new vscode.Position(0, 94),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 104),
+        end: new vscode.Position(0, 104),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 105),
+        end: new vscode.Position(0, 105),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 109),
+        end: new vscode.Position(0, 109),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " >`,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " !condition " >`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 114),
+        end: new vscode.Position(0, 114),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 125),
+        end: new vscode.Position(0, 125),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 126),
+        end: new vscode.Position(0, 126),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+          output: `<div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
         },
       ],
       selection: {
         start: new vscode.Position(0, 127),
         end: new vscode.Position(0, 127),
+      },
+    },
+    {
+      lines: [
+        {
+          input: ` <div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+          output: ` <div [ ngStyle ] = " {'color': condition ? 'red' : 'blue'} " [ ngIf ] = " condi " ng-show = " myValue " *ngIf = " condition " > `,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 0),
       },
     },
   ]);
