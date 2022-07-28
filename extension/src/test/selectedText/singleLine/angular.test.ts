@@ -513,8 +513,8 @@ suite('Selected Angular Statement Suite', () => {
         },
       ],
       selection: {
-        start: new vscode.Position(0, 25),
-        end: new vscode.Position(0, 25),
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 26),
       },
     },
     {

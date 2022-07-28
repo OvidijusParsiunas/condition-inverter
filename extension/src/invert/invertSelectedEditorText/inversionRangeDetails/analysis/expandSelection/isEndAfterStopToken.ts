@@ -14,6 +14,8 @@ export class IsEndAfterStopToken {
     return (
       ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(lineTokens, nonSpaceTokenIndex, false) ||
       lineTokens[nonSpaceTokenIndex] === ';' ||
+      // stop when colon for properties but do not stop when colon for golang short-declare
+      (lineTokens[nonSpaceTokenIndex] === ':' && lineTokens[nonSpaceTokenIndex + 1] !== '=') ||
       CurlyBracketSyntaxUtil.isScopeOpenToken(lineTokens, nonSpaceTokenIndex)
     );
   }
@@ -21,11 +23,12 @@ export class IsEndAfterStopToken {
   private static isPreviousCharAndUpwardsCondition(editor: TextEditor, line: number, endChar?: number): boolean {
     endChar ??= editor.document.lineAt(line).range.end.character;
     const lineTokens = LineTokenTraversalUtil.getLineTokensBeforeCharNumber(editor, line, endChar);
-    const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(lineTokens, lineTokens.length - 1, false);
+    const fullLineTokens = LineTokenTraversalUtil.getFullLineTokens(editor, line);
+    const nonSpaceTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, lineTokens.length - 1, false);
     if (nonSpaceTokenIndex > -1) {
       return IsTextHighlighted.check(editor.selection)
-        ? IsEndAfterStopToken.isStopToken(lineTokens, nonSpaceTokenIndex)
-        : STATEMENT_JSON[lineTokens[nonSpaceTokenIndex] as keyof typeof STATEMENT_JSON];
+        ? IsEndAfterStopToken.isStopToken(fullLineTokens, nonSpaceTokenIndex)
+        : STATEMENT_JSON[fullLineTokens[nonSpaceTokenIndex] as keyof typeof STATEMENT_JSON];
     }
     if (line - 1 < 0) return false;
     return IsEndAfterStopToken.isPreviousCharAndUpwardsCondition(editor, line - 1);

@@ -65,6 +65,18 @@ suite('Selected Property Text Suite', () => {
       lines: [
         {
           input: `dog: cat ? fish : parrot,`,
+          output: `dog: cat ? fish : parrot,`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `dog: cat ? fish : parrot,`,
           output: `dog: !cat ? fish : parrot,`,
         },
       ],
@@ -191,6 +203,18 @@ suite('Selected Property Text Suite', () => {
       selection: {
         start: new vscode.Position(0, 7),
         end: new vscode.Position(0, 7),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `['dog']: cat ? fish : parrot,`,
+          output: `['dog']: cat ? fish : parrot,`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 8),
+        end: new vscode.Position(0, 8),
       },
     },
   ]);
