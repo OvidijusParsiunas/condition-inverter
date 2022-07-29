@@ -661,5 +661,197 @@ suite('Highlighted Partial Inside and Outside Statement Suite', () => {
         end: new vscode.Position(0, 7),
       },
     },
+    {
+      lines: [
+        {
+          input: 'if (`asdasd${asdasdasd}`) { console.log(2) }',
+          output: 'if (!`asdasd${asdasdasd}`) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'if (cat && `asdasd${asdasdasd}`) { console.log(2) }',
+          output: 'if (!cat || !`asdasd${asdasdasd}`) { console.log(2) }',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 12),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = !cat || !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 20),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = !cat || !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 26),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = !cat || !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 27),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = !cat || !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 28),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = !cat || !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = !cat || !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 38),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = cat && !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 19),
+        end: new vscode.Position(0, 39),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = cat && !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 20),
+        end: new vscode.Position(0, 38),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = cat && !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 26),
+        end: new vscode.Position(0, 38),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd}`',
+          output: 'const dog = cat && !`asdasd${asdasdasd}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 27),
+        end: new vscode.Position(0, 38),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd && dog}`',
+          output: 'const dog = cat && `asdasd${!asdasdasd || !dog}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 44),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd && dog}`',
+          output: 'const dog = cat && `asdasd${!asdasdasd && dog}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 28),
+        end: new vscode.Position(0, 37),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd && dog}`',
+          output: 'const dog = cat && `asdasd${asdasdasd || dog}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 38),
+        end: new vscode.Position(0, 40),
+      },
+    },
+    {
+      lines: [
+        {
+          input: 'const dog = cat && `asdasd${asdasdasd && dog}`',
+          output: 'const dog = cat && `asdasd${asdasdasd && !dog}`',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 41),
+        end: new vscode.Position(0, 44),
+      },
+    },
   ]);
 });

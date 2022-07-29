@@ -25,6 +25,8 @@ export class ExpandSelectionEndToIndicator {
   private static isNoConditionIndicatorStopToken(fullLineTokens: Tokens, index: number): boolean {
     return (
       fullLineTokens[index] === ';' ||
+      // if end cursor before string template token sequence
+      (fullLineTokens[index] === '$' && fullLineTokens[index + 1] === '{') ||
       CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, index) ||
       // if end cursor before tag start symbol, do not proceed
       (fullLineTokens[index] === '<' && AnalyzeHTMLTag.isTagStartSymbol(fullLineTokens, index)) ||

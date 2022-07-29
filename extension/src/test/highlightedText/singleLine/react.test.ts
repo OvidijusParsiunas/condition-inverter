@@ -281,7 +281,7 @@ suite('Highlighted React Statement Suite', () => {
       lines: [
         {
           input: '{`banner ${active ? "active" : ""}`}',
-          output: '{`banner ${!active ? "active" : ""}`}',
+          output: '{`banner ${active ? "active" : ""}`}',
         },
       ],
       selection: {

@@ -121,5 +121,17 @@ suite('Highlighted Property Text Suite', () => {
         end: new vscode.Position(0, 4),
       },
     },
+    {
+      lines: [
+        {
+          input: `dog: cat === dog,`,
+          output: `dog: cat === dog,`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 5),
+      },
+    },
   ]);
 });
