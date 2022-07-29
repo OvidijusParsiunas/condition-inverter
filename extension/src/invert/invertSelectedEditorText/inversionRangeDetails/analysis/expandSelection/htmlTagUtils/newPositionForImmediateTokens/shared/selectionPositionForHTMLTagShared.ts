@@ -1,6 +1,6 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { ExpandIfCursorOnPotentialConditionOperatorUtil } from '../../../../fullWordRange/util/selectionExpansionUtil';
-import { MultiLineSearchResult } from '../../../../../../shared/types/multilineSearchResult';
+import { MultiLineSearchResult } from '../../../../../../shared/types/multiLineSearchResult';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../../../../shared/lineTokenTraversalUtil';

@@ -1,12 +1,12 @@
 #If Inverter
 
 <div align="center">
-    <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/if-inverter/push%20to%20main%20branch">
-        <img style="margin-left: -84px" src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/if-inverter/push%20to%20main%20branch" alt="Build status">
-    </a><a href="https://img.shields.io/codecov/c/github/OvidijusParsiunas/if-inverter">
-        <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/if-inverter" alt="Build status">
-    </a><a href="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:if-inverter/main">
-        <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:if-inverter/main" alt="Build status">
+    <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch">
+        <img style="margin-left: -84px" src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch" alt="Build status">
+    </a><a href="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter">
+        <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Build status">
+    </a><a href="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main">
+        <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main" alt="Build status">
     </a>
 </div>
 
@@ -14,7 +14,7 @@ A simple tool used to invert if statements for all programming languages.
 
 [insert gif here]
 
-[VS Code Marketplace](https://github.com/OvidijusParsiunas/if-inverter/tree/main/website)
+[VS Code Marketplace](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website)
 
 ## Theory
 

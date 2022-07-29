@@ -1,5 +1,5 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
-import { MultiLineSearchResult } from '../../../../../../shared/types/multilineSearchResult';
+import { MultiLineSearchResult } from '../../../../../../shared/types/multiLineSearchResult';
 import { SelectionPositionForHTMLTagShared } from './selectionPositionForHTMLTagShared';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { Position } from '../../../../../../shared/types/position';

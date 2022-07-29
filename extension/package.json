@@ -1,5 +1,5 @@
 {
-  "name": "if-inverter",
+  "name": "condition-inverter",
   "displayName": "If Inverter",
   "version": "0.0.1",
   "description": "Invert if statements for all programming languages",
@@ -28,27 +28,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OvidijusParsiunas/if-inverter/tree/main/extension"
+    "url": "https://github.com/OvidijusParsiunas/condition-inverter/tree/main/extension"
   },
   "bugs": {
-    "url": "https://github.com/OvidijusParsiunas/if-inverter/issues",
+    "url": "https://github.com/OvidijusParsiunas/condition-inverter/issues",
     "email": "oparsiunas@googlemail.com"
   },
   "license": "MIT",
   "main": "./out/extension.js",
   "activationEvents": [
-    "onCommand:if-inverter.invert"
+    "onCommand:condition-inverter.invert"
   ],
   "contributes": {
     "commands": [
       {
-        "command": "if-inverter.invert",
+        "command": "condition-inverter.invert",
         "title": "Invert text"
       }
     ],
     "keybindings": [
       {
-        "command": "if-inverter.invert",
+        "command": "condition-inverter.invert",
         "key": "ctrl+shift+i",
         "mac": "cmd+shift+i",
         "when": "editorTextFocus"

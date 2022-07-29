@@ -6,13 +6,13 @@ A simple tool used to invert if statements for all programming languages.
 
 ### Website
 
-More information [here](https://github.com/OvidijusParsiunas/if-inverter/tree/main/website).
+More information [here](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website).
 
 Insert gif here
 
 ### VS Code Extension
 
-More information [here](https://github.com/OvidijusParsiunas/if-inverter/blob/main/extension).
+More information [here](https://github.com/OvidijusParsiunas/condition-inverter/blob/main/extension).
 
 Insert gif here
 

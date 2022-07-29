@@ -11,7 +11,7 @@ export class TestUtil {
   }
 
   private static async executeInversionCommand(): Promise<void> {
-    return vscode.commands.executeCommand('if-inverter.invert');
+    return vscode.commands.executeCommand('condition-inverter.invert');
   }
 
   public static createTextDocument(textEditorObj: TextEditorObj): Promise<boolean> {

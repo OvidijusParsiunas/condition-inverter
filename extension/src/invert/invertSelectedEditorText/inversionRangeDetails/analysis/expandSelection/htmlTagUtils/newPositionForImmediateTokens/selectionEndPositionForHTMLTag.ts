@@ -1,7 +1,7 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { GetPositionIfSelectionBeforeTagStart } from './shared/getPositionIfSelectionBeforeTagStart';
 import { SelectionPositionForHTMLTagShared } from './shared/selectionPositionForHTMLTagShared';
-import { MultiLineSearchResult } from '../../../../../shared/types/multilineSearchResult';
+import { MultiLineSearchResult } from '../../../../../shared/types/multiLineSearchResult';
 import { LineTokenTraversalUtil } from '../../../shared/lineTokenTraversalUtil';
 import { Position } from '../../../../../shared/types/position';
 import { TextEditor, Range } from 'vscode';
