@@ -25,20 +25,53 @@ export class SelectionPositionForHTMLTagShared {
   }
 
   // prettier-ignore
-  public static getPositionIfSelectionBeforeTagEnd(
-      editor: TextEditor, nextTokenDetails: MultiLineSearchResult | null, isStart: boolean): Position | null {
-    if (nextTokenDetails?.token === '>' && AnalyzeHTMLTag.isTagEndSymbol(nextTokenDetails.fullLineTokens, nextTokenDetails.tokenIndex)) {
-      // prettier-ignore
-      const detailsOfTokenAfterNext = LineTokenTraversalUtil.getNextTokenOnSameLineOrBelow(editor, nextTokenDetails.line,
-        LineTokenTraversalUtil.getTokenStringIndex(nextTokenDetails?.fullLineTokens, nextTokenDetails?.tokenIndex) + 1);
-      // change >| (if at end of text editor) or >|< to |> or |>< to prevent inversion
-      if (!detailsOfTokenAfterNext || detailsOfTokenAfterNext.token === '<') {
+  private static getPositionIfSelectionBeforePercentage(editor: TextEditor, nextTokenDetails: MultiLineSearchResult,
+      isStart: boolean): Position | null {
+    const detailsOfTokenAfterNext = LineTokenTraversalUtil.getNextTokenOnSameLineOrBelow(editor, nextTokenDetails.line,
+      LineTokenTraversalUtil.getTokenStringIndex(nextTokenDetails?.fullLineTokens, nextTokenDetails?.tokenIndex) + 1);
+    if (detailsOfTokenAfterNext?.token === '>') {
+      // keep |%> as |%> 
+      if (!isStart || (!SelectionPositionForHTMLTagShared.isTokenAfterSelection(detailsOfTokenAfterNext, editor.selection.end))) {
         return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex);
       }
-      // change |> to >| if next token is not after selection end (will not take place for end)
-      if (isStart && !SelectionPositionForHTMLTagShared.isTokenAfterSelection(detailsOfTokenAfterNext, editor.selection.end)) {
-        return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex + 1);
-      }
+    }
+    return null;
+  }
+
+  // prettier-ignore
+  private static getPositionIfSelectionBeforeGreaterThan(editor: TextEditor, nextTokenDetails: MultiLineSearchResult,
+      previousTokenDetails: MultiLineSearchResult | null, isStart: boolean): Position | null {
+    // prettier-ignore
+    const detailsOfTokenAfterNext = LineTokenTraversalUtil.getNextTokenOnSameLineOrBelow(editor, nextTokenDetails.line,
+      LineTokenTraversalUtil.getTokenStringIndex(nextTokenDetails.fullLineTokens, nextTokenDetails.tokenIndex) + 1);
+    // change >|< to |> or |>< to prevent inversion
+    if (detailsOfTokenAfterNext?.token === '<') {
+      return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex);
+    }
+    // change %|> to %>| for backboneJS&ASPNET 
+    if (previousTokenDetails?.token === '%') {
+      return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex + 1);
+    }
+    // change >| (if at end of text editor)
+    if (!detailsOfTokenAfterNext) {
+      return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex);
+    }
+    // change |> to >| if next token is not after selection end (will not take place for end)
+    if (isStart && !SelectionPositionForHTMLTagShared.isTokenAfterSelection(detailsOfTokenAfterNext, editor.selection.end)) {
+      return SelectionPositionForHTMLTagShared.getNewPosition(nextTokenDetails, nextTokenDetails.tokenIndex + 1);
+    }
+    return null;
+  }
+
+  // prettier-ignore
+  public static getPositionIfSelectionBeforeTagEnd(
+      editor: TextEditor, nextTokenDetails: MultiLineSearchResult | null,
+      previousTokenDetails: MultiLineSearchResult | null, isStart: boolean): Position | null {
+    if (nextTokenDetails?.token === '>' && AnalyzeHTMLTag.isTagEndSymbol(nextTokenDetails.fullLineTokens, nextTokenDetails.tokenIndex)) {
+      return SelectionPositionForHTMLTagShared.getPositionIfSelectionBeforeGreaterThan(editor, nextTokenDetails, previousTokenDetails, isStart);
+    }
+    if (nextTokenDetails?.token === '%') {
+      return SelectionPositionForHTMLTagShared.getPositionIfSelectionBeforePercentage(editor, nextTokenDetails, isStart);
     }
     return null;
   }

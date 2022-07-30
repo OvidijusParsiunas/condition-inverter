@@ -5,6 +5,7 @@ import {
 import { SelectionPositionForHTMLTagShared } from './htmlTagUtils/newPositionForImmediateTokens/shared/selectionPositionForHTMLTagShared';
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { SelectionEndPositionForHTMLTag } from './htmlTagUtils/newPositionForImmediateTokens/selectionEndPositionForHTMLTag';
+import { BackboneJSASPNETUtil } from './htmlTagUtils/specialisedSyntax/backboneJSASPNETUtil';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { EndPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
@@ -25,6 +26,7 @@ export class ExpandSelectionEndToIndicator {
   private static isNoConditionIndicatorStopToken(fullLineTokens: Tokens, index: number): boolean {
     return (
       fullLineTokens[index] === ';' ||
+      BackboneJSASPNETUtil.isCloseTag(fullLineTokens, index) ||
       // if end cursor before string template token sequence
       (fullLineTokens[index] === '$' && fullLineTokens[index + 1] === '{') ||
       CurlyBracketSyntaxUtil.isScopeOpenToken(fullLineTokens, index) ||

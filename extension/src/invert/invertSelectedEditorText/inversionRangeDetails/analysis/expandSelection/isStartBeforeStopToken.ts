@@ -2,6 +2,7 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
+import { BackboneJSASPNETUtil } from './htmlTagUtils/specialisedSyntax/backboneJSASPNETUtil';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
@@ -18,7 +19,8 @@ export class IsStartBeforeStopToken {
     const isConditionIndicator = ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, charIndexForFullLine)
       || fullLineTokens[nonSpaceIndex + charIndexForFullLine] === ';'
       // when |} for html value or ember close clause |}} or }|}
-      || CurlyBracketSyntaxUtil.isHTMLClose(fullLineTokens, nonSpaceIndex + charIndexForFullLine);
+      || CurlyBracketSyntaxUtil.isHTMLClose(fullLineTokens, nonSpaceIndex + charIndexForFullLine)
+      || BackboneJSASPNETUtil.isCloseTag(fullLineTokens, nonSpaceIndex + charIndexForFullLine);
     // if start on/before condition and there are no symbol tokens on the same line before it, do not expand further
     return isConditionIndicator ? isNonSymbolBeforeStart : false;
   }

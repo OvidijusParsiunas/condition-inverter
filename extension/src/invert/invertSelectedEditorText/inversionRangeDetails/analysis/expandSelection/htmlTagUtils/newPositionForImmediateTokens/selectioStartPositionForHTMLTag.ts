@@ -12,7 +12,7 @@ export class SelectionStartPositionForHTMLTag {
     const previousTokenDetails = LineTokenTraversalUtil.getPreviousTokenOnSameLineOrAbove(editor, highlightStart.line, highlightStart.character);
     return (
       GetPositionIfSelectionBeforeTagStart.get(editor, true, nextTokenDetails, previousTokenDetails) ||
-      SelectionPositionForHTMLTagShared.getPositionIfSelectionBeforeTagEnd(editor, nextTokenDetails, true)
+      SelectionPositionForHTMLTagShared.getPositionIfSelectionBeforeTagEnd(editor, nextTokenDetails, previousTokenDetails, true)
     );
   }
 }

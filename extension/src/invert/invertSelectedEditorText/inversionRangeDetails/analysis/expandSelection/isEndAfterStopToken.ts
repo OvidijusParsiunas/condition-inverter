@@ -1,10 +1,9 @@
-import { SPACE_JSON, STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
+import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
-import { RangeCreator } from '../../../shared/functionality/rangeCreator';
-import { FindNextNonSpaceToken } from '../shared/findNextNonSpaceToken';
+import { CharacterAnalysisUtil } from '../shared/characterAnalysisUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position, Selection } from 'vscode';
@@ -89,8 +88,8 @@ export class IsEndAfterStopToken {
     if (siblingLeftTokenIndex === -1 && IsTextHighlighted.check(editor.selection)) {
       // when text is highlighted and there are no non space characters before end of selection, traverse upwards to check if the above line
       // ends with a '(' symbol and if it does, do not proceed to invert text after the end selection
-      const leftNonSpaceToken = FindNextNonSpaceToken.getLeftAndUpwards(editor, highlightEnd.line, 0);
-      if (leftNonSpaceToken === '(') return true;
+      const leftNonSpaceToken = LineTokenTraversalUtil.getPreviousTokenOnSameLineOrAbove(editor, highlightEnd.line, 0);
+      if (leftNonSpaceToken?.token === '(') return true;
     }
     return IsEndAfterStopToken.isLeftTokenOnSameLineConditionIndicator(editor, highlightEnd, lineTokens, fullLineTokens, siblingLeftTokenIndex);
   }
@@ -110,10 +109,7 @@ export class IsEndAfterStopToken {
   public static check(editor: TextEditor, highlightEnd: Position): boolean {
     const wasExtendedOverLogicalOperator = IsEndAfterStopToken.wasExtendedOverLogicalOperator(editor, highlightEnd);
     if (wasExtendedOverLogicalOperator) return true;
-    const charAfterEnd = editor.document.getText(
-      RangeCreator.create(highlightEnd, { line: highlightEnd.line, character: highlightEnd.character + 1 }),
-    );
-    if (Object.keys(SPACE_JSON).indexOf(charAfterEnd) === -1 && charAfterEnd !== '') {
+    if (CharacterAnalysisUtil.isNextSelectionCharacterAnotherChar(editor, highlightEnd)) {
       return IsEndAfterStopToken.isImmediateTokenConditionIndicator(editor, highlightEnd);
     }
     return IsEndAfterStopToken.isEndAfterConditionIndicator(editor, highlightEnd.line, highlightEnd.character);

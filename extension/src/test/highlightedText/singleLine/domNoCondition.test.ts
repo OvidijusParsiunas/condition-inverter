@@ -253,5 +253,41 @@ suite('Highlighted DOM No Condition Invertion Suite', () => {
         end: new vscode.Position(0, 26),
       },
     },
+    {
+      lines: [
+        {
+          input: `aa <dog>`,
+          output: `aa <dog>`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `<dog> aa`,
+          output: `<dog> aa`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 8),
+      },
+    },
+    {
+      lines: [
+        {
+          input: `</dog> aa`,
+          output: `</dog> aa`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 5),
+        end: new vscode.Position(0, 9),
+      },
+    },
   ]);
 });
