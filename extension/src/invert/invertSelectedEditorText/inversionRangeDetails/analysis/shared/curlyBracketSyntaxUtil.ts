@@ -1,4 +1,5 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
+import { DjangoFlaskUtil } from '../expandSelection/htmlTagUtils/specialisedSyntax/djangoFlaskUtil';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
@@ -42,10 +43,14 @@ export class CurlyBracketSyntaxUtil {
     );
   }
 
-  // when |} for html value or ember close clause |}} or }|}
-  public static isHTMLClose(tokens: Tokens, currentIndex: number): boolean {
+  // when |} for html value, ember close clause |}} or }|}, or django close clause %|}
+  public static isScopeClose(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '}') {
-      return AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(tokens, currentIndex) || CurlyBracketSyntaxUtil.isEmberCloseClause(tokens, currentIndex);
+      return (
+        AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(tokens, currentIndex) ||
+        CurlyBracketSyntaxUtil.isEmberCloseClause(tokens, currentIndex) ||
+        DjangoFlaskUtil.isCloseClauseStartingWthCloseBrace(tokens, currentIndex)
+      );
     }
     return false;
   }

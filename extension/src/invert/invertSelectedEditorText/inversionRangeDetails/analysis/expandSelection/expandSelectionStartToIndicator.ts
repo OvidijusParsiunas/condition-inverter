@@ -13,9 +13,10 @@ import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { IsStartBeforeStopToken } from './isStartBeforeStopToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
+import { DjangoFlaskUtil } from './htmlTagUtils/specialisedSyntax/djangoFlaskUtil';
 
 export class ExpandSelectionStartToIndicator {
-  private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true } as TokensJSON;
+  private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true, ['%']: true } as TokensJSON;
   // symbols that may need to stop extension depending on what is around them
   private static readonly potentialStopSymbols = { ['{']: true, ['}']: true };
   private static readonly stopSymbols = {
@@ -37,7 +38,7 @@ export class ExpandSelectionStartToIndicator {
   private static createPositionDetailsForStopToken(
       line: number, lineTokens: Tokens, { index, token }: FirstFoundToken, fullLineTokens: Tokens): StartPositionDetails {
     // if start cursor is before a ternary operator or html start/end tag sybol, do not include it in inversion text to not invert anything before it
-    if (token === '?' || ExpandSelectionStartToIndicator.isStartOrEndOfHTMLRelatedSymbol(index, fullLineTokens)) {
+    if (token === '?' || token === '%' || ExpandSelectionStartToIndicator.isStartOrEndOfHTMLRelatedSymbol(index, fullLineTokens)) {
       return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) + 1 } };
     }
     const startPositionDetails: StartPositionDetails = {
@@ -56,7 +57,8 @@ export class ExpandSelectionStartToIndicator {
       ((token !== ')' || !ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
         (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
           ExpandSelectionStartToIndicator.auxStopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.auxStopSymbols])) ||
-      CurlyBracketSyntaxUtil.isStartSelectionExpansionStopToken(fullLineTokens, index)
+      CurlyBracketSyntaxUtil.isStartSelectionExpansionStopToken(fullLineTokens, index) ||
+      DjangoFlaskUtil.isCloseClauseStartingWthPercentage(fullLineTokens, index)
     );
   }
 

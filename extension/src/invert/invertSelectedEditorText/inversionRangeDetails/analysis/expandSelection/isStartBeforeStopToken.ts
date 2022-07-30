@@ -2,12 +2,13 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
-import { BackboneJSASPNETUtil } from './htmlTagUtils/specialisedSyntax/backboneJSASPNETUtil';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
+import { DjangoFlaskUtil } from './htmlTagUtils/specialisedSyntax/djangoFlaskUtil';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
+import { PercentageSyntaxUtil } from '../shared/percentageSyntaxUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position } from 'vscode';
@@ -18,9 +19,8 @@ export class IsStartBeforeStopToken {
       fullLineTokens: Tokens, nonSpaceIndex: number, charIndexForFullLine: number, isNonSymbolBeforeStart: boolean): boolean {
     const isConditionIndicator = ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, charIndexForFullLine)
       || fullLineTokens[nonSpaceIndex + charIndexForFullLine] === ';'
-      // when |} for html value or ember close clause |}} or }|}
-      || CurlyBracketSyntaxUtil.isHTMLClose(fullLineTokens, nonSpaceIndex + charIndexForFullLine)
-      || BackboneJSASPNETUtil.isCloseTag(fullLineTokens, nonSpaceIndex + charIndexForFullLine);
+      || CurlyBracketSyntaxUtil.isScopeClose(fullLineTokens, nonSpaceIndex + charIndexForFullLine)
+      || PercentageSyntaxUtil.isCloseClause(fullLineTokens, nonSpaceIndex + charIndexForFullLine);
     // if start on/before condition and there are no symbol tokens on the same line before it, do not expand further
     return isConditionIndicator ? isNonSymbolBeforeStart : false;
   }
@@ -59,8 +59,9 @@ export class IsStartBeforeStopToken {
     // when start selection before ;, can safely assume end of for loop conditional statement
     if (fullLineTokens[tokenIndex] === ':' || fullLineTokens[tokenIndex] === ';') return true;
     if (fullLineTokens[tokenIndex] === ')') return IsStartBeforeStopToken.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
-    // when |} for html value or ember close clause |}} or }|}
-    if (CurlyBracketSyntaxUtil.isHTMLClose(fullLineTokens, tokenIndex)) return true;
+    // when |} for html value, ember close clause |}} or }|}, or django close clause %|}
+    if (CurlyBracketSyntaxUtil.isScopeClose(fullLineTokens, tokenIndex)
+      || DjangoFlaskUtil.isCloseClauseStartingWthPercentage(fullLineTokens, tokenIndex)) return true;
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, tokenIndex);
   }
 
