@@ -124,6 +124,10 @@ suite('Ember Invertion Suite', () => {
       input: `is-car {{if isFast "zoooom" "putt-putt-putt"}}`,
       output: `is-car {{if !isFast "zoooom" "putt-putt-putt"}}`,
     },
+    {
+      input: `if this.thingIsTrue "value-if-true" "value-if-false"}}>Block form</div`,
+      output: `if !this.thingIsTrue "value-if-true" "value-if-false"}}>Block form</div`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

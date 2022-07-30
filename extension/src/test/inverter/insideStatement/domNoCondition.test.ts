@@ -124,6 +124,10 @@ suite('DOM No Condition Invertion Suite', () => {
       input: `dog">`,
       output: `dog">`,
     },
+    {
+      input: `className="asdasd">Block form</div`,
+      output: `className="asdasd">Block form</div`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

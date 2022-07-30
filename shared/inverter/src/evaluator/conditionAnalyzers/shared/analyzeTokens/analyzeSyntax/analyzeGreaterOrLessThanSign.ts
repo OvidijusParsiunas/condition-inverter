@@ -1,10 +1,10 @@
 import { AnalyzeArithmeticAndAssignmentOperator } from './analyzeArithmeticAndAssignmentOperator';
+import { LOGICAL_OPERATOR_PART_JSON } from '../../../../../shared/consts/specialTokens';
 import { TraversalUtil } from '../../../../../shared/functionality/traversalUtil';
 import { EvaluationState } from '../../../../../shared/types/evaluationState';
 import { AnalyzeBitwiseShiftOperator } from './analyzeBitwiseShiftOperator';
 import { AnalyzeBrackatableSyntax } from './analyzeBrackatableSyntax';
 import { Tokens } from '../../../../../shared/types/tokens';
-import { LOGICAL_OPERATOR_PART_JSON } from '../../../../../shared/consts/specialTokens';
 
 export class AnalyzeGreaterOrLessThanSign {
   private static isTypeScriptGenericVariableStart(tokens: Tokens, index: number): number {

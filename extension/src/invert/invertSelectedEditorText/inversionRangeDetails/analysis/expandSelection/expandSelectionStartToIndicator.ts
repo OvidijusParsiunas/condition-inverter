@@ -15,10 +15,13 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {
-  private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true, ['{']: true } as TokensJSON;
+  private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true } as TokensJSON;
+  // symbols that may need to stop extension depending on what is around them
+  private static readonly potentialStopSymbols = { ['{']: true, ['}']: true };
   private static readonly stopSymbols = {
     ...LineTokenTraversalUtil.conditionIndicators,
     ...ExpandSelectionStartToIndicator.auxStopSymbols,
+    ...ExpandSelectionStartToIndicator.potentialStopSymbols,
     ...STRING_QUOTE_JSON,
   } as TokensJSON;
 
@@ -40,7 +43,8 @@ export class ExpandSelectionStartToIndicator {
     const startPositionDetails: StartPositionDetails = {
       position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(lineTokens, index) },
     };
-    if (!ExpandSelectionStartToIndicator.auxStopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.auxStopSymbols]) {
+    if (!ExpandSelectionStartToIndicator.auxStopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.auxStopSymbols]
+        && !ExpandSelectionStartToIndicator.potentialStopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.potentialStopSymbols]) {
       startPositionDetails.startOperatorPadding = token as string;
     }
     return startPositionDetails;
@@ -49,10 +53,10 @@ export class ExpandSelectionStartToIndicator {
   // stop token is a token that should end further expansion
   private static isStopToken(fullLineTokens: Tokens, { index, token }: FirstFoundToken): boolean {
     return (
-      (token !== ')' || !ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
-      !CurlyBracketSyntaxUtil.isStringTemplateOpenToken(fullLineTokens, index) &&
-      (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
-        ExpandSelectionStartToIndicator.auxStopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.auxStopSymbols])
+      ((token !== ')' || !ShouldExpandSelectionStartPastCloseBracket.check(fullLineTokens, index)) &&
+        (ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, index, false) ||
+          ExpandSelectionStartToIndicator.auxStopSymbols[token as keyof typeof ExpandSelectionStartToIndicator.auxStopSymbols])) ||
+      CurlyBracketSyntaxUtil.isStartSelectionExpansionStopToken(fullLineTokens, index)
     );
   }
 

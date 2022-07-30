@@ -8,6 +8,7 @@ import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversa
 import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../../../shared/lineTokenTraversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+import { CurlyBracketSyntaxUtil } from '../../../shared/curlyBracketSyntaxUtil';
 
 export class SelectionStartDetailsForHTMLToken {
   private static createPositionDetails(fullLineTokens: Tokens, tokenIndex: number, line: number): StartPositionDetails {
@@ -74,6 +75,8 @@ export class SelectionStartDetailsForHTMLToken {
       return SelectionStartDetailsForHTMLToken.createIfStringQuoteHTMLAttribute(fullLineTokens, line, previousTokenIndex, currentIndex);
     } else if (fullLineTokens[currentIndex] === '<') {
       return SelectionStartDetailsForHTMLToken.createIfLessThanSymbolHTMLAttribute(fullLineTokens, line, previousTokenIndex, currentIndex);
+    } else if (CurlyBracketSyntaxUtil.isEmberCloseClause(fullLineTokens, currentIndex)) {
+      return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, currentIndex, line);
     }
     return SelectionStartDetailsForHTMLToken.createIfFrameworkConditionSyntax(fullLineTokens, line, previousTokenIndex);
   }

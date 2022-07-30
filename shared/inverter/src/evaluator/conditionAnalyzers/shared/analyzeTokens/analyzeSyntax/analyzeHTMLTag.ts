@@ -67,8 +67,14 @@ export class AnalyzeHTMLTag {
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex + 1);
       if (tokens[nextTokenIndex] === '{' || tokens[nextTokenIndex] === '<') return true;
       // assumption (relatively dangerous) that if a string quote appears before >, > is for tag end symbol
+      // }> with no prior { token
       const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, currentIndex - 1, false);
-      if (STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON]) return true;
+      if (
+        STRING_QUOTE_JSON[tokens[previousTokenIndex] as keyof typeof STRING_QUOTE_JSON] ||
+        (tokens[previousTokenIndex] === '}' && TraversalUtil.getIndexOfOpenBrace(tokens, previousTokenIndex, 1) === -1)
+      ) {
+        return true;
+      }
       const htmlTagOpenSymbol = TraversalUtil.findTokenIndex(tokens, currentIndex, '<', false);
       if (htmlTagOpenSymbol > -1) {
         return AnalyzeHTMLTag.isTagStartSymbol(tokens, htmlTagOpenSymbol);

@@ -2,11 +2,11 @@
 import {
   AnalyzeConditionOutsideStatement
 } from 'shared/inverter/src/evaluator/conditionAnalyzers/analyzeConditionOutsideStatement/analyzeConditionOutsideStatement';
-import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
 import { STATEMENT_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
+import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { IsTextHighlighted } from '../shared/isTextHighlighted';
 import { TextEditor, Position } from 'vscode';
@@ -16,7 +16,9 @@ export class IsStartBeforeStopToken {
   private static isConditionIndicatorForSelect(
       fullLineTokens: Tokens, nonSpaceIndex: number, charIndexForFullLine: number, isNonSymbolBeforeStart: boolean): boolean {
     const isConditionIndicator = ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, charIndexForFullLine)
-      || fullLineTokens[nonSpaceIndex + charIndexForFullLine] === ';';
+      || fullLineTokens[nonSpaceIndex + charIndexForFullLine] === ';'
+      // when |} for html value or ember close clause |}} or }|}
+      || CurlyBracketSyntaxUtil.isHTMLClose(fullLineTokens, nonSpaceIndex + charIndexForFullLine);
     // if start on/before condition and there are no symbol tokens on the same line before it, do not expand further
     return isConditionIndicator ? isNonSymbolBeforeStart : false;
   }
@@ -54,10 +56,9 @@ export class IsStartBeforeStopToken {
     // when start selection before :, can safely assume that it is for end of python if statement
     // when start selection before ;, can safely assume end of for loop conditional statement
     if (fullLineTokens[tokenIndex] === ':' || fullLineTokens[tokenIndex] === ';') return true;
-    if (fullLineTokens[tokenIndex] === ')') {
-      return IsStartBeforeStopToken.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
-    }
-    if (fullLineTokens[tokenIndex] === '}') return AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(fullLineTokens, tokenIndex); 
+    if (fullLineTokens[tokenIndex] === ')') return IsStartBeforeStopToken.isTokenBeforeCloseBracketConditionIndicator(editor, line, character);
+    // when |} for html value or ember close clause |}} or }|}
+    if (CurlyBracketSyntaxUtil.isHTMLClose(fullLineTokens, tokenIndex)) return true;
     return ConditionIndicatorValidator.isTokenIndexPartOfConditionIndicator(fullLineTokens, tokenIndex);
   }
 

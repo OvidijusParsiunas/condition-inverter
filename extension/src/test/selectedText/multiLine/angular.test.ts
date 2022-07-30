@@ -524,26 +524,6 @@ suite('Selected Angular Statement Suite', () => {
     {
       lines: [
         {
-          input: '<div [class.my_class]="condition" [ngIf]=\n',
-          output: '<div [class.my_class]="condition" [ngIf]=',
-        },
-        {
-          input: '"condition"\n',
-          output: '"!condition"',
-        },
-        {
-          input: '>\n',
-          output: '>',
-        },
-      ],
-      selection: {
-        start: new vscode.Position(1, 0),
-        end: new vscode.Position(1, 11),
-      },
-    },
-    {
-      lines: [
-        {
           input: '<div [class.my_class]="condition" [ngIf]="\n',
           output: '<div [class.my_class]="condition" [ngIf]="',
         },
