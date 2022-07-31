@@ -1,9 +1,10 @@
+import { STATEMENT_JSON, STRING_QUOTE_JSON } from '../../../../../../shared/consts/specialTokens';
 import { TraversalUtil } from '../../../../../../shared/functionality/traversalUtil';
 import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBrackets';
-import { STRING_QUOTE_JSON } from '../../../../../../shared/consts/specialTokens';
 import { EvaluationState } from '../../../../../../shared/types/evaluationState';
 import { StartEndIndexes } from '../../../../../../shared/types/StartEndIndexes';
 import { FirstFoundToken } from '../../../../../../shared/types/firstFoundToken';
+import { TokensJSON } from '../../../../../../shared/types/tokensJSON';
 import { LANGUAGE } from '../../../../../../shared/consts/languages';
 import { SetEvaluationState } from './shared/setEvaluationState';
 import { Tokens } from '../../../../../../shared/types/tokens';
@@ -18,7 +19,7 @@ export class SetStateForGenericStatement {
   private static getStatementEndIndexForNoSymbols(startSymbolIndex: number, tokensFromStartSymbol: Tokens): FirstFoundToken | null {
     // prettier-ignore
     const statementEndIndex = TraversalUtil.findFirstTokenFromSelection(
-      tokensFromStartSymbol, startSymbolIndex, { ['{']: true, ['}']: true, ['%']: true });
+      tokensFromStartSymbol, startSymbolIndex, { ['{']: true, ['}']: true, ['%']: true, ...(STATEMENT_JSON as TokensJSON) });
     if (statementEndIndex?.token === '%') {
       if (tokensFromStartSymbol[statementEndIndex.index + 1] !== '>' && tokensFromStartSymbol[statementEndIndex.index + 1] !== '}') {
         return SetStateForGenericStatement.getStatementEndIndexForNoSymbols(statementEndIndex.index + 1, tokensFromStartSymbol);

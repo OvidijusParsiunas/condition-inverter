@@ -256,8 +256,8 @@ suite('Highlighted Ember Statement Suite', () => {
     {
       lines: [
         {
-          input: `<div class={{if this.thingIsTrue "value-if-true" "value-if-false"}}>\n`,
-          output: `<div class={{if !this.thingIsTrue "value-if-true" "value-if-false"}}>`,
+          input: `<div class={{if this.thingIsTrue "value-true" "value-false"}}>\n`,
+          output: `<div class={{if !this.thingIsTrue "value-true" "value-false"}}>`,
         },
         {
           input: `Block form\n`,

@@ -7,13 +7,13 @@ import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidat
 import { STRING_QUOTE_JSON } from 'shared/inverter/src/shared/consts/specialTokens';
 import { StartPositionDetails } from '../../../shared/types/inversionRangeDetails';
 import { FirstFoundToken } from 'shared/inverter/src/shared/types/firstFoundToken';
+import { DjangoFlaskUtil } from './htmlTagUtils/specialisedSyntax/djangoFlaskUtil';
 import { LineTokenTraversalUtil } from '../shared/lineTokenTraversalUtil';
 import { CurlyBracketSyntaxUtil } from '../shared/curlyBracketSyntaxUtil';
 import { TokensJSON } from 'shared/inverter/src/shared/types/tokensJSON';
 import { IsStartBeforeStopToken } from './isStartBeforeStopToken';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
-import { DjangoFlaskUtil } from './htmlTagUtils/specialisedSyntax/djangoFlaskUtil';
 
 export class ExpandSelectionStartToIndicator {
   private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true, ['%']: true } as TokensJSON;

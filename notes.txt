@@ -5,7 +5,7 @@ tasks:
 
 get it to work for *ngIf and v-if
 
-extension:
+Extension:
 
 if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imported ifInverter code is using relative path instead of the module path
 
@@ -21,7 +21,40 @@ If cursor is between >|<, selection is extended to both sides to prevent symbol 
 If cursor is at start of editor and the first token is < or end of editor and last token is >, do not include them in the selection - e.g. |< changed to <| and >| changed to |>
 If cursor is beside < or > - the general strategy (as above) is to not include them in the selection
 
-website:
+
+Outstanding ISSUES with highlighed html tags:
+
+The following highlight selection: |text <dog>| - will result in the selection to be changed to |text <dogs|> and the inversion will result in |text >=dogs|>
+this is difficult to fix as <if="|condition">| needs to have the selection to be changed to <if="|condition"|>
+Likewise, text |<div>div content</div>| will result in the selection to be changed to <|div>div content</div>| and the inversion will result in <|div<=div content</div>|
+this originates from a similar problem to the fact that |<div if="condition|"> needs to have the selection changed to <|div if="condition|"> to be inverted correctly
+
+The ONLY way the above can be fixed is having one side of the cursor selection to be changed by what is on the other side of the selection.
+
+On multiline statements, if a condition indicator is not on the same line as the condition and the cursor has been selected (not highlighted) after the condition word, it will not be inverted:
+
+if (
+  condition|
+)
+
+Will result in:
+
+if (
+  condition|
+)
+
+the reason for this is because if there selected cursor is after a word, it will not traverse upwards to find the condition indicator (for performance), hence the following is sent to
+the inverter:
+
+condition\n)
+
+which is not inverted
+
+---
+
+
+
+Website:
 
 the website has an alternative top right logo that is a github corner, however decided to not use it as we need to use a vscode logo as well
 
