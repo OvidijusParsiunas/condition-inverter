@@ -445,5 +445,17 @@ suite('Highlighted Python Statement Suite', () => {
         end: new vscode.Position(0, 13),
       },
     },
+    {
+      lines: [
+        {
+          input: 'elif dog: print',
+          output: 'elif !dog: print',
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 0),
+        end: new vscode.Position(0, 15),
+      },
+    },
   ]);
 });

@@ -34,7 +34,7 @@ export class AnalyzeRedundantBrackets {
       startTokenIndex < endTokenIndex &&
       tokens[startTokenIndex] === '(' &&
       tokens[endTokenIndex] === ')' &&
-      TraversalUtil.getIndexOfClosingBracket(tokens, startIndex - 1) === endTokenIndex
+      TraversalUtil.getIndexOfClosingBracket(tokens, startIndex - 1, 0) === endTokenIndex
     );
   }
 

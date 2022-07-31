@@ -67,23 +67,23 @@ export class TraversalUtil {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, nextIndex, openSyntax, closeSyntax, openSyntaxes, traverseForwards);
   }
 
-  public static getIndexOfClosingBracket(tokens: Tokens, index: number, openBrackets = 0): number {
+  public static getIndexOfClosingBracket(tokens: Tokens, index: number, openBrackets: number): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '(', ')', openBrackets);
   }
 
-  public static getIndexOfOpenBracket(tokens: Tokens, index: number, closeBrackets = 0): number {
+  public static getIndexOfOpenBracket(tokens: Tokens, index: number, closeBrackets: number): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, ')', '(', closeBrackets, false);
   }
 
-  public static getIndexOfClosingBrace(tokens: Tokens, index: number, openBrackets = 0): number {
+  public static getIndexOfClosingBrace(tokens: Tokens, index: number, openBrackets: number): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '{', '}', openBrackets);
   }
 
-  public static getIndexOfOpenBrace(tokens: Tokens, index: number, openBrackets = 0): number {
+  public static getIndexOfOpenBrace(tokens: Tokens, index: number, openBrackets: number): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '}', '{', openBrackets, false);
   }
 
-  public static getIndexOfCurrentTernaryColon(tokens: Tokens, index: number, openBrackets = 0): number {
+  public static getIndexOfCurrentTernaryColon(tokens: Tokens, index: number, openBrackets: number): number {
     return TraversalUtil.getIndexOfClosingSyntaxToken(tokens, index, '?', ':', openBrackets);
   }
 }

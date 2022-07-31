@@ -15,17 +15,6 @@ export class SelectionStartDetailsForHTMLToken {
     return { position: { line, character: LineTokenTraversalUtil.getTokenStringIndex(fullLineTokens, tokenIndex) } };
   }
 
-  private static createIfFrameworkConditionSyntax(fullLineTokens: Tokens, line: number, previousTokenIndex: number): StartPositionDetails | null {
-    if (
-      AnalyzeFrontendFramework.isStartOfAngularJSOrVueDirective(fullLineTokens, previousTokenIndex) ||
-      AnalyzeFrontendFramework.isAngular2Directive(fullLineTokens, previousTokenIndex) ||
-      AnalyzeFrontendFramework.isStartOfEmberIsActiveArgument(fullLineTokens, previousTokenIndex)
-    ) {
-      return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, previousTokenIndex, line);
-    }
-    return null;
-  }
-
   private static createIfVueClassNameObjectSyntax(fullLineTokens: Tokens, line: number, currentIndex: number): StartPositionDetails {
     const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, currentIndex - 1, false);
     return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, previousTokenIndex, line);
@@ -84,7 +73,9 @@ export class SelectionStartDetailsForHTMLToken {
       return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, currentIndex, line);
     } else if (AnalyzeFrontendFramework.isEndOfVueClassNameObjectSyntax(fullLineTokens, currentIndex)) {
       return SelectionStartDetailsForHTMLToken.createIfVueClassNameObjectSyntax(fullLineTokens, line, currentIndex);
+    } else if (AnalyzeFrontendFramework.isAngular2Directive(fullLineTokens, previousTokenIndex)) {
+      return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, previousTokenIndex, line);
     }
-    return SelectionStartDetailsForHTMLToken.createIfFrameworkConditionSyntax(fullLineTokens, line, previousTokenIndex);
+    return null;
   }
 }

@@ -25,18 +25,17 @@ export class AnalyzeArithmeticAndAssignmentOperator {
     return index + 3;
   }
 
+  // no check for whether |, & or ? as the only classes that call it have done the verification and test coverage drops for checks that don't fail
   public static updateStateIfLogicalAssignment(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     const firstSymbol = tokens[index];
-    if (firstSymbol === '&' || firstSymbol === '|' || firstSymbol === '?') {
-      if (tokens[index + 1] === firstSymbol) {
-        if (tokens[index + 2] === '=') {
-          AnalyzeBrackatableSyntax.updateState(evaluationState);
-          return index + 2;
-        }
-      } else if (tokens[index + 1] === '=') {
+    if (tokens[index + 1] === firstSymbol) {
+      if (tokens[index + 2] === '=') {
         AnalyzeBrackatableSyntax.updateState(evaluationState);
-        return index + 1;
+        return index + 2;
       }
+    } else if (tokens[index + 1] === '=') {
+      AnalyzeBrackatableSyntax.updateState(evaluationState);
+      return index + 1;
     }
     return -1;
   }

@@ -20,7 +20,7 @@ export class SelectionEndPositionForHTMLTag {
 
   // move cursor to the end of open tag <%| or <%=|
   private static getNewPositionAfterBackBoneASPNETOpenTag(previousTokenDetails: MultiLineSearchResult, percentageIndex: number): Position {
-    const delta = previousTokenDetails.fullLineTokens[previousTokenDetails.tokenIndex + percentageIndex] === '=' ? 2 : 1;
+    const delta = previousTokenDetails.fullLineTokens[previousTokenDetails.tokenIndex + percentageIndex + 1] === '=' ? 2 : 1;
     return SelectionPositionForHTMLTagShared.getNewPosition(previousTokenDetails, previousTokenDetails.tokenIndex + delta + percentageIndex);
   }
 

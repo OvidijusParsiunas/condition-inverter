@@ -7,7 +7,7 @@ export class AnalyzeExclamationMark {
   private static updateStateForExclamationWithBracket(tokens: Tokens, index: number, evaluationState: EvaluationState): number {
     // -1 can be returned for partial conditions where tokens end without a close bracket, in such scenarios move to the last token e.g:
     // dog && cat && !( - will be inverted to - dog && cat && ( without the bracket removal as there is no token for the close bracket
-    const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, index);
+    const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, index, 0);
     if (closeBracketIndex > -1) {
       evaluationState.shouldBracketsBeRemoved = true;
       return closeBracketIndex;
@@ -28,7 +28,7 @@ export class AnalyzeExclamationMark {
     const lastExclamationMarkIndex = AnalyzeExclamationMark.findLastExclamationMarkIndex(tokens, index + 1);
     const nextNonSpaceCharIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, lastExclamationMarkIndex + 1);
     if (tokens[nextNonSpaceCharIndex] === '(') {
-      return TraversalUtil.getIndexOfClosingBracket(tokens, lastExclamationMarkIndex);
+      return TraversalUtil.getIndexOfClosingBracket(tokens, lastExclamationMarkIndex, 0);
     }
     return lastExclamationMarkIndex;
   }

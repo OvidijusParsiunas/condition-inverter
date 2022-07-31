@@ -36,10 +36,7 @@ export class AnalyzeQuestionMark {
     // checks if ??=
     const assignmentResult = AnalyzeArithmeticAndAssignmentOperator.updateStateIfLogicalAssignment(tokens, index, evaluationState);
     if (assignmentResult > -1) return assignmentResult;
-    if (index < tokens.length) {
-      const operatorResult = AnalyzeQuestionMark.updateStateForNullishCoalescingOrTernaryOperator(tokens, index, index + 1, evaluationState);
-      if (operatorResult > -1) return operatorResult;
-    }
-    return index;
+    const operatorResult = AnalyzeQuestionMark.updateStateForNullishCoalescingOrTernaryOperator(tokens, index, index + 1, evaluationState);
+    return operatorResult > -1 ? operatorResult : index;
   }
 }

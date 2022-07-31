@@ -6,9 +6,6 @@ export class DjangoFlaskUtil {
   }
 
   public static isCloseClauseStartingWthCloseBrace(fullLineTokens: Tokens, index: number): boolean {
-    if (fullLineTokens[index] === '}') {
-      return fullLineTokens[index - 1] === '%';
-    }
-    return false;
+    return fullLineTokens[index - 1] === '%';
   }
 }

@@ -14,19 +14,6 @@ export class EvaluateAndPrepareOutsideStatement {
   // prettier-ignore
   private static getIndexForEqualsOrContinue(
       tokens: Tokens, equalsIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
-    // arrow function
-    if (tokens[equalsIndex + 1] === '>') {
-      const openBracketIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, '(', false);
-      const closeBracketIndex = TraversalUtil.getIndexOfClosingBracket(tokens, openBracketIndex, 1);
-      if (closeBracketIndex > -1 && closeBracketIndex < equalsIndex) {
-        return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, openBracketIndex, evaluationState, traversalState);
-      }
-    } else if (tokens[equalsIndex - 1] === ':') {
-      // this is used to prevent := from being inverted when there is no ;
-      // e.g: if num := 9
-      const semicolonIndex = TraversalUtil.findTokenIndex(tokens, equalsIndex, ';');
-      return semicolonIndex === -1 ? tokens.length : semicolonIndex;
-    }
     if (tokens[equalsIndex - 1] === '>' || tokens[equalsIndex - 1] === '<') {
       return EvaluateAndPrepareOutsideStatement.getStartIndexAfterSymbol(tokens, equalsIndex - 1, originalIndex, evaluationState, traversalState);
     }
@@ -42,27 +29,10 @@ export class EvaluateAndPrepareOutsideStatement {
     return IsTokenWord.check(tokens[previousIndex]);
   }
 
-  private static getLastExclamationMark(tokens: Tokens, index: number): number {
-    const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index, false);
-    if (tokens[previousIndex] === '!') {
-      return EvaluateAndPrepareOutsideStatement.getLastExclamationMark(tokens, previousIndex - 1);
-    }
-    if (tokens[previousIndex] === '(') {
-      const indexBeforeOpenBracket = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, previousIndex - 1, false);
-      if (tokens[indexBeforeOpenBracket] === '!' || tokens[indexBeforeOpenBracket] === '(') {
-        return EvaluateAndPrepareOutsideStatement.getLastExclamationMark(tokens, indexBeforeOpenBracket);
-      }
-    }
-    return index + 1;
-  }
-
   // prettier-ignore
   private static getIndexAroundOpenBracket(
       tokens: Tokens, openBracketIndex: number, indexAfterBracket: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
     const previousIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, openBracketIndex - 1, false);
-    if (tokens[previousIndex] === '!') {
-      return EvaluateAndPrepareOutsideStatement.getLastExclamationMark(tokens, previousIndex);
-    }
     if (tokens[previousIndex] === '(') {
       // prettier-ignore
       return EvaluateAndPrepareOutsideStatement.getIndexForOpenBracket(
@@ -91,7 +61,7 @@ export class EvaluateAndPrepareOutsideStatement {
   // prettier-ignore
   private static getIndexIfOutsideTernaryOperator(
       tokens: Tokens, previousIndex: number, originalIndex: number, evaluationState: EvaluationState, traversalState: TraversalState): number {
-    if (tokens[previousIndex - 1] !== '?' && tokens[originalIndex + 1] !== '?' && tokens[originalIndex + 1] !== '.') {
+    if (tokens[previousIndex - 1] !== '?' && tokens[previousIndex + 1] !== '?' && tokens[previousIndex + 1] !== '.') {
       return originalIndex;
     }
     return EvaluateAndPrepareOutsideStatement.getStartIndex(tokens, previousIndex, evaluationState, traversalState);

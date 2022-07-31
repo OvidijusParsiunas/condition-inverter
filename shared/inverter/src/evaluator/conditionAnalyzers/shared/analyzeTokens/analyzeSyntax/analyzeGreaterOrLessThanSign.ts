@@ -17,7 +17,7 @@ export class AnalyzeGreaterOrLessThanSign {
     if (greaterThanIndex > -1 && (anotherLowerThanIndex === -1 || greaterThanIndex < anotherLowerThanIndex)) {
       const tokenAfterLowerThanIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokensAfterLowerThan, greaterThanIndex + 1);
       if (tokenAfterLowerThanIndex > -1 && tokensAfterLowerThan[tokenAfterLowerThanIndex] === '(') {
-        return indexAfterLowerThan + TraversalUtil.getIndexOfClosingBracket(tokensAfterLowerThan, greaterThanIndex);
+        return indexAfterLowerThan + TraversalUtil.getIndexOfClosingBracket(tokensAfterLowerThan, greaterThanIndex, 0);
       }
     }
     return -1;

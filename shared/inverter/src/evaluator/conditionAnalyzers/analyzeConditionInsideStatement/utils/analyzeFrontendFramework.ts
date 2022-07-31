@@ -4,18 +4,6 @@ import { Tokens } from '../../../../shared/types/tokens';
 // important to note that html attribute conditions are regarded and analysed as outside of statement conditions, however there
 // are dom conditions that must be inverted without a condition symbol such as ng-hide; ng-hide="dog" = ng-hide="!dog"
 export class AnalyzeFrontendFramework {
-  // ng-hide, ng-show, v-show
-  public static isStartOfAngularJSOrVueDirective(tokens: Tokens, index: number): boolean {
-    // ng - angular
-    // v - vue
-    if (tokens[index] === 'ng' || tokens[index] === 'v') {
-      if (tokens[index + 1] === '-') {
-        return tokens[index + 2] === 'hide' || tokens[index + 2] === 'show';
-      }
-    }
-    return false;
-  }
-
   public static isStartOfVueClassNameObjectSyntax(tokens: Tokens, index: number): boolean {
     if (tokens[index] === 'active') {
       const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
@@ -39,8 +27,7 @@ export class AnalyzeFrontendFramework {
       // v - vue
       return tokens[index - 1] === '-' && (tokens[index - 2] === 'ng' || tokens[index - 2] === 'v');
     }
-    if (tokens[index] === 'active') return AnalyzeFrontendFramework.isStartOfVueClassNameObjectSyntax(tokens, index);
-    return false;
+    return AnalyzeFrontendFramework.isStartOfVueClassNameObjectSyntax(tokens, index);
   }
 
   private static isEmberIsActiveVariablePrefixSymbols(tokens: Tokens, isActiveTokenIndex: number): boolean {
@@ -51,13 +38,6 @@ export class AnalyzeFrontendFramework {
         const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterEquals + 1);
         return tokens[indexOfTokenAfterOpenCurlyBrace] === '{';
       }
-    }
-    return false;
-  }
-
-  public static isStartOfEmberIsActiveArgument(tokens: Tokens, atSymbolTokenIndex: number): boolean {
-    if (tokens[atSymbolTokenIndex] === '@' && tokens[atSymbolTokenIndex + 1] === 'isActive') {
-      return AnalyzeFrontendFramework.isEmberIsActiveVariablePrefixSymbols(tokens, atSymbolTokenIndex + 1);
     }
     return false;
   }

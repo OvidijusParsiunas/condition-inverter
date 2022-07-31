@@ -79,7 +79,7 @@ export class SetStateForGenericStatement {
   // prettier-ignore
   private static getBrackatableStatementIndexesAndSetLanguage(
       tokens: Tokens, analysisStartIndex: number, startSymbolIndex: number, evaluationState: EvaluationState): StartEndIndexes {
-    const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, analysisStartIndex);
+    const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, analysisStartIndex, 0);
     const siblingIndexAfterCloseBracket = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, endIndex + 1);
     if (tokens[siblingIndexAfterCloseBracket] === ':') {
       evaluationState.language = LANGUAGE.python;
@@ -90,18 +90,13 @@ export class SetStateForGenericStatement {
     };
   }
 
-  private static getStartEndIndexesIfEmberIsActiveArgument(tokens: Tokens, symbolIndexAfterEquals: number): StartEndIndexes | null {
-    if (tokens[symbolIndexAfterEquals] === '{') {
-      const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, symbolIndexAfterEquals + 1);
-      if (tokens[indexOfTokenAfterOpenCurlyBrace] === '{') {
-        const endQuoteIndex = TraversalUtil.getIndexOfClosingBrace(tokens, indexOfTokenAfterOpenCurlyBrace, 1);
-        return {
-          start: indexOfTokenAfterOpenCurlyBrace,
-          end: endQuoteIndex,
-        };
-      }
-    }
-    return null;
+  private static getStartEndIndexesIfEmberIsActiveArgument(tokens: Tokens, symbolIndexAfterEquals: number): StartEndIndexes {
+    const indexOfTokenAfterOpenCurlyBrace = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, symbolIndexAfterEquals + 1);
+    const endQuoteIndex = TraversalUtil.getIndexOfClosingBrace(tokens, indexOfTokenAfterOpenCurlyBrace, 1);
+    return {
+      start: indexOfTokenAfterOpenCurlyBrace,
+      end: endQuoteIndex,
+    };
   }
 
   private static getVueClassNameObjectSyntaxIndexes(tokens: Tokens, colonIndex: number): StartEndIndexes {
@@ -146,7 +141,7 @@ export class SetStateForGenericStatement {
       return endStatementPosition || { start: tokens.length - 1, end: -1 };
     }
     if (tokens[indexOfTokenAfterStartSymbol] === ':'
-        && AnalyzeFrontendFramework.isStartOfVueClassNameObjectSyntax(tokens, indexOfTokenAfterStartSymbol-1)) {
+        && AnalyzeFrontendFramework.isStartOfVueClassNameObjectSyntax(tokens, indexOfTokenAfterStartSymbol - 1)) {
       return SetStateForGenericStatement.getVueClassNameObjectSyntaxIndexes(tokens, indexOfTokenAfterStartSymbol);
     }
     return SetStateForGenericStatement.isEqualsSymbolForHTMLAttribute(tokens, indexOfTokenAfterStartSymbol);

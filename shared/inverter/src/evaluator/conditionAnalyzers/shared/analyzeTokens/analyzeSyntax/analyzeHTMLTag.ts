@@ -49,12 +49,6 @@ export class AnalyzeHTMLTag {
 
   private static isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens: Tokens, index: number): boolean {
     if (index < 0 || jstsReservedTerminatingWords[tokens[index] as keyof typeof jstsReservedTerminatingWords]) return false;
-    if (tokens[index] === '=') {
-      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
-      if (STRING_QUOTE_JSON[tokens[nextTokenIndex] as keyof typeof STRING_QUOTE_JSON]) {
-        return true;
-      }
-    }
     if (tokens[index] === '}') return AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(tokens, index);
     return AnalyzeHTMLTag.isHTMLAttributeIndicatorBeforeGreaterThanSymbol(tokens, index - 1);
   }

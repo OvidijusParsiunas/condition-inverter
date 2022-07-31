@@ -287,6 +287,8 @@ suite('Outside Statement Inversion Suite', () => {
       input: 'const dog = cat ? fish : parrot\nconst dog = cat ? fish : parrot',
       output: 'const dog = !cat ? fish : parrot\nconst dog = !cat ? fish : parrot',
     },
+    { input: 'const dog = cat?.dog ?? cat', output: 'const dog = cat?.dog ?? cat' },
+    { input: 'const dog = cat?.dog && cat', output: 'const dog = !cat?.dog || !cat' },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

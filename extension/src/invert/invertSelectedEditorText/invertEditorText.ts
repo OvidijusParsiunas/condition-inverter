@@ -7,7 +7,6 @@ export class InvertSelectedEditorText {
   public static invert(editor: TextEditor): void {
     editor.edit((selectedText) => {
       const inversionRangeDetails = InversionRangeDetailsFactory.create(editor);
-      if (!inversionRangeDetails) return;
       const textToInvert = editor.document.getText(inversionRangeDetails.range);
       if (inversionRangeDetails.startOperatorPadding.length > 0 || inversionRangeDetails.endOperatorPadding.length > 0) {
         InvertTextWithPadding.invertAndReplace(inversionRangeDetails, textToInvert, selectedText);

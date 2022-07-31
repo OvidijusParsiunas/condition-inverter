@@ -25,7 +25,7 @@ export class MarkValueForInversion {
 
   private static markForNegatedBracketRemoval(tokens: Tokens, evaluationState: EvaluationState): void {
     const { currentConditionStartIndex: startOfCurrentStatementInsideIndex, syntaxToBeInverted } = evaluationState;
-    const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, startOfCurrentStatementInsideIndex - 1);
+    const endIndex = TraversalUtil.getIndexOfClosingBracket(tokens, startOfCurrentStatementInsideIndex - 1, 0);
     syntaxToBeInverted.push({
       start: startOfCurrentStatementInsideIndex,
       removeNegatedBrackets: { start: startOfCurrentStatementInsideIndex, end: endIndex },
