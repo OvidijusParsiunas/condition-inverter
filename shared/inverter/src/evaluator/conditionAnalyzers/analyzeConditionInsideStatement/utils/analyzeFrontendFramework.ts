@@ -16,6 +16,22 @@ export class AnalyzeFrontendFramework {
     return false;
   }
 
+  public static isStartOfVueClassNameObjectSyntax(tokens: Tokens, index: number): boolean {
+    if (tokens[index] === 'active') {
+      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index + 1);
+      return tokens[nextTokenIndex] === ':';
+    }
+    return false;
+  }
+
+  public static isEndOfVueClassNameObjectSyntax(tokens: Tokens, index: number): boolean {
+    if (tokens[index] === ':') {
+      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, index - 1, false);
+      return tokens[previousTokenIndex] === 'active';
+    }
+    return false;
+  }
+
   // ng-hide, ng-show, v-show
   public static isEndofAngularJSOrVueDirective(tokens: Tokens, index: number): boolean {
     if (tokens[index] === 'hide' || tokens[index] === 'show') {
@@ -23,6 +39,7 @@ export class AnalyzeFrontendFramework {
       // v - vue
       return tokens[index - 1] === '-' && (tokens[index - 2] === 'ng' || tokens[index - 2] === 'v');
     }
+    if (tokens[index] === 'active') return AnalyzeFrontendFramework.isStartOfVueClassNameObjectSyntax(tokens, index);
     return false;
   }
 

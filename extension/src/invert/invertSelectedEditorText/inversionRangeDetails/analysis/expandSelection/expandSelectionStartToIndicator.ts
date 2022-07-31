@@ -16,7 +16,7 @@ import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 import { Range, TextEditor } from 'vscode';
 
 export class ExpandSelectionStartToIndicator {
-  private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true, ['%']: true } as TokensJSON;
+  private static readonly auxStopSymbols = { [')']: true, [';']: true, [':']: true, ['%']: true, [',']: true } as TokensJSON;
   // symbols that may need to stop extension depending on what is around them
   private static readonly potentialStopSymbols = { ['{']: true, ['}']: true };
   private static readonly stopSymbols = {

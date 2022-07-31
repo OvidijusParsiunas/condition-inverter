@@ -4,6 +4,7 @@ import { AnalyzeRedundantBrackets } from '../redundancies/analyzeRedundantBracke
 import { EvaluationState } from '../../../../../../shared/types/evaluationState';
 import { StartEndIndexes } from '../../../../../../shared/types/StartEndIndexes';
 import { FirstFoundToken } from '../../../../../../shared/types/firstFoundToken';
+import { AnalyzeFrontendFramework } from '../../analyzeFrontendFramework';
 import { TokensJSON } from '../../../../../../shared/types/tokensJSON';
 import { LANGUAGE } from '../../../../../../shared/consts/languages';
 import { SetEvaluationState } from './shared/setEvaluationState';
@@ -103,6 +104,14 @@ export class SetStateForGenericStatement {
     return null;
   }
 
+  private static getVueClassNameObjectSyntaxIndexes(tokens: Tokens, colonIndex: number): StartEndIndexes {
+    const firstFoundToken = TraversalUtil.findFirstTokenFromSelection(tokens, colonIndex + 1, { [',']: true, ['}']: true });
+    return {
+      start: colonIndex,
+      end: firstFoundToken ? firstFoundToken.index : -1,
+    };
+  }
+
   private static isEqualsSymbolForHTMLAttribute(tokens: Tokens, indexOfTokenAfterStartSymbol: number): StartEndIndexes | null {
     if (tokens[indexOfTokenAfterStartSymbol] === '=') {
       const symbolIndexAfterEquals = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, indexOfTokenAfterStartSymbol + 1);
@@ -121,6 +130,7 @@ export class SetStateForGenericStatement {
     return null;
   }
 
+  // prettier-ignore
   private static getHTMLAttributeIndexes(tokens: Tokens, startSymbolIndex: number): StartEndIndexes | null {
     let indexOfTokenAfterStartSymbol = TraversalUtil.getSiblingNonSpaceTokenIndex(tokens, startSymbolIndex);
     if (tokens[indexOfTokenAfterStartSymbol] === '.') {
@@ -134,6 +144,10 @@ export class SetStateForGenericStatement {
       const endStatementPosition = SetStateForGenericStatement.isEqualsSymbolForHTMLAttribute(tokens, indexOfTokenAfterCloseSquareBracket);
       // if no equals or other symbols after, set end to -1 to indicate that there is no statement
       return endStatementPosition || { start: tokens.length - 1, end: -1 };
+    }
+    if (tokens[indexOfTokenAfterStartSymbol] === ':'
+        && AnalyzeFrontendFramework.isStartOfVueClassNameObjectSyntax(tokens, indexOfTokenAfterStartSymbol-1)) {
+      return SetStateForGenericStatement.getVueClassNameObjectSyntaxIndexes(tokens, indexOfTokenAfterStartSymbol);
     }
     return SetStateForGenericStatement.isEqualsSymbolForHTMLAttribute(tokens, indexOfTokenAfterStartSymbol);
   }

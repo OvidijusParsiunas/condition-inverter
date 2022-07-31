@@ -88,6 +88,22 @@ suite('Vue Invertion Suite', () => {
       input: `<div :style="[item.main_featured ? {'background': 'url(' + item + ') center no-repeat'} : {'background': '#FFF'}]"></div>`,
       output: `<div :style="[!item.main_featured ? {'background': 'url(' + item + ') center no-repeat'} : {'background': '#FFF'}]"></div>`,
     },
+    {
+      input: `<div :class="[{ active: cat }, errorClass]"></div>`,
+      output: `<div :class="[{ active: !cat }, errorClass]"></div>`,
+    },
+    {
+      input: `<div :class="[{ active:cat }, errorClass]"></div>`,
+      output: `<div :class="[{ active:!cat }, errorClass]"></div>`,
+    },
+    {
+      input: `<div :class="[{active:cat}, errorClass]"></div>`,
+      output: `<div :class="[{active:!cat}, errorClass]"></div>`,
+    },
+    {
+      input: `<div :class="[{ active: cat, anotherProperty: dog }, errorClass]"></div>`,
+      output: `<div :class="[{ active: !cat, anotherProperty: dog }, errorClass]"></div>`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

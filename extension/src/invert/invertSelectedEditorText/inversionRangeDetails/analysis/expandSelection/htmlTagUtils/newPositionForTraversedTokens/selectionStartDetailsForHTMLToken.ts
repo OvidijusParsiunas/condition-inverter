@@ -26,6 +26,11 @@ export class SelectionStartDetailsForHTMLToken {
     return null;
   }
 
+  private static createIfVueClassNameObjectSyntax(fullLineTokens: Tokens, line: number, currentIndex: number): StartPositionDetails {
+    const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, currentIndex - 1, false);
+    return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, previousTokenIndex, line);
+  }
+
   // prettier-ignore
   private static createIfLessThanSymbolHTMLAttribute(
       fullLineTokens: Tokens, line: number, previousTokenIndex: number, currentLessThanSymbolIndex: number): StartPositionDetails | null {
@@ -77,6 +82,8 @@ export class SelectionStartDetailsForHTMLToken {
       return SelectionStartDetailsForHTMLToken.createIfLessThanSymbolHTMLAttribute(fullLineTokens, line, previousTokenIndex, currentIndex);
     } else if (CurlyBracketSyntaxUtil.isScopeClose(fullLineTokens, currentIndex)) {
       return SelectionStartDetailsForHTMLToken.createPositionDetails(fullLineTokens, currentIndex, line);
+    } else if (AnalyzeFrontendFramework.isEndOfVueClassNameObjectSyntax(fullLineTokens, currentIndex)) {
+      return SelectionStartDetailsForHTMLToken.createIfVueClassNameObjectSyntax(fullLineTokens, line, currentIndex);
     }
     return SelectionStartDetailsForHTMLToken.createIfFrameworkConditionSyntax(fullLineTokens, line, previousTokenIndex);
   }
