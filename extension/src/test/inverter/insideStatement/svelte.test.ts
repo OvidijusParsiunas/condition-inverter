@@ -44,6 +44,18 @@ suite('Svelte Invertion Suite', () => {
       input: `if shape == 'circle'}`,
       output: `if shape != 'circle'}`,
     },
+    {
+      input: `{#if 'READY' === status}<h1>Hello World!</h1>{:`,
+      output: `{#if 'READY' !== status}<h1>Hello World!</h1>{:`,
+    },
+    {
+      input: `{:else if dog}<h1>Loading...</h1>{:else}<h1>Initiating</h1>{/if}`,
+      output: `{:else if !dog}<h1>Loading...</h1>{:else}<h1>Initiating</h1>{/if}`,
+    },
+    {
+      input: `{#if 'READY' === status}<h1>Hello World!</h1>{:else if dog}<h1>Loading...</h1>{:else}<h1>Initiating</h1>{/if}`,
+      output: `{#if 'READY' !== status}<h1>Hello World!</h1>{:else if !dog}<h1>Loading...</h1>{:else}<h1>Initiating</h1>{/if}`,
+    },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

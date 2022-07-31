@@ -1,21 +1,13 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { DjangoFlaskUtil } from '../expandSelection/htmlTagUtils/specialisedSyntax/djangoFlaskUtil';
+import { SvelteUtil } from '../expandSelection/htmlTagUtils/specialisedSyntax/svelteUtil';
+import { EmberUtil } from '../expandSelection/htmlTagUtils/specialisedSyntax/emberUtil';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { Tokens } from 'shared/inverter/src/shared/types/tokens';
 
 export class CurlyBracketSyntaxUtil {
-  public static isStringTemplateOpenToken(tokens: Tokens, currentIndex: number): boolean {
+  private static isStringTemplateOpenToken(tokens: Tokens, currentIndex: number): boolean {
     return tokens[currentIndex] === '{' && tokens[currentIndex - 1] === '$';
-  }
-
-  public static isEmberCloseClause(fullLineTokens: Tokens, index: number): boolean {
-    if (fullLineTokens[index] === '}') {
-      const previousTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index - 1, false);
-      if (fullLineTokens[previousTokenIndex] === '}') return true;
-      const nextTokenIndex = TraversalUtil.getSiblingNonSpaceTokenIndex(fullLineTokens, index + 1);
-      return fullLineTokens[nextTokenIndex] === '}';
-    }
-    return false;
   }
 
   private static isEmberOpenClause(tokens: Tokens, currentIndex: number): boolean {
@@ -43,12 +35,13 @@ export class CurlyBracketSyntaxUtil {
     );
   }
 
-  // when |} for html value, ember close clause |}} or }|}, or django close clause %|}
+  // when |} for html value, ember close clause |}} or }|}, svelte {:else if |}, django close clause %|},
   public static isScopeClose(tokens: Tokens, currentIndex: number): boolean {
     if (tokens[currentIndex] === '}') {
       return (
         AnalyzeHTMLTag.isCloseBraceForHTMLAttribribute(tokens, currentIndex) ||
-        CurlyBracketSyntaxUtil.isEmberCloseClause(tokens, currentIndex) ||
+        EmberUtil.isCloseClause(tokens, currentIndex) ||
+        SvelteUtil.isCloseClause(tokens, currentIndex) ||
         DjangoFlaskUtil.isCloseClauseStartingWthCloseBrace(tokens, currentIndex)
       );
     }

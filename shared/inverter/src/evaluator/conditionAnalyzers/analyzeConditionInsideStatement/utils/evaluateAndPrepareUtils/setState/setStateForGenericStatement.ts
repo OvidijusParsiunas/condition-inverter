@@ -47,9 +47,7 @@ export class SetStateForGenericStatement {
     };
   }
 
-  // prettier-ignore
-  private static getStatementWithColonEndIndexesAndSetLanguage(
-      startSymbolIndex: number, colonIndex: number, evaluationState: EvaluationState): StartEndIndexes {
+  private static getPythonStatementIndexes(startSymbolIndex: number, colonIndex: number, evaluationState: EvaluationState): StartEndIndexes {
     evaluationState.language = LANGUAGE.python;
     return {
       start: startSymbolIndex - 1,
@@ -58,16 +56,23 @@ export class SetStateForGenericStatement {
   }
 
   // prettier-ignore
+  private static getStatementWithColonEndIndex(
+    tokensFromStartSymbol: Tokens, startSymbolIndex: number, colonIndex: number, evaluationState: EvaluationState): StartEndIndexes {
+  if (tokensFromStartSymbol[colonIndex + 1] !== '=') {
+    return SetStateForGenericStatement.getPythonStatementIndexes(startSymbolIndex, colonIndex, evaluationState);
+  }
+  return SetStateForGenericStatement.getGoStatementIndexes(startSymbolIndex, tokensFromStartSymbol, evaluationState);
+}
+
+  // prettier-ignore
   private static getNoBracketsStatementIndexesAndSetLanguage(
       tokens: Tokens, startSymbolIndex: number, evaluationState: EvaluationState): StartEndIndexes {
     const tokensFromStartSymbol = tokens.slice(startSymbolIndex);
     const colonIndex = tokensFromStartSymbol.indexOf(':');
-    if (colonIndex > -1 && tokensFromStartSymbol[colonIndex + 1] !== '=') {
-      return SetStateForGenericStatement.getStatementWithColonEndIndexesAndSetLanguage(startSymbolIndex, colonIndex, evaluationState);
+    if (colonIndex > -1 && tokensFromStartSymbol[colonIndex - 1] !== '{') {
+      return SetStateForGenericStatement.getStatementWithColonEndIndex(tokensFromStartSymbol, startSymbolIndex, colonIndex, evaluationState);
     }
-    return colonIndex > -1
-      ? SetStateForGenericStatement.getGoStatementIndexes(startSymbolIndex, tokensFromStartSymbol, evaluationState)
-      : SetStateForGenericStatement.getStatementWithNoSymbolsIndexes(startSymbolIndex, tokensFromStartSymbol);
+    return SetStateForGenericStatement.getStatementWithNoSymbolsIndexes(startSymbolIndex, tokensFromStartSymbol);
   }
 
   // prettier-ignore

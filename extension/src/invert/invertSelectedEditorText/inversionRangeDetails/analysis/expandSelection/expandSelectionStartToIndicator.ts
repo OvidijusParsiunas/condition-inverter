@@ -1,6 +1,6 @@
 import { AnalyzeHTMLTag } from 'shared/inverter/src/evaluator/conditionAnalyzers/shared/analyzeTokens/analyzeSyntax/analyzeHTMLTag';
 import { SelectionStartDetailsForHTMLToken } from './htmlTagUtils/newPositionForTraversedTokens/selectionStartDetailsForHTMLToken';
-import { SelectionStartPositionForHTMLTag } from './htmlTagUtils/newPositionForImmediateTokens/selectioStartPositionForHTMLTag';
+import { SelectionStartPositionForHTMLTag } from './htmlTagUtils/newPositionForImmediateTokens/selectionStartPositionForHTMLTag';
 import { ShouldExpandSelectionStartPastCloseBracket } from './expandSelectionStartPastCloseBracket';
 import { TraversalUtil } from 'shared/inverter/src/shared/functionality/traversalUtil';
 import { ConditionIndicatorValidator } from '../shared/conditionIndicatorValidator';
