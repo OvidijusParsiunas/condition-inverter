@@ -25,8 +25,8 @@
 }
 
 #invert-button:active {
-  color: rgb(58, 57, 31);
-  background-color: #fff8c5;
+  color: #333;
+  background-color: #d4d4d4;
 }
 
 /* when screen width is small - move the button lower */

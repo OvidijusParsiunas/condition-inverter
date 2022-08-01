@@ -45,7 +45,7 @@
 }
 
 #github-logo:hover {
-  filter: brightness(0) saturate(100%) invert(86%) sepia(42%) saturate(268%) hue-rotate(10deg) brightness(108%) contrast(100%);
+  filter: brightness(0) saturate(100%) invert(0%) sepia(95%) saturate(7499%) hue-rotate(237deg) brightness(96%) contrast(100%);
 }
 
 .logo {

@@ -15,7 +15,7 @@
     "Formatters",
     "Other"
   ],
-  "icon": "resources/extension-icon.png",
+  "icon": "assets/extension-icon.png",
   "galleryBanner": {
     "color": "#06362d",
     "theme": "dark"

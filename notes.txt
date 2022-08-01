@@ -7,6 +7,10 @@ not sure if individual test:coverage scripts are needed
 
 get it to work for *ngIf and v-if
 
+add keys to the website
+investigate the potential opportunity for this to work in the browser:
+https://code.visualstudio.com/api/extension-guides/web-extensions
+
 Extension:
 
 if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imports from shared/inverter are module paths and not relative paths
