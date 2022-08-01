@@ -1,4 +1,4 @@
-import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
+import { Inverter } from 'shared/inverter/src/inverter';
 import * as assert from 'assert';
 
 // INVERTION RESULT:

@@ -1,13 +1,21 @@
 #title {
   left: 50%;
   color: white;
-  font-size: 34px;
+  font-size: 33px;
   margin-top: 3.6vh;
   position: absolute;
   white-space: nowrap;
   pointer-events: none;
   transform: translateX(-50%);
   font-family: 'Inter', sans-serif;
+}
+
+#title-logo {
+  color: yellow;
+}
+
+.individual-title-content {
+  float: left;
 }
 
 /* when screen height is small - move the title higher and make the font smaller */

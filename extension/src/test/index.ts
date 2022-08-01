@@ -10,8 +10,8 @@ export async function run(): Promise<void> {
     color: true,
   });
 
-  const nyc = await NYC.setupCoverage();
-  mocha.reporter('xunit', { output: '../testspace/xunit.xml' });
+  const nyc = process.env.COVERAGE ? await NYC.setupCoverage() : null;
+  if (process.env.COVERAGE) mocha.reporter('xunit', { output: '../testspace/xunit.xml' });
 
   const testsRoot = path.resolve(__dirname, '..');
   const files = glob.sync('**/**.test.js', { cwd: testsRoot });

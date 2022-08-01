@@ -1,12 +1,12 @@
 import './title.css';
 
 export default function Title() {
-  // WORK: refactor
   return (
     <div id="title">
-      <div style={{ float: 'left', fontSize: 33 }}>If (</div>
-      <div style={{ float: 'left' }}>Inverter</div>
-      <div style={{ marginTop: 0, fontSize: 33 }}>)</div>
+      <div className="individual-title-content">Condition Inverter</div>
+      <div id="title-logo" className="individual-title-content">
+        &#60;&#62;
+      </div>
     </div>
   );
 }

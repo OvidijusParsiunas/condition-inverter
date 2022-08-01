@@ -7,7 +7,14 @@ get it to work for *ngIf and v-if
 
 Extension:
 
-if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imported ifInverter code is using relative path instead of the module path
+if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imports from shared/inverter are module paths and not relative paths
+e.g. for code:
+change :import { Tokens } from '../../../../../../../../shared/inverter/src/shared/types/tokens';
+to: import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+
+for tests:
+change: import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
+to: import { Inverter } from 'shared/inverter/src/inverter';
 
 STRATEGY:
 
