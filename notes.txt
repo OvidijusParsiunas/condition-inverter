@@ -3,6 +3,8 @@ tasks:
 * Get a logo for the app
 * Update all of the readmes
 
+not sure if individual test:coverage scripts are needed
+
 get it to work for *ngIf and v-if
 
 Extension:

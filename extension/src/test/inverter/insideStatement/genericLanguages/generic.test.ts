@@ -1,4 +1,4 @@
-import { Inverter } from '../shared/inverter/src/inverter';
+import { Inverter } from 'shared/inverter/src/inverter';
 import * as assert from 'assert';
 
 // when the user highlights arbitrary conditions using the extension:

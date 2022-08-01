@@ -21,12 +21,12 @@
 
 #invert-button:hover {
   color: #333;
-  background-color: #e6e6e6;
+  background-color: #f5f5e8;
 }
 
 #invert-button:active {
   color: rgb(58, 57, 31);
-  background-color: #f8efa8;
+  background-color: #fff8c5;
 }
 
 /* when screen width is small - move the button lower */

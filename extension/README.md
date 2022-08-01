@@ -1,5 +1,3 @@
-#If Inverter
-
 <div align="center">
     <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch">
         <img style="margin-left: -84px" src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch" alt="Build status">
@@ -10,32 +8,26 @@
     </a>
 </div>
 
-A simple tool used to invert if statements for all programming languages.
+# Condition Inverter
+
+Invert conditions for all modern programming languages and frameworks!
 
 [insert gif here]
 
-[VS Code Marketplace](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website)
+[VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter)
 
 ## Theory
 
-This tool has been designed to directly invert the conditional syntax within an if statement for it to produce an absolute opposite result. This is illustrated by the following table:
+This tool has been designed to invert conditional syntax into a format that would produce an absolute opposite result. This is illustrated by the following table:
 
-Properties: dog = true, cat = false.
+| Properties | Original if statement | Result | Inverted if statement | Result |
+| :---  | :---  | :---- | :---- | :---- |
+| dog = true, cat = false | dog && cat | false  | !dog &#124; &#124; !cat | true |
+| dog = 3, cat = 2 | dog < cat  | false |  dog >= cat | true |
 
-| Original if statement | Result | Inverted if statement | Result |
-| :---  | :---- | :---- | :---- |
-| if (dog) | true |  if (!dog) | false |
-| if (dog && cat) | false  | if (!dog &#124; &#124; !cat) | true |
-| if (dog &#124;&#124; cat) | true | if (!dog && !cat) | false |
-| if (dog < cat) | false |  if (dog >= cat) | true |
-
-Whilst the if statement inversion problem can be solved by simply wrapping the conditional logic between brackets and adding an exclamation mark in the front; such process would only add redundant complexity - lowering code cohesion and maintainability. Hence, to produce sound results and uphold code quality - this tool has been designed to invert specific areas of code that would yield maximum cohesion with minimal intrusion to its existing structure:
-
-| Input | Naive result :ballot_box_with_check: | If Inverter result :white_check_mark: |
-| :--- | :---- | :--- |
-| if (!(dog)) | if (!(!(dog))) | if (dog) |
-| if (true && 0) | if (!(true && 0)) | if (false &#124;&#124; 1) |
-| if (((dog && cat))) | if (!((dog && cat))) | if (((!dog &#124;&#124; !cat))) |
+## Language Support
+This tool has been designed to support all *modern* progrogramming languages/frameworks. This encompasses technologies that have been ranked as the most popular on the [Stack Overflow Developer Survey](https://survey.stackoverflow.co/2022/#technology-most-popular-technologies). <br>
+As a disclaimer this tool does not currently support query, shell scripting or assembly based languages.
 
 ## Local setup
 ```
@@ -60,5 +52,4 @@ $ npm run test:coverage
 
 ## Contributions
 
-Open source is built by the community for the community. All contributions to this project are welcome!
-<br> Additionally, if you have any suggestions for enhancements, ideas on how to take the project further or have discovered a bug, do not hesitate to create a new ticket and we will look into it as soon as possible!
+Open source is built by the community for the community. All contributions to this project are welcome! If your language/framework is not supported, you have discovered a bug, or have any suggestions for enhancements, do not hesitate to create a new ticket and we will look into it as soon as possible!
