@@ -1,3 +1,7 @@
+TO-DO:
+
+Overall:
+
 tasks:
 * Publish extension
 * Get a logo for the app
@@ -11,29 +15,8 @@ add keys to the website
 investigate the potential opportunity for this to work in the browser:
 https://code.visualstudio.com/api/extension-guides/web-extensions
 
-Extension:
 
-if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imports from shared/inverter are module paths and not relative paths
-e.g. for code:
-change :import { Tokens } from '../../../../../../../../shared/inverter/src/shared/types/tokens';
-to: import { Tokens } from 'shared/inverter/src/shared/types/tokens';
-
-for tests:
-change: import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
-to: import { Inverter } from 'shared/inverter/src/inverter';
-
-STRATEGY:
-
-REF - 1334
-When the user has highlighted or selected an arbitrary position within a line, the algorithm attempts to expand and find the closest condition indicator on the left and right,
-however to not have to traverse upwards and downwards infinitely, it looks for the first non space token on each side and then attempts to find the condition indicator on that line
-
-REF - 1335
-Strategy for extending user cursor selection in VSCode exntension when working with HTML:
-If cursor is between >|<, selection is extended to both sides to prevent symbol inversion by the inverter |><|
-If cursor is at start of editor and the first token is < or end of editor and last token is >, do not include them in the selection - e.g. |< changed to <| and >| changed to |>
-If cursor is beside < or > - the general strategy (as above) is to not include them in the selection
-
+EXTENSION:
 
 Outstanding ISSUES with highlighed html tags:
 
@@ -63,11 +46,9 @@ condition\n)
 
 which is not inverted
 
----
 
 
-
-Website:
+WEBSITE:
 
 the website has an alternative top right logo that is a github corner, however decided to not use it as we need to use a vscode logo as well
 
@@ -81,3 +62,32 @@ E.g:
 if (!(hello)) = if (hello)
 
 The code can easily be changed to fit this by simply removing the code at REF - 1889
+
+
+
+
+KNOWLEDGE:
+
+if test coverage is not meeting the threshold exclusively in Windows, need to make sure that the imports from shared/inverter are module paths and not relative paths
+e.g. for code:
+change :import { Tokens } from '../../../../../../../../shared/inverter/src/shared/types/tokens';
+to: import { Tokens } from 'shared/inverter/src/shared/types/tokens';
+
+for tests:
+change: import { Inverter } from '../../../../../shared/out/inverter/src/inverter';
+to: import { Inverter } from 'shared/inverter/src/inverter';
+
+
+
+
+STRATEGY:
+
+REF - 1334
+When the user has highlighted or selected an arbitrary position within a line, the algorithm attempts to expand and find the closest condition indicator on the left and right,
+however to not have to traverse upwards and downwards infinitely, it looks for the first non space token on each side and then attempts to find the condition indicator on that line
+
+REF - 1335
+Strategy for extending user cursor selection in VSCode exntension when working with HTML:
+If cursor is between >|<, selection is extended to both sides to prevent symbol inversion by the inverter |><|
+If cursor is at start of editor and the first token is < or end of editor and last token is >, do not include them in the selection - e.g. |< changed to <| and >| changed to |>
+If cursor is beside < or > - the general strategy (as above) is to not include them in the selection
