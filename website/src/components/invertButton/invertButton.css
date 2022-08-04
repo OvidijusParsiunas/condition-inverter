@@ -20,12 +20,12 @@
 }
 
 #invert-button:hover {
-  color: #333;
+  color: rgb(27, 27, 27);
   background-color: #f5f5e8;
 }
 
 #invert-button:active {
-  color: #333;
+  color: rgb(27, 27, 27);
   background-color: #d4d4d4;
 }
 
