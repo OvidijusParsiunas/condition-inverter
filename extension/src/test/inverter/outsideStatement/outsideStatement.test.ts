@@ -131,6 +131,10 @@ suite('Outside Statement Inversion Suite', () => {
       output: '!mouse\r?\nmouse\r:cat && dog\rconst dog = !dog || !cat',
     },
     {
+      input: `mouse\t?\nmouse\t:cat && dog\tconst dog = dog && cat`,
+      output: '!mouse\t?\nmouse\t:cat && dog\tconst dog = !dog || !cat',
+    },
+    {
       input: `mouse?mouse:cat;const dog = dog && cat`,
       output: '!mouse?mouse:cat;const dog = !dog || !cat',
     },

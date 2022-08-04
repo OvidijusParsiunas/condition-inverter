@@ -806,6 +806,9 @@ suite('Generic Inversion Suite', () => {
     { input: 'isNaN(width) || isNaN(height)) { console.log(2) }', output: '!isNaN(width) && !isNaN(height)) { console.log(2) }' },
     { input: 'throw (dog && cat)', output: 'throw (!dog || !cat)' },
     { input: `if (dog) { } dog ? cat : dog`, output: `if (!dog) { } !dog ? cat : dog` },
+    { input: `if (		dog && 		cat)`, output: `if (		!dog || 		!cat)` },
+    { input: `if (\t\tdog &&\t\tcat)`, output: `if (\t\t!dog ||\t\t!cat)` },
+    { input: `if (\r\rdog &&\r\rcat)`, output: `if (\r\r!dog ||\r\r!cat)` },
   ].forEach((testProps) => {
     test(testProps.input, () => {
       const result = Inverter.invert(testProps.input);

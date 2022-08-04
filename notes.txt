@@ -3,7 +3,6 @@ TO-DO:
 Overall:
 
 tasks:
-* Publish extension
 * Get a logo for the app
 * Update all of the readmes
 
