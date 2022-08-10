@@ -1,4 +1,4 @@
-import { SetPostInvertionSelection } from '../../shared/functionality/setPositionInvertionSelection';
+import { SetPostInvertionSelection } from '../../shared/functionality/setPostSelection';
 import { Range, Selection, TextEditorEdit } from 'vscode';
 import { Inverter } from 'shared/inverter/src/inverter';
 

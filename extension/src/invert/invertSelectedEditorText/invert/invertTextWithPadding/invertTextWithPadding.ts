@@ -1,4 +1,4 @@
-import { SetPostInvertionSelection } from '../../shared/functionality/setPositionInvertionSelection';
+import { SetPostInvertionSelection } from '../../shared/functionality/setPostSelection';
 import { InversionRangeDetails } from '../../shared/types/inversionRangeDetails';
 import { InvertTextWithStartPadding } from './invertTextWithStartPadding';
 import { InvertTextWithPaddingImpl } from './InvertTextWithPaddingImpl';
