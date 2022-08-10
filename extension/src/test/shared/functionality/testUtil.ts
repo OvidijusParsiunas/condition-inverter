@@ -42,13 +42,17 @@ export class TestUtil {
   }
 
   private static testOutput(textEditor: vscode.TextEditor, testProps: TestProps, doneCallback: () => void): void {
-    const { selection, lines } = testProps;
-    textEditor.selection = new vscode.Selection(selection.start, selection.end);
+    const { lines, postSelection } = testProps;
     // compare result by each line
     lines.forEach((line, index) => {
       const resultTextOutput = textEditor.document.lineAt(index).text;
       assert.strictEqual(resultTextOutput, line.output);
     });
+    // check cursor position after invertion
+    if (postSelection) {
+      assert.strictEqual(textEditor.selection.start.character, postSelection.start.character);
+      assert.strictEqual(textEditor.selection.end.character, postSelection.end.character);
+    }
     doneCallback();
   }
 

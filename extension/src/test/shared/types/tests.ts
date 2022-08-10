@@ -13,6 +13,8 @@ export interface SelectionPositions {
 export interface TestProps {
   lines: IOLineTestProps;
   selection: SelectionPositions;
+  // post invertion selection positions
+  postSelection?: SelectionPositions;
 }
 
 export interface TextEditorObj {

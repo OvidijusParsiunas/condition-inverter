@@ -1,9 +1,11 @@
+import { SetSelectionEnd } from '../../shared/functionality/setSelectionEnd';
+import { Range, TextEditor, TextEditorEdit } from 'vscode';
 import { Inverter } from 'shared/inverter/src/inverter';
-import { Range, TextEditorEdit } from 'vscode';
 
 export class InvertText {
-  public static invertAndReplace(range: Range, textToInvert: string, selectedText: TextEditorEdit): void {
+  public static invertAndReplace(editor: TextEditor, range: Range, textToInvert: string, selectedText: TextEditorEdit): void {
     const invertedText = Inverter.invert(textToInvert);
     selectedText.replace(range, invertedText);
+    SetSelectionEnd.set(editor, textToInvert, invertedText);
   }
 }

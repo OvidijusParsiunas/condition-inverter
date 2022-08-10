@@ -5,10 +5,9 @@ Overall:
 tasks:
 * Get a logo for the app
 * Update all of the readmes
+* Extension files that are not needed to run, should be ignored
 
 not sure if individual test:coverage scripts are needed
-
-get it to work for *ngIf and v-if
 
 add keys to the website
 investigate the potential opportunity for this to work in the browser:

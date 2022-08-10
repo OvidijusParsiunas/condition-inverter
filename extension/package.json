@@ -1,7 +1,7 @@
 {
   "name": "condition-inverter",
   "displayName": "Condition Inverter",
-  "version": "0.5.0",
+  "version": "0.9.0",
   "description": "Invert conditions for all modern programming languages and frameworks",
   "keywords": [
     "condition",
@@ -15,7 +15,7 @@
     "Formatters",
     "Other"
   ],
-  "icon": "assets/extension-icon.png",
+  "icon": "assets/active/extension-icon-5.png",
   "galleryBanner": {
     "color": "#06362d",
     "theme": "dark"
