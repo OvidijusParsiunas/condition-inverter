@@ -114,6 +114,22 @@ suite('Retain Highlighted Statement Position Suite', () => {
     {
       lines: [
         {
+          input: `if (!cat && dog) {`,
+          output: `if (cat && dog) {`,
+        },
+      ],
+      selection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 5),
+      },
+      postSelection: {
+        start: new vscode.Position(0, 4),
+        end: new vscode.Position(0, 4),
+      },
+    },
+    {
+      lines: [
+        {
           input: `if (cat && dog) {`,
           output: `if (cat && dog) {`,
         },
