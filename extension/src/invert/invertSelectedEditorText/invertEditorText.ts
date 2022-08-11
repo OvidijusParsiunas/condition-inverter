@@ -9,9 +9,9 @@ export class InvertSelectedEditorText {
       const inversionRangeDetails = InversionRangeDetailsFactory.create(editor);
       const textToInvert = editor.document.getText(inversionRangeDetails.range);
       if (inversionRangeDetails.startOperatorPadding.length > 0 || inversionRangeDetails.endOperatorPadding.length > 0) {
-        InvertTextWithPadding.invertAndReplace(editor.selection, inversionRangeDetails, textToInvert, selectedText);
+        InvertTextWithPadding.invertAndReplace(editor, inversionRangeDetails, textToInvert, selectedText);
       } else {
-        InvertText.invertAndReplace(editor.selection, inversionRangeDetails.range, textToInvert, selectedText);
+        InvertText.invertAndReplace(editor, inversionRangeDetails.range, textToInvert, selectedText);
       }
     });
   }

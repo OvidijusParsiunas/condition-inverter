@@ -4,7 +4,7 @@ import { InvertTextWithStartPadding } from './invertTextWithStartPadding';
 import { InvertTextWithPaddingImpl } from './InvertTextWithPaddingImpl';
 import { InvertTextWithEndPadding } from './invertTextWithEndPadding';
 import { Inverter } from 'shared/inverter/src/inverter';
-import { Selection, TextEditorEdit } from 'vscode';
+import { TextEditor, TextEditorEdit } from 'vscode';
 
 export class InvertTextWithPadding {
   private static setNewRangeIfStart(inversionRangeDetails: InversionRangeDetails): void {
@@ -35,7 +35,7 @@ export class InvertTextWithPadding {
   }
 
   // prettier-ignore
-  public static invertAndReplace(selection: Selection, inversionRangeDetails: InversionRangeDetails, textToInvert: string,
+  public static invertAndReplace(editor: TextEditor, inversionRangeDetails: InversionRangeDetails, textToInvert: string,
       selectedText: TextEditorEdit): void {
     const paddingInversionClasses = InvertTextWithPadding.getInvertWithPaddingClasses(inversionRangeDetails);
     const paddedConditionText = InvertTextWithPadding.processTextViaPaddingClasses(textToInvert, 'prepareText', paddingInversionClasses);
@@ -43,6 +43,6 @@ export class InvertTextWithPadding {
     const processedInvertedText = InvertTextWithPadding.processTextViaPaddingClasses(invertedText, 'processInvertedText', paddingInversionClasses);
     InvertTextWithPadding.setNewRangeIfStart(inversionRangeDetails);
     selectedText.replace(inversionRangeDetails.range, processedInvertedText);
-    SetPostInvertionSelection.set(selection, paddedConditionText, invertedText);
+    SetPostInvertionSelection.set(editor, paddedConditionText, invertedText);
   }
 }
