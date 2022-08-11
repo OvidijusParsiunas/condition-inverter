@@ -21,14 +21,14 @@ Invert conditions for all modern programming languages and frameworks!
 [Link](http://conditioninverter.com/), [Github](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website)
 
 <p align="center">
-    <img width="850" src="assets/readme/gifs/website-animation.gif" alt="Logo">
+    <img width="830" src="assets/readme/gifs/website-animation.gif" alt="Logo">
 </p>
 
 #### VS Code Extension
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter), [Github](https://github.com/OvidijusParsiunas/condition-inverter/blob/main/extension)
 <p align="center">
-    <img width="850" src="assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="830" src="assets/readme/gifs/extension-animation.gif" alt="Logo">
 </p>
 
 

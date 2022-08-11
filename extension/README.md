@@ -20,17 +20,17 @@ Invert conditions for all modern programming languages and frameworks!
 Highlight conditions that you want to invert:
 
 <p align="center">
-    <img width="850" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="830" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
 </p>
 
 Invert conditions inside html templates:
 <p align="center">
-    <img width="850" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="830" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
 </p>
 
 Invert conditions for ternary operators, for loops, and more:
 <p align="center">
-    <img width="850" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="830" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
 </p>
 
 ## How to use
