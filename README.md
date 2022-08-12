@@ -1,3 +1,7 @@
+<p align="center"> 
+    <img width="100%" src="assets/readme/png/extension-banner-2.png" alt="Logo">
+</p>
+
 <div align="center">
     <a href="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg">
         <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Build status">
@@ -10,7 +14,7 @@
     </a>
 </div>
 
-# Condition Inverter
+# About
 
 Invert conditions for all modern programming languages and frameworks!
 
@@ -21,14 +25,14 @@ Invert conditions for all modern programming languages and frameworks!
 [Link](http://conditioninverter.com/), [Github](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website)
 
 <p align="center">
-    <img width="830" src="assets/readme/gifs/website-animation.gif" alt="Logo">
+    <img width="100%" src="assets/readme/gif/website-animation.gif" alt="Logo">
 </p>
 
 #### VS Code Extension
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter), [Github](https://github.com/OvidijusParsiunas/condition-inverter/blob/main/extension)
 <p align="center">
-    <img width="830" src="assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="100%" src="assets/readme/gif/extension-animation.gif" alt="Logo">
 </p>
 
 
