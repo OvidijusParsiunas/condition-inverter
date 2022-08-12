@@ -6,6 +6,8 @@ tasks:
 * Get a logo for the app
 * Update all of the readmes
 * Extension files that are not needed to run, should be ignored
+* change gif sizes to use 100% for all repos
+* use active/backup assets folder structure
 
 not sure if individual test:coverage scripts are needed
 

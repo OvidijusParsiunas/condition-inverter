@@ -1,3 +1,7 @@
+<p align="center"> 
+    <img width="100%" src="../assets/readme/png/extension-banner-2.png" alt="Logo">
+</p>
+
 <div align="center">
     <a href="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg">
         <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Build status">
@@ -10,7 +14,7 @@
     </a>
 </div>
 
-# Condition Inverter
+# About
 
 Invert conditions for all modern programming languages and frameworks!
 
@@ -20,17 +24,17 @@ Invert conditions for all modern programming languages and frameworks!
 Highlight conditions that you want to invert:
 
 <p align="center">
-    <img width="830" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="100%" src="../assets/readme/gif/extension-animation.gif" alt="Logo">
 </p>
 
 Invert conditions inside html templates:
 <p align="center">
-    <img width="830" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="100%" src="../assets/readme/gif/extension-animation.gif" alt="Logo">
 </p>
 
 Invert conditions for ternary operators, for loops, and more:
 <p align="center">
-    <img width="830" src="../assets/readme/gifs/extension-animation.gif" alt="Logo">
+    <img width="100%" src="../assets/readme/gif/extension-animation.gif" alt="Logo">
 </p>
 
 ## How to use

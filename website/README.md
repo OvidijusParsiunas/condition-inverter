@@ -1,3 +1,7 @@
+<p align="center"> 
+    <img width="100%" src="../assets/readme/png/extension-banner-2.png" alt="Logo">
+</p>
+
 <div align="center">
     <a href="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg">
         <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Build status">
@@ -10,7 +14,7 @@
     </a>
 </div>
 
-# Condition Inverter
+# About
 
 Invert conditions for all modern programming languages and frameworks!
 
