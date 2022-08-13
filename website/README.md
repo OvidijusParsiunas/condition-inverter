@@ -25,7 +25,7 @@ A simple tool used to invert conditions for all modern programming languages and
     <img width="100%" src="../assets/readme/gif/WEBSITE-ANIMATION-4.gif" alt="Logo">
 </p>
 
-Condition Inverter has been designed to invert conditional syntax within if statements, ternary operarators, conditional assignments and many more! It can also be used with html templates!
+Condition Inverter is designed to invert conditional syntax within if statements, ternary operarators, conditional assignments and many more! It can also be used with html templates!
 
 
 ## Theory

@@ -26,7 +26,7 @@ A simple tool used to invert conditions for all modern programming languages and
 Highlight conditions that you want to invert:
 
 <p align="center">
-    <img width="100%" src="../assets/readme/gif/EXTENSION-ANIMATION-RESOLUTION-1.gif" alt="Logo">
+    <img width="100%" src="../assets/readme/gif/EXTENSION-ANIMATION-NEW-2.gif" alt="Logo">
 </p>
 
 Invert conditions in ternary operators, for loops, and more:
