@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img width="90%" src="assets/readme/png/extension-banner-6.png" alt="Logo">
+    <img width="90%" src="assets/readme/png/extension-banner-11.png" alt="Logo">
 </p>
 
 <div align="center">
