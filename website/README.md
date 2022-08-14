@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img width="90%" src="../assets/readme/png/extension-banner-5.png" alt="Logo">
+    <img width="90%" src="../assets/readme/png/extension-banner-6.png" alt="Banner">
 </p>
 
 <div align="center">
@@ -22,7 +22,7 @@
 A simple tool used to invert conditions for all modern programming languages and frameworks!
 
 <p align="center">
-    <img width="100%" src="../assets/readme/gif/WEBSITE-ANIMATION-4.gif" alt="Logo">
+    <img width="100%" src="../assets/readme/gif/WEBSITE-ANIMATION-4.gif" alt="Website-gif">
 </p>
 
 Condition Inverter is designed to invert conditional syntax within if statements, ternary operarators, conditional assignments and many more! It can also be used with html templates!

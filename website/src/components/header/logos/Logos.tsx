@@ -1,4 +1,4 @@
-import { GITHUB_REPO_URL } from '../../../shared/consts/externalURLs';
+import { GITHUB_REPO_URL, VS_CODE_MARKETPLACE_URL } from '../../../shared/consts/externalURLs';
 // import GithubCornerSVG from '../../../static/GithubCornerSVG';
 import vscodeLogo from '../../../static/vscode-logo.png';
 import githubLogo from '../../../static/github-logo.png';
@@ -11,7 +11,7 @@ export default function Logos() {
         {/* <GithubCornerSVG /> */}
       </a>
       <div id="small-logos-container">
-        <a href={GITHUB_REPO_URL} target="_blank" rel="noreferrer">
+        <a href={VS_CODE_MARKETPLACE_URL} target="_blank" rel="noreferrer">
           <img id="vscode-logo" className="logo" src={vscodeLogo} alt="VSCode logo" />
         </a>
         <a href={GITHUB_REPO_URL} target="_blank" rel="noreferrer">
