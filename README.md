@@ -1,25 +1,25 @@
 <p align="center"> 
-    <img width="90%" src="assets/readme/png/extension-banner-6.png" alt="Banner">
+    <img width="90%" src="assets/readme/png/extension-banner-12.png" alt="Banner">
 </p>
 
 <div align="center">
     <a href="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg">
-        <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Build status">
+        <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Visual Studio Marketplace version">
     </a>
     <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch">
         <img src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch" alt="Build status">
     </a>
     <a href="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter">
-        <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Build status">
+        <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Code coverage">
     </a>
     <a href="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main">
-        <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main" alt="Build status">
+        <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main" alt="Number of tests that have passed">
     </a>
 </div>
 
 ## Description
 
-A simple tool used to invert conditions for all modern programming languages and frameworks!
+A simple tool used to invert conditions for all modern programming languages and frameworks! It can be used to invert if statements, ternary operators, conditional assignments and much more - in both standard code files and html templates!
 
 ## Platforms
 
@@ -33,10 +33,6 @@ VS Code Extension - [Marketplace](https://marketplace.visualstudio.com/items?ite
 <p align="center">
     <img width="100%" src="assets/readme/gif/PRESENTER-EXTENSION-ANIMATION.gif" alt="Extension gif">
 </p>
-
-
-## Features
-Condition Inverter has been designed to invert conditional syntax within if statements, ternary operarators, conditional assignments and many more! It is also fully functional in html templates!
 
 
 ## Theory

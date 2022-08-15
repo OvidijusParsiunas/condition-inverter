@@ -1,19 +1,19 @@
 <p align="center"> 
-    <img width="90%" src="assets/active/extension-banner-6.png" alt="Banner">
+    <img width="90%" src="assets/active/extension-banner-12.png" alt="Banner">
 </p>
 
 <div align="center">
     <a href="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg">
-        <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Build status">
+        <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Visual Studio Marketplace version">
     </a>
     <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch">
         <img src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch" alt="Build status">
     </a>
     <a href="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter">
-        <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Build status">
+        <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Code coverage">
     </a>
     <a href="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main">
-        <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main" alt="Build status">
+        <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main" alt="Number of tests that have passed">
     </a>
 </div>
 
@@ -71,13 +71,13 @@ Disclaimer - this tool does not currently support query, shell scripting or asse
 $ npm install
 
 # Compile dependencies and run the project in watch mode:
-$ npm run compile:watch
+$ npm run esbuild-watch
 
 # To run tests
-# Navigate to the ../shared directory and install its node dependencies:
+# First navigate to the ../shared directory and install its node dependencies:
 $ npm install
 
-# Navigate back to the ./extension directory and run tests:
+# Navigate back to the ./extension directory and run the tests:
 $ npm run test
 
 # Run tests with coverage:

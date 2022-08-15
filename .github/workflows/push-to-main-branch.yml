@@ -20,7 +20,7 @@ jobs:
       - name: Install and Test extension/inverter 🔧
         run: |
           npm install
-          npm run compile
+          npm run esbuild
         working-directory: ./extension
       - name: Run headless test 🔧
         uses: GabrielBB/xvfb-action@v1.0

@@ -1,7 +1,7 @@
 {
   "name": "condition-inverter",
   "displayName": "Condition Inverter",
-  "version": "0.13.0",
+  "version": "0.22.0",
   "description": "Invert conditions for all modern programming languages and frameworks",
   "keywords": [
     "condition",
@@ -36,7 +36,7 @@
     "email": "oparsiunas@googlemail.com"
   },
   "license": "MIT",
-  "main": "./out/extension.js",
+  "main": "./minifiedOut/extension.js",
   "activationEvents": [
     "onCommand:condition-inverter.invert"
   ],
@@ -57,10 +57,12 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc --build ./",
-    "compile:watch": "tsc --build -watch ./",
-    "pretest": "npm run compile && npm run lint",
+    "vscode:prepublish": "npm run esbuild-base -- --minify",
+    "esbuild": "npm run esbuild-base -- --sourcemap",
+    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
+    "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=minifiedOut/extension.js --external:vscode --format=cjs --platform=node",
+    "pretest": "npm run test-compile && npm run lint",
+    "test-compile": "tsc -p ./",
     "lint": "eslint ./src ../shared --ext ts",
     "test": "node ./out/test/runTest.js",
     "test:coverage": "run-script-os",
@@ -80,6 +82,7 @@
     "@typescript-eslint/eslint-plugin": "^5.12.1",
     "@typescript-eslint/parser": "^5.12.1",
     "@vscode/test-electron": "^2.1.2",
+    "esbuild": "^0.15.3",
     "eslint": "^8.9.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -87,8 +90,8 @@
     "mocha": "^9.2.1",
     "nyc": "^15.1.0",
     "prettier": "^2.6.1",
-    "typescript": "^4.5.5",
-    "run-script-os": "^1.1.6"
+    "run-script-os": "^1.1.6",
+    "typescript": "^4.5.5"
   },
   "__metadata": {
     "id": "e5427837-be71-44ee-b1c4-e41f6e7e4b12",
