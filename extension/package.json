@@ -36,7 +36,7 @@
     "email": "oparsiunas@googlemail.com"
   },
   "license": "MIT",
-  "main": "./minifiedOut/extension.js",
+  "main": "./out/extension.js",
   "activationEvents": [
     "onCommand:condition-inverter.invert"
   ],
@@ -57,12 +57,13 @@
     ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run esbuild-base -- --minify",
-    "esbuild": "npm run esbuild-base -- --sourcemap",
-    "esbuild-watch": "npm run esbuild-base -- --sourcemap --watch",
-    "esbuild-base": "npm run compile && esbuild ./src/extension.ts --bundle --outfile=minifiedOut/extension.js --external:vscode --format=cjs --platform=node",
+    "vscode:prepublish": "npm run esbuild:base -- --minify",
+    "esbuild": "npm run esbuild:base -- --sourcemap",
+    "esbuild:watch": "npm run esbuild:base -- --sourcemap --watch",
+    "esbuild:base": "npm run compile && esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node",
     "pretest": "npm run compile && npm run lint",
     "compile": "tsc --build ./",
+    "compile:watch": "tsc --build -watch ./",
     "lint": "eslint ./src ../shared --ext ts",
     "test": "node ./out/test/runTest.js",
     "test:coverage": "run-script-os",

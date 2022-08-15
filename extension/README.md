@@ -71,7 +71,7 @@ Disclaimer - this tool does not currently support query, shell scripting or asse
 $ npm install
 
 # Compile dependencies and run the project in watch mode:
-$ npm run esbuild-watch
+$ npm run compile:watch
 
 # To run tests
 # First navigate to the ../shared directory and install its node dependencies:

@@ -8,6 +8,7 @@ tasks:
 * Extension files that are not needed to run, should be ignored
 * change gif sizes to use 100% for all repos
 * use active/backup assets folder structure
+* figure out how to lint the shared folder
 
 not sure if individual test:coverage scripts are needed
 
@@ -46,6 +47,11 @@ condition\n)
 
 which is not inverted
 
+
+esbuild is used to bundle and minify the code into a single file. It exports the file to out/extension.js (just like the normal compiled version)
+and not not a different directory because the 'main' property inside the package.json file is used to denote the extension export file and is
+additionally used for code coverage, hence the file pointing at main needs to be the unminified for test coverage and minified for publishing
+the extension
 
 
 WEBSITE:
