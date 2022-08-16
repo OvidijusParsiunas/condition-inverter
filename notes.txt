@@ -48,10 +48,15 @@ condition\n)
 which is not inverted
 
 
-esbuild is used to bundle and minify the code into a single file. It exports the file to out/extension.js (just like the normal compiled version)
-and not not a different directory because the 'main' property inside the package.json file is used to denote the extension export file and is
-additionally used for code coverage, hence the file pointing at main needs to be the unminified for test coverage and minified for publishing
-the extension
+vscode:prepublish is using esbuild to bundle and minify the code into a single file. It exports the file to out/extension.js. The reason why it
+is using that path is because the 'main' property inside the package.json file as well as being the export entry file, is also used for code coverage,
+hence the file pointing at main needs to be the unminified for test coverage and minified for publishing the extension
+additionally not using the following:
+"esbuild:watch": "npm run esbuild:base -- --sourcemap --watch"
+because it does not automatically recompile test files
+compile is not using the following:
+tsc --build .
+because it does not take code coverage for all files
 
 
 WEBSITE:
