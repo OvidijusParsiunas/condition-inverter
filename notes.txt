@@ -55,8 +55,8 @@ additionally not using the following:
 "esbuild:watch": "npm run esbuild:base -- --sourcemap --watch"
 because it does not automatically recompile test files
 compile is not using the following:
-tsc --build .
-because it does not take code coverage for all files
+tsc --build ./ and tsc -p ./ are run before each test because tsc --build ./ compiles the extension files and the shared directory files, however tsc -p ./ compilation is required
+for all files to be analyzed by code coverage
 
 
 WEBSITE:

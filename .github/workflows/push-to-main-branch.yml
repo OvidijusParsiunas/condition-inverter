@@ -20,6 +20,7 @@ jobs:
       - name: Install and Test extension/inverter 🔧
         run: |
           npm install
+          npm install --prefix ../shared
           npm run esbuild
         working-directory: ./extension
       - name: Run headless test 🔧
