@@ -3,16 +3,16 @@
 </p>
 
 <div align="center">
-    <a href="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg">
+    <a href="https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter">
         <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Visual Studio Marketplace version">
     </a>
     <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch">
         <img src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch" alt="Build status">
     </a>
-    <a href="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter">
+    <a href="https://app.codecov.io/gh/OvidijusParsiunas/condition-inverter">
         <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Code coverage">
     </a>
-    <a href="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main">
+    <a href="https://ovidijusparsiunas.testspace.com/projects/66878/spaces">
         <img src="https://img.shields.io/testspace/tests/ovidijusparsiunas/ovidijusparsiunas:condition-inverter/main" alt="Number of tests that have passed">
     </a>
 </div>
@@ -26,7 +26,7 @@ A simple tool used to invert conditions for all modern programming languages and
 Highlight conditions that you want to invert:
 
 <p align="center">
-    <img width="100%" src="../assets/readme/gif/EXTENSION-ANIMATION-NEW-2.gif" alt="Extension-gif-1">
+    <img width="100%" src="assets/active/EXTENSION-ANIMATION-NEW-2.gif" alt="Extension-gif-1">
 </p>
 
 Invert conditions in ternary operators, for loops, and more:

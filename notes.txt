@@ -5,17 +5,8 @@ Overall:
 tasks:
 * Get a logo for the app
 * Update all of the readmes
-* Extension files that are not needed to run, should be ignored
 * change gif sizes to use 100% for all repos
 * use active/backup assets folder structure
-* figure out how to lint the shared folder
-
-not sure if individual test:coverage scripts are needed
-
-add keys to the website
-investigate the potential opportunity for this to work in the browser:
-https://code.visualstudio.com/api/extension-guides/web-extensions
-
 
 EXTENSION:
 

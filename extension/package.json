@@ -1,7 +1,7 @@
 {
   "name": "condition-inverter",
   "displayName": "Condition Inverter",
-  "version": "0.22.0",
+  "version": "0.23.0",
   "description": "Invert conditions for all modern programming languages and frameworks",
   "keywords": [
     "condition",
@@ -37,6 +37,7 @@
   },
   "license": "MIT",
   "main": "./out/extension.js",
+  "browser": "./out/extension.js",
   "activationEvents": [
     "onCommand:condition-inverter.invert"
   ],
