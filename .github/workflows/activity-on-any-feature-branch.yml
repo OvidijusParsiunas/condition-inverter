@@ -1,0 +1,33 @@
+name: push to any feature branch/pull to any branch and check if the build is successful
+on:
+  push:
+    branches-ignore:
+      - 'gh-pages'
+      - main
+  pull_request:
+    branches-ignore:
+      - 'gh-pages'
+
+jobs:
+  build-and-test-extension:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    env:
+      NODE_ENV: development
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Install and Test extension/inverter 🔧
+        run: |
+          npm install
+          npm install --prefix ../shared
+          npm run esbuild
+        working-directory: ./extension
+      - name: Run headless test 🔧
+        uses: GabrielBB/xvfb-action@v1.0
+        with:
+          run: npm --prefix ./extension run test:coverage
