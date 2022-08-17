@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img width="90%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/png/extension-banner-12.png" alt="Banner">
+    <img width="90%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/png/banner/banner-12.png" alt="Banner">
 </p>
 
 <div align="center">
@@ -26,17 +26,17 @@ A simple tool used to invert conditions for all modern programming languages and
 Highlight conditions that you want to invert:
 
 <p align="center">
-    <img width="100%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/gif/EXTENSION-ANIMATION-NEW-2.gif" alt="Extension-gif-1">
+    <img width="100%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/gif/extension/editor/extension-editor-if-4.gif" alt="Extension-editor-if-animation">
 </p>
 
 Invert conditions in ternary operators, for loops, and more:
 <p align="center">
-    <img width="100%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/gif/EXTENSION-ANIMATION-RESOLUTION-2.gif" alt="Extension-gif-2">
+    <img width="100%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/gif/extension/editor/extension-editor-others-6.gif" alt="Extension-editor-others-animation">
 </p>
 
 Invert conditions inside html templates:
 <p align="center">
-    <img width="100%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/gif/EXTENSION-ANIMATION-RESOLUTION-3.gif" alt="Extension-gif-3">
+    <img width="100%" src="https://raw.githubusercontent.com/OvidijusParsiunas/condition-inverter/main/assets/readme/gif/extension/editor/extension-editor-html-3.gif" alt="Extension-editor-html-animation">
 </p>
 
 ## How to use
