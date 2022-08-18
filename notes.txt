@@ -4,9 +4,7 @@ Overall:
 
 tasks:
 * Get a logo for the app
-* Update all of the readmes
 * change gif sizes to use 100% for all repos
-* use active/backup assets folder structure
 
 EXTENSION:
 

@@ -1,5 +1,5 @@
 <p align="center"> 
-    <img width="90%" src="assets/readme/png/extension-banner-12.png" alt="Banner">
+    <img width="90%" src="assets/readme/png/banner/banner-12.png" alt="Banner">
 </p>
 
 <div align="center">
@@ -26,12 +26,12 @@ A simple tool used to invert conditions for all modern programming languages and
 Website - [conditioninverter.com](http://conditioninverter.com/), [Github](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website)
 
 <p align="center">
-    <img width="100%" src="assets/readme/gif/WEBSITE-ANIMATION-4.gif" alt="Website gif">
+    <img width="100%" src="assets/readme/gif/website/website-5.gif" alt="Website gif">
 </p>
 
 VS Code Extension - [Marketplace](https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter), [Github](https://github.com/OvidijusParsiunas/condition-inverter/blob/main/extension)
 <p align="center">
-    <img width="100%" src="assets/readme/gif/PRESENTER-EXTENSION-ANIMATION.gif" alt="Extension gif">
+    <img width="100%" src="assets/readme/gif/extension/ide/extension-ide-6.gif" alt="Extension gif">
 </p>
 
 

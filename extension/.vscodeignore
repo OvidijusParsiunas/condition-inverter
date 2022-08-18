@@ -3,7 +3,7 @@
 src/**
 out/invert/**
 out/test/**
-assets/backup/**
+assets/extension-icon/backup/**
 .gitignore
 .yarnrc
 vsc-extension-quickstart.md
