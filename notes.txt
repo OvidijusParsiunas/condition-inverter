@@ -1,11 +1,3 @@
-TO-DO:
-
-Overall:
-
-tasks:
-* Get a logo for the app
-* change gif sizes to use 100% for all repos
-
 EXTENSION:
 
 Outstanding ISSUES with highlighed html tags:
