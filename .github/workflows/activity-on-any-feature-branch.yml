@@ -4,8 +4,9 @@ on:
     branches-ignore:
       - 'gh-pages'
       - main
-  pull_request_target:
-    target: [opened]
+  pull_request:
+    branches-ignore:
+      - 'gh-pages'
 
 jobs:
   build-and-test-extension:
