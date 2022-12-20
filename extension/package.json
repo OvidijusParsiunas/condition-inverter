@@ -1,7 +1,7 @@
 {
   "name": "condition-inverter",
   "displayName": "Condition Inverter",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "Invert conditions for all modern programming languages and frameworks",
   "keywords": [
     "condition",
