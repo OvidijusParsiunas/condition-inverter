@@ -23,13 +23,13 @@ A simple tool used to invert conditions for all modern programming languages and
 
 ## Platforms
 
-Website - [conditioninverter.com](http://conditioninverter.com/), [Github](https://github.com/OvidijusParsiunas/condition-inverter/tree/main/website)
+Website - [conditioninverter.com](http://conditioninverter.com/)
 
 <p align="center">
     <img width="100%" src="assets/readme/gif/website/website-5.gif" alt="Website gif">
 </p>
 
-VS Code Extension - [Marketplace](https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter), [Github](https://github.com/OvidijusParsiunas/condition-inverter/blob/main/extension)
+VS Code Extension - [Marketplace](https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter)
 <p align="center">
     <img width="100%" src="assets/readme/gif/extension/ide/extension-ide-6.gif" alt="Extension gif">
 </p>
