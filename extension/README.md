@@ -4,10 +4,10 @@
 
 <div align="center">
     <a href="https://marketplace.visualstudio.com/items?itemName=OvidijusParsiunas.condition-inverter">
-        <img style="margin-left: -14px" src="https://vsmarketplacebadge.apphb.com/version/ovidijusparsiunas.condition-inverter.svg" alt="Visual Studio Marketplace version">
+        <img style="margin-left: -14px" src="https://img.shields.io/visual-studio-marketplace/v/OvidijusParsiunas.condition-inverter?color=-n" alt="Visual Studio Marketplace version">
     </a>
-    <a href="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch">
-        <img src="https://img.shields.io/github/workflow/status/OvidijusParsiunas/condition-inverter/push%20to%20main%20branch" alt="Build status">
+    <a href="https://img.shields.io/github/actions/workflow/status/OvidijusParsiunas/condition-inverter/push-to-main-branch.yml?branch=main">
+        <img src="https://img.shields.io/github/actions/workflow/status/OvidijusParsiunas/condition-inverter/push-to-main-branch.yml?branch=main" alt="Build status">
     </a>
     <a href="https://app.codecov.io/gh/OvidijusParsiunas/condition-inverter">
         <img src="https://img.shields.io/codecov/c/github/OvidijusParsiunas/condition-inverter" alt="Code coverage">
